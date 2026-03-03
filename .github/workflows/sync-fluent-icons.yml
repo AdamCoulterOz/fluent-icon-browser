@@ -2,7 +2,8 @@ name: Sync Fluent Icons Index
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    # Weekly on Sunday 21:17 UTC (Monday morning in Australia).
+    - cron: "17 21 * * 0"
   workflow_dispatch:
     inputs:
       force_rebuild:

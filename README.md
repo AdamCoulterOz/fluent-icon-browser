@@ -35,7 +35,7 @@ python serve.py
 
 ### `.github/workflows/sync-fluent-icons.yml`
 
-- Runs hourly (and manually via workflow dispatch).
+- Runs weekly (and manually via workflow dispatch).
 - Checks current `microsoft/fluentui-system-icons` `main` commit SHA.
 - Rebuilds only when upstream SHA changes (or `force_rebuild=true`).
 - Pipeline:

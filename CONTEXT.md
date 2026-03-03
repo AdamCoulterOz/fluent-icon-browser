@@ -30,7 +30,7 @@ The UI loads `icon-data.json` at runtime and provides:
 ### GitHub automation
 
 - `.github/workflows/sync-fluent-icons.yml`
-  - runs hourly + manual trigger
+  - runs weekly + manual trigger
   - checks upstream SHA for `microsoft/fluentui-system-icons` `main`
   - only rebuilds when SHA changed (or forced)
   - commits updated `icon-data.json` and `.upstream-sha`
@@ -47,4 +47,3 @@ The UI loads `icon-data.json` at runtime and provides:
 ## Open Questions / Ambiguities
 
 - Whether to keep generated `consolidated/` artifacts out of git permanently (currently assumed: do not commit).
-- Preferred schedule cadence (currently hourly) vs lower frequency for fewer Actions minutes.
