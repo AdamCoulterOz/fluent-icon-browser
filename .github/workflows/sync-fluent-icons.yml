@@ -1,0 +1,105 @@
+name: Sync Fluent Icons Index
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: Rebuild even if upstream SHA has not changed
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-fluent-icons
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Resolve upstream HEAD SHA
+        id: upstream
+        run: |
+          set -euo pipefail
+          sha="$(git ls-remote https://github.com/microsoft/fluentui-system-icons.git refs/heads/main | awk '{print $1}')"
+          if [ -z "$sha" ]; then
+            echo "Unable to resolve upstream SHA." >&2
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Decide if rebuild is needed
+        id: decision
+        run: |
+          set -euo pipefail
+          current="$(cat .upstream-sha 2>/dev/null || true)"
+          upstream="${{ steps.upstream.outputs.sha }}"
+          force="${{ github.event.inputs.force_rebuild || 'false' }}"
+          changed="false"
+
+          if [ "$force" = "true" ]; then
+            changed="true"
+          elif [ "$upstream" != "$current" ]; then
+            changed="true"
+          fi
+
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "Current SHA: ${current:-<none>}"
+          echo "Upstream SHA: $upstream"
+          echo "Force rebuild: $force"
+
+      - name: Sparse clone upstream assets
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/fluentui-system-icons.git .tmp/upstream
+          cd .tmp/upstream
+          git sparse-checkout set assets
+
+      - name: Regenerate icon data
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          python process.py --input-dir .tmp/upstream/assets --output-dir .tmp/consolidated
+          python generate-icon-data.py --icons-dir .tmp/consolidated --output icon-data.json
+          echo "${{ steps.upstream.outputs.sha }}" > .upstream-sha
+
+      - name: Commit and push
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icon-data.json .upstream-sha
+
+          if git diff --cached --quiet; then
+            echo "No icon-data changes after rebuild."
+            exit 0
+          fi
+
+          short_sha="$(echo '${{ steps.upstream.outputs.sha }}' | cut -c1-7)"
+          git commit -m "chore: sync icon index from microsoft/fluentui-system-icons@${short_sha}"
+          git push

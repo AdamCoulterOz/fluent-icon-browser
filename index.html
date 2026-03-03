@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluentUI System Icons Browser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FluentUI System Icons Browser</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search icons by name, description, or metaphors..." />
+                <div class="filters">
+                    <label>
+                        <input type="checkbox" id="filterRegular" checked> Regular
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filterFilled" checked> Filled
+                    </label>
+                    <label>
+                        <input type="checkbox" id="filterColor" checked> Color
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats">
+            <span id="iconCount">Loading icons...</span>
+        </div>
+
+        <div class="icon-grid" id="iconGrid">
+            <!-- Icons will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <div id="iconModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+                <br/>
+                <div id="metaphorsList"></div>
+            </div>
+            <div class="modal-body">
+                <div class="icon-variants">
+                    <div class="variant" id="regularVariant" style="display: none;">
+                        <h3>Regular</h3>
+                        <div class="icon-view icon-large" id="regularIcon"></div>
+                        <div class="icon-actions">
+                            <button class="icon-btn icon-clipboard"
+                                    onclick="copyToClipboard(event, 'regular')"
+                                    title="Copy SVG"></button>
+
+                            <button class="icon-btn icon-download"
+                                    onclick="downloadIcon('regular')"
+                                    title="Download SVG"></button>
+                        </div>
+                    </div>
+                    <div class="variant" id="filledVariant" style="display: none;">
+                        <h3>Filled</h3>
+                        <div class="icon-view icon-large" id="filledIcon"></div>
+                        <div class="icon-actions">
+                            <button class="icon-btn icon-clipboard"
+                                    onclick="copyToClipboard(event, 'filled')"
+                                    title="Copy SVG"></button>
+
+                            <button class="icon-btn icon-download"
+                                    onclick="downloadIcon('filled')"
+                                    title="Download SVG"></button>
+                        </div>
+                    </div>
+                    <div class="variant" id="colorVariant" style="display: none;">
+                        <h3>Color</h3>
+                        <div class="icon-view icon-large" id="colorIcon"></div>
+                        <div class="icon-actions">
+                            <button class="icon-btn icon-clipboard"
+                                    onclick="copyToClipboard(event, 'color')"
+                                    title="Copy SVG"></button>
+
+                            <button class="icon-btn icon-download"
+                                    onclick="downloadIcon('color')"
+                                    title="Download SVG"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
