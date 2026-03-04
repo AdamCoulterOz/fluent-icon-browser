@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FluentUI System Icons Browser</title>
+    <title>Fluent + Fabric Icon Browser</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>FluentUI System Icons Browser</h1>
+            <h1>Fluent + Fabric Icon Browser</h1>
+            <div class="icon-set-tabs" role="tablist" aria-label="Icon set selection">
+                <button type="button" class="set-tab active" id="setTabFluent" data-set="fluent" role="tab" aria-selected="true">Fluent System</button>
+                <button type="button" class="set-tab" id="setTabFabric" data-set="fabric" role="tab" aria-selected="false">Fabric MDL2</button>
+            </div>
+            <p class="set-subtitle" id="setSubtitle"></p>
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search icons by name, description, or metaphors..." />
                 <div class="filters">
@@ -52,7 +57,7 @@
                         <div class="size-controls" id="regularControls">
                             <label for="regularSize">Size</label>
                             <select id="regularSize" aria-label="Regular icon size"></select>
-                            <a id="regularCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
+                            <a id="regularCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
                         </div>
                         <div class="download-options" id="regularDownloadOptions">
                             <label class="download-toggle">
@@ -76,7 +81,7 @@
                         <div class="size-controls" id="filledControls">
                             <label for="filledSize">Size</label>
                             <select id="filledSize" aria-label="Filled icon size"></select>
-                            <a id="filledCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
+                            <a id="filledCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
                         </div>
                         <div class="download-options" id="filledDownloadOptions">
                             <label class="download-toggle">
@@ -100,7 +105,7 @@
                         <div class="size-controls" id="colorControls">
                             <label for="colorSize">Size</label>
                             <select id="colorSize" aria-label="Color icon size"></select>
-                            <a id="colorCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
+                            <a id="colorCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
                         </div>
                         <div class="download-options" id="colorDownloadOptions">
                             <label class="download-toggle disabled">

@@ -1,4 +1,4 @@
-name: Sync Fluent Icons Index
+name: Sync Icon Indexes
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       force_rebuild:
-        description: Rebuild even if upstream SHA has not changed
+        description: Rebuild even if upstream SHAs have not changed
         required: false
         default: "false"
         type: choice
@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-fluent-icons
+  group: sync-icon-indexes
   cancel-in-progress: true
 
 jobs:
@@ -35,51 +35,77 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Resolve upstream HEAD SHA
+      - name: Resolve upstream HEAD SHAs
         id: upstream
         run: |
           set -euo pipefail
-          sha="$(git ls-remote https://github.com/microsoft/fluentui-system-icons.git refs/heads/main | awk '{print $1}')"
-          if [ -z "$sha" ]; then
-            echo "Unable to resolve upstream SHA." >&2
+          fluent_sha="$(git ls-remote https://github.com/microsoft/fluentui-system-icons.git refs/heads/main | awk '{print $1}')"
+          fabric_sha="$(git ls-remote https://github.com/microsoft/fluentui.git refs/heads/master | awk '{print $1}')"
+          if [ -z "$fabric_sha" ]; then
+            fabric_sha="$(git ls-remote https://github.com/microsoft/fluentui.git refs/heads/main | awk '{print $1}')"
+          fi
+
+          if [ -z "$fluent_sha" ] || [ -z "$fabric_sha" ]; then
+            echo "Unable to resolve one or more upstream SHAs." >&2
             exit 1
           fi
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+          echo "fluent_sha=$fluent_sha" >> "$GITHUB_OUTPUT"
+          echo "fabric_sha=$fabric_sha" >> "$GITHUB_OUTPUT"
 
       - name: Decide if rebuild is needed
         id: decision
         run: |
           set -euo pipefail
-          current="$(cat .upstream-sha 2>/dev/null || true)"
-          upstream="${{ steps.upstream.outputs.sha }}"
+          current_fluent="$(cat .upstream-sha 2>/dev/null || true)"
+          current_fabric="$(cat .upstream-fabric-sha 2>/dev/null || true)"
+          upstream_fluent="${{ steps.upstream.outputs.fluent_sha }}"
+          upstream_fabric="${{ steps.upstream.outputs.fabric_sha }}"
           force="${{ github.event.inputs.force_rebuild || 'false' }}"
           changed="false"
 
           if [ "$force" = "true" ]; then
             changed="true"
-          elif [ "$upstream" != "$current" ]; then
+          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ]; then
             changed="true"
           fi
 
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
-          echo "Current SHA: ${current:-<none>}"
-          echo "Upstream SHA: $upstream"
+          echo "Current Fluent SHA: ${current_fluent:-<none>}"
+          echo "Upstream Fluent SHA: $upstream_fluent"
+          echo "Current Fabric SHA: ${current_fabric:-<none>}"
+          echo "Upstream Fabric SHA: $upstream_fabric"
           echo "Force rebuild: $force"
 
-      - name: Sparse clone upstream assets
+      - name: Sparse clone Fluent System assets
         if: steps.decision.outputs.changed == 'true'
         run: |
           set -euo pipefail
-          git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/fluentui-system-icons.git .tmp/upstream
-          cd .tmp/upstream
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/fluentui-system-icons.git .tmp/fluent-system
+          cd .tmp/fluent-system
           git sparse-checkout set assets
+
+      - name: Sparse clone Fabric MDL2 components
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/fluentui.git .tmp/fluent-fabric
+          cd .tmp/fluent-fabric
+          git sparse-checkout set packages/react-icons-mdl2/src/components
 
       - name: Regenerate icon data
         if: steps.decision.outputs.changed == 'true'
         run: |
           set -euo pipefail
-          python generate-icon-data.py --icons-dir .tmp/upstream/assets --output icon-data.json --upstream-sha "${{ steps.upstream.outputs.sha }}"
-          echo "${{ steps.upstream.outputs.sha }}" > .upstream-sha
+          python generate-icon-data.py \
+            --fluent-icons-dir .tmp/fluent-system/assets \
+            --fabric-components-dir .tmp/fluent-fabric/packages/react-icons-mdl2/src/components \
+            --output icon-data.json \
+            --fluent-upstream-sha "${{ steps.upstream.outputs.fluent_sha }}" \
+            --fabric-upstream-sha "${{ steps.upstream.outputs.fabric_sha }}"
+
+          echo "${{ steps.upstream.outputs.fluent_sha }}" > .upstream-sha
+          echo "${{ steps.upstream.outputs.fabric_sha }}" > .upstream-fabric-sha
 
       - name: Commit and push
         if: steps.decision.outputs.changed == 'true'
@@ -87,13 +113,14 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json .upstream-sha
+          git add icon-data.json .upstream-sha .upstream-fabric-sha
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
             exit 0
           fi
 
-          short_sha="$(echo '${{ steps.upstream.outputs.sha }}' | cut -c1-7)"
-          git commit -m "chore: sync icon index from microsoft/fluentui-system-icons@${short_sha}"
+          fluent_short_sha="$(echo '${{ steps.upstream.outputs.fluent_sha }}' | cut -c1-7)"
+          fabric_short_sha="$(echo '${{ steps.upstream.outputs.fabric_sha }}' | cut -c1-7)"
+          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha}"
           git push

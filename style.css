@@ -59,6 +59,40 @@ h1 {
     margin-bottom: 20px;
 }
 
+.icon-set-tabs {
+    display: inline-flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.set-tab {
+    border: 1px solid var(--border-color);
+    border-radius: 9999px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.set-tab:hover {
+    border-color: var(--text-accent);
+}
+
+.set-tab.active {
+    background: var(--text-accent);
+    border-color: var(--text-accent);
+    color: #fff;
+}
+
+.set-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
 .search-container {
     display: flex;
     flex-direction: column;
@@ -95,6 +129,11 @@ h1 {
     cursor: pointer;
     user-select: none;
     color: var(--text-primary);
+}
+
+.filters label.disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
 .filters input[type="checkbox"] {

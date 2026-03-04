@@ -1,5 +1,8 @@
 class IconBrowser {
     constructor() {
+        this.iconSets = {};
+        this.currentSetKey = "fluent";
+        this.currentSet = null;
         this.icons = [];
         this.filteredIcons = [];
         this.currentIcon = null;
@@ -17,8 +20,54 @@ class IconBrowser {
     async init() {
         await this.loadIcons();
         this.setupEventListeners();
-        this.renderIcons();
-        this.updateStats();
+        this.applyCurrentSet();
+    }
+
+    normalizePayload(payload) {
+        if (Array.isArray(payload)) {
+            return {
+                defaultSet: "fluent",
+                sets: {
+                    fluent: {
+                        label: "Fluent System Icons",
+                        source: "microsoft/fluentui-system-icons",
+                        icons: payload,
+                    },
+                },
+            };
+        }
+
+        if (payload && typeof payload === "object") {
+            if (payload.sets && typeof payload.sets === "object") {
+                return {
+                    defaultSet: payload.defaultSet || "fluent",
+                    sets: payload.sets,
+                };
+            }
+
+            const icons = Array.isArray(payload.icons) ? payload.icons : [];
+            return {
+                defaultSet: "fluent",
+                sets: {
+                    fluent: {
+                        label: "Fluent System Icons",
+                        source: payload.source || "microsoft/fluentui-system-icons",
+                        icons,
+                    },
+                },
+            };
+        }
+
+        return {
+            defaultSet: "fluent",
+            sets: {
+                fluent: {
+                    label: "Fluent System Icons",
+                    source: "microsoft/fluentui-system-icons",
+                    icons: [],
+                },
+            },
+        };
     }
 
     async loadIcons() {
@@ -29,8 +78,14 @@ class IconBrowser {
             }
 
             const payload = await response.json();
-            this.icons = Array.isArray(payload) ? payload : payload.icons || [];
-            this.filteredIcons = [...this.icons];
+            const normalized = this.normalizePayload(payload);
+            this.iconSets = normalized.sets;
+
+            const availableSetKeys = Object.keys(this.iconSets);
+            const preferredSet = normalized.defaultSet;
+            this.currentSetKey = availableSetKeys.includes(preferredSet)
+                ? preferredSet
+                : availableSetKeys[0] || "fluent";
         } catch (error) {
             console.error("Error loading icons:", error);
             this.showError("Failed to load icons. Please make sure icon-data.json exists.");
@@ -52,6 +107,13 @@ class IconBrowser {
         [filterRegular, filterFilled, filterColor].forEach((filter) => {
             filter.addEventListener("change", () => {
                 this.filterIcons(searchInput.value);
+            });
+        });
+
+        document.querySelectorAll(".set-tab").forEach((button) => {
+            button.addEventListener("click", () => {
+                const setKey = button.dataset.set;
+                this.switchSet(setKey);
             });
         });
 
@@ -81,6 +143,114 @@ class IconBrowser {
         });
     }
 
+    switchSet(setKey) {
+        if (!setKey || !this.iconSets[setKey] || setKey === this.currentSetKey) {
+            return;
+        }
+
+        this.currentSetKey = setKey;
+        this.currentIcon = null;
+        document.getElementById("iconModal").style.display = "none";
+        this.applyCurrentSet();
+    }
+
+    applyCurrentSet() {
+        const fallbackSet = Object.keys(this.iconSets)[0];
+        if (!this.iconSets[this.currentSetKey] && fallbackSet) {
+            this.currentSetKey = fallbackSet;
+        }
+
+        this.currentSet = this.iconSets[this.currentSetKey] || {
+            label: "Icons",
+            source: "",
+            icons: [],
+        };
+
+        this.icons = Array.isArray(this.currentSet.icons) ? this.currentSet.icons : [];
+        this.filteredIcons = [...this.icons];
+        this.syncSetTabs();
+        this.syncFilterControlsForSet();
+        this.updateSetSubtitle();
+
+        const searchTerm = document.getElementById("searchInput")?.value || "";
+        this.filterIcons(searchTerm);
+    }
+
+    syncSetTabs() {
+        document.querySelectorAll(".set-tab").forEach((button) => {
+            const setKey = button.dataset.set;
+            const isAvailable = Boolean(this.iconSets[setKey]);
+            const isActive = setKey === this.currentSetKey;
+
+            button.style.display = isAvailable ? "inline-flex" : "none";
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+    }
+
+    updateSetSubtitle() {
+        const subtitle = document.getElementById("setSubtitle");
+        if (!subtitle) {
+            return;
+        }
+
+        const label = this.currentSet?.label || "Icons";
+        const source = this.currentSet?.source || "";
+        subtitle.textContent = source ? `${label} (${source})` : label;
+    }
+
+    getSetAvailableVariants() {
+        const available = new Set();
+
+        for (const icon of this.icons) {
+            const variantKeys = Object.keys(icon.variants || {});
+            variantKeys.forEach((variant) => available.add(variant));
+        }
+
+        return available;
+    }
+
+    syncFilterControlsForSet() {
+        const availableVariants = this.getSetAvailableVariants();
+        const filterMap = {
+            regular: document.getElementById("filterRegular"),
+            filled: document.getElementById("filterFilled"),
+            color: document.getElementById("filterColor"),
+        };
+
+        Object.entries(filterMap).forEach(([variant, checkbox]) => {
+            if (!checkbox) {
+                return;
+            }
+
+            const isAvailable = availableVariants.has(variant);
+            checkbox.disabled = !isAvailable;
+            if (!isAvailable) {
+                checkbox.checked = false;
+            }
+
+            const label = checkbox.closest("label");
+            if (label) {
+                label.classList.toggle("disabled", !isAvailable);
+            }
+        });
+
+        const hasAnySelected = Object.values(filterMap).some(
+            (checkbox) => checkbox && checkbox.checked
+        );
+        if (hasAnySelected) {
+            return;
+        }
+
+        for (const variant of ["regular", "filled", "color"]) {
+            const checkbox = filterMap[variant];
+            if (checkbox && !checkbox.disabled) {
+                checkbox.checked = true;
+                break;
+            }
+        }
+    }
+
     getVariantData(icon, variant) {
         return icon?.variants?.[variant] || null;
     }
@@ -93,15 +263,32 @@ class IconBrowser {
         return typeof variantData === "string";
     }
 
+    getSizeEntries(variantData) {
+        if (!variantData || this.isLegacyVariantData(variantData)) {
+            return {};
+        }
+
+        return variantData.sizes && typeof variantData.sizes === "object"
+            ? variantData.sizes
+            : {};
+    }
+
     getVariantSizes(variantData) {
         if (!variantData || this.isLegacyVariantData(variantData)) {
             return [];
         }
 
-        return Object.keys(variantData.sizes || {})
+        const sizes = Object.keys(this.getSizeEntries(variantData))
             .map((value) => Number(value))
             .filter((value) => Number.isFinite(value))
             .sort((a, b) => a - b);
+
+        const fallbackDefault = Number(variantData.defaultSize);
+        if (sizes.length === 0 && Number.isFinite(fallbackDefault)) {
+            return [fallbackDefault];
+        }
+
+        return sizes;
     }
 
     getDefaultSize(variantData) {
@@ -118,62 +305,145 @@ class IconBrowser {
         return sizes[0];
     }
 
-    resolveVariantUrl(variantData, size) {
-        if (!variantData || this.isLegacyVariantData(variantData)) {
+    normalizeSizeEntry(entry, variantData) {
+        if (typeof entry === "string") {
+            return {
+                url: entry,
+                svg: null,
+                sourceUrl: entry,
+            };
+        }
+
+        if (entry && typeof entry === "object") {
+            const url = typeof entry.url === "string" ? entry.url : null;
+            const svg = typeof entry.svg === "string" ? entry.svg : null;
+            const sourceUrl =
+                typeof entry.sourceUrl === "string"
+                    ? entry.sourceUrl
+                    : url ||
+                      (typeof variantData?.sourceUrl === "string" ? variantData.sourceUrl : null);
+
+            return { url, svg, sourceUrl };
+        }
+
+        return {
+            url: null,
+            svg: null,
+            sourceUrl:
+                typeof variantData?.sourceUrl === "string" ? variantData.sourceUrl : null,
+        };
+    }
+
+    resolveVariantAsset(variantData, size) {
+        if (!variantData) {
             return null;
         }
 
-        if (size && variantData.sizes?.[String(size)]) {
-            return variantData.sizes[String(size)];
+        if (this.isLegacyVariantData(variantData)) {
+            return {
+                size: null,
+                url: null,
+                svg: variantData,
+                sourceUrl: null,
+            };
         }
 
+        const entries = this.getSizeEntries(variantData);
         const defaultSize = this.getDefaultSize(variantData);
-        if (defaultSize && variantData.sizes?.[String(defaultSize)]) {
-            return variantData.sizes[String(defaultSize)];
+        const resolvedSize =
+            Number.isFinite(size) && entries[String(size)] ? Number(size) : defaultSize;
+
+        if (resolvedSize && entries[String(resolvedSize)]) {
+            return {
+                size: resolvedSize,
+                ...this.normalizeSizeEntry(entries[String(resolvedSize)], variantData),
+            };
+        }
+
+        if (typeof variantData.previewSvg === "string" && variantData.previewSvg) {
+            return {
+                size: defaultSize,
+                url: null,
+                svg: variantData.previewSvg,
+                sourceUrl:
+                    typeof variantData.sourceUrl === "string" ? variantData.sourceUrl : null,
+            };
         }
 
         if (typeof variantData.previewUrl === "string" && variantData.previewUrl) {
-            return variantData.previewUrl;
+            return {
+                size: defaultSize,
+                url: variantData.previewUrl,
+                svg: null,
+                sourceUrl: variantData.previewUrl,
+            };
         }
 
-        const firstSize = Object.keys(variantData.sizes || {})[0];
-        return firstSize ? variantData.sizes[firstSize] : null;
+        const firstSizeKey = Object.keys(entries)[0];
+        if (firstSizeKey) {
+            return {
+                size: Number(firstSizeKey),
+                ...this.normalizeSizeEntry(entries[firstSizeKey], variantData),
+            };
+        }
+
+        return {
+            size: defaultSize,
+            url: null,
+            svg: null,
+            sourceUrl:
+                typeof variantData.sourceUrl === "string" ? variantData.sourceUrl : null,
+        };
+    }
+
+    escapeHtmlAttribute(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;");
     }
 
     renderPreviewMarkup(icon, variant, variantData) {
-        if (this.isLegacyVariantData(variantData)) {
-            return variantData;
-        }
-
-        const url = this.resolveVariantUrl(variantData, variantData.defaultSize);
-        if (!url) {
+        const asset = this.resolveVariantAsset(variantData, this.getDefaultSize(variantData));
+        if (!asset) {
             return '<div style="color: #ccc;">No preview</div>';
         }
 
-        const label = `${this.formatName(icon.name)} ${variant}`;
-        return `<img src="${url}" alt="${label}" loading="lazy" decoding="async">`;
+        if (asset.svg) {
+            return asset.svg;
+        }
+
+        if (asset.url) {
+            const label = `${this.formatName(icon.name)} ${variant}`;
+            const escapedLabel = this.escapeHtmlAttribute(label);
+            return `<img src="${asset.url}" alt="${escapedLabel}" loading="lazy" decoding="async">`;
+        }
+
+        return '<div style="color: #ccc;">No preview</div>';
     }
 
     filterIcons(searchTerm) {
-        const { regular: regularFilter, filled: filledFilter, color: colorFilter } = this.getActiveFilters();
+        const filters = this.getActiveFilters();
+        const search = (searchTerm || "").toLowerCase();
+        const anyFilterSelected = Object.values(filters).some(Boolean);
 
         this.filteredIcons = this.icons.filter((icon) => {
             const searchMatch =
-                searchTerm === "" ||
-                icon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                (icon.description &&
-                    icon.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                search === "" ||
+                icon.name.toLowerCase().includes(search) ||
+                (icon.displayName && icon.displayName.toLowerCase().includes(search)) ||
+                (icon.description && icon.description.toLowerCase().includes(search)) ||
                 (icon.metaphors &&
                     icon.metaphors.some((metaphor) =>
-                        String(metaphor).toLowerCase().includes(searchTerm.toLowerCase())
+                        String(metaphor).toLowerCase().includes(search)
                     ));
 
-            const anyFilterSelected = Object.values(this.getActiveFilters()).some(Boolean);
             const styleMatch =
                 !anyFilterSelected ||
-                (regularFilter && this.hasVariant(icon, "regular")) ||
-                (filledFilter && this.hasVariant(icon, "filled")) ||
-                (colorFilter && this.hasVariant(icon, "color"));
+                (filters.regular && this.hasVariant(icon, "regular")) ||
+                (filters.filled && this.hasVariant(icon, "filled")) ||
+                (filters.color && this.hasVariant(icon, "color"));
 
             return searchMatch && styleMatch;
         });
@@ -257,13 +527,13 @@ class IconBrowser {
         const sizes = this.getVariantSizes(variantData);
         const defaultSize = this.getDefaultSize(variantData);
         sizeSelect.innerHTML = sizes
-            .map((size) => `<option value="${size}">${size}</option>`)
+            .map((entrySize) => `<option value="${entrySize}">${entrySize}</option>`)
             .join("");
         if (defaultSize) {
             sizeSelect.value = String(defaultSize);
         }
 
-        controls.style.display = "flex";
+        controls.style.display = sizes.length > 0 ? "flex" : "none";
         downloadOptions.style.display = "block";
 
         if (variant === "color") {
@@ -300,23 +570,31 @@ class IconBrowser {
 
         iconDiv.className = `icon-view ${colorClass} icon-large`;
 
-        if (this.isLegacyVariantData(variantData)) {
-            iconDiv.innerHTML = variantData;
+        const selectedSize = sizeSelect?.value ? Number(sizeSelect.value) : null;
+        const asset = this.resolveVariantAsset(variantData, selectedSize);
+
+        if (!asset) {
+            iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
             cdnLink.removeAttribute("href");
             cdnLink.classList.add("disabled");
             return;
         }
 
-        const selectedSize = sizeSelect?.value ? Number(sizeSelect.value) : null;
-        const previewUrl = this.resolveVariantUrl(variantData, selectedSize);
-
-        if (previewUrl) {
+        if (asset.svg) {
+            iconDiv.innerHTML = asset.svg;
+        } else if (asset.url) {
             const label = `${this.formatName(this.currentIcon.name)} ${variant}`;
-            iconDiv.innerHTML = `<img src="${previewUrl}" alt="${label}" decoding="async">`;
-            cdnLink.href = previewUrl;
-            cdnLink.classList.remove("disabled");
+            const escapedLabel = this.escapeHtmlAttribute(label);
+            iconDiv.innerHTML = `<img src="${asset.url}" alt="${escapedLabel}" decoding="async">`;
         } else {
             iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
+        }
+
+        const linkTarget = asset.sourceUrl || asset.url;
+        if (linkTarget) {
+            cdnLink.href = linkTarget;
+            cdnLink.classList.remove("disabled");
+        } else {
             cdnLink.removeAttribute("href");
             cdnLink.classList.add("disabled");
         }
@@ -329,7 +607,8 @@ class IconBrowser {
         }
 
         this.currentIcon = icon;
-        document.getElementById("modalTitle").textContent = this.formatName(icon.name);
+        document.getElementById("modalTitle").textContent =
+            icon.displayName || this.formatName(icon.name);
         document.getElementById("modalDescription").textContent =
             icon.description || "No description available";
 
@@ -372,30 +651,25 @@ class IconBrowser {
             return null;
         }
 
-        if (this.isLegacyVariantData(variantData)) {
-            return {
-                svgText: variantData,
-                sourceUrl: null,
-                size: null,
-            };
-        }
-
         const sizeSelect = document.getElementById(`${variant}Size`);
         const selectedSize = sizeSelect?.value ? Number(sizeSelect.value) : null;
-        const resolvedUrl = this.resolveVariantUrl(variantData, selectedSize);
-        const defaultSize = this.getDefaultSize(variantData);
+        const asset = this.resolveVariantAsset(variantData, selectedSize);
+        if (!asset) {
+            return null;
+        }
 
         return {
-            svgText: null,
-            sourceUrl: resolvedUrl,
-            size: selectedSize || defaultSize,
+            svgText: asset.svg,
+            sourceUrl: asset.url,
+            size: asset.size,
         };
     }
 
     updateStats() {
         const count = this.filteredIcons.length;
         const total = this.icons.length;
-        document.getElementById("iconCount").textContent = `Showing ${count} of ${total} icons`;
+        const label = this.currentSet?.label || "Icons";
+        document.getElementById("iconCount").textContent = `Showing ${count} of ${total} icons (${label})`;
     }
 
     showError(message) {
@@ -413,7 +687,7 @@ async function fetchSvgText(url) {
 
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Failed to fetch SVG from CDN (${response.status})`);
+        throw new Error(`Failed to fetch SVG from source (${response.status})`);
     }
 
     const svgText = await response.text();

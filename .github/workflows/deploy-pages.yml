@@ -6,7 +6,7 @@ on:
       - main
   workflow_run:
     workflows:
-      - Sync Fluent Icons Index
+      - Sync Icon Indexes
     types:
       - completed
   workflow_dispatch:
