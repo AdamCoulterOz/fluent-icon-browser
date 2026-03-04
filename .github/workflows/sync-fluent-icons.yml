@@ -35,12 +35,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python dependencies
-        run: |
-          set -euo pipefail
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
       - name: Resolve upstream HEAD SHA
         id: upstream
         run: |
@@ -84,8 +78,7 @@ jobs:
         if: steps.decision.outputs.changed == 'true'
         run: |
           set -euo pipefail
-          python process.py --input-dir .tmp/upstream/assets --output-dir .tmp/consolidated
-          python generate-icon-data.py --icons-dir .tmp/consolidated --output icon-data.json
+          python generate-icon-data.py --icons-dir .tmp/upstream/assets --output icon-data.json --upstream-sha "${{ steps.upstream.outputs.sha }}"
           echo "${{ steps.upstream.outputs.sha }}" > .upstream-sha
 
       - name: Commit and push

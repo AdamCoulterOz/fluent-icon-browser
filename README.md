@@ -6,30 +6,32 @@ Static browser UI for searching icons from [microsoft/fluentui-system-icons](htt
 
 - Searches by icon name, description, and metaphors.
 - Filters by variant (`regular`, `filled`, `color`).
-- Shows SVG previews with copy/download actions.
+- Shows SVG previews sourced from CDN.
+- Supports native size selection per variant in the modal panel.
+- Copies/downloads the selected native-size SVG.
 - Auto-refreshes `icon-data.json` when upstream Fluent icons change.
 - Deploys the site to GitHub Pages from `main`.
 
 ## Local Development
 
-### 1. Install dependencies
+### 1. Build index JSON directly from upstream assets
 
 ```bash
-python -m pip install -r requirements.txt
+python generate-icon-data.py \
+  --icons-dir /path/to/fluentui-system-icons/assets \
+  --upstream-sha <upstream-commit-sha> \
+  --output icon-data.json
 ```
 
-### 2. Build consolidated icons + index JSON
-
-```bash
-python process.py --input-dir /path/to/fluentui-system-icons/assets --output-dir consolidated
-python generate-icon-data.py --icons-dir consolidated --output icon-data.json
-```
-
-### 3. Run locally
+### 2. Run locally
 
 ```bash
 python serve.py
 ```
+
+### Optional: run transform/consolidation script
+
+`process.py` is intentionally still in the repo for experimentation, but it is not used by the automated sync pipeline.
 
 ## Automation
 
@@ -40,9 +42,10 @@ python serve.py
 - Rebuilds only when upstream SHA changes (or `force_rebuild=true`).
 - Pipeline:
   - sparse clone upstream `assets/`
-  - run `process.py`
   - run `generate-icon-data.py`
   - commit updated `icon-data.json` + `.upstream-sha`
+
+`icon-data.json` stores metadata + CDN URLs to upstream SVG files (rather than embedding transformed SVG payloads).
 
 ### `.github/workflows/deploy-pages.yml`
 
@@ -52,11 +55,11 @@ python serve.py
 ## Repository Layout
 
 - `index.html`, `style.css`, `script.js`: static UI.
-- `process.py`: consolidates upstream icon assets.
-- `generate-icon-data.py`: generates browser index (`icon-data.json`).
+- `process.py`: optional transform/consolidation script (not used by CI sync).
+- `generate-icon-data.py`: generates browser index (`icon-data.json`) with CDN URLs and available native sizes.
 - `icons/`: small UI glyph assets for modal action buttons.
 - `icon-data.json`: generated icon index served by the browser.
-- `requirements.txt`: Python build dependencies.
+- `requirements.txt`: optional Python dependency for `process.py`.
 - `serve.py`: local static file server.
 
 ## Notes

@@ -9,14 +9,15 @@ The UI loads `icon-data.json` at runtime and provides:
 - text search (name, description, metaphors)
 - style filtering (`regular`, `filled`, `color`)
 - modal preview with copy/download for SVG variants
+- per-variant native size selector in the modal
 
 ## Key Files
 
 - `index.html`: page layout and modal structure.
 - `style.css`: all styling, including dark mode behavior and icon action button masks.
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
-- `process.py`: consolidates raw upstream assets into normalized per-icon SVG variants.
-- `generate-icon-data.py`: builds `icon-data.json` from consolidated icon folders.
+- `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
+- `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` and emits CDN URLs + native sizes.
 - `icon-data.json`: generated index consumed by the frontend.
 - `.upstream-sha`: last synced upstream commit SHA (written by automation).
 
@@ -24,8 +25,7 @@ The UI loads `icon-data.json` at runtime and provides:
 
 ### Local build flow
 
-1. `process.py --input-dir <upstream-assets> --output-dir consolidated`
-2. `generate-icon-data.py --icons-dir consolidated --output icon-data.json`
+1. `generate-icon-data.py --icons-dir <upstream-assets> --upstream-sha <sha> --output icon-data.json`
 
 ### GitHub automation
 
@@ -33,6 +33,7 @@ The UI loads `icon-data.json` at runtime and provides:
   - runs weekly + manual trigger
   - checks upstream SHA for `microsoft/fluentui-system-icons` `main`
   - only rebuilds when SHA changed (or forced)
+  - generates index directly from upstream `assets` (no transform step)
   - commits updated `icon-data.json` and `.upstream-sha`
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
@@ -43,6 +44,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - Repository should stay static-first (no bundler/build frontend stack).
 - `icon-data.json` is committed so Pages can serve immediately.
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
+- Icon SVG payloads are loaded from CDN URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
 
 ## Open Questions / Ambiguities
 
