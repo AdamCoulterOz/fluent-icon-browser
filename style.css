@@ -395,6 +395,27 @@ h1 {
     text-decoration: none;
 }
 
+.download-options {
+    margin-bottom: 8px;
+}
+
+.download-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.download-toggle input[type="checkbox"] {
+    accent-color: var(--text-accent);
+}
+
+.download-toggle.disabled {
+    opacity: 0.6;
+}
+
 .variant button {
     background: var(--text-accent);
     color: white;

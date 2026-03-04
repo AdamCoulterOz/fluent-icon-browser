@@ -54,6 +54,12 @@
                             <select id="regularSize" aria-label="Regular icon size"></select>
                             <a id="regularCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
                         </div>
+                        <div class="download-options" id="regularDownloadOptions">
+                            <label class="download-toggle">
+                                <input type="checkbox" id="regularCurrentColor">
+                                Use <code>currentColor</code> for fills on download
+                            </label>
+                        </div>
                         <div class="icon-actions">
                             <button class="icon-btn icon-clipboard"
                                     onclick="copyToClipboard(event, 'regular')"
@@ -72,6 +78,12 @@
                             <select id="filledSize" aria-label="Filled icon size"></select>
                             <a id="filledCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
                         </div>
+                        <div class="download-options" id="filledDownloadOptions">
+                            <label class="download-toggle">
+                                <input type="checkbox" id="filledCurrentColor">
+                                Use <code>currentColor</code> for fills on download
+                            </label>
+                        </div>
                         <div class="icon-actions">
                             <button class="icon-btn icon-clipboard"
                                     onclick="copyToClipboard(event, 'filled')"
@@ -89,6 +101,12 @@
                             <label for="colorSize">Size</label>
                             <select id="colorSize" aria-label="Color icon size"></select>
                             <a id="colorCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open CDN</a>
+                        </div>
+                        <div class="download-options" id="colorDownloadOptions">
+                            <label class="download-toggle disabled">
+                                <input type="checkbox" id="colorCurrentColor" disabled>
+                                <code>currentColor</code> transform not available for color icons
+                            </label>
                         </div>
                         <div class="icon-actions">
                             <button class="icon-btn icon-clipboard"

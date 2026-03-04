@@ -238,13 +238,16 @@ class IconBrowser {
         const controls = document.getElementById(`${variant}Controls`);
         const sizeSelect = document.getElementById(`${variant}Size`);
         const cdnLink = document.getElementById(`${variant}CdnLink`);
+        const downloadOptions = document.getElementById(`${variant}DownloadOptions`);
+        const currentColorToggle = document.getElementById(`${variant}CurrentColor`);
 
-        if (!controls || !sizeSelect || !cdnLink) {
+        if (!controls || !sizeSelect || !cdnLink || !downloadOptions || !currentColorToggle) {
             return;
         }
 
         if (this.isLegacyVariantData(variantData)) {
             controls.style.display = "none";
+            downloadOptions.style.display = "none";
             sizeSelect.innerHTML = "";
             cdnLink.removeAttribute("href");
             cdnLink.classList.add("disabled");
@@ -261,6 +264,23 @@ class IconBrowser {
         }
 
         controls.style.display = "flex";
+        downloadOptions.style.display = "block";
+
+        if (variant === "color") {
+            currentColorToggle.checked = false;
+            currentColorToggle.disabled = true;
+        } else {
+            currentColorToggle.disabled = false;
+        }
+    }
+
+    shouldUseCurrentColorOnDownload(variant) {
+        if (variant === "color") {
+            return false;
+        }
+
+        const toggle = document.getElementById(`${variant}CurrentColor`);
+        return Boolean(toggle?.checked);
     }
 
     updateModalVariantPreview(variant) {
@@ -416,6 +436,73 @@ function setActionFeedback(button, success) {
     }, 1500);
 }
 
+function toCurrentColorSvg(svgText) {
+    try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(svgText, "image/svg+xml");
+        const root = doc.documentElement;
+
+        if (!root || root.tagName.toLowerCase() !== "svg") {
+            return svgText;
+        }
+
+        const elements = root.querySelectorAll("*");
+        for (const element of elements) {
+            const fill = element.getAttribute("fill");
+            if (fill) {
+                const normalized = fill.trim().toLowerCase();
+                if (
+                    normalized &&
+                    normalized !== "none" &&
+                    normalized !== "currentcolor" &&
+                    !normalized.startsWith("url(")
+                ) {
+                    element.setAttribute("fill", "currentColor");
+                }
+            }
+
+            const style = element.getAttribute("style");
+            if (!style) {
+                continue;
+            }
+
+            const declarations = style
+                .split(";")
+                .map((entry) => entry.trim())
+                .filter(Boolean)
+                .map((entry) => {
+                    const separator = entry.indexOf(":");
+                    if (separator === -1) {
+                        return entry;
+                    }
+
+                    const key = entry.slice(0, separator).trim().toLowerCase();
+                    const value = entry.slice(separator + 1).trim();
+                    const normalized = value.toLowerCase();
+                    if (
+                        key === "fill" &&
+                        normalized !== "none" &&
+                        normalized !== "currentcolor" &&
+                        !normalized.startsWith("url(")
+                    ) {
+                        return "fill:currentColor";
+                    }
+
+                    return `${key}:${value}`;
+                });
+
+            if (declarations.length > 0) {
+                element.setAttribute("style", declarations.join(";"));
+            }
+        }
+
+        return new XMLSerializer().serializeToString(root);
+    } catch (error) {
+        console.warn("Unable to transform SVG fill to currentColor:", error);
+        return svgText;
+    }
+}
+
 async function copyToClipboard(clickEvent, variant) {
     const selection = iconBrowser.getVariantSelection(variant);
     if (!selection) {
@@ -441,14 +528,18 @@ async function downloadIcon(variant) {
     }
 
     try {
-        const svgText = selection.svgText || (await fetchSvgText(selection.sourceUrl));
-        const blob = new Blob([svgText], { type: "image/svg+xml" });
+        const originalSvg = selection.svgText || (await fetchSvgText(selection.sourceUrl));
+        const applyCurrentColor = iconBrowser.shouldUseCurrentColorOnDownload(variant);
+        const finalSvg = applyCurrentColor ? toCurrentColorSvg(originalSvg) : originalSvg;
+
+        const blob = new Blob([finalSvg], { type: "image/svg+xml" });
         const url = URL.createObjectURL(blob);
         const anchor = document.createElement("a");
         const sizePart = selection.size ? `_${selection.size}` : "";
+        const suffix = applyCurrentColor ? "_currentcolor" : "";
 
         anchor.href = url;
-        anchor.download = `${iconBrowser.currentIcon.name}${sizePart}_${variant}.svg`;
+        anchor.download = `${iconBrowser.currentIcon.name}${sizePart}_${variant}${suffix}.svg`;
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);

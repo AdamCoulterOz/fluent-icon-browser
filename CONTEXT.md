@@ -10,6 +10,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - style filtering (`regular`, `filled`, `color`)
 - modal preview with copy/download for SVG variants
 - per-variant native size selector in the modal
+- optional download-time `currentColor` transform for mono variants
 
 ## Key Files
 
@@ -45,6 +46,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - `icon-data.json` is committed so Pages can serve immediately.
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
 - Icon SVG payloads are loaded from CDN URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
+- UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
 
 ## Open Questions / Ambiguities
 

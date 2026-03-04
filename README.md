@@ -9,6 +9,7 @@ Static browser UI for searching icons from [microsoft/fluentui-system-icons](htt
 - Shows SVG previews sourced from CDN.
 - Supports native size selection per variant in the modal panel.
 - Copies/downloads the selected native-size SVG.
+- Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
 - Auto-refreshes `icon-data.json` when upstream Fluent icons change.
 - Deploys the site to GitHub Pages from `main`.
 
