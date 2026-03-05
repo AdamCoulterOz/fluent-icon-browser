@@ -10,7 +10,7 @@
 The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
-- icon-set switching (Fluent/Fabric)
+- icon-set switching (Fluent/MDL2)
 - compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
   - current control order: brand (`logo + Icons`), search, icon set selector, style selector
   - search box is constrained to `max-width: 442px` and centered within the available search lane
