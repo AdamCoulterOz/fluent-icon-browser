@@ -185,6 +185,7 @@ body {
     width: 14px;
     height: 14px;
     border-radius: 3px;
+    position: relative;
 }
 
 .regular-icon {
@@ -197,9 +198,9 @@ body {
     background: currentColor;
 }
 
-.mixed-icon {
+.color-icon {
     border: 2px solid currentColor;
-    background: linear-gradient(to right, transparent 0 50%, currentColor 50% 100%);
+    background: linear-gradient(to right, #ffb900 0 33%, #00bcf2 33% 66%, #e74856 66% 100%);
 }
 
 .sr-only {
@@ -283,27 +284,38 @@ body {
 }
 
 .icon-grid {
-    padding: 10px 20px 20px;
+    padding: 20px 20px 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-auto-rows: 90px;
+    justify-content: start;
+    gap: 8px;
 }
 
 .icon-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
+    border-radius: 6px;
+    width: 90px;
+    height: 90px;
+    padding: 15px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 1px 3px var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+}
+
+.icon-card.is-hidden {
+    display: none !important;
 }
 
 .icon-card:hover {
     border-color: var(--text-accent);
-    box-shadow: 0 4px 12px rgba(76, 194, 255, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(76, 194, 255, 0.2);
+    transform: translateY(-1px);
 }
 
 .icon-view {
@@ -341,8 +353,9 @@ body {
 
 /* Gallery icon size override */
 .icon-card .icon-view {
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
+    margin: 0;
     background: none;
     border-radius: 0;
 }
@@ -626,12 +639,14 @@ body {
     text-align: center;
     padding: 40px;
     color: var(--text-secondary);
+    grid-column: 1 / -1;
 }
 
 .no-results {
     text-align: center;
     padding: 40px;
     color: var(--text-secondary);
+    grid-column: 1 / -1;
 }
 
 /* Responsive Design */
@@ -658,9 +673,9 @@ body {
     }
 
     .icon-grid {
-        padding: 8px 12px 12px;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
+        padding: 12px 12px 12px;
+        grid-auto-rows: 90px;
+        gap: 6px;
     }
 
     .modal-content {
@@ -709,7 +724,7 @@ body {
 
 @media (max-width: 480px) {
     .icon-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-auto-rows: 90px;
     }
 }
 

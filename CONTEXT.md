@@ -11,15 +11,20 @@ The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
 - icon-set switching (Fluent/Fabric)
-- compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `all`, `solid`)
+- compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
   - current control order: brand (`logo + Icons`), search, icon set selector, style selector
   - search box is constrained to `max-width: 442px` and centered within the available search lane
   - search input and both segmented selectors share a unified control height (`32px`)
   - visible result count is shown as a compact numeric pill inside the search box (right side), replacing the previous standalone "Showing ... icons" line
   - selector widths are fixed (not elastic): icon set selector `125px`, style selector `134px`
-  - style options are icon-only buttons with accessible labels: outlined (`regular`), split outlined/filled (`all`), and filled (`solid`)
+  - style options are icon-only buttons with accessible labels: outlined (`regular`), filled (`solid`), and outlined-with-full tricolor fill (`color`)
+  - style selection is optional (default unselected) and mutually exclusive; clicking the active option toggles back to no style filter
   - narrow behavior: title text collapses away and only the logo is shown, while logo + search always remain on the same row
   - spacing tuned for readability: slightly increased gap between brand and search in both desktop and compact layouts
+  - icon gallery is now dense/tile-based: labels hidden in grid, each card is a compact `60x60` square, and cards expose icon names via tooltip/aria label
+  - gallery tiles now add inset breathing room: icon artwork remains `60x60`, while each card/tile is `90x90` (`15px` padding on all sides)
+  - dense gallery uses fluid grid columns (`minmax(90px, 1fr)`) with centered `90x90` cards to avoid large trailing whitespace on wide rows
+  - grid top padding now matches horizontal padding (`20px` desktop, `12px` mobile) so first row spacing mirrors side gutters
 - header segmented controls have protected minimum widths for stable layout:
   - icon set selector: `min-width: 125px`, `height: 32px`
   - style filter selector: `min-width: 134px`, `height: 32px`
@@ -29,10 +34,9 @@ The UI loads `icon-data.json` at runtime and provides:
 - optional download-time `currentColor` transform for mono variants
 - enriched Fabric search metadata (`description` + `metaphors`) for all 1,736 MDL2 icons
 - performance improvements for large result sets:
-  - grid rendering is incremental/chunked via `requestAnimationFrame` instead of a single full synchronous redraw
-  - render jobs are cancelable to avoid wasted work during rapid filter/search changes
+  - icon metadata is loaded up front and the gallery mounts all cards once per set; subsequent search/style changes are applied as single-pass class/preview updates (no visible chunk-by-chunk transition)
   - search input is debounced and icons are pre-indexed per set for faster filtering
-  - style mode toggles (`regular`/`all`/`solid`) now update existing rendered cards in-place (chunked), instead of rebuilding the full grid
+  - style mode toggles (`regular`/`solid`/`color`, plus unselected/no-filter state) update existing rendered cards in-place without rebuilding the grid
 
 ## Key Files
 
@@ -93,7 +97,7 @@ The UI loads `icon-data.json` at runtime and provides:
   - removed root-level overflow clipping behavior that broke `position: sticky` in Chrome
   - `.top-bar` now includes `position: -webkit-sticky` + `position: sticky`
   - `.container` uses `overflow: visible` so sticky positioning is not constrained
-  - `.icon-grid` has added top padding (`10px` desktop, `8px` on mobile breakpoint) so the first icon row clears the pinned header shadow
+  - `.icon-grid` has top padding (`20px` desktop, `12px` on mobile breakpoint) so the first icon row clears the pinned header and mirrors side gutters
 - Legacy checkbox filters (including hide mirrored/inverse duplicates) were removed from the header in favor of compact segmented controls.
 - Fabric normalization behavior:
   - mirrored variants are folded into one icon variant entry when they are naming mirrors (`*_mirrored*`)

@@ -3,14 +3,14 @@ class IconBrowser {
         this.iconSets = {};
         this.currentSetKey = "fluent";
         this.currentSet = null;
-        this.styleMode = "all";
+        this.styleMode = "";
         this.icons = [];
         this.filteredIcons = [];
         this.currentIcon = null;
-        this.renderJobId = 0;
-        this.renderChunkSize = 180;
-        this.styleApplyJobId = 0;
         this.iconByName = new Map();
+        this.cardByName = new Map();
+        this.renderedAllCards = false;
+        this.lastAppliedStyleMode = null;
         this.searchDebounceTimer = null;
         this.searchDebounceMs = 120;
         this.init();
@@ -114,7 +114,11 @@ class IconBrowser {
             button.addEventListener("click", () => {
                 const mode = button.dataset.styleMode;
                 const previousMode = this.styleMode;
-                this.setStyleMode(mode || "all");
+                if ((mode || "") === previousMode) {
+                    this.setStyleMode("");
+                } else {
+                    this.setStyleMode(mode || "");
+                }
                 if (this.styleMode !== previousMode) {
                     this.applyStyleModeToRenderedCards();
                     this.updateStats();
@@ -181,6 +185,9 @@ class IconBrowser {
         this.icons = Array.isArray(this.currentSet.icons) ? this.currentSet.icons : [];
         this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
+        this.cardByName = new Map();
+        this.renderedAllCards = false;
+        this.lastAppliedStyleMode = null;
         this.syncSetTabs();
         this.syncStyleModeControlsForSet();
         this.updateSetSubtitle();
@@ -224,7 +231,7 @@ class IconBrowser {
     }
 
     setStyleMode(mode) {
-        if (!["regular", "all", "filled"].includes(mode)) {
+        if (!["", "regular", "filled", "color"].includes(mode)) {
             return;
         }
 
@@ -244,14 +251,14 @@ class IconBrowser {
         const availableVariants = this.getSetAvailableVariants();
         const modeButtons = {
             regular: document.getElementById("filterModeRegular"),
-            all: document.getElementById("filterModeAll"),
             filled: document.getElementById("filterModeFilled"),
+            color: document.getElementById("filterModeColor"),
         };
 
         const availability = {
             regular: availableVariants.has("regular"),
-            all: true,
             filled: availableVariants.has("filled"),
+            color: availableVariants.has("color"),
         };
 
         Object.entries(modeButtons).forEach(([mode, button]) => {
@@ -264,14 +271,8 @@ class IconBrowser {
             button.classList.toggle("disabled", !isAvailable);
         });
 
-        if (!availability[this.styleMode]) {
-            if (availability.all) {
-                this.styleMode = "all";
-            } else if (availability.regular) {
-                this.styleMode = "regular";
-            } else if (availability.filled) {
-                this.styleMode = "filled";
-            }
+        if (this.styleMode && !availability[this.styleMode]) {
+            this.styleMode = "";
         }
 
         this.syncStyleModeButtons();
@@ -468,6 +469,7 @@ class IconBrowser {
             icon._searchNormalized = this.normalizeSearchText(rawText);
             icon._hasRegular = this.hasVariant(icon, "regular");
             icon._hasFilled = this.hasVariant(icon, "filled");
+            icon._hasColor = this.hasVariant(icon, "color");
             icon._previewCache = {};
             this.iconByName.set(icon.name, icon);
         });
@@ -475,9 +477,10 @@ class IconBrowser {
 
     matchesStyleModeForIcon(icon, styleMode = this.getActiveStyleMode()) {
         return (
-            styleMode === "all" ||
+            !styleMode ||
             (styleMode === "regular" && Boolean(icon?._hasRegular)) ||
-            (styleMode === "filled" && Boolean(icon?._hasFilled))
+            (styleMode === "filled" && Boolean(icon?._hasFilled)) ||
+            (styleMode === "color" && Boolean(icon?._hasColor))
         );
     }
 
@@ -485,6 +488,8 @@ class IconBrowser {
         let previewOrder = ["regular", "filled", "color"];
         if (styleMode === "filled") {
             previewOrder = ["filled", "regular", "color"];
+        } else if (styleMode === "color") {
+            previewOrder = ["color", "regular", "filled"];
         }
 
         return previewOrder.find((variant) => this.hasVariant(icon, variant)) || null;
@@ -523,24 +528,13 @@ class IconBrowser {
         return cached;
     }
 
-    applyStyleToCard(card, styleMode) {
-        const iconName = card?.dataset?.iconName;
-        if (!iconName) {
-            return;
-        }
-
-        const icon = this.iconByName.get(iconName);
-        if (!icon) {
-            return;
-        }
-
-        const isVisible = this.matchesStyleModeForIcon(icon, styleMode);
-        card.style.display = isVisible ? "" : "none";
+    applyStyleToCard(card, icon, styleMode, isVisible, shouldRefreshPreview) {
+        card.classList.toggle("is-hidden", !isVisible);
         if (!isVisible) {
             return;
         }
 
-        if (card.dataset.previewMode === styleMode) {
+        if (!shouldRefreshPreview && card.dataset.previewMode === styleMode) {
             return;
         }
 
@@ -555,37 +549,51 @@ class IconBrowser {
         card.dataset.previewMode = styleMode;
     }
 
-    applyStyleModeToRenderedCards() {
+    toggleNoResultsMessage(isVisible) {
         const grid = document.getElementById("iconGrid");
         if (!grid) {
             return;
         }
 
-        const cards = Array.from(grid.querySelectorAll(".icon-card"));
-        if (cards.length === 0) {
+        const noResults = grid.querySelector(".no-results");
+        if (!noResults) {
+            return;
+        }
+
+        noResults.style.display = isVisible ? "block" : "none";
+    }
+
+    applyStyleModeToRenderedCards() {
+        if (!this.renderedAllCards || this.cardByName.size === 0) {
             return;
         }
 
         const styleMode = this.getActiveStyleMode();
-        const currentStyleJob = ++this.styleApplyJobId;
-        const chunkSize = this.renderChunkSize;
+        const searchMatches = new Set(this.filteredIcons.map((icon) => icon.name));
+        const shouldRefreshVisiblePreviews = this.lastAppliedStyleMode !== styleMode;
+        let visibleCount = 0;
 
-        const applyChunk = (startIndex) => {
-            if (currentStyleJob !== this.styleApplyJobId) {
-                return;
+        for (const icon of this.icons) {
+            const card = this.cardByName.get(icon.name);
+            if (!card) {
+                continue;
             }
 
-            const endIndex = Math.min(startIndex + chunkSize, cards.length);
-            for (let index = startIndex; index < endIndex; index += 1) {
-                this.applyStyleToCard(cards[index], styleMode);
-            }
+            const matchesSearch = searchMatches.has(icon.name);
+            const matchesStyle = this.matchesStyleModeForIcon(icon, styleMode);
+            const isVisible = matchesSearch && matchesStyle;
+            const needsPreviewRefresh =
+                (shouldRefreshVisiblePreviews && isVisible) ||
+                (isVisible && card.dataset.previewMode !== styleMode);
 
-            if (endIndex < cards.length) {
-                requestAnimationFrame(() => applyChunk(endIndex));
+            this.applyStyleToCard(card, icon, styleMode, isVisible, needsPreviewRefresh);
+            if (isVisible) {
+                visibleCount += 1;
             }
-        };
+        }
 
-        applyChunk(0);
+        this.lastAppliedStyleMode = styleMode;
+        this.toggleNoResultsMessage(visibleCount === 0);
     }
 
     renderPreviewMarkup(icon, variant, variantData) {
@@ -628,57 +636,54 @@ class IconBrowser {
 
     renderIcons() {
         const grid = document.getElementById("iconGrid");
-        const currentRenderJob = ++this.renderJobId;
-        this.styleApplyJobId += 1;
-
-        if (this.filteredIcons.length === 0) {
-            grid.innerHTML = '<div class="no-results">No icons found matching your criteria.</div>';
+        if (!grid) {
             return;
         }
 
-        grid.innerHTML = "";
-        const totalIcons = this.filteredIcons.length;
-
-        const appendChunk = (startIndex) => {
-            if (currentRenderJob !== this.renderJobId) {
+        if (!this.renderedAllCards) {
+            if (this.icons.length === 0) {
+                grid.innerHTML = '<div class="no-results">No icons available for this icon set.</div>';
+                this.cardByName = new Map();
+                this.renderedAllCards = true;
+                this.lastAppliedStyleMode = this.getActiveStyleMode();
                 return;
             }
 
-            const endIndex = Math.min(startIndex + this.renderChunkSize, totalIcons);
-            const html = this.filteredIcons
-                .slice(startIndex, endIndex)
-                .map((icon) => this.renderIconCard(icon))
-                .join("");
+            const allCardsMarkup = this.icons.map((icon) => this.renderIconCard(icon)).join("");
+            grid.innerHTML = `${allCardsMarkup}<div class="no-results" style="display:none;">No icons found matching your criteria.</div>`;
 
-            if (html) {
-                grid.insertAdjacentHTML("beforeend", html);
-            }
+            this.cardByName = new Map();
+            grid.querySelectorAll(".icon-card").forEach((card) => {
+                const iconName = card.dataset.iconName;
+                if (iconName) {
+                    this.cardByName.set(iconName, card);
+                }
+            });
 
-            if (endIndex < totalIcons) {
-                requestAnimationFrame(() => appendChunk(endIndex));
-            }
-        };
+            this.renderedAllCards = true;
+            this.lastAppliedStyleMode = null;
+        }
 
-        appendChunk(0);
+        this.applyStyleModeToRenderedCards();
     }
 
     renderIconCard(icon) {
         const styleMode = this.getActiveStyleMode();
         const preview = this.getCachedPreviewForMode(icon, styleMode);
-        const isVisible = this.matchesStyleModeForIcon(icon, styleMode);
         const escapedName = this.escapeHtmlAttribute(icon.name);
-        const hiddenStyle = isVisible ? "" : ' style="display:none;"';
+        const displayName = this.formatName(icon.name);
+        const escapedDisplayName = this.escapeHtmlAttribute(displayName);
 
         return `
             <div class="icon-card"
                 data-icon-name="${escapedName}"
                 data-preview-mode="${styleMode}"
-                ${hiddenStyle}
+                title="${escapedDisplayName}"
+                aria-label="${escapedDisplayName}"
                 onclick="iconBrowser.openModal('${icon.name}')">
                 <div class="icon-view ${preview.colorClass}">
                     ${preview.markup}
                 </div>
-                <div class="icon-name">${this.formatName(icon.name)}</div>
             </div>
         `;
     }
@@ -869,6 +874,9 @@ class IconBrowser {
     showError(message) {
         const grid = document.getElementById("iconGrid");
         grid.innerHTML = `<div class="no-results">${message}</div>`;
+        this.cardByName = new Map();
+        this.renderedAllCards = false;
+        this.lastAppliedStyleMode = null;
     }
 }
 
