@@ -257,7 +257,9 @@ body {
 .search-wrap {
     position: relative;
     width: 100%;
+    max-width: 442px;
     min-width: 0;
+    justify-self: center;
 }
 
 .search-count-pill {

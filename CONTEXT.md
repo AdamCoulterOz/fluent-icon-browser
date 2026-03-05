@@ -13,6 +13,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - icon-set switching (Fluent/Fabric)
 - compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `all`, `solid`)
   - current control order: brand (`logo + Icons`), search, icon set selector, style selector
+  - search box is constrained to `max-width: 442px` and centered within the available search lane
   - search input and both segmented selectors share a unified control height (`32px`)
   - visible result count is shown as a compact numeric pill inside the search box (right side), replacing the previous standalone "Showing ... icons" line
   - selector widths are fixed (not elastic): icon set selector `125px`, style selector `134px`
