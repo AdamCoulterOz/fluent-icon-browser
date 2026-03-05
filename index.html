@@ -61,84 +61,58 @@
     <div id="iconModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <button type="button" class="close" aria-label="Close details panel">&times;</button>
-            <div class="modal-header">
-                <h2 id="modalTitle"></h2>
-                <p id="modalDescription"></p>
-                <br/>
-                <div id="metaphorsList"></div>
-            </div>
-            <div class="modal-body">
-                <div class="icon-variants">
-                    <div class="variant" id="regularVariant" style="display: none;">
-                        <h3>Regular</h3>
-                        <div class="icon-view icon-large" id="regularIcon"></div>
-                        <div class="size-controls" id="regularControls">
-                            <label for="regularSize">Size</label>
-                            <select id="regularSize" aria-label="Regular icon size"></select>
-                            <a id="regularCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
-                        </div>
-                        <div class="download-options" id="regularDownloadOptions">
-                            <label class="download-toggle">
-                                <input type="checkbox" id="regularCurrentColor">
-                                Use <code>currentColor</code> for fills on download
-                            </label>
-                        </div>
-                        <div class="icon-actions">
-                            <button class="icon-btn icon-clipboard"
-                                    onclick="copyToClipboard(event, 'regular')"
-                                    title="Copy SVG"></button>
-
-                            <button class="icon-btn icon-download"
-                                    onclick="downloadIcon('regular')"
-                                    title="Download SVG"></button>
-                        </div>
-                    </div>
-                    <div class="variant" id="filledVariant" style="display: none;">
-                        <h3>Filled</h3>
-                        <div class="icon-view icon-large" id="filledIcon"></div>
-                        <div class="size-controls" id="filledControls">
-                            <label for="filledSize">Size</label>
-                            <select id="filledSize" aria-label="Filled icon size"></select>
-                            <a id="filledCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
-                        </div>
-                        <div class="download-options" id="filledDownloadOptions">
-                            <label class="download-toggle">
-                                <input type="checkbox" id="filledCurrentColor">
-                                Use <code>currentColor</code> for fills on download
-                            </label>
-                        </div>
-                        <div class="icon-actions">
-                            <button class="icon-btn icon-clipboard"
-                                    onclick="copyToClipboard(event, 'filled')"
-                                    title="Copy SVG"></button>
-
-                            <button class="icon-btn icon-download"
-                                    onclick="downloadIcon('filled')"
-                                    title="Download SVG"></button>
+            <div class="panel-layout">
+                <div class="modal-header panel-meta">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                    <div id="metaphorsList"></div>
+                </div>
+                <div class="modal-body panel-preview">
+                    <div class="panel-preview-header">
+                        <div class="panel-toolbar">
+                            <div class="segmented-control panel-variant-tabs" role="tablist" aria-label="Icon version selection">
+                                <button type="button" class="segment-btn panel-variant-tab icon-mode-button" id="panelVariantRegular" data-variant="regular" aria-selected="false" aria-label="Regular" title="Regular">
+                                    <span class="style-mode-icon regular-icon" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="segment-btn panel-variant-tab icon-mode-button" id="panelVariantFilled" data-variant="filled" aria-selected="false" aria-label="Solid" title="Solid">
+                                    <span class="style-mode-icon filled-icon" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="segment-btn panel-variant-tab icon-mode-button" id="panelVariantColor" data-variant="color" aria-selected="false" aria-label="Color" title="Color">
+                                    <span class="style-mode-icon color-icon" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <span class="panel-size-wrap">
+                                <select id="panelSizeSelect" class="panel-size-select" aria-label="Icon size"></select>
+                            </span>
+                            <button type="button" class="panel-icon-toggle" id="panelCurrentColorToggle" aria-pressed="false" aria-label="Use currentColor on download" title="Use currentColor on download">
+                                <span class="toolbar-icon currentcolor-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="panel-actions-group">
+                                <button type="button" class="panel-action-btn" id="panelCopyBtn" aria-label="Copy SVG" title="Copy SVG">
+                                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                        <rect x="9" y="9" width="10" height="11" rx="2"></rect>
+                                        <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                                <button type="button" class="panel-action-btn" id="panelDownloadBtn" aria-label="Download SVG" title="Download SVG">
+                                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                        <path d="M12 4v10"></path>
+                                        <path d="m8 10 4 4 4-4"></path>
+                                        <path d="M5 18h14"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="variant" id="colorVariant" style="display: none;">
-                        <h3>Color</h3>
-                        <div class="icon-view icon-large" id="colorIcon"></div>
-                        <div class="size-controls" id="colorControls">
-                            <label for="colorSize">Size</label>
-                            <select id="colorSize" aria-label="Color icon size"></select>
-                            <a id="colorCdnLink" class="cdn-link" href="#" target="_blank" rel="noopener noreferrer">Open Source</a>
+                    <div class="panel-variants">
+                        <div class="variant" id="regularVariant" style="display: none;">
+                            <div class="icon-view icon-large" id="regularIcon"></div>
                         </div>
-                        <div class="download-options" id="colorDownloadOptions">
-                            <label class="download-toggle disabled">
-                                <input type="checkbox" id="colorCurrentColor" disabled>
-                                <code>currentColor</code> transform not available for color icons
-                            </label>
+                        <div class="variant" id="filledVariant" style="display: none;">
+                            <div class="icon-view icon-large" id="filledIcon"></div>
                         </div>
-                        <div class="icon-actions">
-                            <button class="icon-btn icon-clipboard"
-                                    onclick="copyToClipboard(event, 'color')"
-                                    title="Copy SVG"></button>
-
-                            <button class="icon-btn icon-download"
-                                    onclick="downloadIcon('color')"
-                                    title="Download SVG"></button>
+                        <div class="variant" id="colorVariant" style="display: none;">
+                            <div class="icon-view icon-large" id="colorIcon"></div>
                         </div>
                     </div>
                 </div>

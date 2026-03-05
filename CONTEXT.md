@@ -44,6 +44,26 @@ The UI loads `icon-data.json` at runtime and provides:
   - opening/closing the docked panel applies grid spacing immediately (no animated padding transition) to avoid visible multi-step reflow/judder
   - selected icon card remains visually highlighted while the panel is open; clicking the same selected icon again toggles selection off and closes the panel
   - pressing `Esc` or using the panel close button dismisses the panel
+  - panel internals are now split into a two-column desktop layout:
+    - left column: icon title, description, and metaphor chips
+    - right column: variant preview + controls, with a segmented variant switcher using the same visual language as the top nav controls
+    - right-column control bar now includes, on one row: variant selector, size selector, `currentColor` toggle icon, copy, and download buttons
+    - panel size selector uses a dedicated icon asset (`icons/chevron_down_regular.svg`) for a consistent down-chevron indicator and stable right padding
+    - panel selected states for variant/currentColor now rely on solid fill contrast (no inset "ring" treatment)
+    - copy/download buttons use a distinct warm CTA palette (orange family) to stand apart from the blue selection controls
+    - panel variant selector dividers use a solid mid-tone blend (between active and inactive surfaces) so divider contrast stays consistent without looking too dark
+    - panel preview column keeps a subtle top gradient that now resolves within the top section (currently ~30% of column height) instead of fading through the entire preview area
+    - panel controls now use dedicated control-surface tokens; dark mode slightly brightens unselected control backgrounds to improve contrast while keeping the same visual language
+    - copy/download controls are grouped in a trailing action cluster with responsive separation from variant/size/currentColor controls (`clamp(8px, 5vw, 50px)`)
+    - copy/download glyph styling is intentionally heavier/larger than before to balance visual weight against neighboring segmented controls
+    - when an icon has no description text, the description line is hidden entirely (no placeholder sentence rendered)
+    - when no metaphors are present for an icon, the metaphors section is omitted (no placeholder text rendered)
+    - per-icon variant selector only shows variants that actually exist for the selected icon (no disabled/greyed options)
+    - copy/download buttons are circular accent CTA controls with brief success/error feedback states
+    - icon preview area is centered and uses the full available preview space without an extra background tile
+  - on narrow layouts, the panel stacks to a single-column flow while preserving the same controls/content
+    - compact stacked header condenses metadata into a single row (title + truncated inline description); metaphor tags are hidden there
+  - panel styling now aligns with nav theming tokens (rounded pills, blue-accent segmented control, consistent light/dark treatment)
 - per-variant native size selector in the details panel
 - optional download-time `currentColor` transform for mono variants
 - enriched Fabric search metadata (`description` + `metaphors`) for all 1,736 MDL2 icons

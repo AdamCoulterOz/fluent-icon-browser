@@ -8,6 +8,16 @@ class IconBrowser {
         this.filteredIcons = [];
         this.currentIcon = null;
         this.selectedIconName = null;
+        this.activePanelVariant = null;
+        this.panelSelectedSizes = {
+            regular: null,
+            filled: null,
+            color: null,
+        };
+        this.panelCurrentColorEnabled = {
+            regular: false,
+            filled: false,
+        };
         this.iconByName = new Map();
         this.cardByName = new Map();
         this.renderedAllCards = false;
@@ -133,14 +143,56 @@ class IconBrowser {
             });
         });
 
-        ["regular", "filled", "color"].forEach((variant) => {
-            const select = document.getElementById(`${variant}Size`);
-            if (select) {
-                select.addEventListener("change", () => {
-                    this.updateModalVariantPreview(variant);
-                });
-            }
+        document.querySelectorAll(".panel-variant-tab").forEach((button) => {
+            button.addEventListener("click", () => {
+                const variant = button.dataset.variant;
+                if (!variant) {
+                    return;
+                }
+                this.setActivePanelVariant(variant);
+            });
         });
+
+        const panelSizeSelect = document.getElementById("panelSizeSelect");
+        if (panelSizeSelect) {
+            panelSizeSelect.addEventListener("change", () => {
+                if (!this.activePanelVariant) {
+                    return;
+                }
+                const parsed = Number(panelSizeSelect.value);
+                this.panelSelectedSizes[this.activePanelVariant] = Number.isFinite(parsed)
+                    ? parsed
+                    : null;
+                this.updateModalVariantPreview(this.activePanelVariant);
+            });
+        }
+
+        const panelCurrentColorToggle = document.getElementById("panelCurrentColorToggle");
+        if (panelCurrentColorToggle) {
+            panelCurrentColorToggle.addEventListener("click", () => {
+                this.toggleCurrentColorForActiveVariant();
+            });
+        }
+
+        const panelCopyButton = document.getElementById("panelCopyBtn");
+        if (panelCopyButton) {
+            panelCopyButton.addEventListener("click", (event) => {
+                if (!this.activePanelVariant) {
+                    return;
+                }
+                copyToClipboard(event, this.activePanelVariant);
+            });
+        }
+
+        const panelDownloadButton = document.getElementById("panelDownloadBtn");
+        if (panelDownloadButton) {
+            panelDownloadButton.addEventListener("click", () => {
+                if (!this.activePanelVariant) {
+                    return;
+                }
+                downloadIcon(this.activePanelVariant);
+            });
+        }
 
         if (closeBtn) {
             closeBtn.addEventListener("click", () => {
@@ -231,6 +283,7 @@ class IconBrowser {
         this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
         this.selectedIconName = null;
+        this.activePanelVariant = null;
         this.cardByName = new Map();
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
@@ -755,43 +808,23 @@ class IconBrowser {
     }
 
     configureVariantControls(variant, variantData) {
-        const controls = document.getElementById(`${variant}Controls`);
-        const sizeSelect = document.getElementById(`${variant}Size`);
-        const cdnLink = document.getElementById(`${variant}CdnLink`);
-        const downloadOptions = document.getElementById(`${variant}DownloadOptions`);
-        const currentColorToggle = document.getElementById(`${variant}CurrentColor`);
-
-        if (!controls || !sizeSelect || !cdnLink || !downloadOptions || !currentColorToggle) {
+        if (!variantData) {
             return;
         }
 
         if (this.isLegacyVariantData(variantData)) {
-            controls.style.display = "none";
-            downloadOptions.style.display = "none";
-            sizeSelect.innerHTML = "";
-            cdnLink.removeAttribute("href");
-            cdnLink.classList.add("disabled");
+            this.panelSelectedSizes[variant] = null;
             return;
         }
 
         const sizes = this.getVariantSizes(variantData);
         const defaultSize = this.getDefaultSize(variantData);
-        sizeSelect.innerHTML = sizes
-            .map((entrySize) => `<option value="${entrySize}">${entrySize}</option>`)
-            .join("");
-        if (defaultSize) {
-            sizeSelect.value = String(defaultSize);
+        const selectedSize = this.panelSelectedSizes[variant];
+        if (Number.isFinite(selectedSize) && sizes.includes(selectedSize)) {
+            return;
         }
 
-        controls.style.display = sizes.length > 0 ? "flex" : "none";
-        downloadOptions.style.display = "block";
-
-        if (variant === "color") {
-            currentColorToggle.checked = false;
-            currentColorToggle.disabled = true;
-        } else {
-            currentColorToggle.disabled = false;
-        }
+        this.panelSelectedSizes[variant] = defaultSize || sizes[0] || null;
     }
 
     shouldUseCurrentColorOnDownload(variant) {
@@ -799,8 +832,7 @@ class IconBrowser {
             return false;
         }
 
-        const toggle = document.getElementById(`${variant}CurrentColor`);
-        return Boolean(toggle?.checked);
+        return Boolean(this.panelCurrentColorEnabled[variant]);
     }
 
     updateModalVariantPreview(variant) {
@@ -814,19 +846,15 @@ class IconBrowser {
         }
 
         const iconDiv = document.getElementById(`${variant}Icon`);
-        const cdnLink = document.getElementById(`${variant}CdnLink`);
-        const sizeSelect = document.getElementById(`${variant}Size`);
         const colorClass = variant === "color" ? "has-color-variant" : "";
 
         iconDiv.className = `icon-view ${colorClass} icon-large`;
 
-        const selectedSize = sizeSelect?.value ? Number(sizeSelect.value) : null;
+        const selectedSize = this.panelSelectedSizes[variant];
         const asset = this.resolveVariantAsset(variantData, selectedSize);
 
         if (!asset) {
             iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
-            cdnLink.removeAttribute("href");
-            cdnLink.classList.add("disabled");
             return;
         }
 
@@ -838,15 +866,6 @@ class IconBrowser {
             iconDiv.innerHTML = `<img src="${asset.url}" alt="${escapedLabel}" decoding="async">`;
         } else {
             iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
-        }
-
-        const linkTarget = asset.sourceUrl || asset.url;
-        if (linkTarget) {
-            cdnLink.href = linkTarget;
-            cdnLink.classList.remove("disabled");
-        } else {
-            cdnLink.removeAttribute("href");
-            cdnLink.classList.add("disabled");
         }
     }
 
@@ -865,20 +884,17 @@ class IconBrowser {
         this.currentIcon = icon;
         document.getElementById("modalTitle").textContent =
             icon.displayName || this.formatName(icon.name);
-        document.getElementById("modalDescription").textContent =
-            icon.description || "No description available";
+        const modalDescription = document.getElementById("modalDescription");
+        const descriptionText =
+            typeof icon.description === "string" ? icon.description.trim() : "";
+        modalDescription.textContent = descriptionText;
+        modalDescription.style.display = descriptionText ? "" : "none";
 
-        ["regular", "filled", "color"].forEach((variant) => {
-            const variantDiv = document.getElementById(`${variant}Variant`);
+        const availableVariants = this.getAvailableVariantsForIcon(icon);
+        availableVariants.forEach((variant) => {
             const variantData = this.getVariantData(icon, variant);
-
-            if (variantData) {
-                variantDiv.style.display = "block";
-                this.configureVariantControls(variant, variantData);
-                this.updateModalVariantPreview(variant);
-            } else {
-                variantDiv.style.display = "none";
-            }
+            this.configureVariantControls(variant, variantData);
+            this.updateModalVariantPreview(variant);
         });
 
         const metaphorsList = document.getElementById("metaphorsList");
@@ -891,10 +907,198 @@ class IconBrowser {
                 </div>
             `;
         } else {
-            metaphorsList.innerHTML = '<p style="color: #605e5c;">No metaphors available</p>';
+            metaphorsList.innerHTML = "";
         }
 
+        const preferredVariant = this.resolvePreferredPanelVariant(icon, availableVariants);
+        this.setActivePanelVariant(preferredVariant, { availableVariants });
         this.openIconPanel();
+    }
+
+    getAvailableVariantsForIcon(icon = this.currentIcon) {
+        if (!icon) {
+            return [];
+        }
+
+        return ["regular", "filled", "color"].filter((variant) => this.hasVariant(icon, variant));
+    }
+
+    resolvePreferredPanelVariant(icon, availableVariants = this.getAvailableVariantsForIcon(icon)) {
+        if (availableVariants.length === 0) {
+            return null;
+        }
+
+        if (this.activePanelVariant && availableVariants.includes(this.activePanelVariant)) {
+            return this.activePanelVariant;
+        }
+
+        const mode = this.getActiveStyleMode();
+        if (mode && availableVariants.includes(mode)) {
+            return mode;
+        }
+
+        if (availableVariants.includes("regular")) {
+            return "regular";
+        }
+        if (availableVariants.includes("filled")) {
+            return "filled";
+        }
+        if (availableVariants.includes("color")) {
+            return "color";
+        }
+
+        return availableVariants[0];
+    }
+
+    syncPanelVariantTabs(availableVariants = this.getAvailableVariantsForIcon()) {
+        const buttons = Array.from(document.querySelectorAll(".panel-variant-tab"));
+        const visibleButtons = [];
+
+        buttons.forEach((button) => {
+            const variant = button.dataset.variant;
+            const isAvailable = Boolean(variant && availableVariants.includes(variant));
+            const isActive = isAvailable && variant === this.activePanelVariant;
+
+            button.style.display = isAvailable ? "inline-flex" : "none";
+            button.disabled = false;
+            button.classList.remove("disabled");
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-selected", isActive ? "true" : "false");
+            button.classList.remove("is-last-visible");
+
+            if (isAvailable) {
+                visibleButtons.push(button);
+            }
+        });
+
+        const lastVisible = visibleButtons[visibleButtons.length - 1];
+        if (lastVisible) {
+            lastVisible.classList.add("is-last-visible");
+        }
+    }
+
+    syncActiveVariantPanels() {
+        ["regular", "filled", "color"].forEach((variant) => {
+            const variantDiv = document.getElementById(`${variant}Variant`);
+            if (!variantDiv) {
+                return;
+            }
+
+            const isActive = variant === this.activePanelVariant;
+            variantDiv.style.display = isActive ? "flex" : "none";
+        });
+    }
+
+    setActivePanelVariant(variant, options = {}) {
+        if (!this.currentIcon) {
+            return;
+        }
+
+        const availableVariants = options.availableVariants || this.getAvailableVariantsForIcon();
+        if (!availableVariants.length) {
+            this.activePanelVariant = null;
+            this.syncPanelVariantTabs([]);
+            this.syncPanelToolbarControls([]);
+            this.syncActiveVariantPanels();
+            return;
+        }
+
+        this.activePanelVariant = availableVariants.includes(variant)
+            ? variant
+            : availableVariants[0];
+
+        this.syncPanelVariantTabs(availableVariants);
+        this.syncPanelToolbarControls(availableVariants);
+        this.syncActiveVariantPanels();
+    }
+
+    syncPanelToolbarControls(availableVariants = this.getAvailableVariantsForIcon()) {
+        const sizeSelect = document.getElementById("panelSizeSelect");
+        const sizeWrap = sizeSelect?.parentElement || null;
+        const currentColorToggle = document.getElementById("panelCurrentColorToggle");
+        const copyButton = document.getElementById("panelCopyBtn");
+        const downloadButton = document.getElementById("panelDownloadBtn");
+        const hasActiveVariant = Boolean(
+            this.activePanelVariant && availableVariants.includes(this.activePanelVariant)
+        );
+
+        if (copyButton) {
+            copyButton.disabled = !hasActiveVariant;
+        }
+        if (downloadButton) {
+            downloadButton.disabled = !hasActiveVariant;
+        }
+
+        if (!sizeSelect || !currentColorToggle) {
+            return;
+        }
+
+        if (!hasActiveVariant) {
+            sizeSelect.innerHTML = "";
+            sizeSelect.disabled = true;
+            sizeSelect.style.display = "none";
+            sizeWrap?.classList.add("disabled");
+            currentColorToggle.style.display = "inline-flex";
+            currentColorToggle.disabled = true;
+            currentColorToggle.classList.add("disabled");
+            currentColorToggle.classList.remove("active");
+            currentColorToggle.setAttribute("aria-pressed", "false");
+            return;
+        }
+
+        const variant = this.activePanelVariant;
+        const variantData = this.getVariantData(this.currentIcon, variant);
+        const sizes = this.getVariantSizes(variantData);
+        const fallbackSize = this.getDefaultSize(variantData) || sizes[0] || null;
+        const selectedSize = this.panelSelectedSizes[variant];
+        const resolvedSize =
+            Number.isFinite(selectedSize) && sizes.includes(selectedSize)
+                ? selectedSize
+                : fallbackSize;
+
+        this.panelSelectedSizes[variant] = resolvedSize;
+
+        if (sizes.length > 0) {
+            sizeSelect.innerHTML = sizes
+                .map((size) => `<option value="${size}">${size}</option>`)
+                .join("");
+            if (resolvedSize) {
+                sizeSelect.value = String(resolvedSize);
+            }
+            sizeSelect.disabled = false;
+            sizeWrap?.classList.remove("disabled");
+        } else {
+            sizeSelect.innerHTML = '<option value="">auto</option>';
+            sizeSelect.value = "";
+            sizeSelect.disabled = true;
+            sizeWrap?.classList.add("disabled");
+        }
+        sizeSelect.style.display = "inline-block";
+
+        if (variant === "color") {
+            currentColorToggle.disabled = true;
+            currentColorToggle.classList.add("disabled");
+            currentColorToggle.classList.remove("active");
+            currentColorToggle.setAttribute("aria-pressed", "false");
+            currentColorToggle.style.display = "inline-flex";
+        } else {
+            const enabled = Boolean(this.panelCurrentColorEnabled[variant]);
+            currentColorToggle.disabled = false;
+            currentColorToggle.classList.remove("disabled");
+            currentColorToggle.style.display = "inline-flex";
+            currentColorToggle.classList.toggle("active", enabled);
+            currentColorToggle.setAttribute("aria-pressed", enabled ? "true" : "false");
+        }
+    }
+
+    toggleCurrentColorForActiveVariant() {
+        const variant = this.activePanelVariant;
+        if (!variant || variant === "color") {
+            return;
+        }
+
+        this.panelCurrentColorEnabled[variant] = !this.panelCurrentColorEnabled[variant];
+        this.syncPanelToolbarControls();
     }
 
     getVariantSelection(variant) {
@@ -907,8 +1111,7 @@ class IconBrowser {
             return null;
         }
 
-        const sizeSelect = document.getElementById(`${variant}Size`);
-        const selectedSize = sizeSelect?.value ? Number(sizeSelect.value) : null;
+        const selectedSize = this.panelSelectedSizes[variant];
         const asset = this.resolveVariantAsset(variantData, selectedSize);
         if (!asset) {
             return null;
@@ -968,14 +1171,11 @@ function setActionFeedback(button, success) {
         return;
     }
 
-    const originalText = button.textContent;
-    button.textContent = success ? "Done" : "Error";
-    button.style.background = success ? "#107c10" : "#a4262c";
-
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = "#0078d4";
-    }, 1500);
+    button.classList.remove("is-success", "is-error");
+    button.classList.add(success ? "is-success" : "is-error");
+    window.setTimeout(() => {
+        button.classList.remove("is-success", "is-error");
+    }, 1200);
 }
 
 function toCurrentColorSvg(svgText) {
