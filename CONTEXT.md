@@ -58,6 +58,8 @@ The UI loads `icon-data.json` at runtime and provides:
     - copy/download glyph styling is intentionally heavier/larger than before to balance visual weight against neighboring segmented controls
     - when an icon has no description text, the description line is hidden entirely (no placeholder sentence rendered)
     - when no metaphors are present for an icon, the metaphors section is omitted (no placeholder text rendered)
+    - metaphor tags use soft filled pills without outlines for a cleaner, lighter metadata treatment
+    - metaphor tag pills now have a stronger dark-mode fill contrast so they remain legible against the docked panel background
     - per-icon variant selector only shows variants that actually exist for the selected icon (no disabled/greyed options)
     - copy/download buttons are circular accent CTA controls with brief success/error feedback states
     - icon preview area is centered and uses the full available preview space without an extra background tile

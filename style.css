@@ -909,7 +909,13 @@ body {
     font-size: 12px;
     font-weight: 500;
     margin: 0;
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--nav-bg-end) 16%, var(--border-color) 84%) inset;
+}
+
+@media (prefers-color-scheme: dark) {
+    .metaphor-tag {
+        background: color-mix(in srgb, var(--nav-bg-start) 48%, var(--bg-secondary) 52%);
+        color: #eaf6ff;
+    }
 }
 
 @media (max-width: 900px) {
