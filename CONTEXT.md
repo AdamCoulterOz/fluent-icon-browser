@@ -21,6 +21,14 @@ The UI loads `icon-data.json` at runtime and provides:
   - style selection is optional (default unselected) and mutually exclusive; clicking the active option toggles back to no style filter
   - narrow behavior: title text collapses away and only the logo is shown, while logo + search always remain on the same row
   - spacing tuned for readability: slightly increased gap between brand and search in both desktop and compact layouts
+  - top nav uses dedicated light/dark tokens (separate from generic accent color) for gradient background, segment contrast, and input/pill colors to reduce flat single-tone appearance and improve dark-mode legibility
+  - in dark mode, the search field itself is also dark (with light text/placeholder) rather than white, to match the dark nav surface
+  - result count pill uses a slightly offset blue accent so it reads as a distinct status badge from the surrounding nav background
+  - nav controls are borderless externally (search field, count pill, and segmented-control outer stroke removed) while keeping internal vertical dividers inside segmented controls; search field corners are fully pill-rounded to match the selectors
+  - search input includes a subtle leading magnifier icon inside the field, with text padding adjusted to preserve alignment
+  - segmented option dividers use the nav background tone (not white) to blend with the bar and reduce visual noise
+  - non-selected segmented-control backgrounds are slightly elevated from the nav bar (`--nav-segment-bg`) for clearer contrast without introducing heavy outlines
+  - search count pill is inset by equal top/right spacing (`5px`) so it aligns cleanly with the search field's rounded edge
   - icon gallery is now dense/tile-based: labels hidden in grid, each card is a compact `60x60` square, and cards expose icon names via tooltip/aria label
   - gallery tiles now add inset breathing room: icon artwork remains `60x60`, while each card/tile is `90x90` (`15px` padding on all sides)
   - dense gallery uses fluid grid columns (`minmax(90px, 1fr)`) with centered `90x90` cards to avoid large trailing whitespace on wide rows
