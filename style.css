@@ -33,9 +33,7 @@
     --nav-input-placeholder: rgba(50, 49, 48, 0.56);
     --nav-count-bg: #005fa8;
     --nav-count-text: #ffffff;
-    --icon-panel-width: 380px;
-    --icon-panel-gap: 14px;
-    --icon-panel-mobile-height: 50vh;
+    --icon-panel-height: clamp(260px, 42vh, 420px);
 }
 
 html,
@@ -529,13 +527,15 @@ body {
 .modal {
     position: fixed;
     z-index: 180;
+    left: 12px;
     right: 12px;
-    top: 64px;
+    top: auto;
     bottom: 12px;
-    width: min(var(--icon-panel-width), calc(100vw - 24px));
+    width: auto;
+    height: var(--icon-panel-height);
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
     display: none;
     overflow: hidden;
@@ -724,7 +724,7 @@ body {
 }
 
 body.icon-panel-open .icon-grid {
-    padding-right: calc(var(--icon-panel-width) + var(--icon-panel-gap));
+    padding-bottom: calc(20px + var(--icon-panel-height) + 12px);
 }
 
 .loading {
@@ -814,20 +814,9 @@ body.icon-panel-open .icon-grid {
     }
 }
 
-@media (max-width: 900px) {
-    .modal {
-        left: 8px;
-        right: 8px;
-        top: auto;
-        bottom: 8px;
-        width: auto;
-        height: var(--icon-panel-mobile-height);
-        border-radius: 12px;
-    }
-
+@media (max-width: 768px) {
     body.icon-panel-open .icon-grid {
-        padding-right: 12px;
-        padding-bottom: calc(12px + var(--icon-panel-mobile-height));
+        padding-bottom: calc(12px + var(--icon-panel-height) + 8px);
     }
 }
 
