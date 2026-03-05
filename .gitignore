@@ -6,3 +6,7 @@ __pycache__/
 .tmp/
 dist/
 .venv/
+samples/fabric-grids/_icon_cache/
+samples/fabric-grids/*.png
+samples/fabric-grids/*.html
+samples/fabric-grids/manifest.json

@@ -3,18 +3,21 @@ class IconBrowser {
         this.iconSets = {};
         this.currentSetKey = "fluent";
         this.currentSet = null;
+        this.styleMode = "all";
         this.icons = [];
         this.filteredIcons = [];
         this.currentIcon = null;
+        this.renderJobId = 0;
+        this.renderChunkSize = 180;
+        this.styleApplyJobId = 0;
+        this.iconByName = new Map();
+        this.searchDebounceTimer = null;
+        this.searchDebounceMs = 120;
         this.init();
     }
 
-    getActiveFilters() {
-        return {
-            regular: document.getElementById("filterRegular").checked,
-            filled: document.getElementById("filterFilled").checked,
-            color: document.getElementById("filterColor").checked,
-        };
+    getActiveStyleMode() {
+        return this.styleMode;
     }
 
     async init() {
@@ -94,19 +97,28 @@ class IconBrowser {
 
     setupEventListeners() {
         const searchInput = document.getElementById("searchInput");
-        const filterRegular = document.getElementById("filterRegular");
-        const filterFilled = document.getElementById("filterFilled");
-        const filterColor = document.getElementById("filterColor");
         const modal = document.getElementById("iconModal");
         const closeBtn = document.querySelector(".close");
 
         searchInput.addEventListener("input", (event) => {
-            this.filterIcons(event.target.value);
+            const nextValue = event.target.value;
+            if (this.searchDebounceTimer) {
+                clearTimeout(this.searchDebounceTimer);
+            }
+            this.searchDebounceTimer = setTimeout(() => {
+                this.filterIcons(nextValue);
+            }, this.searchDebounceMs);
         });
 
-        [filterRegular, filterFilled, filterColor].forEach((filter) => {
-            filter.addEventListener("change", () => {
-                this.filterIcons(searchInput.value);
+        document.querySelectorAll(".style-mode-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                const mode = button.dataset.styleMode;
+                const previousMode = this.styleMode;
+                this.setStyleMode(mode || "all");
+                if (this.styleMode !== previousMode) {
+                    this.applyStyleModeToRenderedCards();
+                    this.updateStats();
+                }
             });
         });
 
@@ -167,9 +179,10 @@ class IconBrowser {
         };
 
         this.icons = Array.isArray(this.currentSet.icons) ? this.currentSet.icons : [];
+        this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
         this.syncSetTabs();
-        this.syncFilterControlsForSet();
+        this.syncStyleModeControlsForSet();
         this.updateSetSubtitle();
 
         const searchTerm = document.getElementById("searchInput")?.value || "";
@@ -210,45 +223,58 @@ class IconBrowser {
         return available;
     }
 
-    syncFilterControlsForSet() {
-        const availableVariants = this.getSetAvailableVariants();
-        const filterMap = {
-            regular: document.getElementById("filterRegular"),
-            filled: document.getElementById("filterFilled"),
-            color: document.getElementById("filterColor"),
-        };
-
-        Object.entries(filterMap).forEach(([variant, checkbox]) => {
-            if (!checkbox) {
-                return;
-            }
-
-            const isAvailable = availableVariants.has(variant);
-            checkbox.disabled = !isAvailable;
-            if (!isAvailable) {
-                checkbox.checked = false;
-            }
-
-            const label = checkbox.closest("label");
-            if (label) {
-                label.classList.toggle("disabled", !isAvailable);
-            }
-        });
-
-        const hasAnySelected = Object.values(filterMap).some(
-            (checkbox) => checkbox && checkbox.checked
-        );
-        if (hasAnySelected) {
+    setStyleMode(mode) {
+        if (!["regular", "all", "filled"].includes(mode)) {
             return;
         }
 
-        for (const variant of ["regular", "filled", "color"]) {
-            const checkbox = filterMap[variant];
-            if (checkbox && !checkbox.disabled) {
-                checkbox.checked = true;
-                break;
+        this.styleMode = mode;
+        this.syncStyleModeButtons();
+    }
+
+    syncStyleModeButtons() {
+        document.querySelectorAll(".style-mode-button").forEach((button) => {
+            const isActive = button.dataset.styleMode === this.styleMode;
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+    }
+
+    syncStyleModeControlsForSet() {
+        const availableVariants = this.getSetAvailableVariants();
+        const modeButtons = {
+            regular: document.getElementById("filterModeRegular"),
+            all: document.getElementById("filterModeAll"),
+            filled: document.getElementById("filterModeFilled"),
+        };
+
+        const availability = {
+            regular: availableVariants.has("regular"),
+            all: true,
+            filled: availableVariants.has("filled"),
+        };
+
+        Object.entries(modeButtons).forEach(([mode, button]) => {
+            if (!button) {
+                return;
+            }
+
+            const isAvailable = availability[mode];
+            button.disabled = !isAvailable;
+            button.classList.toggle("disabled", !isAvailable);
+        });
+
+        if (!availability[this.styleMode]) {
+            if (availability.all) {
+                this.styleMode = "all";
+            } else if (availability.regular) {
+                this.styleMode = "regular";
+            } else if (availability.filled) {
+                this.styleMode = "filled";
             }
         }
+
+        this.syncStyleModeButtons();
     }
 
     getVariantData(icon, variant) {
@@ -404,6 +430,164 @@ class IconBrowser {
             .replaceAll(">", "&gt;");
     }
 
+    normalizeSearchText(value) {
+        return String(value || "")
+            .toLowerCase()
+            .replaceAll("_", " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    matchesSearchValue(value, search, searchRaw) {
+        const raw = String(value || "").toLowerCase();
+        if (searchRaw && raw.includes(searchRaw)) {
+            return true;
+        }
+
+        const normalized = this.normalizeSearchText(value);
+        return search === "" || normalized.includes(search);
+    }
+
+    prepareSearchIndex() {
+        this.iconByName = new Map();
+        this.icons.forEach((icon) => {
+            const aliases = Array.isArray(icon.aliases) ? icon.aliases : [];
+            const metaphors = Array.isArray(icon.metaphors) ? icon.metaphors : [];
+            const searchParts = [
+                icon.name || "",
+                icon.displayName || "",
+                icon.description || "",
+                ...aliases,
+                ...metaphors,
+            ]
+                .filter(Boolean)
+                .map((part) => String(part));
+
+            const rawText = searchParts.join(" ").toLowerCase();
+            icon._searchRaw = rawText;
+            icon._searchNormalized = this.normalizeSearchText(rawText);
+            icon._hasRegular = this.hasVariant(icon, "regular");
+            icon._hasFilled = this.hasVariant(icon, "filled");
+            icon._previewCache = {};
+            this.iconByName.set(icon.name, icon);
+        });
+    }
+
+    matchesStyleModeForIcon(icon, styleMode = this.getActiveStyleMode()) {
+        return (
+            styleMode === "all" ||
+            (styleMode === "regular" && Boolean(icon?._hasRegular)) ||
+            (styleMode === "filled" && Boolean(icon?._hasFilled))
+        );
+    }
+
+    getPreviewVariantForMode(icon, styleMode = this.getActiveStyleMode()) {
+        let previewOrder = ["regular", "filled", "color"];
+        if (styleMode === "filled") {
+            previewOrder = ["filled", "regular", "color"];
+        }
+
+        return previewOrder.find((variant) => this.hasVariant(icon, variant)) || null;
+    }
+
+    getCachedPreviewForMode(icon, styleMode = this.getActiveStyleMode()) {
+        if (!icon) {
+            return {
+                variant: null,
+                markup: '<div style="color: #ccc;">No preview</div>',
+                colorClass: "",
+            };
+        }
+
+        if (!icon._previewCache) {
+            icon._previewCache = {};
+        }
+
+        if (icon._previewCache[styleMode]) {
+            return icon._previewCache[styleMode];
+        }
+
+        const previewVariant = this.getPreviewVariantForMode(icon, styleMode);
+        const variantData = previewVariant ? this.getVariantData(icon, previewVariant) : null;
+        const previewMarkup = variantData
+            ? this.renderPreviewMarkup(icon, previewVariant, variantData)
+            : '<div style="color: #ccc;">No preview</div>';
+        const colorClass = previewVariant === "color" ? "has-color-variant" : "";
+
+        const cached = {
+            variant: previewVariant,
+            markup: previewMarkup,
+            colorClass,
+        };
+        icon._previewCache[styleMode] = cached;
+        return cached;
+    }
+
+    applyStyleToCard(card, styleMode) {
+        const iconName = card?.dataset?.iconName;
+        if (!iconName) {
+            return;
+        }
+
+        const icon = this.iconByName.get(iconName);
+        if (!icon) {
+            return;
+        }
+
+        const isVisible = this.matchesStyleModeForIcon(icon, styleMode);
+        card.style.display = isVisible ? "" : "none";
+        if (!isVisible) {
+            return;
+        }
+
+        if (card.dataset.previewMode === styleMode) {
+            return;
+        }
+
+        const preview = this.getCachedPreviewForMode(icon, styleMode);
+        const iconView = card.querySelector(".icon-view");
+        if (!iconView) {
+            return;
+        }
+
+        iconView.className = `icon-view ${preview.colorClass}`.trim();
+        iconView.innerHTML = preview.markup;
+        card.dataset.previewMode = styleMode;
+    }
+
+    applyStyleModeToRenderedCards() {
+        const grid = document.getElementById("iconGrid");
+        if (!grid) {
+            return;
+        }
+
+        const cards = Array.from(grid.querySelectorAll(".icon-card"));
+        if (cards.length === 0) {
+            return;
+        }
+
+        const styleMode = this.getActiveStyleMode();
+        const currentStyleJob = ++this.styleApplyJobId;
+        const chunkSize = this.renderChunkSize;
+
+        const applyChunk = (startIndex) => {
+            if (currentStyleJob !== this.styleApplyJobId) {
+                return;
+            }
+
+            const endIndex = Math.min(startIndex + chunkSize, cards.length);
+            for (let index = startIndex; index < endIndex; index += 1) {
+                this.applyStyleToCard(cards[index], styleMode);
+            }
+
+            if (endIndex < cards.length) {
+                requestAnimationFrame(() => applyChunk(endIndex));
+            }
+        };
+
+        applyChunk(0);
+    }
+
     renderPreviewMarkup(icon, variant, variantData) {
         const asset = this.resolveVariantAsset(variantData, this.getDefaultSize(variantData));
         if (!asset) {
@@ -424,28 +608,18 @@ class IconBrowser {
     }
 
     filterIcons(searchTerm) {
-        const filters = this.getActiveFilters();
-        const search = (searchTerm || "").toLowerCase();
-        const anyFilterSelected = Object.values(filters).some(Boolean);
+        const searchRaw = String(searchTerm || "").toLowerCase().trim();
+        const search = this.normalizeSearchText(searchRaw);
 
         this.filteredIcons = this.icons.filter((icon) => {
+            const rawIndex = icon._searchRaw || "";
+            const normalizedIndex = icon._searchNormalized || "";
             const searchMatch =
                 search === "" ||
-                icon.name.toLowerCase().includes(search) ||
-                (icon.displayName && icon.displayName.toLowerCase().includes(search)) ||
-                (icon.description && icon.description.toLowerCase().includes(search)) ||
-                (icon.metaphors &&
-                    icon.metaphors.some((metaphor) =>
-                        String(metaphor).toLowerCase().includes(search)
-                    ));
+                (searchRaw && rawIndex.includes(searchRaw)) ||
+                normalizedIndex.includes(search);
 
-            const styleMatch =
-                !anyFilterSelected ||
-                (filters.regular && this.hasVariant(icon, "regular")) ||
-                (filters.filled && this.hasVariant(icon, "filled")) ||
-                (filters.color && this.hasVariant(icon, "color"));
-
-            return searchMatch && styleMatch;
+            return searchMatch;
         });
 
         this.renderIcons();
@@ -454,43 +628,55 @@ class IconBrowser {
 
     renderIcons() {
         const grid = document.getElementById("iconGrid");
+        const currentRenderJob = ++this.renderJobId;
+        this.styleApplyJobId += 1;
 
         if (this.filteredIcons.length === 0) {
             grid.innerHTML = '<div class="no-results">No icons found matching your criteria.</div>';
             return;
         }
 
-        grid.innerHTML = this.filteredIcons.map((icon) => this.renderIconCard(icon)).join("");
+        grid.innerHTML = "";
+        const totalIcons = this.filteredIcons.length;
+
+        const appendChunk = (startIndex) => {
+            if (currentRenderJob !== this.renderJobId) {
+                return;
+            }
+
+            const endIndex = Math.min(startIndex + this.renderChunkSize, totalIcons);
+            const html = this.filteredIcons
+                .slice(startIndex, endIndex)
+                .map((icon) => this.renderIconCard(icon))
+                .join("");
+
+            if (html) {
+                grid.insertAdjacentHTML("beforeend", html);
+            }
+
+            if (endIndex < totalIcons) {
+                requestAnimationFrame(() => appendChunk(endIndex));
+            }
+        };
+
+        appendChunk(0);
     }
 
     renderIconCard(icon) {
-        const filters = this.getActiveFilters();
-        const enabledVariants = Object.keys(filters).filter((variant) => filters[variant]);
-
-        let previewVariant = null;
-        for (const variant of ["regular", "filled", "color"]) {
-            if (enabledVariants.includes(variant) && this.hasVariant(icon, variant)) {
-                previewVariant = variant;
-                break;
-            }
-        }
-
-        if (!previewVariant) {
-            previewVariant = ["regular", "filled", "color"].find((variant) =>
-                this.hasVariant(icon, variant)
-            );
-        }
-
-        const variantData = previewVariant ? this.getVariantData(icon, previewVariant) : null;
-        const previewMarkup = variantData
-            ? this.renderPreviewMarkup(icon, previewVariant, variantData)
-            : '<div style="color: #ccc;">No preview</div>';
-        const colorClass = previewVariant === "color" ? "has-color-variant" : "";
+        const styleMode = this.getActiveStyleMode();
+        const preview = this.getCachedPreviewForMode(icon, styleMode);
+        const isVisible = this.matchesStyleModeForIcon(icon, styleMode);
+        const escapedName = this.escapeHtmlAttribute(icon.name);
+        const hiddenStyle = isVisible ? "" : ' style="display:none;"';
 
         return `
-            <div class="icon-card" onclick="iconBrowser.openModal('${icon.name}')">
-                <div class="icon-view ${colorClass}">
-                    ${previewMarkup}
+            <div class="icon-card"
+                data-icon-name="${escapedName}"
+                data-preview-mode="${styleMode}"
+                ${hiddenStyle}
+                onclick="iconBrowser.openModal('${icon.name}')">
+                <div class="icon-view ${preview.colorClass}">
+                    ${preview.markup}
                 </div>
                 <div class="icon-name">${this.formatName(icon.name)}</div>
             </div>
@@ -666,10 +852,18 @@ class IconBrowser {
     }
 
     updateStats() {
-        const count = this.filteredIcons.length;
-        const total = this.icons.length;
-        const label = this.currentSet?.label || "Icons";
-        document.getElementById("iconCount").textContent = `Showing ${count} of ${total} icons (${label})`;
+        const count = this.filteredIcons.filter((icon) =>
+            this.matchesStyleModeForIcon(icon, this.getActiveStyleMode())
+        ).length;
+        const countElement = document.getElementById("iconCount");
+        if (!countElement) {
+            return;
+        }
+
+        const formattedCount = count.toLocaleString();
+        const label = this.currentSet?.label || "icons";
+        countElement.textContent = formattedCount;
+        countElement.setAttribute("aria-label", `${formattedCount} visible icons in ${label}`);
     }
 
     showError(message) {

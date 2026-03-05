@@ -16,6 +16,7 @@ Static browser UI for searching icons from:
 - Supports native size selection per variant in the modal panel.
 - Copies/downloads the selected native-size SVG.
 - Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
+- Includes committed MDL2 metadata (`description` + `metaphors`) for all Fabric icons to improve search relevance.
 - Auto-refreshes `icon-data.json` when upstream Fluent System or Fabric MDL2 icons change.
 - Deploys the site to GitHub Pages from `main`.
 
@@ -27,9 +28,18 @@ Static browser UI for searching icons from:
 python generate-icon-data.py \
   --fluent-icons-dir /path/to/fluentui-system-icons/assets \
   --fabric-components-dir /path/to/fluentui/packages/react-icons-mdl2/src/components \
+  --fabric-metadata fabric-mdl2-metadata.json \
   --fluent-upstream-sha <fluent-system-commit-sha> \
   --fabric-upstream-sha <fluentui-commit-sha> \
   --output icon-data.json
+```
+
+### Optional: regenerate Fabric metadata
+
+```bash
+python generate-fabric-metadata.py \
+  --components-dir /path/to/fluentui/packages/react-icons-mdl2/src/components \
+  --output fabric-mdl2-metadata.json
 ```
 
 ### 2. Run locally
@@ -54,8 +64,9 @@ python serve.py
 - Pipeline:
   - sparse clone Fluent System `assets/`
   - sparse clone Fabric MDL2 component sources
+  - run `generate-fabric-metadata.py`
   - run `generate-icon-data.py`
-  - commit updated `icon-data.json` + `.upstream-sha` + `.upstream-fabric-sha`
+  - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha`
 
 `icon-data.json` stores both icon sets:
 - Fluent entries use CDN URLs to upstream SVG files.
@@ -71,6 +82,8 @@ python serve.py
 - `index.html`, `style.css`, `script.js`: static UI.
 - `process.py`: optional transform/consolidation script (not used by CI sync).
 - `generate-icon-data.py`: generates browser index (`icon-data.json`) for both icon sets.
+- `generate-fabric-metadata.py`: generates/maintains `fabric-mdl2-metadata.json` (`id`, `name`, `description`, `metaphors`) for all Fabric icons.
+- `fabric-mdl2-metadata.json`: committed metadata used to enrich Fabric icon search.
 - `icons/`: small UI glyph assets for modal action buttons.
 - `icon-data.json`: generated icon index served by the browser.
 - `requirements.txt`: optional Python dependency for `process.py`.

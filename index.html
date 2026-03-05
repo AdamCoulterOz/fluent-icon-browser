@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fluent + Fabric Icon Browser</title>
+    <title>Icons</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Fluent + Fabric Icon Browser</h1>
-            <div class="icon-set-tabs" role="tablist" aria-label="Icon set selection">
-                <button type="button" class="set-tab active" id="setTabFluent" data-set="fluent" role="tab" aria-selected="true">Fluent System</button>
-                <button type="button" class="set-tab" id="setTabFabric" data-set="fabric" role="tab" aria-selected="false">Fabric MDL2</button>
-            </div>
-            <p class="set-subtitle" id="setSubtitle"></p>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search icons by name, description, or metaphors..." />
-                <div class="filters">
-                    <label>
-                        <input type="checkbox" id="filterRegular" checked> Regular
-                    </label>
-                    <label>
-                        <input type="checkbox" id="filterFilled" checked> Filled
-                    </label>
-                    <label>
-                        <input type="checkbox" id="filterColor" checked> Color
-                    </label>
+        <header class="top-bar">
+            <div class="top-bar-row">
+                <div class="brand-search">
+                    <h1 class="brand-title" aria-label="Icons">
+                        <span class="brand-logo" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <rect x="3" y="3" width="8" height="8" rx="2"></rect>
+                                <rect x="13" y="3" width="8" height="8" rx="2"></rect>
+                                <rect x="3" y="13" width="8" height="8" rx="2"></rect>
+                                <rect x="13" y="13" width="8" height="8" rx="2"></rect>
+                            </svg>
+                        </span>
+                        <span class="brand-text">Icons</span>
+                    </h1>
+                    <div class="search-wrap">
+                        <input type="text" id="searchInput" placeholder="Search icons by name, description, or metaphors..." />
+                        <span id="iconCount" class="search-count-pill" aria-live="polite" aria-label="Visible icon count">0</span>
+                    </div>
+                </div>
+                <div class="top-controls">
+                    <div class="segmented-control icon-set-tabs" role="tablist" aria-label="Icon set selection">
+                        <button type="button" class="segment-btn set-tab active" id="setTabFluent" data-set="fluent" role="tab" aria-selected="true">Fluent</button>
+                        <button type="button" class="segment-btn set-tab" id="setTabFabric" data-set="fabric" role="tab" aria-selected="false">Fabric</button>
+                    </div>
+                    <div class="segmented-control style-filter" role="tablist" aria-label="Style filter">
+                        <button type="button" class="segment-btn style-mode-button icon-mode-button" id="filterModeRegular" data-style-mode="regular" aria-selected="false" aria-label="Regular" title="Regular">
+                            <span class="style-mode-icon regular-icon" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="segment-btn style-mode-button icon-mode-button active" id="filterModeAll" data-style-mode="all" aria-selected="true" aria-label="All" title="All">
+                            <span class="style-mode-icon mixed-icon" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="segment-btn style-mode-button icon-mode-button" id="filterModeFilled" data-style-mode="filled" aria-selected="false" aria-label="Solid" title="Solid">
+                            <span class="style-mode-icon filled-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
-
-        <div class="stats">
-            <span id="iconCount">Loading icons...</span>
-        </div>
 
         <div class="icon-grid" id="iconGrid">
             <!-- Icons will be dynamically loaded here -->

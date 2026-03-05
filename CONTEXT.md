@@ -11,10 +11,27 @@ The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
 - icon-set switching (Fluent/Fabric)
-- style filtering (`regular`, `filled`, `color`) for available variants
+- compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `all`, `solid`)
+  - current control order: brand (`logo + Icons`), search, icon set selector, style selector
+  - search input and both segmented selectors share a unified control height (`32px`)
+  - visible result count is shown as a compact numeric pill inside the search box (right side), replacing the previous standalone "Showing ... icons" line
+  - selector widths are fixed (not elastic): icon set selector `125px`, style selector `134px`
+  - style options are icon-only buttons with accessible labels: outlined (`regular`), split outlined/filled (`all`), and filled (`solid`)
+  - narrow behavior: title text collapses away and only the logo is shown, while logo + search always remain on the same row
+  - spacing tuned for readability: slightly increased gap between brand and search in both desktop and compact layouts
+- header segmented controls have protected minimum widths for stable layout:
+  - icon set selector: `min-width: 125px`, `height: 32px`
+  - style filter selector: `min-width: 134px`, `height: 32px`
+  - segmented button labels use explicit flex centering + fixed line-height to keep vertical alignment stable after runtime tab state updates (notably in Chrome)
 - modal preview with copy/download for SVG variants
 - per-variant native size selector in the modal
 - optional download-time `currentColor` transform for mono variants
+- enriched Fabric search metadata (`description` + `metaphors`) for all 1,736 MDL2 icons
+- performance improvements for large result sets:
+  - grid rendering is incremental/chunked via `requestAnimationFrame` instead of a single full synchronous redraw
+  - render jobs are cancelable to avoid wasted work during rapid filter/search changes
+  - search input is debounced and icons are pre-indexed per set for faster filtering
+  - style mode toggles (`regular`/`all`/`solid`) now update existing rendered cards in-place (chunked), instead of rebuilding the full grid
 
 ## Key Files
 
@@ -23,6 +40,13 @@ The UI loads `icon-data.json` at runtime and provides:
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
 - `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
 - `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` and emits CDN URLs + native sizes.
+- `generate-fabric-metadata.py`: builds `fabric-mdl2-metadata.json` for all MDL2 icons (`id`, `name`, `description`, `metaphors`).
+- `fabric-mdl2-metadata.json`: committed metadata source for Fabric icon descriptions/metaphors.
+- `generate-fabric-samples.py`: creates visual MDL2 review sheets (10x10 icon grids) for human-in-the-loop metadata QA.
+- `samples/fabric-grids/batch-0001-metadata-draft.json`: trial metadata draft for the first 100 MDL2 icons from grid review, now including:
+  - `literalDescription` (what is visually depicted)
+  - `semanticDescription` (intended usage meaning)
+  - `description` (combined literal + semantic, compatibility field)
 - `icon-data.json`: generated index consumed by the frontend.
 - `.upstream-sha`: last synced Fluent System upstream commit SHA.
 - `.upstream-fabric-sha`: last synced Fluent/Fabric upstream commit SHA.
@@ -31,7 +55,7 @@ The UI loads `icon-data.json` at runtime and provides:
 
 ### Local build flow
 
-1. `generate-icon-data.py --icons-dir <upstream-assets> --upstream-sha <sha> --output icon-data.json`
+1. `generate-icon-data.py --fluent-icons-dir <upstream-assets> --fabric-components-dir <upstream-mdl2-components> --fabric-metadata fabric-mdl2-metadata.json --output icon-data.json`
 
 ### GitHub automation
 
@@ -42,9 +66,10 @@ The UI loads `icon-data.json` at runtime and provides:
     - `microsoft/fluentui` `master` (MDL2 components)
   - only rebuilds when either SHA changed (or forced)
   - generates combined index from:
+    - generated `fabric-mdl2-metadata.json` (committed)
     - upstream Fluent `assets` (CDN-linked SVG URLs)
     - upstream Fabric MDL2 component sources (parsed inline SVG + source links)
-  - commits updated `icon-data.json`, `.upstream-sha`, `.upstream-fabric-sha`
+  - commits updated `icon-data.json`, `fabric-mdl2-metadata.json`, `.upstream-sha`, `.upstream-fabric-sha`
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
   - deploys static site to GitHub Pages
@@ -56,8 +81,28 @@ The UI loads `icon-data.json` at runtime and provides:
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
 - Icon SVG payloads are loaded from CDN URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
 - Fabric/MDL2 icons are sourced from upstream component definitions and stored as inline SVG in `icon-data.json` (with source links), because upstream raw SVG files are not published as a parallel asset folder.
+- Fabric metadata is maintained in-repo and regenerated by script/workflow; manual overrides are defined in `generate-fabric-metadata.py`.
 - UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
+- Main page container is now full-width fluid (`100%`) rather than capped, to keep Chrome/Safari responsive behavior consistent across window sizes.
+- Header has responsive breakpoints to avoid clipping and preserve selector usability:
+  - `<=620px`: compact 2-row layout (`logo + search` on row 1, then both selectors together on row 2) so selector widths do not influence the search row width
+    - on this compact row, both selector controls are center-aligned as a group
+  - `<=480px`: same header structure is retained (only icon card grid density changes), so selectors remain on one row and do not stack vertically
+- Sticky header behavior was hardened for cross-browser reliability:
+  - removed root-level overflow clipping behavior that broke `position: sticky` in Chrome
+  - `.top-bar` now includes `position: -webkit-sticky` + `position: sticky`
+  - `.container` uses `overflow: visible` so sticky positioning is not constrained
+  - `.icon-grid` has added top padding (`10px` desktop, `8px` on mobile breakpoint) so the first icon row clears the pinned header shadow
+- Legacy checkbox filters (including hide mirrored/inverse duplicates) were removed from the header in favor of compact segmented controls.
+- Fabric normalization behavior:
+  - mirrored variants are folded into one icon variant entry when they are naming mirrors (`*_mirrored*`)
+  - numeric suffixes (`*8`, `*12`, etc.) are not implicitly treated as style variants, because MDL2 uses these inconsistently across icons
+  - known MDL2 naming quirks are still explicitly overridden in `FABRIC_GROUP_OVERRIDES`, including `arrow_up_right8` mapped as a filled variant of `arrow_up_right`, `end_point`/`end_point_solid` mapped into the `flag` family as filled, `blocked_site_solid12` mapped as filled `blocked_site`, `double_chevron_*12` mapped as filled variants of the corresponding non-`8` chevrons, `parking_location` mapped as regular `parking`, and `pin_solid12` mapped as filled `pin`
+  - semantic inverse pairs (token-swap style like `increase`/`decrease`, `left`/`right`, etc.) are annotated into normalized families
+  - canonical family member keeps aliases for normalized members so search still finds hidden duplicates
+  - non-canonical members are marked with `normalizedTo`
 
 ## Open Questions / Ambiguities
 
 - Whether to keep generated `consolidated/` artifacts out of git permanently (currently assumed: do not commit).
+- Whether to introduce synthetic transform variants (rotation/mirroring) as optional generated entries for missing directional forms, and how to label them clearly vs native upstream icons.

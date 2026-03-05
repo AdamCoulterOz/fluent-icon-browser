@@ -97,9 +97,14 @@ jobs:
         if: steps.decision.outputs.changed == 'true'
         run: |
           set -euo pipefail
+          python generate-fabric-metadata.py \
+            --components-dir .tmp/fluent-fabric/packages/react-icons-mdl2/src/components \
+            --output fabric-mdl2-metadata.json
+
           python generate-icon-data.py \
             --fluent-icons-dir .tmp/fluent-system/assets \
             --fabric-components-dir .tmp/fluent-fabric/packages/react-icons-mdl2/src/components \
+            --fabric-metadata fabric-mdl2-metadata.json \
             --output icon-data.json \
             --fluent-upstream-sha "${{ steps.upstream.outputs.fluent_sha }}" \
             --fabric-upstream-sha "${{ steps.upstream.outputs.fabric_sha }}"
@@ -113,7 +118,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json .upstream-sha .upstream-fabric-sha
+          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
