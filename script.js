@@ -7,6 +7,7 @@ class IconBrowser {
         this.icons = [];
         this.filteredIcons = [];
         this.currentIcon = null;
+        this.selectedIconName = null;
         this.iconByName = new Map();
         this.cardByName = new Map();
         this.renderedAllCards = false;
@@ -97,7 +98,6 @@ class IconBrowser {
 
     setupEventListeners() {
         const searchInput = document.getElementById("searchInput");
-        const modal = document.getElementById("iconModal");
         const closeBtn = document.querySelector(".close");
 
         searchInput.addEventListener("input", (event) => {
@@ -142,21 +142,67 @@ class IconBrowser {
             }
         });
 
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
-
-        modal.addEventListener("click", (event) => {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        });
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+                this.closeIconPanel();
+            });
+        }
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
-                modal.style.display = "none";
+                this.closeIconPanel();
             }
         });
+    }
+
+    openIconPanel() {
+        const panel = document.getElementById("iconModal");
+        if (!panel) {
+            return;
+        }
+
+        panel.classList.add("is-open");
+        panel.setAttribute("aria-hidden", "false");
+        document.body.classList.add("icon-panel-open");
+    }
+
+    isIconPanelOpen() {
+        const panel = document.getElementById("iconModal");
+        return Boolean(panel?.classList.contains("is-open"));
+    }
+
+    setSelectedIcon(iconName) {
+        const previousName = this.selectedIconName;
+        if (previousName) {
+            const previousCard = this.cardByName.get(previousName);
+            previousCard?.classList.remove("is-selected");
+        }
+
+        this.selectedIconName = iconName || null;
+        if (this.selectedIconName) {
+            const nextCard = this.cardByName.get(this.selectedIconName);
+            nextCard?.classList.add("is-selected");
+        }
+    }
+
+    clearSelectedIcon() {
+        this.setSelectedIcon(null);
+    }
+
+    closeIconPanel(options = {}) {
+        const { clearSelection = true } = options;
+        const panel = document.getElementById("iconModal");
+        if (!panel) {
+            return;
+        }
+
+        panel.classList.remove("is-open");
+        panel.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("icon-panel-open");
+        this.currentIcon = null;
+        if (clearSelection) {
+            this.clearSelectedIcon();
+        }
     }
 
     switchSet(setKey) {
@@ -165,8 +211,7 @@ class IconBrowser {
         }
 
         this.currentSetKey = setKey;
-        this.currentIcon = null;
-        document.getElementById("iconModal").style.display = "none";
+        this.closeIconPanel();
         this.applyCurrentSet();
     }
 
@@ -185,6 +230,7 @@ class IconBrowser {
         this.icons = Array.isArray(this.currentSet.icons) ? this.currentSet.icons : [];
         this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
+        this.selectedIconName = null;
         this.cardByName = new Map();
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
@@ -572,6 +618,7 @@ class IconBrowser {
         const searchMatches = new Set(this.filteredIcons.map((icon) => icon.name));
         const shouldRefreshVisiblePreviews = this.lastAppliedStyleMode !== styleMode;
         let visibleCount = 0;
+        let selectedIconStillVisible = !this.selectedIconName;
 
         for (const icon of this.icons) {
             const card = this.cardByName.get(icon.name);
@@ -590,6 +637,14 @@ class IconBrowser {
             if (isVisible) {
                 visibleCount += 1;
             }
+
+            if (this.selectedIconName && icon.name === this.selectedIconName && isVisible) {
+                selectedIconStillVisible = true;
+            }
+        }
+
+        if (!selectedIconStillVisible) {
+            this.closeIconPanel();
         }
 
         this.lastAppliedStyleMode = styleMode;
@@ -659,6 +714,10 @@ class IconBrowser {
                     this.cardByName.set(iconName, card);
                 }
             });
+
+            if (this.selectedIconName) {
+                this.setSelectedIcon(this.selectedIconName);
+            }
 
             this.renderedAllCards = true;
             this.lastAppliedStyleMode = null;
@@ -792,11 +851,17 @@ class IconBrowser {
     }
 
     openModal(iconName) {
+        if (this.selectedIconName === iconName && this.isIconPanelOpen()) {
+            this.closeIconPanel();
+            return;
+        }
+
         const icon = this.icons.find((entry) => entry.name === iconName);
         if (!icon) {
             return;
         }
 
+        this.setSelectedIcon(iconName);
         this.currentIcon = icon;
         document.getElementById("modalTitle").textContent =
             icon.displayName || this.formatName(icon.name);
@@ -829,7 +894,7 @@ class IconBrowser {
             metaphorsList.innerHTML = '<p style="color: #605e5c;">No metaphors available</p>';
         }
 
-        document.getElementById("iconModal").style.display = "flex";
+        this.openIconPanel();
     }
 
     getVariantSelection(variant) {
@@ -874,6 +939,7 @@ class IconBrowser {
     showError(message) {
         const grid = document.getElementById("iconGrid");
         grid.innerHTML = `<div class="no-results">${message}</div>`;
+        this.closeIconPanel();
         this.cardByName = new Map();
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;

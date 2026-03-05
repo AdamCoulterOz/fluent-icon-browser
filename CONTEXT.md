@@ -38,7 +38,14 @@ The UI loads `icon-data.json` at runtime and provides:
   - style filter selector: `min-width: 134px`, `height: 32px`
   - segmented button labels use explicit flex centering + fixed line-height to keep vertical alignment stable after runtime tab state updates (notably in Chrome)
 - modal preview with copy/download for SVG variants
-- per-variant native size selector in the modal
+  - icon details are presented in a persistent docked panel (non-blocking) instead of an overlay modal:
+    - desktop: fixed right sidebar
+    - narrow view (`<=900px`): fixed bottom bar
+  - panel stays open while browsing, so clicking different icons updates the same panel without forcing close/reopen
+  - opening/closing the docked panel applies grid spacing immediately (no animated padding transition) to avoid visible multi-step reflow/judder
+  - selected icon card remains visually highlighted while the panel is open; clicking the same selected icon again toggles selection off and closes the panel
+  - pressing `Esc` or using the panel close button dismisses the panel
+- per-variant native size selector in the details panel
 - optional download-time `currentColor` transform for mono variants
 - enriched Fabric search metadata (`description` + `metaphors`) for all 1,736 MDL2 icons
 - performance improvements for large result sets:
