@@ -160,6 +160,36 @@ body {
     gap: 8px;
 }
 
+.repo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--toolbar-control-height);
+    height: var(--toolbar-control-height);
+    flex: 0 0 var(--toolbar-control-height);
+    border-radius: 9999px;
+    color: var(--nav-segment-text);
+    background: var(--nav-segment-bg);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.repo-link:hover {
+    background: var(--nav-segment-hover-bg);
+    color: var(--nav-brand-color);
+}
+
+.repo-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 2px;
+}
+
+.repo-link svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
 .segmented-control {
     display: inline-flex;
     align-items: center;

@@ -1,5 +1,7 @@
 # Fluent Icon Browser
 
+[Open the website](https://adamcoulteroz.github.io/fluent-icon-browser/)
+
 Static browser UI for searching icons from:
 
 - [microsoft/fluentui-system-icons](https://github.com/microsoft/fluentui-system-icons) (Fluent System)
