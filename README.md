@@ -14,7 +14,7 @@ Static browser UI for searching icons from:
 - Searches by icon name, description, and metaphors.
 - Switches between icon sets (`Fluent System`, `Fabric MDL2`).
 - Filters by variant (`regular`, `filled`, `color`) where applicable to the active set.
-- Shows SVG previews sourced from CDN.
+- Shows SVG previews sourced from pinned upstream assets.
 - Supports native size selection per variant in the modal panel.
 - Copies/downloads the selected native-size SVG.
 - Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
@@ -71,7 +71,7 @@ python serve.py
   - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha`
 
 `icon-data.json` stores both icon sets:
-- Fluent entries use CDN URLs to upstream SVG files.
+- Fluent entries use pinned raw GitHub URLs to upstream SVG files.
 - Fabric entries include parsed SVG payloads and source links to upstream MDL2 component files.
 
 ### `.github/workflows/deploy-pages.yml`

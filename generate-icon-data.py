@@ -121,6 +121,8 @@ def build_cdn_url(
 ) -> str:
     encoded_folder = quote(icon_folder_name, safe="")
     encoded_file = quote(svg_file_name, safe="")
+    if "raw.githubusercontent.com/" in cdn_base:
+        return f"{cdn_base}/{upstream_sha}/assets/{encoded_folder}/SVG/{encoded_file}"
     return f"{cdn_base}@{upstream_sha}/assets/{encoded_folder}/SVG/{encoded_file}"
 
 
@@ -776,8 +778,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--fluent-cdn-base",
-        default="https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons",
-        help="CDN base URL for Fluent source SVGs",
+        default="https://raw.githubusercontent.com/microsoft/fluentui-system-icons",
+        help="Asset base URL for Fluent source SVGs",
     )
     parser.add_argument(
         "--fabric-cdn-base",
