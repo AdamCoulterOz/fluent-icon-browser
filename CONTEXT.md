@@ -113,6 +113,10 @@ The UI loads `icon-data.json` at runtime and provides:
   - commits updated `icon-data.json`, `fabric-mdl2-metadata.json`, `.upstream-sha`, `.upstream-fabric-sha`
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
+  - runs after successful `Sync Icon Indexes` completions on `main`
+  - runs daily as a repair path for transient GitHub Pages or Actions failures
+  - checks out `main` directly so scheduled and workflow-run deployments publish the current committed site state
+  - builds and deploys in a single job to avoid a second hosted-runner allocation between artifact upload and Pages deployment
   - deploys static site to GitHub Pages
   - public site URL: `https://adamcoulteroz.github.io/fluent-icon-browser/`
 

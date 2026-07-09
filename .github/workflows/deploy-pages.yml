@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Daily repair run so transient Pages failures do not leave the site stale.
+    - cron: "47 21 * * *"
   workflow_run:
     workflows:
       - Sync Icon Indexes
@@ -21,14 +24,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: main
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -46,13 +52,6 @@ jobs:
         with:
           path: _site
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
