@@ -35,6 +35,7 @@ class IconBrowser {
         await this.loadIcons();
         this.setupEventListeners();
         this.applyCurrentSet();
+        this.applyDeepLink();
     }
 
     normalizePayload(payload) {
@@ -255,6 +256,7 @@ class IconBrowser {
         if (clearSelection) {
             this.clearSelectedIcon();
         }
+        this.updateUrlForSelection(null);
     }
 
     switchSet(setKey) {
@@ -293,6 +295,85 @@ class IconBrowser {
 
         const searchTerm = document.getElementById("searchInput")?.value || "";
         this.filterIcons(searchTerm);
+    }
+
+    // Deep link support: ?icon=<name>&set=<key> opens a specific icon (e.g. linked from the
+    // PowerSpec Mdl2Icon enum docs). Switches to the set that holds the icon, filters the grid to it,
+    // and opens its panel. Falls back to a plain search when the exact name isn't a distinct card
+    // (some MDL2 variants are folded into a canonical family), so the link still lands usefully.
+    applyDeepLink() {
+        let params;
+        try {
+            params = new URLSearchParams(window.location.search);
+        } catch (error) {
+            return;
+        }
+
+        const iconParam = (params.get("icon") || "").trim();
+        const setParam = (params.get("set") || "").trim();
+        if (!iconParam && !setParam) {
+            return;
+        }
+
+        let targetSetKey = setParam && this.iconSets[setParam] ? setParam : null;
+        if (!targetSetKey && iconParam) {
+            for (const [key, set] of Object.entries(this.iconSets)) {
+                const icons = Array.isArray(set.icons) ? set.icons : [];
+                if (icons.some((entry) => entry.name === iconParam)) {
+                    targetSetKey = key;
+                    break;
+                }
+            }
+        }
+
+        // Preserve the incoming deep-link URL while we resolve it: switchSet/openModal would
+        // otherwise rewrite (or clear) it mid-flight.
+        this._applyingDeepLink = true;
+        try {
+            if (targetSetKey && targetSetKey !== this.currentSetKey) {
+                this.switchSet(targetSetKey);
+            }
+
+            if (!iconParam) {
+                return;
+            }
+
+            const exact = this.icons.find((entry) => entry.name === iconParam);
+            const query = exact ? exact.displayName || iconParam : iconParam;
+            const searchInput = document.getElementById("searchInput");
+            if (searchInput) {
+                searchInput.value = query;
+            }
+            this.filterIcons(query);
+
+            if (exact) {
+                this.openModal(exact.name);
+                const card = this.cardByName.get(exact.name);
+                card?.scrollIntoView({ block: "center", behavior: "smooth" });
+            }
+        } finally {
+            this._applyingDeepLink = false;
+        }
+    }
+
+    // Reflect the selected icon in the URL so any icon view is a copy-shareable deep link.
+    updateUrlForSelection(iconName) {
+        if (this._applyingDeepLink) {
+            return;
+        }
+        try {
+            const url = new URL(window.location.href);
+            if (iconName) {
+                url.searchParams.set("set", this.currentSetKey);
+                url.searchParams.set("icon", iconName);
+            } else {
+                url.searchParams.delete("icon");
+                url.searchParams.delete("set");
+            }
+            window.history.replaceState(null, "", url);
+        } catch (error) {
+            // Non-fatal: deep linking is a convenience, never block the UI on it.
+        }
     }
 
     syncSetTabs() {
@@ -913,6 +994,7 @@ class IconBrowser {
         const preferredVariant = this.resolvePreferredPanelVariant(icon, availableVariants);
         this.setActivePanelVariant(preferredVariant, { availableVariants });
         this.openIconPanel();
+        this.updateUrlForSelection(icon.name);
     }
 
     getAvailableVariantsForIcon(icon = this.currentIcon) {
