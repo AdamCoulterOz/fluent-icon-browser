@@ -405,12 +405,46 @@ def normalize_metaphors(raw: object) -> List[str]:
     return deduped
 
 
-def generate_metadata(components_dir: Path, output_file: Path) -> int:
+def generate_metadata(
+    components_dir: Path,
+    output_file: Path,
+    branded_components_dir: Path | None = None,
+) -> int:
+    if not components_dir.exists():
+        raise FileNotFoundError(
+            f"Fabric MDL2 component directory not found: {components_dir}"
+        )
+    if branded_components_dir is not None and not branded_components_dir.exists():
+        raise FileNotFoundError(
+            "Branded Fabric MDL2 component directory not found: "
+            f"{branded_components_dir}"
+        )
+
     existing = load_existing_metadata(output_file)
     icons = []
 
-    for icon_name, display_name in iter_fabric_icons(components_dir):
-        icon_id = camel_to_snake(icon_name)
+    source_icons: Dict[str, Dict[str, object]] = {}
+    component_sources = [(components_dir, False)]
+    if branded_components_dir is not None:
+        component_sources.append((branded_components_dir, True))
+
+    for source_dir, is_branded in component_sources:
+        for icon_name, display_name in iter_fabric_icons(source_dir):
+            icon_id = camel_to_snake(icon_name)
+            source_entry = source_icons.setdefault(
+                icon_id,
+                {
+                    "displayName": display_name,
+                    "branded": False,
+                },
+            )
+            if is_branded:
+                source_entry["branded"] = True
+
+    for icon_id in sorted(source_icons):
+        source_entry = source_icons[icon_id]
+        display_name = str(source_entry["displayName"])
+        is_branded = bool(source_entry["branded"])
         words = split_words(display_name)
 
         if icon_id in EXACT_OVERRIDES:
@@ -425,6 +459,9 @@ def generate_metadata(components_dir: Path, output_file: Path) -> int:
             description = existing_description or build_description(display_name, words)
             metaphors = existing_metaphors or build_metaphors(icon_id, words, description)
 
+        if is_branded and "branded" not in metaphors:
+            metaphors.append("branded")
+
         icons.append(
             {
                 "id": icon_id,
@@ -437,6 +474,14 @@ def generate_metadata(components_dir: Path, output_file: Path) -> int:
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "source": "microsoft/fluentui/packages/react-icons-mdl2",
+        "sources": [
+            "microsoft/fluentui/packages/react-icons-mdl2",
+            *(
+                ["microsoft/fluentui/packages/react-icons-mdl2-branded"]
+                if branded_components_dir is not None
+                else []
+            ),
+        ],
         "count": len(icons),
         "icons": icons,
     }
@@ -457,6 +502,11 @@ def parse_args() -> argparse.Namespace:
         help="Path to Fabric MDL2 component directory",
     )
     parser.add_argument(
+        "--branded-components-dir",
+        default="",
+        help="Optional path to branded Fabric MDL2 component directory",
+    )
+    parser.add_argument(
         "--output",
         default="fabric-mdl2-metadata.json",
         help="Output metadata JSON path",
@@ -466,7 +516,14 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    generate_metadata(Path(args.components_dir), Path(args.output))
+    branded_components_dir = (
+        Path(args.branded_components_dir) if args.branded_components_dir else None
+    )
+    generate_metadata(
+        Path(args.components_dir),
+        Path(args.output),
+        branded_components_dir=branded_components_dir,
+    )
 
 
 if __name__ == "__main__":

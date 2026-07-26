@@ -17,6 +17,7 @@
 - Icon set: a named icon collection, currently Fluent System icons and Fabric MDL2 icons.
 - Icon: a searchable, selectable icon family with display metadata and available visual variants.
 - Variant: a renderable regular, filled, or color representation when present.
+- Branded MDL2 icon: an icon sourced from the upstream branded component package and tagged `branded` within the existing Fabric set.
 - Deep link: a URL query identifying an icon set and icon name.
 
 ## Public Interfaces
@@ -35,6 +36,7 @@
 - `icon-data.json` remains committed and directly consumable by the static page.
 - Deep-link URLs must remain implementation-independent: external consumers may rely on query parameters, not internal JavaScript function names or DOM structure.
 - Upstream icon source URLs remain pinned to upstream SHAs recorded in the generated index.
+- The `fabric` set is the union of ordinary and branded MDL2 component sources; branded icons must remain searchable by the `branded` tag.
 
 ## Side Effects
 
@@ -45,7 +47,7 @@
 
 ## Dependency Boundaries
 
-- Upstream dependencies: `microsoft/fluentui-system-icons` and `microsoft/fluentui`.
+- Upstream dependencies: `microsoft/fluentui-system-icons`, plus the `react-icons-mdl2` and `react-icons-mdl2-branded` packages in `microsoft/fluentui`.
 - Downstream consumers: external docs and tools may link to the public site and documented deep-link query contract.
 - Trusted contracts: committed static files, generated icon index shape used by this UI, and documented URL query parameters.
 - Internal-only concerns: search-index preparation, DOM structure, card maps, normalization implementation details, workflow implementation details.
@@ -68,6 +70,7 @@
 ## Agent Guidance
 
 - Preserve the documented deep-link query contract when refactoring browser state, search, or selection behavior.
+- Preserve branded source attribution and the `branded` search tag when regenerating or regrouping Fabric MDL2 families.
 - Update this file alongside changes to public URLs, generated index semantics, side effects, or deployment lifecycle.
 - Keep implementation mechanics out of this interface unless they become deliberate public contract.
 - Verify deep-link behavior before deployment when changing selection, filtering, set switching, or panel-opening code.

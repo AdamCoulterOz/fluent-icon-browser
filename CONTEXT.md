@@ -5,7 +5,7 @@
 `fluent-icon-browser` is a static web app that indexes and browses:
 
 - Fluent System icons from `microsoft/fluentui-system-icons`
-- Fabric MDL2 icons from `microsoft/fluentui` (`react-icons-mdl2`)
+- Fabric MDL2 icons from `microsoft/fluentui` (`react-icons-mdl2` and `react-icons-mdl2-branded`)
 
 The UI loads `icon-data.json` at runtime and provides:
 
@@ -72,7 +72,8 @@ The UI loads `icon-data.json` at runtime and provides:
   - selecting an icon updates the current URL via `replaceState`, making the visible icon view copy-shareable
   - folded MDL2 variants fall back to name search so external links still land on the canonical visible icon family
 - optional download-time `currentColor` transform for mono variants
-- enriched Fabric search metadata (`description` + `metaphors`) for all 1,736 MDL2 icons
+- enriched Fabric search metadata (`description` + `metaphors`) for 1,985 unique MDL2 component names across the ordinary and branded packages
+- every component supplied by `react-icons-mdl2-branded` contributes the searchable `branded` metaphor to its generated family
 - performance improvements for large result sets:
   - icon metadata is loaded up front and the gallery mounts all cards once per set; subsequent search/style changes are applied as single-pass class/preview updates (no visible chunk-by-chunk transition)
   - search input is debounced and icons are pre-indexed per set for faster filtering
@@ -84,8 +85,8 @@ The UI loads `icon-data.json` at runtime and provides:
 - `style.css`: all styling, including dark mode behavior and icon action button masks.
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
 - `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
-- `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` and emits commit-pinned raw GitHub URLs + native sizes.
-- `generate-fabric-metadata.py`: builds `fabric-mdl2-metadata.json` for all MDL2 icons (`id`, `name`, `description`, `metaphors`).
+- `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` plus ordinary/branded MDL2 components and emits commit-pinned source URLs + native sizes.
+- `generate-fabric-metadata.py`: builds `fabric-mdl2-metadata.json` for ordinary and branded MDL2 icons (`id`, `name`, `description`, `metaphors`).
 - `fabric-mdl2-metadata.json`: committed metadata source for Fabric icon descriptions/metaphors.
 - `generate-fabric-samples.py`: creates visual MDL2 review sheets (10x10 icon grids) for human-in-the-loop metadata QA.
 - `samples/fabric-grids/batch-0001-metadata-draft.json`: trial metadata draft for the first 100 MDL2 icons from grid review, now including:
@@ -100,7 +101,7 @@ The UI loads `icon-data.json` at runtime and provides:
 
 ### Local build flow
 
-1. `generate-icon-data.py --fluent-icons-dir <upstream-assets> --fabric-components-dir <upstream-mdl2-components> --fabric-metadata fabric-mdl2-metadata.json --output icon-data.json`
+1. `generate-icon-data.py --fluent-icons-dir <upstream-assets> --fabric-components-dir <upstream-mdl2-components> --fabric-branded-components-dir <upstream-branded-mdl2-components> --fabric-metadata fabric-mdl2-metadata.json --output icon-data.json`
 
 ### GitHub automation
 
@@ -113,7 +114,7 @@ The UI loads `icon-data.json` at runtime and provides:
   - generates combined index from:
     - generated `fabric-mdl2-metadata.json` (committed)
     - upstream Fluent `assets` (raw GitHub SVG URLs pinned to upstream SHA)
-    - upstream Fabric MDL2 component sources (parsed inline SVG + source links)
+    - upstream ordinary and branded Fabric MDL2 component sources (parsed inline SVG + source links)
   - commits updated `icon-data.json`, `fabric-mdl2-metadata.json`, `.upstream-sha`, `.upstream-fabric-sha`
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
@@ -131,7 +132,8 @@ The UI loads `icon-data.json` at runtime and provides:
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
 - Fluent icon SVG payloads are loaded from `raw.githubusercontent.com` URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
 - Fluent preview/download URLs intentionally avoid jsDelivr because browser image requests for some pinned SVG assets returned intermittent `403` responses.
-- Fabric/MDL2 icons are sourced from upstream component definitions and stored as inline SVG in `icon-data.json` (with source links), because upstream raw SVG files are not published as a parallel asset folder.
+- Fabric/MDL2 icons are sourced from both upstream component packages and stored as inline SVG in `icon-data.json` (with source links), because upstream raw SVG files are not published as a parallel asset folder.
+- Branded MDL2 components remain part of the `fabric` icon set rather than a separate UI set; `branded` is a searchable metaphor/tag and the upstream branded-assets license remains applicable.
 - Fabric metadata is maintained in-repo and regenerated by script/workflow; manual overrides are defined in `generate-fabric-metadata.py`.
 - UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
 - `?set=<key>&icon=<name>` is a public, stable deep-link contract for external docs and tools that need to link directly to an icon.
@@ -159,3 +161,5 @@ The UI loads `icon-data.json` at runtime and provides:
 
 - Whether to keep generated `consolidated/` artifacts out of git permanently (currently assumed: do not commit).
 - Whether to introduce synthetic transform variants (rotation/mirroring) as optional generated entries for missing directional forms, and how to label them clearly vs native upstream icons.
+- How to expose exact legacy `font-icons-mdl2`-only glyphs without weakening the SVG copy/download contract.
+- How to preserve separate same-size `Fill` and `Solid` artworks when both normalize to the current `filled` variant slot; `MailSolid` and `PinnedSolid` remain known collisions.

@@ -91,7 +91,9 @@ jobs:
           set -euo pipefail
           git clone --depth 1 --filter=blob:none --sparse https://github.com/microsoft/fluentui.git .tmp/fluent-fabric
           cd .tmp/fluent-fabric
-          git sparse-checkout set packages/react-icons-mdl2/src/components
+          git sparse-checkout set \
+            packages/react-icons-mdl2/src/components \
+            packages/react-icons-mdl2-branded/src/components
 
       - name: Regenerate icon data
         if: steps.decision.outputs.changed == 'true'
@@ -99,11 +101,13 @@ jobs:
           set -euo pipefail
           python generate-fabric-metadata.py \
             --components-dir .tmp/fluent-fabric/packages/react-icons-mdl2/src/components \
+            --branded-components-dir .tmp/fluent-fabric/packages/react-icons-mdl2-branded/src/components \
             --output fabric-mdl2-metadata.json
 
           python generate-icon-data.py \
             --fluent-icons-dir .tmp/fluent-system/assets \
             --fabric-components-dir .tmp/fluent-fabric/packages/react-icons-mdl2/src/components \
+            --fabric-branded-components-dir .tmp/fluent-fabric/packages/react-icons-mdl2-branded/src/components \
             --fabric-metadata fabric-mdl2-metadata.json \
             --output icon-data.json \
             --fluent-upstream-sha "${{ steps.upstream.outputs.fluent_sha }}" \

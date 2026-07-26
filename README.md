@@ -5,7 +5,7 @@
 Static browser UI for searching icons from:
 
 - [microsoft/fluentui-system-icons](https://github.com/microsoft/fluentui-system-icons) (Fluent System)
-- [microsoft/fluentui](https://github.com/microsoft/fluentui) `react-icons-mdl2` (Fabric/MDL2)
+- [microsoft/fluentui](https://github.com/microsoft/fluentui) `react-icons-mdl2` and `react-icons-mdl2-branded` (Fabric/MDL2)
 
 ...with automatic index refresh and GitHub Pages hosting.
 
@@ -19,6 +19,7 @@ Static browser UI for searching icons from:
 - Copies/downloads the selected native-size SVG.
 - Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
 - Includes committed MDL2 metadata (`description` + `metaphors`) for all Fabric icons to improve search relevance.
+- Tags every icon sourced from `react-icons-mdl2-branded` with the searchable `branded` metaphor.
 - Auto-refreshes `icon-data.json` when upstream Fluent System or Fabric MDL2 icons change.
 - Deploys the site to GitHub Pages from `main`.
 
@@ -30,6 +31,7 @@ Static browser UI for searching icons from:
 python generate-icon-data.py \
   --fluent-icons-dir /path/to/fluentui-system-icons/assets \
   --fabric-components-dir /path/to/fluentui/packages/react-icons-mdl2/src/components \
+  --fabric-branded-components-dir /path/to/fluentui/packages/react-icons-mdl2-branded/src/components \
   --fabric-metadata fabric-mdl2-metadata.json \
   --fluent-upstream-sha <fluent-system-commit-sha> \
   --fabric-upstream-sha <fluentui-commit-sha> \
@@ -41,6 +43,7 @@ python generate-icon-data.py \
 ```bash
 python generate-fabric-metadata.py \
   --components-dir /path/to/fluentui/packages/react-icons-mdl2/src/components \
+  --branded-components-dir /path/to/fluentui/packages/react-icons-mdl2-branded/src/components \
   --output fabric-mdl2-metadata.json
 ```
 
@@ -61,18 +64,18 @@ python serve.py
 - Runs weekly (and manually via workflow dispatch).
 - Checks current upstream SHAs for:
   - `microsoft/fluentui-system-icons` (`main`)
-  - `microsoft/fluentui` (`master`, for `react-icons-mdl2`)
+  - `microsoft/fluentui` (`master`, for `react-icons-mdl2` and `react-icons-mdl2-branded`)
 - Rebuilds only when either upstream SHA changes (or `force_rebuild=true`).
 - Pipeline:
   - sparse clone Fluent System `assets/`
-  - sparse clone Fabric MDL2 component sources
+  - sparse clone ordinary and branded Fabric MDL2 component sources
   - run `generate-fabric-metadata.py`
   - run `generate-icon-data.py`
   - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha`
 
 `icon-data.json` stores both icon sets:
 - Fluent entries use pinned raw GitHub URLs to upstream SVG files.
-- Fabric entries include parsed SVG payloads and source links to upstream MDL2 component files.
+- Fabric entries include parsed SVG payloads and source links to ordinary or branded upstream MDL2 component files.
 
 ### `.github/workflows/deploy-pages.yml`
 
@@ -93,4 +96,4 @@ python serve.py
 
 ## Notes
 
-- This project consumes icon assets from Microsoft’s Fluent UI System Icons repo. Review their license/usage terms before redistribution in your own downstream projects.
+- This project consumes icon assets from Microsoft’s Fluent repositories. Branded MDL2 assets are governed by the Microsoft Fabric Assets License referenced by the upstream `react-icons-mdl2-branded` package; review all relevant license and usage terms before redistribution.

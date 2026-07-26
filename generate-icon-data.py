@@ -126,10 +126,15 @@ def build_cdn_url(
     return f"{cdn_base}@{upstream_sha}/assets/{encoded_folder}/SVG/{encoded_file}"
 
 
-def build_fabric_source_url(cdn_base: str, upstream_sha: str, file_name: str) -> str:
+def build_fabric_source_url(
+    cdn_base: str,
+    upstream_sha: str,
+    package_name: str,
+    file_name: str,
+) -> str:
     encoded_file = quote(file_name, safe="")
     return (
-        f"{cdn_base}@{upstream_sha}/packages/react-icons-mdl2/src/components/{encoded_file}"
+        f"{cdn_base}@{upstream_sha}/packages/{package_name}/src/components/{encoded_file}"
     )
 
 
@@ -509,47 +514,73 @@ def generate_fabric_icons(
     upstream_sha: str,
     cdn_base: str,
     metadata_by_id: Dict[str, dict],
+    branded_components_dir: Optional[Path] = None,
 ) -> list[dict]:
     if not components_dir.exists():
         raise FileNotFoundError(
             f"Fabric components directory not found: {components_dir}"
         )
+    if branded_components_dir is not None and not branded_components_dir.exists():
+        raise FileNotFoundError(
+            "Branded Fabric components directory not found: "
+            f"{branded_components_dir}"
+        )
 
     members: list[dict] = []
-    for component_file in sorted(components_dir.glob("*.tsx")):
-        match = FABRIC_ICON_FILE_PATTERN.match(component_file.name)
-        if not match:
-            continue
-
-        icon_id = match.group("name")
-        tsx_text = component_file.read_text(encoding="utf-8")
-        svg_text = extract_fabric_svg(tsx_text, component_file)
-        if not svg_text:
-            continue
-
-        default_size = infer_fabric_default_size(icon_id, svg_text)
-        source_url = build_fabric_source_url(cdn_base, upstream_sha, component_file.name)
-        display_name = extract_display_name(tsx_text, icon_id)
-        normalized_id = camel_to_snake(icon_id)
-        parsed_variant = parse_fabric_member_variant(normalized_id)
-        metadata = metadata_by_id.get(normalized_id, {})
-        description = metadata.get("description") if isinstance(metadata, dict) else ""
-        metaphors = metadata.get("metaphors") if isinstance(metadata, dict) else []
-
-        members.append(
-            {
-                "rawId": normalized_id,
-                "displayName": humanize_camel(display_name),
-                "baseId": parsed_variant["baseId"],
-                "style": parsed_variant["style"],
-                "mirrored": parsed_variant["mirrored"],
-                "defaultSize": default_size,
-                "svgText": svg_text,
-                "sourceUrl": source_url,
-                "description": description if isinstance(description, str) else "",
-                "metaphors": normalize_metaphors(metaphors),
-            }
+    component_sources = []
+    if branded_components_dir is not None:
+        component_sources.append(
+            (
+                branded_components_dir,
+                "react-icons-mdl2-branded",
+                ["branded"],
+            )
         )
+    component_sources.append((components_dir, "react-icons-mdl2", []))
+
+    for source_dir, package_name, source_tags in component_sources:
+        for component_file in sorted(source_dir.glob("*.tsx")):
+            match = FABRIC_ICON_FILE_PATTERN.match(component_file.name)
+            if not match:
+                continue
+
+            icon_id = match.group("name")
+            tsx_text = component_file.read_text(encoding="utf-8")
+            svg_text = extract_fabric_svg(tsx_text, component_file)
+            if not svg_text:
+                continue
+
+            default_size = infer_fabric_default_size(icon_id, svg_text)
+            source_url = build_fabric_source_url(
+                cdn_base,
+                upstream_sha,
+                package_name,
+                component_file.name,
+            )
+            display_name = extract_display_name(tsx_text, icon_id)
+            normalized_id = camel_to_snake(icon_id)
+            parsed_variant = parse_fabric_member_variant(normalized_id)
+            metadata = metadata_by_id.get(normalized_id, {})
+            description = (
+                metadata.get("description") if isinstance(metadata, dict) else ""
+            )
+            metaphors = metadata.get("metaphors") if isinstance(metadata, dict) else []
+
+            members.append(
+                {
+                    "rawId": normalized_id,
+                    "displayName": humanize_camel(display_name),
+                    "baseId": parsed_variant["baseId"],
+                    "style": parsed_variant["style"],
+                    "mirrored": parsed_variant["mirrored"],
+                    "defaultSize": default_size,
+                    "svgText": svg_text,
+                    "sourceUrl": source_url,
+                    "description": description if isinstance(description, str) else "",
+                    "metaphors": normalize_metaphors(metaphors),
+                    "sourceTags": source_tags,
+                }
+            )
 
     grouped: Dict[str, list[dict]] = {}
     for member in members:
@@ -590,6 +621,7 @@ def generate_fabric_icons(
             metaphors.extend(normalize_metaphors(base_metadata.get("metaphors")))
         for member in group_members:
             metaphors.extend(member["metaphors"])
+            metaphors.extend(member["sourceTags"])
             metaphors.append(normalize_search_alias(member["rawId"]))
             metaphors.append(member["rawId"])
             metaphors.append(member["displayName"].lower())
@@ -677,6 +709,7 @@ def generate_fabric_icons(
 def generate_icon_data(
     fluent_icons_dir: Path,
     fabric_components_dir: Path,
+    fabric_branded_components_dir: Optional[Path],
     fabric_metadata_path: Path,
     output_file: Path,
     fluent_upstream_sha: str,
@@ -696,6 +729,7 @@ def generate_icon_data(
         upstream_sha=fabric_upstream_sha,
         cdn_base=fabric_cdn_base,
         metadata_by_id=fabric_metadata,
+        branded_components_dir=fabric_branded_components_dir,
     )
 
     payload = {
@@ -713,6 +747,14 @@ def generate_icon_data(
             "fabric": {
                 "label": "Fabric MDL2 Icons",
                 "source": "microsoft/fluentui/packages/react-icons-mdl2",
+                "sources": [
+                    "microsoft/fluentui/packages/react-icons-mdl2",
+                    *(
+                        ["microsoft/fluentui/packages/react-icons-mdl2-branded"]
+                        if fabric_branded_components_dir is not None
+                        else []
+                    ),
+                ],
                 "upstreamSha": fabric_upstream_sha,
                 "cdnBase": fabric_cdn_base,
                 "icons": fabric_icons,
@@ -745,6 +787,11 @@ def parse_args() -> argparse.Namespace:
         "--fabric-components-dir",
         default=".tmp/fluentui/packages/react-icons-mdl2/src/components",
         help="Path to Fabric MDL2 icon component directory",
+    )
+    parser.add_argument(
+        "--fabric-branded-components-dir",
+        default="",
+        help="Optional path to branded Fabric MDL2 icon component directory",
     )
     parser.add_argument(
         "--fabric-metadata",
@@ -799,10 +846,16 @@ def main() -> None:
     fluent_sha_override = args.fluent_upstream_sha or args.upstream_sha
     fluent_upstream_sha = resolve_sha(fluent_sha_override, ".upstream-sha")
     fabric_upstream_sha = resolve_sha(args.fabric_upstream_sha, ".upstream-fabric-sha")
+    fabric_branded_components_dir = (
+        Path(args.fabric_branded_components_dir)
+        if args.fabric_branded_components_dir
+        else None
+    )
 
     generate_icon_data(
         fluent_icons_dir=Path(fluent_icons_dir),
         fabric_components_dir=Path(args.fabric_components_dir),
+        fabric_branded_components_dir=fabric_branded_components_dir,
         fabric_metadata_path=Path(args.fabric_metadata),
         output_file=Path(args.output),
         fluent_upstream_sha=fluent_upstream_sha,

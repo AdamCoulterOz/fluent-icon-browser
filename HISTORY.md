@@ -1,5 +1,11 @@
 # History
 
+## 2026-07-26: Include Branded Fabric MDL2 Components
+
+- Expanded the Fabric MDL2 source boundary from `react-icons-mdl2` alone to the union of `react-icons-mdl2` and `react-icons-mdl2-branded`.
+- Kept branded assets within the existing `fabric` set and added `branded` as a searchable metadata tag rather than introducing a separate public icon-set key.
+- Preserved commit-pinned SVG source attribution to the owning ordinary or branded upstream package.
+
 ## 2026-07-09: Harden GitHub Pages Autonomous Deployment
 
 - Updated GitHub-maintained workflow actions to current major versions after a Pages deployment failed under older action runtimes.
