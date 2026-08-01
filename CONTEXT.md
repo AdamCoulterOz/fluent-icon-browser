@@ -11,7 +11,7 @@ The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
 - icon-set switching (Fluent/MDL2)
-- compact top sticky header with single blue row containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
+- compact 64-pixel sticky frosted header using Meridian's Keel surface treatment, containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
   - current control order: brand (`logo + Icons`), search, icon set selector, style selector, GitHub repository link
   - search box is constrained to `max-width: 442px` and centered within the available search lane
   - search input and both segmented selectors share a unified control height (`32px`)
@@ -21,8 +21,8 @@ The UI loads `icon-data.json` at runtime and provides:
   - style selection is optional (default unselected) and mutually exclusive; clicking the active option toggles back to no style filter
   - narrow behavior: title text collapses away and only the logo is shown, while logo + search always remain on the same row
   - spacing tuned for readability: slightly increased gap between brand and search in both desktop and compact layouts
-  - top nav uses dedicated light/dark tokens (separate from generic accent color) for gradient background, segment contrast, and input/pill colors to reduce flat single-tone appearance and improve dark-mode legibility
-  - in dark mode, the search field itself is also dark (with light text/placeholder) rather than white, to match the dark nav surface
+  - top navigation and controls use the exact Keel light/dark surface, border, text, accent, focus, radius, shadow, and motion tokens; the app follows `prefers-color-scheme` and does not persist a separate theme choice
+  - in dark mode, the search field uses the Keel card surface with light text and placeholder rather than a contrasting white field
   - result count pill uses a slightly offset blue accent so it reads as a distinct status badge from the surrounding nav background
   - nav controls are borderless externally (search field, count pill, and segmented-control outer stroke removed) while keeping internal vertical dividers inside segmented controls; search field corners are fully pill-rounded to match the selectors
   - search input includes a subtle leading magnifier icon inside the field, with text padding adjusted to preserve alignment
@@ -50,9 +50,9 @@ The UI loads `icon-data.json` at runtime and provides:
     - right-column control bar now includes, on one row: variant selector, size selector, `currentColor` toggle icon, copy, and download buttons
     - panel size selector uses a dedicated icon asset (`icons/chevron_down_regular.svg`) for a consistent down-chevron indicator and stable right padding
     - panel selected states for variant/currentColor now rely on solid fill contrast (no inset "ring" treatment)
-    - copy/download buttons use a distinct warm CTA palette (orange family) to stand apart from the blue selection controls
+    - copy/download buttons use the shared Keel blue action accent so primary actions and selection controls follow one interaction language
     - panel variant selector dividers use a solid mid-tone blend (between active and inactive surfaces) so divider contrast stays consistent without looking too dark
-    - panel preview column keeps a subtle top gradient that now resolves within the top section (currently ~30% of column height) instead of fading through the entire preview area
+    - panel preview column uses a subtle Keel layered surface rather than an app-specific gradient
     - panel controls now use dedicated control-surface tokens; dark mode slightly brightens unselected control backgrounds to improve contrast while keeping the same visual language
     - copy/download controls are grouped in a trailing action cluster with responsive separation from variant/size/currentColor controls (`clamp(8px, 5vw, 50px)`)
     - copy/download glyph styling is intentionally heavier/larger than before to balance visual weight against neighboring segmented controls
@@ -65,7 +65,7 @@ The UI loads `icon-data.json` at runtime and provides:
     - icon preview area is centered and uses the full available preview space without an extra background tile
   - on narrow layouts, the panel stacks to a single-column flow while preserving the same controls/content
     - compact stacked header condenses metadata into a single row (title + truncated inline description); metaphor tags are hidden there
-  - panel styling now aligns with nav theming tokens (rounded pills, blue-accent segmented control, consistent light/dark treatment)
+  - panel styling aligns with the same Keel rounded pills, blue-accent segmented controls, layered surfaces, and consistent light/dark treatment as the header
 - per-variant native size selector in the details panel
 - URL deep links for icon selection:
   - `?set=<key>&icon=<name>` switches to the matching icon set, filters to the icon, and opens the details panel
@@ -128,6 +128,7 @@ The UI loads `icon-data.json` at runtime and provides:
 ## Current Decisions
 
 - Repository should stay static-first (no bundler/build frontend stack).
+- The browser follows Meridian's Keel design language while retaining its dense gallery and icon-specific interaction model: Hanken Grotesk for interface copy, Fira Code for numeric/status content, a 64-pixel frosted header, neutral layered surfaces, blue action accents, 10/12/18-pixel radii, and shared system light/dark tokens.
 - `icon-data.json` is committed so Pages can serve immediately.
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
 - Fluent icon SVG payloads are loaded from `raw.githubusercontent.com` URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
