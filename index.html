@@ -5,12 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fluent Icons</title>
     <meta name="description" content="Browse Fluent System and Fabric MDL2 icons by name, meaning, and visual variant.">
+    <meta name="keywords" content="Fluent icons, Fluent UI icons, Fabric MDL2 icons, Microsoft icons, SVG icon browser, icon search, developer tools, UI design">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#181a1b" media="(prefers-color-scheme: dark)">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fluent Icons">
+    <meta property="og:description" content="Browse Fluent System and Fabric MDL2 icons by name, meaning, and visual variant.">
+    <meta property="og:url" content="https://adamcoulteroz.github.io/fluent-icon-browser/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Fluent Icons">
+    <meta name="twitter:description" content="Search and inspect Fluent System and Fabric MDL2 icon families and SVG variants.">
+    <link rel="canonical" href="https://adamcoulteroz.github.io/fluent-icon-browser/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap">
     <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Fluent Icons",
+        "url": "https://adamcoulteroz.github.io/fluent-icon-browser/",
+        "description": "Browse Fluent System and Fabric MDL2 icons by name, meaning, and visual variant.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "browserRequirements": "JavaScript is required to search and render the icon catalogue.",
+        "author": {
+            "@type": "Person",
+            "name": "Adam Coulter",
+            "url": "https://adamcoulteroz.github.io/"
+        }
+    }
+    </script>
+    <noscript><style>.top-bar, .icon-grid { display: none; }</style></noscript>
 </head>
 <body>
     <div class="container">
@@ -64,10 +93,46 @@
             </div>
         </header>
 
+        <noscript>
+            <main class="noscript-page">
+                <article class="noscript-card">
+                    <span class="noscript-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <rect x="3" y="3" width="8" height="8" rx="2"></rect>
+                            <rect x="13" y="3" width="8" height="8" rx="2"></rect>
+                            <rect x="3" y="13" width="8" height="8" rx="2"></rect>
+                            <rect x="13" y="13" width="8" height="8" rx="2"></rect>
+                        </svg>
+                    </span>
+                    <p class="noscript-eyebrow">Icon catalogue</p>
+                    <h1>Fluent Icons</h1>
+                    <p>Browse Fluent System and Fabric MDL2 icon families by name, description, metaphor and available visual variant.</p>
+                    <h2>Catalogue features</h2>
+                    <ul>
+                        <li>Fluent regular, filled and colour SVG variants where available.</li>
+                        <li>Fabric MDL2 and branded icon families from upstream Microsoft sources.</li>
+                        <li>Searchable names, descriptions, metaphors and source attribution.</li>
+                        <li>Shareable icon links plus browser copy and SVG download actions.</li>
+                    </ul>
+                    <p>The searchable catalogue requires JavaScript because its committed icon index is rendered in the browser.</p>
+                    <p><a href="https://github.com/AdamCoulterOz/fluent-icon-browser">View the source and generated catalogue on GitHub</a>.</p>
+                </article>
+            </main>
+        </noscript>
+
         <div class="icon-grid" id="iconGrid">
             <!-- Icons will be dynamically loaded here -->
         </div>
     </div>
+
+    <footer class="site-footer">
+        <a class="site-home-link" href="https://adamcoulteroz.github.io/" aria-label="Back to Adam Coulter's projects and tools">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 12H5m6-6-6 6 6 6"></path>
+            </svg>
+            Adam Coulter — Projects and tools
+        </a>
+    </footer>
 
     <div id="iconModal" class="modal" aria-hidden="true">
         <div class="modal-content">

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adamcoulteroz.github.io/fluent-icon-browser/sitemap.xml

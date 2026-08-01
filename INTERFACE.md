@@ -23,6 +23,8 @@
 ## Public Interfaces
 
 - Site URL: `https://adamcoulteroz.github.io/fluent-icon-browser/`
+- Parent project index: `https://adamcoulteroz.github.io/`
+- Crawler policy and sitemap: `robots.txt` and `sitemap.xml` at the site URL.
 - Deep-link query:
   - `set`: icon set key, currently `fluent` or `fabric`.
   - `icon`: icon name from the active generated index.
@@ -56,6 +58,7 @@
 ## Lifecycle / Execution Model
 
 - The static page loads in the browser, fetches `icon-data.json`, renders the default set, then resolves any deep-link query.
+- Without JavaScript, the static page renders catalogue scope, source information, and parent/source links; it does not render or search the icon index.
 - Weekly sync regenerates icon data when upstream SHAs change.
 - Pages deployment runs after pushes, after successful sync workflow runs, and on a daily repair schedule.
 - The browser is single-user client-side state; no persistence occurs outside the current URL and browser-mediated copy/download actions.

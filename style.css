@@ -153,6 +153,110 @@ body {
     overflow: visible;
 }
 
+.noscript-page {
+    display: grid;
+    min-height: calc(100vh - 72px);
+    padding: 48px 24px;
+    place-items: center;
+}
+
+.noscript-card {
+    width: min(100%, 720px);
+    padding: clamp(28px, 6vw, 56px);
+    border-radius: 18px;
+    background: var(--surface-card);
+    box-shadow: var(--shadow-md);
+}
+
+.noscript-mark {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    place-items: center;
+}
+
+.noscript-mark svg {
+    width: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+}
+
+.noscript-eyebrow {
+    margin: 24px 0 8px;
+    color: var(--accent);
+    font: 600 0.76rem/1.2 var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.noscript-card h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 8vw, 4.5rem);
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+}
+
+.noscript-card h2 {
+    margin: 32px 0 10px;
+    font-size: 1.1rem;
+}
+
+.noscript-card p,
+.noscript-card li {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.noscript-card ul {
+    display: grid;
+    margin: 0;
+    padding-left: 1.25rem;
+    gap: 7px;
+}
+
+.noscript-card a,
+.site-home-link {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.noscript-card a:hover,
+.site-home-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.site-footer {
+    display: flex;
+    min-height: 72px;
+    padding: 18px 24px;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-subtle);
+}
+
+.site-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+}
+
+.site-home-link svg {
+    width: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
 .top-bar {
     position: -webkit-sticky;
     position: sticky;

@@ -22,3 +22,9 @@
 - Adopted Meridian's Keel palette, Hanken Grotesk and Fira Code typography, radii, focus, motion, shadow, and layered surface tokens across the static browser.
 - Recast the compact sticky header as the shared 64-pixel frosted navigation surface and aligned search, segmented controls, gallery cards, selected states, metadata pills, and the docked details panel with the same system light/dark theme.
 - Preserved the dense icon catalogue, existing `Icons` identity, responsive layout, copy/download behavior, and stable `?set=<key>&icon=<name>` deep-link contract.
+
+## 2026-08-02: Add static discovery and parent navigation
+
+- Added canonical, keyword, social, crawler, and Schema.org metadata for the published icon browser.
+- Added an honest JavaScript-disabled catalogue description while retaining client-side search and rendering as the interactive lifecycle.
+- Added a persistent footer route back to the root Adam Coulter project index and included crawler files in the Pages artifact.
