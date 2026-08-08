@@ -95,6 +95,7 @@ class IconBrowser {
             const payload = await response.json();
             const normalized = this.normalizePayload(payload);
             this.iconSets = normalized.sets;
+            void warmIconCache(payload);
 
             const availableSetKeys = Object.keys(this.iconSets);
             const preferredSet = normalized.defaultSet;
@@ -1229,6 +1230,64 @@ class IconBrowser {
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
     }
+}
+
+const iconCacheVersionKey = "fluent-icons-icon-cache-version";
+
+function getIconCacheUrls(payload) {
+    return [...new Set(
+        [...JSON.stringify(payload).matchAll(/https?:[^"\\]+\.svg/g)].map((match) => match[0])
+    )];
+}
+
+function updateCacheLoader(completed, total, failed = 0) {
+    const loader = document.getElementById("cacheLoader");
+    const progress = document.getElementById("cacheLoaderProgress");
+    const label = document.getElementById("cacheLoaderLabel");
+    if (!loader || !progress || !label) {
+        return;
+    }
+
+    loader.hidden = false;
+    progress.style.width = `${Math.round((completed / total) * 100)}%`;
+    label.textContent = failed > 0
+        ? `Caching icons: ${completed.toLocaleString()} / ${total.toLocaleString()} (${failed} retrying next launch)`
+        : `Caching icons: ${completed.toLocaleString()} / ${total.toLocaleString()}`;
+}
+
+async function warmIconCache(payload) {
+    const catalogVersion = payload.generatedAt;
+    if (!catalogVersion || localStorage.getItem(iconCacheVersionKey) === catalogVersion) {
+        return;
+    }
+
+    const urls = getIconCacheUrls(payload);
+    if (urls.length === 0 || !("serviceWorker" in navigator)) {
+        return;
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+    if (!registration.active) {
+        return;
+    }
+
+    updateCacheLoader(0, urls.length);
+    const channel = new MessageChannel();
+    channel.port1.onmessage = ({ data }) => {
+        if (data.type === "icon-cache-progress") {
+            updateCacheLoader(data.completed, data.total, data.failed);
+            return;
+        }
+
+        if (data.type === "icon-cache-complete") {
+            updateCacheLoader(data.completed, data.total, data.failed);
+            if (data.failed === 0) {
+                localStorage.setItem(iconCacheVersionKey, catalogVersion);
+            }
+        }
+    };
+
+    registration.active.postMessage({ type: "cache-icons", urls }, [channel.port2]);
 }
 
 const svgFetchCache = new Map();
