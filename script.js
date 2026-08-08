@@ -1344,6 +1344,7 @@ class IconBrowser {
         const label = this.currentSet?.label || "icons";
         countElement.textContent = formattedCount;
         countElement.setAttribute("aria-label", `${formattedCount} visible icons in ${label}`);
+        countElement.closest(".search-wrap")?.style.setProperty("--search-count-width", `${countElement.offsetWidth}px`);
     }
 
     showError(message) {

@@ -695,7 +695,7 @@ body::-webkit-scrollbar {
     min-width: 0;
     height: var(--toolbar-control-height);
     box-sizing: border-box;
-    padding: 0 88px 0 34px;
+    padding: 0 calc(var(--search-count-width, 22px) + 13px) 0 34px;
     line-height: 1;
     font-size: 14px;
     border: 1px solid var(--border-subtle);
