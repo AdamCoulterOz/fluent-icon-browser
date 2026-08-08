@@ -1,6 +1,5 @@
 const CACHE_NAME = "fluent-icons-v1";
 const ICON_CACHE_NAME = "fluent-icons-assets-v1";
-const ICON_CACHE_LIMIT = 200;
 const APP_SHELL = [
     "./",
     "index.html",
@@ -71,10 +70,6 @@ async function cacheIconAsset(request) {
     const response = await fetch(request);
     if (response.ok || response.type === "opaque") {
         await cache.put(request, response.clone());
-        const keys = await cache.keys();
-        if (keys.length > ICON_CACHE_LIMIT) {
-            await cache.delete(keys[0]);
-        }
     }
     return response;
 }
