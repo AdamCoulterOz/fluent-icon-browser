@@ -22,6 +22,7 @@ Static browser UI for searching icons from:
 - Tags every icon sourced from `react-icons-mdl2-branded` with the searchable `branded` metaphor.
 - Auto-refreshes `icon-data.json` when upstream Fluent System or Fabric MDL2 icons change.
 - Deploys the site to GitHub Pages from `main`.
+- Supports installation as a PWA with offline access to the app shell and recently viewed icon SVG assets.
 
 ## Local Development
 
@@ -52,6 +53,8 @@ python generate-fabric-metadata.py \
 ```bash
 python serve.py
 ```
+
+Install the site from a browser's install menu after opening it over HTTPS (or from `localhost`). The service worker caches the app shell during installation and retains up to 200 recently requested remote SVG icon assets for offline reuse.
 
 ### Optional: run transform/consolidation script
 
