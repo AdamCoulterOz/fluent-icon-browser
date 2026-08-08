@@ -1437,6 +1437,7 @@ body::-webkit-scrollbar {
         left: 50%;
         z-index: 7;
         width: fit-content;
+        min-width: min(280px, calc(100% + 2px));
         max-width: calc(100% + 2px);
         max-height: min(210px, calc(100vh - var(--icon-panel-height) - 40px));
         padding: 12px 14px;
