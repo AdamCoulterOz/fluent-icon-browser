@@ -262,9 +262,10 @@ body {
     position: sticky;
     top: 64px;
     z-index: 190;
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    grid-template-areas: "title message actions";
     align-items: center;
-    flex-wrap: wrap;
     gap: 12px;
     box-sizing: border-box;
     width: 100%;
@@ -283,25 +284,38 @@ body {
     animation: app-update-banner-in 180ms var(--ease-out);
 }
 
-.app-update-copy {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    flex: 1 1 280px;
-    min-width: 0;
-    font-size: 0.78rem;
-}
-
-.app-update-copy strong {
+.app-update-title {
+    grid-area: title;
     font-size: 0.82rem;
 }
 
-.app-update-copy span {
+.app-update-message {
+    grid-area: message;
     min-width: 0;
     overflow: hidden;
     color: var(--text-secondary);
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.app-update-actions {
+    grid-area: actions;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-update-banner.is-stacked {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "title actions"
+        "message message";
+}
+
+.app-update-banner.is-stacked .app-update-message {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
 }
 
 @keyframes app-update-banner-in {

@@ -33,6 +33,19 @@
             let pendingUpdate = null;
             let dismissedUpdateVersion = null;
 
+            const syncUpdateBannerLayout = () => {
+                const banner = document.getElementById("appUpdateBanner");
+                const message = document.getElementById("appUpdateMessage");
+                if (!banner || !message || banner.hidden) {
+                    return;
+                }
+
+                banner.classList.remove("is-stacked");
+                if (message.scrollWidth > message.clientWidth) {
+                    banner.classList.add("is-stacked");
+                }
+            };
+
             const showUpdateBanner = (version, summary, registration) => {
                 const banner = document.getElementById("appUpdateBanner");
                 const message = document.getElementById("appUpdateMessage");
@@ -47,6 +60,7 @@
                 pendingUpdate = { version, registration };
                 message.textContent = summary || "A new version of Fluent Icons is ready.";
                 banner.hidden = false;
+                requestAnimationFrame(syncUpdateBannerLayout);
             };
 
             const refreshWhenUpdated = async (registration) => {
@@ -100,6 +114,7 @@
 
                 window.addEventListener("focus", () => refreshWhenUpdated(registration));
                 window.addEventListener("online", () => refreshWhenUpdated(registration));
+                window.addEventListener("resize", syncUpdateBannerLayout);
             });
         }
     </script>
@@ -176,12 +191,12 @@
         </header>
 
         <aside class="app-update-banner" id="appUpdateBanner" role="status" aria-live="polite" hidden>
-            <div class="app-update-copy">
-                <strong>Update available</strong>
-                <span id="appUpdateMessage"></span>
+            <strong class="app-update-title">Update available</strong>
+            <span class="app-update-message" id="appUpdateMessage"></span>
+            <div class="app-update-actions">
+                <button type="button" class="app-update-refresh" id="appUpdateRefresh">Reload</button>
+                <button type="button" class="app-update-dismiss" id="appUpdateDismiss" aria-label="Dismiss update notification">&times;</button>
             </div>
-            <button type="button" class="app-update-refresh" id="appUpdateRefresh">Reload</button>
-            <button type="button" class="app-update-dismiss" id="appUpdateDismiss" aria-label="Dismiss update notification">&times;</button>
         </aside>
 
         <div class="cache-loader" id="cacheLoader" role="status" aria-live="polite" hidden>
