@@ -1172,6 +1172,10 @@ body.icon-panel-open .icon-grid {
     font-size: 0.75rem;
 }
 
+.cache-loader[hidden] {
+    display: none;
+}
+
 .cache-loader-track {
     width: 112px;
     height: 4px;
