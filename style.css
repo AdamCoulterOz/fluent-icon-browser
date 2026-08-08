@@ -1136,7 +1136,7 @@ body {
     }
 
     .panel-preview-header {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .panel-preview {
@@ -1245,11 +1245,11 @@ body.icon-panel-open .icon-grid {
     }
 
     .panel-preview-header {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .panel-toolbar {
-        justify-content: center;
+        justify-content: flex-start;
     }
 }
 
