@@ -258,29 +258,36 @@ body {
 }
 
 .app-update-banner {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    z-index: 300;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 64px;
+    z-index: 190;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
-    max-width: min(440px, calc(100vw - 32px));
-    padding: 12px 12px 12px 14px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 20px;
     color: var(--text-primary);
     background: var(--surface-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .app-update-banner[hidden] {
     display: none;
 }
 
+.app-update-banner:not([hidden]) {
+    animation: app-update-banner-in 180ms var(--ease-out);
+}
+
 .app-update-copy {
-    display: grid;
-    gap: 2px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex: 1 1 280px;
     min-width: 0;
     font-size: 0.78rem;
 }
@@ -290,10 +297,23 @@ body {
 }
 
 .app-update-copy span {
+    min-width: 0;
     overflow: hidden;
     color: var(--text-secondary);
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+@keyframes app-update-banner-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .app-update-refresh,
@@ -1308,9 +1328,7 @@ body.icon-panel-open .icon-grid {
 /* Responsive Design */
 @media (max-width: 768px) {
     .app-update-banner {
-        right: 12px;
-        bottom: 12px;
-        max-width: calc(100vw - 24px);
+        padding: 10px 12px;
     }
 
     .container {

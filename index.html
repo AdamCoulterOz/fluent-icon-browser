@@ -124,14 +124,6 @@
     <noscript><style>.top-bar, .icon-grid { display: none; }</style></noscript>
 </head>
 <body>
-    <aside class="app-update-banner" id="appUpdateBanner" role="status" aria-live="polite" hidden>
-        <div class="app-update-copy">
-            <strong>Update available</strong>
-            <span id="appUpdateMessage"></span>
-        </div>
-        <button type="button" class="app-update-refresh" id="appUpdateRefresh">Reload</button>
-        <button type="button" class="app-update-dismiss" id="appUpdateDismiss" aria-label="Dismiss update notification">&times;</button>
-    </aside>
     <div class="container">
         <header class="top-bar">
             <div class="top-bar-row">
@@ -182,6 +174,15 @@
                 </div>
             </div>
         </header>
+
+        <aside class="app-update-banner" id="appUpdateBanner" role="status" aria-live="polite" hidden>
+            <div class="app-update-copy">
+                <strong>Update available</strong>
+                <span id="appUpdateMessage"></span>
+            </div>
+            <button type="button" class="app-update-refresh" id="appUpdateRefresh">Reload</button>
+            <button type="button" class="app-update-dismiss" id="appUpdateDismiss" aria-label="Dismiss update notification">&times;</button>
+        </aside>
 
         <div class="cache-loader" id="cacheLoader" role="status" aria-live="polite" hidden>
             <div class="cache-loader-track" aria-hidden="true">
