@@ -12,7 +12,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - text search (name, description, metaphors)
 - icon-set switching (Fluent/MDL2)
 - compact 64-pixel sticky frosted header using Meridian's Keel surface treatment, containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
-  - current control order: brand (`logo + Icons`), search, icon set selector, style selector, GitHub repository link
+  - current control order: brand (`logo + Icons`), search, icon set selector, style selector
   - search box is constrained to `max-width: 442px` and centered within the available search lane
   - search input and both segmented selectors share a unified control height (`32px`)
   - visible result count is shown as a compact numeric pill inside the search box (right side), replacing the previous standalone "Showing ... icons" line
@@ -45,7 +45,7 @@ The UI loads `icon-data.json` at runtime and provides:
   - selected icon card remains visually highlighted while the panel is open; clicking the same selected icon again toggles selection off and closes the panel
   - pressing `Esc` or using the panel close button dismisses the panel
   - panel internals are now split into a two-column desktop layout:
-    - left column: icon title, description, and metaphor chips
+    - left column: icon title, description, and metaphor chips; it retains its 42%-to-480px desktop share, but yields smoothly to a 200px minimum between the 600px compact-layout breakpoint and 720px viewport width so the preview toolbar retains usable width
     - right column: variant preview + controls, with a segmented variant switcher using the same visual language as the top nav controls
     - right-column control bar now includes, on one row: variant selector, size selector, `currentColor` toggle icon, copy, and download buttons
     - panel size selector uses a dedicated icon asset (`icons/chevron_down_regular.svg`) for a consistent down-chevron indicator and stable right padding
@@ -64,7 +64,7 @@ The UI loads `icon-data.json` at runtime and provides:
     - copy/download buttons are circular accent CTA controls with brief success/error feedback states
     - icon preview area is centered and uses the full available preview space without an extra background tile
   - on narrow layouts, the panel stacks to a single-column flow while preserving the same controls/content
-    - compact stacked header condenses metadata into a single row (title + truncated inline description); metaphor tags are hidden there
+    - compact stacked header condenses metadata into a single row; only titles with a description or metaphor tags trigger a distinct popover above the panel
   - panel styling aligns with the same Keel rounded pills, blue-accent segmented controls, layered surfaces, and consistent light/dark treatment as the header
 - per-variant native size selector in the details panel
 - URL deep links for icon selection:
@@ -139,9 +139,8 @@ The UI loads `icon-data.json` at runtime and provides:
 - UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
 - `?set=<key>&icon=<name>` is a public, stable deep-link contract for external docs and tools that need to link directly to an icon.
 - `index.html`, `robots.txt`, and `sitemap.xml` expose canonical, social, structured, crawler, and no-JavaScript discovery content. The no-JavaScript surface describes the catalogue honestly; search and icon rendering remain client-side features.
-- The normal page footer links back to the parent project index at `https://adamcoulteroz.github.io/`.
+- The normal page footer is fixed to the viewport bottom, links back to the parent project index at `https://adamcoulteroz.github.io/`, and exposes the GitHub repository link at its right edge; its two phrase groups wrap naturally when space requires, and a footer `ResizeObserver` keeps the details dock aligned above its rendered height.
 - Main page container is now full-width fluid (`100%`) rather than capped, to keep Chrome/Safari responsive behavior consistent across window sizes.
-- Site header includes a compact GitHub repository link pointing at `https://github.com/AdamCoulterOz/fluent-icon-browser`.
 - Header has responsive breakpoints to avoid clipping and preserve selector usability:
   - `<=620px`: compact 2-row layout (`logo + search` on row 1, then both selectors together on row 2) so selector widths do not influence the search row width
     - on this compact row, both selector controls are center-aligned as a group

@@ -34,6 +34,7 @@ class IconBrowser {
     async init() {
         await this.loadIcons();
         this.setupEventListeners();
+        this.setupFooterOffset();
         this.applyCurrentSet();
         this.applyDeepLink();
     }
@@ -210,14 +211,14 @@ class IconBrowser {
             });
         }
 
-        if (panelMeta) {
-            panelMeta.addEventListener("pointerenter", (event) => {
+        if (modalTitle) {
+            modalTitle.addEventListener("pointerenter", (event) => {
                 if (event.pointerType === "mouse") {
                     this.openPanelMetaDetails();
                 }
             });
 
-            panelMeta.addEventListener("pointerleave", (event) => {
+            modalTitle.addEventListener("pointerleave", (event) => {
                 if (event.pointerType === "mouse") {
                     this.closePanelMetaDetails();
                 }
@@ -244,6 +245,25 @@ class IconBrowser {
             this.syncToolbarScrollIndicators();
         });
         this.setupToolbarScrollIndicators();
+    }
+
+    setupFooterOffset() {
+        const footer = document.querySelector(".site-footer");
+        if (!footer) {
+            return;
+        }
+
+        const syncFooterOffset = () => {
+            const footerHeight = Math.ceil(footer.getBoundingClientRect().height);
+            document.documentElement.style.setProperty("--site-footer-height", `${footerHeight}px`);
+        };
+
+        syncFooterOffset();
+
+        if (typeof ResizeObserver !== "undefined") {
+            this.footerResizeObserver = new ResizeObserver(syncFooterOffset);
+            this.footerResizeObserver.observe(footer);
+        }
     }
 
     setupToolbarScrollIndicators() {
@@ -298,6 +318,12 @@ class IconBrowser {
             return;
         }
 
+        if (title.disabled) {
+            details.hidden = true;
+            title.setAttribute("aria-expanded", "false");
+            return;
+        }
+
         details.hidden = this.isCompactPanelLayout();
         title.setAttribute("aria-expanded", "false");
     }
@@ -309,7 +335,7 @@ class IconBrowser {
 
         const details = document.getElementById("panelMetaDetails");
         const title = document.getElementById("modalTitle");
-        if (!details || !title) {
+        if (!details || !title || title.disabled) {
             return;
         }
 
@@ -1113,6 +1139,12 @@ class IconBrowser {
         } else {
             metaphorsList.innerHTML = "";
         }
+
+        const modalTitle = document.getElementById("modalTitle");
+        const hasMetaDetails = Boolean(descriptionText) || Boolean(icon.metaphors?.length);
+        modalTitle.disabled = !hasMetaDetails;
+        modalTitle.classList.toggle("has-meta-details", hasMetaDetails);
+        modalTitle.setAttribute("aria-expanded", "false");
 
         this.syncPanelMetaDetails();
 

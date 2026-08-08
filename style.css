@@ -61,6 +61,7 @@
     --panel-cta-bg-hover: var(--accent-hover);
     --panel-preview-control-band-end: 30%;
     --icon-panel-height: clamp(260px, 42vh, 420px);
+    --site-footer-height: 48px;
 }
 
 html,
@@ -125,6 +126,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-bottom: var(--site-footer-height);
     font-family: var(--font-sans);
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -247,18 +249,41 @@ body::-webkit-scrollbar {
 }
 
 .site-footer {
+    position: fixed;
+    z-index: 190;
+    right: 0;
+    bottom: 0;
+    left: 0;
     display: flex;
-    min-height: 72px;
-    padding: 18px 24px;
+    min-height: 48px;
+    padding: 12px 24px;
     align-items: center;
     justify-content: center;
     background: var(--surface-subtle);
+    border-top: 1px solid var(--nav-border-color);
 }
 
 .site-footer-copy {
+    display: flex;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 0.25em;
+    max-width: calc(100% - 56px);
     margin: 0;
     color: var(--text-secondary);
     font-size: 0.86rem;
+}
+
+.footer-copy-part {
+    white-space: nowrap;
+}
+
+.footer-repo-link {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .app-update-banner {
@@ -413,7 +438,7 @@ body::-webkit-scrollbar {
     box-sizing: border-box;
     min-height: 64px;
     padding: 10px 20px;
-    background: var(--surface-overlay);
+    background: transparent;
     box-shadow: none;
     border-bottom: 1px solid var(--nav-border-color);
     backdrop-filter: saturate(180%) blur(20px);
@@ -955,15 +980,17 @@ body::-webkit-scrollbar {
     left: 12px;
     right: 12px;
     top: auto;
-    bottom: 12px;
+    bottom: calc(12px + var(--site-footer-height));
     width: auto;
     height: var(--icon-panel-height);
-    background: var(--bg-secondary);
+    background: var(--surface-overlay);
     border: 1px solid var(--border-color);
     border-radius: 18px;
     box-shadow: var(--shadow-md);
     display: none;
     overflow: hidden;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -992,9 +1019,9 @@ body::-webkit-scrollbar {
     right: 12px;
     width: 28px;
     height: 28px;
-    border-radius: 999px;
+    border-radius: 8px;
     border: none;
-    background: var(--bg-primary);
+    background: transparent;
     font-size: 20px;
     line-height: 1;
     font-weight: 600;
@@ -1002,6 +1029,13 @@ body::-webkit-scrollbar {
     color: var(--text-secondary);
     z-index: 6;
     box-shadow: none;
+    display: grid;
+    place-items: center;
+}
+
+.close-icon {
+    width: 20px;
+    height: 20px;
 }
 
 .close:hover {
@@ -1011,9 +1045,19 @@ body::-webkit-scrollbar {
 
 .panel-layout {
     display: grid;
-    grid-template-columns: clamp(200px, 28%, 320px) minmax(0, 1fr);
+    grid-template-columns: clamp(200px, 42%, 480px) minmax(0, 1fr);
     width: 100%;
     height: 100%;
+}
+
+@media (min-width: 601px) and (max-width: 720px) {
+    .panel-layout {
+        grid-template-columns: clamp(200px, calc(116.5vw - 546px), 292px) minmax(0, 1fr);
+    }
+
+    .panel-actions-group {
+        margin-left: 8px;
+    }
 }
 
 .modal-header.panel-meta {
@@ -1027,7 +1071,7 @@ body::-webkit-scrollbar {
     font-size: 1.3rem;
     margin-bottom: 8px;
     color: var(--text-primary);
-    padding-right: 44px;
+    padding-right: 0;
     line-height: 1.15;
     letter-spacing: -0.01em;
 }
@@ -1039,6 +1083,11 @@ body::-webkit-scrollbar {
     color: inherit;
     font: inherit;
     text-align: left;
+}
+
+.panel-title-trigger:disabled {
+    cursor: default;
+    opacity: 1;
 }
 
 .panel-meta-details p {
@@ -1055,18 +1104,20 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: var(--surface-subtle);
+    background: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
     .panel-preview {
-        background: var(--surface-subtle);
+        background: transparent;
     }
 }
 
 .panel-preview-header {
     display: flex;
     justify-content: flex-start;
+    padding-right: 40px;
+    box-sizing: border-box;
 }
 
 .panel-toolbar {
@@ -1266,13 +1317,18 @@ body::-webkit-scrollbar {
 }
 
 .panel-action-btn svg {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     stroke: currentColor;
     stroke-width: 2.35;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+.panel-action-btn svg.fluent-toolbar-icon {
+    fill: currentColor;
+    stroke: none;
 }
 
 .panel-action-btn.is-success {
@@ -1338,6 +1394,11 @@ body::-webkit-scrollbar {
 }
 
 @media (max-width: 600px) {
+    .modal,
+    .modal-content {
+        overflow: visible;
+    }
+
     .panel-layout {
         grid-template-columns: 1fr;
     }
@@ -1346,9 +1407,10 @@ body::-webkit-scrollbar {
         position: relative;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
-        padding: 12px 44px 12px 14px;
+        padding: 12px 52px;
         display: flex;
         align-items: baseline;
+        justify-content: center;
         gap: 8px;
         overflow: visible;
         white-space: nowrap;
@@ -1361,7 +1423,7 @@ body::-webkit-scrollbar {
         flex: 0 0 auto;
     }
 
-    .panel-title-trigger {
+    .panel-title-trigger.has-meta-details {
         cursor: pointer;
         text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent 55%);
         text-underline-offset: 4px;
@@ -1369,17 +1431,22 @@ body::-webkit-scrollbar {
 
     .panel-meta-details {
         position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        z-index: 5;
-        max-height: min(210px, calc(var(--icon-panel-height) - 64px));
+        top: auto;
+        right: auto;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        z-index: 7;
+        width: fit-content;
+        max-width: calc(100% + 2px);
+        max-height: min(210px, calc(100vh - var(--icon-panel-height) - 40px));
         padding: 12px 14px;
         overflow-y: auto;
         white-space: normal;
         background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+        transform: translateX(-50%);
     }
 
     .panel-meta-details[hidden] {
@@ -1390,14 +1457,27 @@ body::-webkit-scrollbar {
         margin-bottom: 12px;
     }
 
-    .panel-preview-header {
-        justify-content: flex-start;
+    .panel-preview .panel-preview-header {
+        justify-content: center;
+        padding-right: 0;
+    }
+
+    .panel-preview .toolbar-scroll-region--panel {
+        width: max-content;
+        max-width: 100%;
+    }
+
+    .panel-preview .panel-toolbar {
+        width: max-content;
+        max-width: 100%;
     }
 
     .panel-preview {
-        --toolbar-edge-background: var(--bg-secondary);
-        background: var(--bg-secondary);
+        --toolbar-edge-background: var(--surface-overlay);
+        background: transparent;
         padding-top: 12px;
+        border-bottom-right-radius: 17px;
+        border-bottom-left-radius: 17px;
     }
 
     .panel-toolbar {
@@ -1410,7 +1490,7 @@ body::-webkit-scrollbar {
 }
 
 body.icon-panel-open .icon-grid {
-    padding-bottom: calc(20px + var(--icon-panel-height) + 12px);
+    padding-bottom: calc(20px + var(--icon-panel-height) + var(--site-footer-height) + 12px);
 }
 
 .loading {
@@ -1549,7 +1629,7 @@ body.icon-panel-open .icon-grid {
 
 @media (max-width: 768px) {
     body.icon-panel-open .icon-grid {
-        padding-bottom: calc(12px + var(--icon-panel-height) + 8px);
+        padding-bottom: calc(12px + var(--icon-panel-height) + var(--site-footer-height) + 8px);
     }
 }
 
