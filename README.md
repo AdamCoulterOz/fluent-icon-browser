@@ -54,7 +54,7 @@ python generate-fabric-metadata.py \
 python serve.py
 ```
 
-Install the site from a browser's install menu after opening it over HTTPS (or from `localhost`). The service worker caches the app shell during installation and retains up to 200 recently requested remote SVG icon assets for offline reuse.
+Install the site from a browser's install menu after opening it over HTTPS (or from `localhost`). The service worker caches the app shell during installation and retains up to 200 recently requested remote SVG icon assets for offline reuse. When the installed app is opened, focused, or reconnects to the network, it checks the deployed build version and reloads once when an update is available.
 
 ### Optional: run transform/consolidation script
 

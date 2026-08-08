@@ -29,7 +29,41 @@
     <link rel="stylesheet" href="style.css">
     <script>
         if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js"));
+            const appVersionKey = "fluent-icons-app-version";
+
+            const refreshWhenUpdated = async (registration) => {
+                try {
+                    const response = await fetch("version.json", { cache: "no-store" });
+                    if (!response.ok) {
+                        return;
+                    }
+
+                    const { version } = await response.json();
+                    if (!version) {
+                        return;
+                    }
+
+                    const installedVersion = localStorage.getItem(appVersionKey);
+                    localStorage.setItem(appVersionKey, version);
+                    if (installedVersion && installedVersion !== version) {
+                        await registration.update();
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    console.warn("Unable to check for an app update:", error);
+                }
+            };
+
+            window.addEventListener("load", async () => {
+                const registration = await navigator.serviceWorker.register("service-worker.js", {
+                    updateViaCache: "none"
+                });
+                await registration.update();
+                await refreshWhenUpdated(registration);
+
+                window.addEventListener("focus", () => refreshWhenUpdated(registration));
+                window.addEventListener("online", () => refreshWhenUpdated(registration));
+            });
         }
     </script>
     <script type="application/ld+json">

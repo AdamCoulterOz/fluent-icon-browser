@@ -45,6 +45,7 @@ jobs:
           mkdir -p _site
           cp index.html style.css script.js service-worker.js site.webmanifest icon-data.json robots.txt sitemap.xml _site/
           cp -R icons _site/icons
+          printf '{"version":"%s"}\n' "$GITHUB_SHA" > _site/version.json
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
