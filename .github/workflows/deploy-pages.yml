@@ -45,7 +45,13 @@ jobs:
           mkdir -p _site
           cp index.html style.css script.js service-worker.js site.webmanifest icon-data.json robots.txt sitemap.xml _site/
           cp -R icons _site/icons
-          printf '{"version":"%s"}\n' "$GITHUB_SHA" > _site/version.json
+          export DEPLOYMENT_VERSION="$GITHUB_SHA"
+          export DEPLOYMENT_SUMMARY="$(git log -1 --pretty=%s)"
+          python3 - <<'PY' > _site/version.json
+          import json
+          import os
+          print(json.dumps({"version": os.environ["DEPLOYMENT_VERSION"], "summary": os.environ["DEPLOYMENT_SUMMARY"]}))
+          PY
           touch _site/.nojekyll
 
       - name: Upload Pages artifact

@@ -257,6 +257,82 @@ body {
     stroke-width: 1.8;
 }
 
+.app-update-banner {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: min(440px, calc(100vw - 32px));
+    padding: 12px 12px 12px 14px;
+    color: var(--text-primary);
+    background: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+.app-update-banner[hidden] {
+    display: none;
+}
+
+.app-update-copy {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    font-size: 0.78rem;
+}
+
+.app-update-copy strong {
+    font-size: 0.82rem;
+}
+
+.app-update-copy span {
+    overflow: hidden;
+    color: var(--text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-update-refresh,
+.app-update-dismiss {
+    border: none;
+    cursor: pointer;
+}
+
+.app-update-refresh {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border-radius: 6px;
+    color: #ffffff;
+    background: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.app-update-refresh:hover {
+    background: var(--accent-hover);
+}
+
+.app-update-dismiss {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    background: transparent;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.app-update-dismiss:hover {
+    color: var(--text-primary);
+    background: var(--surface-subtle);
+}
+
 .top-bar {
     position: -webkit-sticky;
     position: sticky;
@@ -1233,6 +1309,12 @@ body.icon-panel-open .icon-grid {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .app-update-banner {
+        right: 12px;
+        bottom: 12px;
+        max-width: calc(100vw - 24px);
+    }
+
     .container {
         padding: 0;
     }

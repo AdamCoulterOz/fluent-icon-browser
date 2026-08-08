@@ -30,6 +30,24 @@
     <script>
         if ("serviceWorker" in navigator) {
             const appVersionKey = "fluent-icons-app-version";
+            let pendingUpdate = null;
+            let dismissedUpdateVersion = null;
+
+            const showUpdateBanner = (version, summary, registration) => {
+                const banner = document.getElementById("appUpdateBanner");
+                const message = document.getElementById("appUpdateMessage");
+                if (!banner || !message) {
+                    return;
+                }
+
+                if (dismissedUpdateVersion === version) {
+                    return;
+                }
+
+                pendingUpdate = { version, registration };
+                message.textContent = summary || "A new version of Fluent Icons is ready.";
+                banner.hidden = false;
+            };
 
             const refreshWhenUpdated = async (registration) => {
                 try {
@@ -38,16 +56,20 @@
                         return;
                     }
 
-                    const { version } = await response.json();
+                    const { version, summary } = await response.json();
                     if (!version) {
                         return;
                     }
 
                     const installedVersion = localStorage.getItem(appVersionKey);
-                    localStorage.setItem(appVersionKey, version);
-                    if (installedVersion && installedVersion !== version) {
+                    if (!installedVersion) {
+                        localStorage.setItem(appVersionKey, version);
+                        return;
+                    }
+
+                    if (installedVersion !== version) {
                         await registration.update();
-                        window.location.reload();
+                        showUpdateBanner(version, summary, registration);
                     }
                 } catch (error) {
                     console.warn("Unable to check for an app update:", error);
@@ -60,6 +82,21 @@
                 });
                 await registration.update();
                 await refreshWhenUpdated(registration);
+
+                document.getElementById("appUpdateRefresh")?.addEventListener("click", async () => {
+                    if (!pendingUpdate) {
+                        return;
+                    }
+
+                    localStorage.setItem(appVersionKey, pendingUpdate.version);
+                    await pendingUpdate.registration.update();
+                    window.location.reload();
+                });
+
+                document.getElementById("appUpdateDismiss")?.addEventListener("click", () => {
+                    dismissedUpdateVersion = pendingUpdate?.version || null;
+                    document.getElementById("appUpdateBanner").hidden = true;
+                });
 
                 window.addEventListener("focus", () => refreshWhenUpdated(registration));
                 window.addEventListener("online", () => refreshWhenUpdated(registration));
@@ -87,6 +124,14 @@
     <noscript><style>.top-bar, .icon-grid { display: none; }</style></noscript>
 </head>
 <body>
+    <aside class="app-update-banner" id="appUpdateBanner" role="status" aria-live="polite" hidden>
+        <div class="app-update-copy">
+            <strong>Update available</strong>
+            <span id="appUpdateMessage"></span>
+        </div>
+        <button type="button" class="app-update-refresh" id="appUpdateRefresh">Reload</button>
+        <button type="button" class="app-update-dismiss" id="appUpdateDismiss" aria-label="Dismiss update notification">&times;</button>
+    </aside>
     <div class="container">
         <header class="top-bar">
             <div class="top-bar-row">
