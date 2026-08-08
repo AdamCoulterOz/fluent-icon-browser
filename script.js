@@ -808,14 +808,14 @@ class IconBrowser {
     filterIcons(searchTerm) {
         const searchRaw = String(searchTerm || "").toLowerCase().trim();
         const search = this.normalizeSearchText(searchRaw);
+        const searchTerms = search.split(" ").filter(Boolean);
 
         this.filteredIcons = this.icons.filter((icon) => {
             const rawIndex = icon._searchRaw || "";
             const normalizedIndex = icon._searchNormalized || "";
             const searchMatch =
-                search === "" ||
-                (searchRaw && rawIndex.includes(searchRaw)) ||
-                normalizedIndex.includes(search);
+                searchTerms.length === 0 ||
+                searchTerms.every((term) => rawIndex.includes(term) || normalizedIndex.includes(term));
 
             return searchMatch;
         });
