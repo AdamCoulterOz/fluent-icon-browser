@@ -813,7 +813,16 @@ body {
     letter-spacing: -0.01em;
 }
 
-.modal-header.panel-meta p {
+.panel-title-trigger {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.panel-meta-details p {
     color: var(--text-secondary);
     line-height: 1.45;
     font-size: 13px;
@@ -1107,13 +1116,14 @@ body {
     }
 
     .modal-header.panel-meta {
+        position: relative;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
         padding: 12px 44px 12px 14px;
         display: flex;
         align-items: baseline;
         gap: 8px;
-        overflow: hidden;
+        overflow: visible;
         white-space: nowrap;
     }
 
@@ -1124,15 +1134,33 @@ body {
         flex: 0 0 auto;
     }
 
-    .modal-header.panel-meta p {
-        margin: 0;
-        flex: 1;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .panel-title-trigger {
+        cursor: pointer;
+        text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent 55%);
+        text-underline-offset: 4px;
     }
 
-    .modal-header.panel-meta #metaphorsList {
+    .panel-meta-details {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        z-index: 5;
+        max-height: min(210px, calc(var(--icon-panel-height) - 64px));
+        padding: 12px 14px;
+        overflow-y: auto;
+        white-space: normal;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    .panel-meta-details[hidden] {
         display: none;
+    }
+
+    .panel-meta-details p {
+        margin-bottom: 12px;
     }
 
     .panel-preview-header {

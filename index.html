@@ -191,9 +191,13 @@
             <button type="button" class="close" aria-label="Close details panel">&times;</button>
             <div class="panel-layout">
                 <div class="modal-header panel-meta">
-                    <h2 id="modalTitle"></h2>
-                    <p id="modalDescription"></p>
-                    <div id="metaphorsList"></div>
+                    <h2 class="panel-title">
+                        <button type="button" class="panel-title-trigger" id="modalTitle" aria-label="Show icon details" aria-controls="panelMetaDetails" aria-expanded="false"></button>
+                    </h2>
+                    <div class="panel-meta-details" id="panelMetaDetails">
+                        <p id="modalDescription"></p>
+                        <div id="metaphorsList"></div>
+                    </div>
                 </div>
                 <div class="modal-body panel-preview">
                     <div class="panel-preview-header">
