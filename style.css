@@ -303,6 +303,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 12px;
+    align-self: start;
+    justify-self: end;
+    white-space: nowrap;
 }
 
 .app-update-banner.is-stacked {
