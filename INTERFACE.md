@@ -43,6 +43,7 @@
 ## Side Effects
 
 - Browser runtime fetches `icon-data.json` from the same static site.
+- Browser runtime fetches commit-pinned Fluent SVGs cross-origin; preview images may use opaque cached responses, while copy/download require CORS-readable SVG text.
 - Selecting icons mutates the current browser URL with `history.replaceState`.
 - Copy and download actions interact with the browser clipboard and local download behavior.
 - GitHub workflows may commit generated index updates and deploy the static site to GitHub Pages.

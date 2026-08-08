@@ -1,5 +1,5 @@
-const CACHE_NAME = "fluent-icons-v1";
-const ICON_CACHE_NAME = "fluent-icons-assets-v1";
+const CACHE_NAME = "fluent-icons-v2";
+const ICON_CACHE_NAME = "fluent-icons-assets-v2";
 const ICON_CACHE_CONCURRENCY = 60;
 const APP_SHELL = [
     "./",
@@ -72,12 +72,14 @@ async function cacheAppAsset(request) {
 async function cacheIconAsset(request) {
     const cache = await caches.open(ICON_CACHE_NAME);
     const cachedResponse = await cache.match(request);
-    if (cachedResponse) {
+    const acceptsOpaqueResponse = request.mode === "no-cors";
+
+    if (cachedResponse && (cachedResponse.type !== "opaque" || acceptsOpaqueResponse)) {
         return cachedResponse;
     }
 
     const response = await fetch(request);
-    if (response.ok || response.type === "opaque") {
+    if (response.ok || (acceptsOpaqueResponse && response.type === "opaque")) {
         await cache.put(request, response.clone());
     }
     return response;
@@ -108,10 +110,11 @@ async function cacheIconAssets(urls, statusPort) {
             nextIndex += 1;
 
             try {
-                const request = new Request(url);
-                if (!await cache.match(request)) {
+                const request = new Request(url, { mode: "cors", credentials: "omit" });
+                const cachedResponse = await cache.match(request);
+                if (!cachedResponse || cachedResponse.type === "opaque") {
                     const response = await fetch(request);
-                    if (!response.ok && response.type !== "opaque") {
+                    if (!response.ok || response.type === "opaque") {
                         throw new Error(`Failed to fetch ${url}`);
                     }
                     await cache.put(request, response);

@@ -28,3 +28,8 @@
 - Added canonical, keyword, social, crawler, and Schema.org metadata for the published icon browser.
 - Added an honest JavaScript-disabled catalogue description while retaining client-side search and rendering as the interactive lifecycle.
 - Added a persistent footer route back to the root Adam Coulter project index and included crawler files in the Pages artifact.
+
+## 2026-08-09: Separate Preview and SVG Text Cache Semantics
+
+- Stopped opaque cross-origin responses cached for icon image previews from satisfying readable SVG fetches used by copy and download actions.
+- Made background icon warming request CORS-readable SVGs and advanced the cache generation so existing opaque entries are discarded after the service-worker update.

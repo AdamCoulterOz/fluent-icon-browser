@@ -132,6 +132,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - `icon-data.json` is committed so Pages can serve immediately.
 - Sync workflow uses sparse checkout of upstream `assets/` for efficiency.
 - Fluent icon SVG payloads are loaded from `raw.githubusercontent.com` URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
+- The service worker may retain opaque cross-origin SVG responses for image previews, but copy/download fetches require readable CORS responses; opaque cache entries are bypassed and replaced for those requests, and background cache warming explicitly requests CORS-readable SVGs.
 - Fluent preview/download URLs intentionally avoid jsDelivr because browser image requests for some pinned SVG assets returned intermittent `403` responses.
 - Fabric/MDL2 icons are sourced from both upstream component packages and stored as inline SVG in `icon-data.json` (with source links), because upstream raw SVG files are not published as a parallel asset folder.
 - Branded MDL2 components remain part of the `fabric` icon set rather than a separate UI set; `branded` is a searchable metaphor/tag and the upstream branded-assets license remains applicable.

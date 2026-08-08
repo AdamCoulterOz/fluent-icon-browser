@@ -1389,7 +1389,7 @@ class IconBrowser {
     }
 }
 
-const iconCacheVersionKey = "fluent-icons-icon-cache-version";
+const iconCacheVersionKey = "fluent-icons-icon-cache-version-v2";
 
 function getIconCacheUrls(payload) {
     return [...new Set(
