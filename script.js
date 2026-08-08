@@ -206,7 +206,21 @@ class IconBrowser {
 
         if (modalTitle) {
             modalTitle.addEventListener("click", () => {
-                this.togglePanelMetaDetails();
+                this.openPanelMetaDetails();
+            });
+        }
+
+        if (panelMeta) {
+            panelMeta.addEventListener("pointerenter", (event) => {
+                if (event.pointerType === "mouse") {
+                    this.openPanelMetaDetails();
+                }
+            });
+
+            panelMeta.addEventListener("pointerleave", (event) => {
+                if (event.pointerType === "mouse") {
+                    this.closePanelMetaDetails();
+                }
             });
         }
 
@@ -248,7 +262,7 @@ class IconBrowser {
         title.setAttribute("aria-expanded", "false");
     }
 
-    togglePanelMetaDetails() {
+    openPanelMetaDetails() {
         if (!this.isCompactPanelLayout()) {
             return;
         }
@@ -259,8 +273,8 @@ class IconBrowser {
             return;
         }
 
-        details.hidden = !details.hidden;
-        title.setAttribute("aria-expanded", String(!details.hidden));
+        details.hidden = false;
+        title.setAttribute("aria-expanded", "true");
     }
 
     closePanelMetaDetails() {
