@@ -1101,13 +1101,11 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.15s ease, filter 0.2s ease, background-color 0.2s ease;
+    transition: background-color 0.2s ease;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 .panel-action-btn:hover:not(:disabled) {
-    transform: translateY(-1px);
-    filter: none;
     background: var(--panel-cta-bg-hover);
 }
 
