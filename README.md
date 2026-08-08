@@ -54,7 +54,7 @@ python generate-fabric-metadata.py \
 python serve.py
 ```
 
-Install the site from a browser's install menu after opening it over HTTPS (or from `localhost`). The service worker caches the app shell during installation, then warms the icon cache in six-request batches when a new catalogue version is first opened. It resumes incomplete warm-ups on the next launch. Icon URLs are pinned to their upstream commit, so a changed icon receives a new cache entry while unchanged icons remain cached. When the installed app is opened, focused, or reconnects to the network, it checks the deployed build version and reloads once when an update is available.
+Install the site from a browser's install menu after opening it over HTTPS (or from `localhost`). The service worker caches the app shell during installation, then warms the icon cache in 60-request batches when a new catalogue version is first opened. It resumes incomplete warm-ups on the next launch. Icon URLs are pinned to their upstream commit, so a changed icon receives a new cache entry while unchanged icons remain cached. When the installed app is opened, focused, or reconnects to the network, it checks the deployed build version and reloads once when an update is available.
 
 ### Optional: run transform/consolidation script
 
