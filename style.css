@@ -856,6 +856,8 @@ body {
     gap: 8px;
     flex-wrap: nowrap;
     min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .panel-variant-tabs {
@@ -1173,7 +1175,7 @@ body {
     }
 
     .panel-toolbar {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .panel-actions-group {
@@ -1278,6 +1280,7 @@ body.icon-panel-open .icon-grid {
 
     .panel-toolbar {
         justify-content: flex-start;
+        flex-wrap: nowrap;
     }
 }
 
