@@ -1255,6 +1255,13 @@ function updateCacheLoader(completed, total, failed = 0) {
         : `Caching icons: ${completed.toLocaleString()} / ${total.toLocaleString()}`;
 }
 
+function hideCacheLoader() {
+    const loader = document.getElementById("cacheLoader");
+    if (loader) {
+        loader.hidden = true;
+    }
+}
+
 async function warmIconCache(payload) {
     const catalogVersion = payload.generatedAt;
     if (!catalogVersion || localStorage.getItem(iconCacheVersionKey) === catalogVersion) {
@@ -1271,7 +1278,6 @@ async function warmIconCache(payload) {
         return;
     }
 
-    updateCacheLoader(0, urls.length);
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
         if (data.type === "icon-cache-progress") {
@@ -1283,6 +1289,7 @@ async function warmIconCache(payload) {
             updateCacheLoader(data.completed, data.total, data.failed);
             if (data.failed === 0) {
                 localStorage.setItem(iconCacheVersionKey, catalogVersion);
+                hideCacheLoader();
             }
         }
     };
