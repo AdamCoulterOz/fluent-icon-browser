@@ -239,7 +239,47 @@ class IconBrowser {
             }
         });
 
-        window.addEventListener("resize", () => this.syncPanelMetaDetails());
+        window.addEventListener("resize", () => {
+            this.syncPanelMetaDetails();
+            this.syncToolbarScrollIndicators();
+        });
+        this.setupToolbarScrollIndicators();
+    }
+
+    setupToolbarScrollIndicators() {
+        this.toolbarScrollIndicators = Array.from(
+            document.querySelectorAll(".top-controls, .panel-toolbar")
+        );
+
+        this.toolbarScrollIndicators.forEach((toolbar) => {
+            toolbar.addEventListener("scroll", () => this.syncToolbarScrollIndicators(), {
+                passive: true,
+            });
+        });
+
+        if (typeof ResizeObserver !== "undefined") {
+            this.toolbarScrollObserver = new ResizeObserver(() => {
+                this.syncToolbarScrollIndicators();
+            });
+            this.toolbarScrollIndicators.forEach((toolbar) => {
+                this.toolbarScrollObserver.observe(toolbar);
+            });
+        }
+
+        this.syncToolbarScrollIndicators();
+    }
+
+    syncToolbarScrollIndicators() {
+        (this.toolbarScrollIndicators || []).forEach((toolbar) => {
+            const maximumScrollLeft = Math.max(0, toolbar.scrollWidth - toolbar.clientWidth);
+            const canScroll = maximumScrollLeft > 1;
+
+            toolbar.classList.toggle("has-overflow-left", canScroll && toolbar.scrollLeft > 1);
+            toolbar.classList.toggle(
+                "has-overflow-right",
+                canScroll && toolbar.scrollLeft < maximumScrollLeft - 1
+            );
+        });
     }
 
     isCompactPanelLayout() {
@@ -298,6 +338,7 @@ class IconBrowser {
         panel.classList.add("is-open");
         panel.setAttribute("aria-hidden", "false");
         document.body.classList.add("icon-panel-open");
+        requestAnimationFrame(() => this.syncToolbarScrollIndicators());
     }
 
     isIconPanelOpen() {
