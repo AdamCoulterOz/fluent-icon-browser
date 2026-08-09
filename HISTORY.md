@@ -1,5 +1,7 @@
 # History
 
+- Rounded the four shared inner favicon/header tiles from Lamé `n=4` to `n=3` while retaining the `n=4` outer favicon silhouette, tile geometry, stroke weight, and action-blue identity.
+
 ## 2026-07-26: Include Branded Fabric MDL2 Components
 
 - Expanded the Fabric MDL2 source boundary from `react-icons-mdl2` alone to the union of `react-icons-mdl2` and `react-icons-mdl2-branded`.
