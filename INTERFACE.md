@@ -45,7 +45,8 @@
 - Browser runtime fetches `icon-data.json` from the same static site.
 - Browser runtime fetches commit-pinned Fluent SVGs cross-origin; preview images may use opaque cached responses, while copy/download require CORS-readable SVG text.
 - Selecting icons mutates the current browser URL with `history.replaceState`.
-- Copy and download actions interact with the browser clipboard and local download behavior.
+- Copy and download actions interact with the browser clipboard and local download behavior. The preview toolbar exposes `currentColor` and bounds transformations that apply identically to both outputs. Bounds are off by default and retained for the browser-tab session; when enabled, output SVG markup groups its drawable artwork with a zero-opacity path matching the source `viewBox` to preserve document bounds and grouping in native-curve imports.
+- The bounds preference is stored in browser `sessionStorage` and expires when the browser-tab session ends.
 - GitHub workflows may commit generated index updates and deploy the static site to GitHub Pages.
 
 ## Dependency Boundaries
@@ -59,10 +60,11 @@
 ## Lifecycle / Execution Model
 
 - The static page loads in the browser, fetches `icon-data.json`, renders the default set, then resolves any deep-link query.
+- The icon details panel updates in place when another icon is selected. It closes when the selected card is toggled, the user presses `Esc`, clicks outside the panel without selecting another icon, or swipes the panel downward on a touch screen. A touch dismissal tracks the finger and owns the active gesture so the underlying gallery does not scroll; an incomplete swipe settles the panel back into place.
 - Without JavaScript, the static page renders catalogue scope, source information, and parent/source links; it does not render or search the icon index.
 - Weekly sync regenerates icon data when upstream SHAs change.
 - Pages deployment runs after pushes, after successful sync workflow runs, and on a daily repair schedule.
-- The browser is single-user client-side state; no persistence occurs outside the current URL and browser-mediated copy/download actions.
+- The browser is single-user client-side state. The bounds preference persists only in browser `sessionStorage`; selected icon state remains represented by the current URL, and copy/download effects remain browser-mediated.
 
 ## Anti-Goals
 

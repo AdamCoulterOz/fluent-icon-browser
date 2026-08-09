@@ -33,3 +33,18 @@
 
 - Stopped opaque cross-origin responses cached for icon image previews from satisfying readable SVG fetches used by copy and download actions.
 - Made background icon warming request CORS-readable SVGs and advanced the cache generation so existing opaque entries are discarded after the service-worker update.
+
+## 2026-08-09: Unify SVG Output Transformations
+
+- Added adjacent `currentColor` and bounds toggles that apply the same transformations to both copied and downloaded SVGs.
+- Made bounds opt-in and retained that preference for the browser-tab session, while keeping the grouped transparent `viewBox` path behavior when enabled.
+
+## 2026-08-09: Simplify Preview Selection and Dismissal
+
+- Replaced the native size selector with a themed, keyboard-accessible listbox whose selected and unselected states match the segmented controls.
+- Removed the dedicated close control and made outside click, `Esc`, same-card toggling, and downward touch swipe the panel dismissal gestures; selecting another icon continues to update the open panel in place.
+
+## 2026-08-09: Preserve Preview Configuration Visibility
+
+- Made Copy and Download move into the compact title bar only when their presence would otherwise cause the preview toolbar to scroll.
+- Kept configuration controls at the leading edge of any remaining overflow and exposed ellipsis-truncated icon names through the existing metadata popover.

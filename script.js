@@ -1,3 +1,23 @@
+const INCLUDE_BOUNDS_SESSION_KEY = "fluent-icons-include-bounds";
+const PANEL_SIZE_MENU_HIDE_DELAY_MS = 130;
+
+function readIncludeBoundsPreference() {
+    try {
+        return sessionStorage.getItem(INCLUDE_BOUNDS_SESSION_KEY) === "true";
+    } catch (error) {
+        console.warn("Session storage is unavailable; SVG bounds will reset on reload:", error);
+        return false;
+    }
+}
+
+function writeIncludeBoundsPreference(enabled) {
+    try {
+        sessionStorage.setItem(INCLUDE_BOUNDS_SESSION_KEY, String(enabled));
+    } catch (error) {
+        console.warn("Session storage is unavailable; SVG bounds will reset on reload:", error);
+    }
+}
+
 class IconBrowser {
     constructor() {
         this.iconSets = {};
@@ -18,12 +38,16 @@ class IconBrowser {
             regular: false,
             filled: false,
         };
+        this.includeBoundsEnabled = readIncludeBoundsPreference();
         this.iconByName = new Map();
         this.cardByName = new Map();
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
         this.searchDebounceTimer = null;
         this.searchDebounceMs = 120;
+        this.panelSwipeGesture = null;
+        this.panelSwipeAnimationTimer = null;
+        this.panelSizeMenuCloseTimer = null;
         this.init();
     }
 
@@ -111,9 +135,12 @@ class IconBrowser {
 
     setupEventListeners() {
         const searchInput = document.getElementById("searchInput");
-        const closeBtn = document.querySelector(".close");
         const modalTitle = document.getElementById("modalTitle");
         const panelMeta = document.querySelector(".panel-meta");
+        const panel = document.getElementById("iconModal");
+        const panelContent = panel?.querySelector(".modal-content");
+        const panelSizeButton = document.getElementById("panelSizeButton");
+        const panelSizeMenu = document.getElementById("panelSizeMenu");
 
         searchInput.addEventListener("input", (event) => {
             const nextValue = event.target.value;
@@ -158,17 +185,33 @@ class IconBrowser {
             });
         });
 
-        const panelSizeSelect = document.getElementById("panelSizeSelect");
-        if (panelSizeSelect) {
-            panelSizeSelect.addEventListener("change", () => {
-                if (!this.activePanelVariant) {
+        if (panelSizeButton) {
+            panelSizeButton.addEventListener("click", () => {
+                this.togglePanelSizeMenu();
+            });
+
+            panelSizeButton.addEventListener("keydown", (event) => {
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                    event.preventDefault();
+                    this.openPanelSizeMenu({
+                        focusSelected: true,
+                        focusLast: event.key === "ArrowUp",
+                    });
+                }
+            });
+        }
+
+        if (panelSizeMenu) {
+            panelSizeMenu.addEventListener("click", (event) => {
+                const option = event.target.closest?.(".panel-size-option");
+                if (!option) {
                     return;
                 }
-                const parsed = Number(panelSizeSelect.value);
-                this.panelSelectedSizes[this.activePanelVariant] = Number.isFinite(parsed)
-                    ? parsed
-                    : null;
-                this.updateModalVariantPreview(this.activePanelVariant);
+                this.selectPanelSize(Number(option.dataset.size));
+            });
+
+            panelSizeMenu.addEventListener("keydown", (event) => {
+                this.handlePanelSizeMenuKeydown(event);
             });
         }
 
@@ -189,6 +232,16 @@ class IconBrowser {
             });
         }
 
+        const panelIncludeBoundsToggle = document.getElementById("panelIncludeBoundsToggle");
+        if (panelIncludeBoundsToggle) {
+            panelIncludeBoundsToggle.addEventListener("click", () => {
+                this.includeBoundsEnabled = !this.includeBoundsEnabled;
+                writeIncludeBoundsPreference(this.includeBoundsEnabled);
+                this.syncIncludeBoundsToggle();
+            });
+            this.syncIncludeBoundsToggle();
+        }
+
         const panelDownloadButton = document.getElementById("panelDownloadBtn");
         if (panelDownloadButton) {
             panelDownloadButton.addEventListener("click", () => {
@@ -196,12 +249,6 @@ class IconBrowser {
                     return;
                 }
                 downloadIcon(this.activePanelVariant);
-            });
-        }
-
-        if (closeBtn) {
-            closeBtn.addEventListener("click", () => {
-                this.closeIconPanel();
             });
         }
 
@@ -226,13 +273,156 @@ class IconBrowser {
         }
 
         document.addEventListener("pointerdown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (
+                panelSizeMenu &&
+                !panelSizeMenu.hidden &&
+                target &&
+                !panelSizeMenu.contains(target) &&
+                !panelSizeButton?.contains(target)
+            ) {
+                this.closePanelSizeMenu();
+            }
+
             if (this.isPanelMetaDetailsOpen() && panelMeta && !panelMeta.contains(event.target)) {
                 this.closePanelMetaDetails();
             }
+
+            if (
+                this.isIconPanelOpen() &&
+                target &&
+                !panel?.contains(target) &&
+                !panelSizeMenu?.contains(target) &&
+                !target.closest(".icon-card")
+            ) {
+                this.closeIconPanel();
+            }
         });
+
+        if (panelContent) {
+            panelContent.addEventListener(
+                "touchstart",
+                (event) => {
+                    this.resetPanelSwipeState();
+                    if (event.touches.length !== 1) {
+                        return;
+                    }
+                    const touch = event.touches[0];
+                    const target = event.target instanceof Element ? event.target : null;
+                    const verticalScroller = this.findPanelVerticalScroller(target, panelContent);
+                    const horizontalScroller = target?.closest(".panel-toolbar") || null;
+                    this.panelSwipeGesture = {
+                        identifier: touch.identifier,
+                        startX: touch.clientX,
+                        startY: touch.clientY,
+                        startTime: performance.now(),
+                        axis: null,
+                        dragOffset: 0,
+                        verticalScroller,
+                        horizontalScroller,
+                        startScrollLeft: horizontalScroller?.scrollLeft || 0,
+                    };
+                },
+                { passive: true }
+            );
+
+            panelContent.addEventListener(
+                "touchmove",
+                (event) => {
+                    const gesture = this.panelSwipeGesture;
+                    if (!gesture) {
+                        return;
+                    }
+                    const touch = Array.from(event.touches).find(
+                        (entry) => entry.identifier === gesture.identifier
+                    );
+                    if (!touch) {
+                        return;
+                    }
+
+                    const deltaX = touch.clientX - gesture.startX;
+                    const deltaY = touch.clientY - gesture.startY;
+                    const absoluteX = Math.abs(deltaX);
+                    const absoluteY = Math.abs(deltaY);
+
+                    if (gesture.verticalScroller) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    if (!gesture.axis && Math.max(absoluteX, absoluteY) >= 4) {
+                        gesture.axis = absoluteY > absoluteX ? "vertical" : "horizontal";
+                    }
+
+                    if (gesture.axis === "horizontal") {
+                        if (gesture.horizontalScroller) {
+                            gesture.horizontalScroller.scrollLeft = gesture.startScrollLeft - deltaX;
+                            this.syncToolbarScrollIndicators();
+                        }
+                        return;
+                    }
+
+                    if (gesture.axis !== "vertical") {
+                        return;
+                    }
+
+                    gesture.dragOffset = Math.max(0, deltaY);
+                    panel.classList.add("is-swipe-dragging");
+                    panel.style.setProperty("--panel-swipe-offset", `${gesture.dragOffset}px`);
+                },
+                { passive: false }
+            );
+
+            panelContent.addEventListener(
+                "touchend",
+                (event) => {
+                    const gesture = this.panelSwipeGesture;
+                    if (!gesture) {
+                        return;
+                    }
+                    const touch = Array.from(event.changedTouches).find(
+                        (entry) => entry.identifier === gesture.identifier
+                    );
+                    if (!touch) {
+                        this.resetPanelSwipeState();
+                        return;
+                    }
+                    const deltaX = touch.clientX - gesture.startX;
+                    const deltaY = touch.clientY - gesture.startY;
+                    const elapsed = Math.max(1, performance.now() - gesture.startTime);
+                    const velocityY = deltaY / elapsed;
+                    const isDownwardSwipe =
+                        gesture.axis === "vertical" &&
+                        deltaY > Math.abs(deltaX) * 1.1 &&
+                        (deltaY >= 72 || (deltaY >= 24 && velocityY >= 0.5));
+
+                    this.panelSwipeGesture = null;
+                    if (isDownwardSwipe) {
+                        this.dismissPanelFromSwipe();
+                    } else {
+                        this.settlePanelSwipe();
+                    }
+                },
+                { passive: true }
+            );
+
+            panelContent.addEventListener(
+                "touchcancel",
+                () => {
+                    this.panelSwipeGesture = null;
+                    this.settlePanelSwipe();
+                },
+                { passive: true }
+            );
+        }
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
+                if (this.closePanelSizeMenu({ restoreFocus: true })) {
+                    return;
+                }
                 if (this.closePanelMetaDetails()) {
                     return;
                 }
@@ -241,6 +431,8 @@ class IconBrowser {
         });
 
         window.addEventListener("resize", () => {
+            this.closePanelSizeMenu();
+            this.syncPanelActionPlacement();
             this.syncPanelMetaDetails();
             this.syncToolbarScrollIndicators();
         });
@@ -272,13 +464,19 @@ class IconBrowser {
         );
 
         this.toolbarScrollIndicators.forEach((toolbar) => {
-            toolbar.addEventListener("scroll", () => this.syncToolbarScrollIndicators(), {
-                passive: true,
-            });
+            toolbar.addEventListener(
+                "scroll",
+                () => {
+                    this.closePanelSizeMenu();
+                    this.syncToolbarScrollIndicators();
+                },
+                { passive: true }
+            );
         });
 
         if (typeof ResizeObserver !== "undefined") {
             this.toolbarScrollObserver = new ResizeObserver(() => {
+                this.syncPanelActionPlacement();
                 this.syncToolbarScrollIndicators();
             });
             this.toolbarScrollIndicators.forEach((toolbar) => {
@@ -286,7 +484,45 @@ class IconBrowser {
             });
         }
 
+        this.syncPanelActionPlacement();
         this.syncToolbarScrollIndicators();
+    }
+
+    setPanelActionsPromoted(promoted) {
+        const panel = document.getElementById("iconModal");
+        const panelMeta = panel?.querySelector(".panel-meta");
+        const actions = document.getElementById("panelActionsGroup");
+        const anchor = document.getElementById("panelActionsAnchor");
+        if (!panel || !panelMeta || !actions || !anchor) {
+            return;
+        }
+
+        panel.classList.toggle("has-promoted-actions", promoted);
+        if (promoted) {
+            if (actions.parentElement !== panelMeta) {
+                panelMeta.appendChild(actions);
+            }
+        } else if (actions.previousElementSibling !== anchor) {
+            anchor.insertAdjacentElement("afterend", actions);
+        }
+    }
+
+    syncPanelActionPlacement() {
+        const panel = document.getElementById("iconModal");
+        const toolbar = panel?.querySelector(".panel-toolbar");
+        if (!panel || !toolbar) {
+            return;
+        }
+
+        this.setPanelActionsPromoted(false);
+        const shouldMeasure = this.isIconPanelOpen() && this.isCompactPanelLayout();
+        const shouldPromote = shouldMeasure && toolbar.scrollWidth - toolbar.clientWidth > 1;
+        this.setPanelActionsPromoted(shouldPromote);
+
+        if (shouldPromote) {
+            toolbar.scrollLeft = 0;
+        }
+        this.syncPanelTitleState();
     }
 
     syncToolbarScrollIndicators() {
@@ -306,9 +542,91 @@ class IconBrowser {
         return window.matchMedia("(max-width: 600px)").matches;
     }
 
+    findPanelVerticalScroller(target, panelContent) {
+        let current = target;
+        while (current && current !== panelContent) {
+            const style = getComputedStyle(current);
+            const canScrollVertically =
+                /(auto|scroll)/.test(style.overflowY) &&
+                current.scrollHeight > current.clientHeight + 1;
+            if (canScrollVertically) {
+                return current;
+            }
+            current = current.parentElement;
+        }
+        return null;
+    }
+
+    resetPanelSwipeState() {
+        const panel = document.getElementById("iconModal");
+        if (this.panelSwipeAnimationTimer) {
+            clearTimeout(this.panelSwipeAnimationTimer);
+            this.panelSwipeAnimationTimer = null;
+        }
+        this.panelSwipeGesture = null;
+        panel?.classList.remove(
+            "is-swipe-dragging",
+            "is-swipe-settling",
+            "is-swipe-dismissing"
+        );
+        panel?.style.removeProperty("--panel-swipe-offset");
+    }
+
+    settlePanelSwipe() {
+        const panel = document.getElementById("iconModal");
+        if (!panel) {
+            return;
+        }
+        panel.classList.remove("is-swipe-dragging", "is-swipe-dismissing");
+        panel.classList.add("is-swipe-settling");
+        panel.style.setProperty("--panel-swipe-offset", "0px");
+        this.panelSwipeAnimationTimer = setTimeout(() => {
+            this.resetPanelSwipeState();
+        }, 180);
+    }
+
+    dismissPanelFromSwipe() {
+        const panel = document.getElementById("iconModal");
+        if (!panel) {
+            return;
+        }
+        const panelBounds = panel.getBoundingClientRect();
+        const exitDistance = Math.max(panelBounds.height, window.innerHeight - panelBounds.top + 24);
+        panel.classList.remove("is-swipe-dragging", "is-swipe-settling");
+        panel.classList.add("is-swipe-dismissing");
+        panel.style.setProperty("--panel-swipe-offset", `${exitDistance}px`);
+        this.panelSwipeAnimationTimer = setTimeout(() => {
+            this.closeIconPanel();
+        }, 180);
+    }
+
     isPanelMetaDetailsOpen() {
         const details = document.getElementById("panelMetaDetails");
         return this.isCompactPanelLayout() && Boolean(details && !details.hidden);
+    }
+
+    syncPanelTitleState() {
+        const panel = document.getElementById("iconModal");
+        const title = document.getElementById("modalTitle");
+        const fullTitle = document.getElementById("modalFullTitle");
+        const description = document.getElementById("modalDescription");
+        const metaphors = document.getElementById("metaphorsList");
+        if (!panel || !title || !fullTitle || !description || !metaphors) {
+            return;
+        }
+
+        const isPromoted = panel.classList.contains("has-promoted-actions");
+        const isTruncated =
+            isPromoted && title.clientWidth > 0 && title.scrollWidth - title.clientWidth > 1;
+        const hasDescription = Boolean(description.textContent.trim());
+        const hasMetaphors = Boolean(metaphors.children.length);
+        const hasDetails = isTruncated || hasDescription || hasMetaphors;
+
+        fullTitle.textContent = title.textContent;
+        fullTitle.hidden = !isTruncated;
+        title.disabled = !hasDetails;
+        title.classList.toggle("has-meta-details", hasDetails);
+        title.setAttribute("aria-expanded", "false");
     }
 
     syncPanelMetaDetails() {
@@ -355,6 +673,148 @@ class IconBrowser {
         return true;
     }
 
+    isPanelSizeMenuOpen() {
+        const menu = document.getElementById("panelSizeMenu");
+        return Boolean(menu?.classList.contains("is-open"));
+    }
+
+    positionPanelSizeMenu() {
+        const button = document.getElementById("panelSizeButton");
+        const menu = document.getElementById("panelSizeMenu");
+        if (!button || !menu || menu.hidden) {
+            return;
+        }
+
+        const rect = button.getBoundingClientRect();
+        menu.style.left = `${Math.round(rect.left)}px`;
+        menu.style.top = `${Math.round(rect.bottom)}px`;
+        menu.style.width = `${Math.round(rect.width)}px`;
+    }
+
+    openPanelSizeMenu(options = {}) {
+        const { focusSelected = false, focusLast = false } = options;
+        const button = document.getElementById("panelSizeButton");
+        const menu = document.getElementById("panelSizeMenu");
+        const wrap = document.getElementById("panelSizeWrap");
+        if (!button || !menu || button.disabled || !menu.children.length) {
+            return;
+        }
+
+        if (this.panelSizeMenuCloseTimer) {
+            clearTimeout(this.panelSizeMenuCloseTimer);
+            this.panelSizeMenuCloseTimer = null;
+        }
+
+        menu.hidden = false;
+        this.positionPanelSizeMenu();
+        void menu.offsetHeight;
+        menu.classList.add("is-open");
+        button.setAttribute("aria-expanded", "true");
+        wrap?.classList.add("is-open");
+
+        if (focusSelected) {
+            const selected = menu.querySelector('[aria-selected="true"]');
+            const fallback = focusLast ? menu.lastElementChild : menu.firstElementChild;
+            (selected || fallback)?.focus();
+        }
+    }
+
+    closePanelSizeMenu(options = {}) {
+        const { restoreFocus = false, immediate = false } = options;
+        const button = document.getElementById("panelSizeButton");
+        const menu = document.getElementById("panelSizeMenu");
+        const wrap = document.getElementById("panelSizeWrap");
+        if (!menu) {
+            return false;
+        }
+
+        const wasOpen = menu.classList.contains("is-open");
+        const wasVisible = !menu.hidden;
+        menu.classList.remove("is-open");
+        button?.setAttribute("aria-expanded", "false");
+        wrap?.classList.remove("is-open");
+        if (restoreFocus && wasOpen) {
+            button?.focus();
+        }
+
+        if (this.panelSizeMenuCloseTimer) {
+            clearTimeout(this.panelSizeMenuCloseTimer);
+            this.panelSizeMenuCloseTimer = null;
+        }
+
+        const finishClose = () => {
+            if (!menu.classList.contains("is-open")) {
+                menu.hidden = true;
+            }
+            this.panelSizeMenuCloseTimer = null;
+        };
+
+        const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+        if (!wasVisible || immediate || prefersReducedMotion) {
+            finishClose();
+        } else {
+            this.panelSizeMenuCloseTimer = setTimeout(finishClose, PANEL_SIZE_MENU_HIDE_DELAY_MS);
+        }
+        return wasOpen;
+    }
+
+    togglePanelSizeMenu() {
+        if (this.isPanelSizeMenuOpen()) {
+            this.closePanelSizeMenu();
+        } else {
+            this.openPanelSizeMenu();
+        }
+    }
+
+    handlePanelSizeMenuKeydown(event) {
+        const menu = document.getElementById("panelSizeMenu");
+        if (!menu) {
+            return;
+        }
+
+        const options = Array.from(menu.querySelectorAll(".panel-size-option"));
+        const activeIndex = options.indexOf(document.activeElement);
+        let nextIndex = null;
+
+        if (event.key === "ArrowDown") {
+            nextIndex = activeIndex < 0 ? 0 : (activeIndex + 1) % options.length;
+        } else if (event.key === "ArrowUp") {
+            nextIndex = activeIndex < 0 ? options.length - 1 : (activeIndex - 1 + options.length) % options.length;
+        } else if (event.key === "Home") {
+            nextIndex = 0;
+        } else if (event.key === "End") {
+            nextIndex = options.length - 1;
+        } else if (event.key === "Escape") {
+            event.preventDefault();
+            event.stopPropagation();
+            this.closePanelSizeMenu({ restoreFocus: true });
+            return;
+        }
+
+        if (nextIndex !== null && options[nextIndex]) {
+            event.preventDefault();
+            options[nextIndex].focus();
+        }
+    }
+
+    selectPanelSize(size) {
+        if (!this.activePanelVariant || !Number.isFinite(size)) {
+            return;
+        }
+
+        this.panelSelectedSizes[this.activePanelVariant] = size;
+        const sizeValue = document.getElementById("panelSizeValue");
+        const menu = document.getElementById("panelSizeMenu");
+        if (sizeValue) {
+            sizeValue.textContent = String(size);
+        }
+        menu?.querySelectorAll(".panel-size-option").forEach((option) => {
+            option.setAttribute("aria-selected", String(Number(option.dataset.size) === size));
+        });
+        this.updateModalVariantPreview(this.activePanelVariant);
+        this.closePanelSizeMenu({ restoreFocus: true });
+    }
+
     openIconPanel() {
         const panel = document.getElementById("iconModal");
         if (!panel) {
@@ -364,7 +824,11 @@ class IconBrowser {
         panel.classList.add("is-open");
         panel.setAttribute("aria-hidden", "false");
         document.body.classList.add("icon-panel-open");
-        requestAnimationFrame(() => this.syncToolbarScrollIndicators());
+        requestAnimationFrame(() => {
+            this.syncPanelActionPlacement();
+            this.syncPanelMetaDetails();
+            this.syncToolbarScrollIndicators();
+        });
     }
 
     isIconPanelOpen() {
@@ -397,9 +861,12 @@ class IconBrowser {
             return;
         }
 
+        this.resetPanelSwipeState();
         panel.classList.remove("is-open");
         panel.setAttribute("aria-hidden", "true");
         document.body.classList.remove("icon-panel-open");
+        this.setPanelActionsPromoted(false);
+        this.closePanelSizeMenu({ immediate: true });
         this.closePanelMetaDetails();
         this.currentIcon = null;
         if (clearSelection) {
@@ -947,6 +1414,10 @@ class IconBrowser {
         if (asset.url) {
             const label = `${this.formatName(icon.name)} ${variant}`;
             const escapedLabel = this.escapeHtmlAttribute(label);
+            if (variant !== "color") {
+                const escapedUrl = this.escapeHtmlAttribute(asset.url);
+                return `<span class="gallery-icon-mask" role="img" aria-label="${escapedLabel}" style="--gallery-icon-source: url('${escapedUrl}')"></span>`;
+            }
             return `<img src="${asset.url}" alt="${escapedLabel}" loading="lazy" decoding="async">`;
         }
 
@@ -1057,7 +1528,7 @@ class IconBrowser {
         this.panelSelectedSizes[variant] = defaultSize || sizes[0] || null;
     }
 
-    shouldUseCurrentColorOnDownload(variant) {
+    shouldUseCurrentColor(variant) {
         if (variant === "color") {
             return false;
         }
@@ -1140,12 +1611,7 @@ class IconBrowser {
             metaphorsList.innerHTML = "";
         }
 
-        const modalTitle = document.getElementById("modalTitle");
-        const hasMetaDetails = Boolean(descriptionText) || Boolean(icon.metaphors?.length);
-        modalTitle.disabled = !hasMetaDetails;
-        modalTitle.classList.toggle("has-meta-details", hasMetaDetails);
-        modalTitle.setAttribute("aria-expanded", "false");
-
+        this.syncPanelTitleState();
         this.syncPanelMetaDetails();
 
         const preferredVariant = this.resolvePreferredPanelVariant(icon, availableVariants);
@@ -1252,8 +1718,10 @@ class IconBrowser {
     }
 
     syncPanelToolbarControls(availableVariants = this.getAvailableVariantsForIcon()) {
-        const sizeSelect = document.getElementById("panelSizeSelect");
-        const sizeWrap = sizeSelect?.parentElement || null;
+        const sizeButton = document.getElementById("panelSizeButton");
+        const sizeValue = document.getElementById("panelSizeValue");
+        const sizeMenu = document.getElementById("panelSizeMenu");
+        const sizeWrap = document.getElementById("panelSizeWrap");
         const currentColorToggle = document.getElementById("panelCurrentColorToggle");
         const copyButton = document.getElementById("panelCopyBtn");
         const downloadButton = document.getElementById("panelDownloadBtn");
@@ -1268,20 +1736,27 @@ class IconBrowser {
             downloadButton.disabled = !hasActiveVariant;
         }
 
-        if (!sizeSelect || !currentColorToggle) {
+        if (!sizeButton || !sizeValue || !sizeMenu || !currentColorToggle) {
             return;
         }
 
+        this.closePanelSizeMenu({ immediate: true });
+
         if (!hasActiveVariant) {
-            sizeSelect.innerHTML = "";
-            sizeSelect.disabled = true;
-            sizeSelect.style.display = "none";
+            sizeValue.textContent = "";
+            sizeMenu.innerHTML = "";
+            sizeButton.disabled = true;
+            sizeButton.style.display = "none";
             sizeWrap?.classList.add("disabled");
             currentColorToggle.style.display = "inline-flex";
             currentColorToggle.disabled = true;
             currentColorToggle.classList.add("disabled");
             currentColorToggle.classList.remove("active");
             currentColorToggle.setAttribute("aria-pressed", "false");
+            requestAnimationFrame(() => {
+                this.syncPanelActionPlacement();
+                this.syncToolbarScrollIndicators();
+            });
             return;
         }
 
@@ -1298,21 +1773,23 @@ class IconBrowser {
         this.panelSelectedSizes[variant] = resolvedSize;
 
         if (sizes.length > 0) {
-            sizeSelect.innerHTML = sizes
-                .map((size) => `<option value="${size}">${size}</option>`)
+            sizeValue.textContent = String(resolvedSize);
+            sizeMenu.innerHTML = sizes
+                .map(
+                    (size) => `
+                        <button type="button" class="panel-size-option" role="option" data-size="${size}" aria-selected="${size === resolvedSize}">${size}</button>
+                    `
+                )
                 .join("");
-            if (resolvedSize) {
-                sizeSelect.value = String(resolvedSize);
-            }
-            sizeSelect.disabled = false;
+            sizeButton.disabled = false;
             sizeWrap?.classList.remove("disabled");
         } else {
-            sizeSelect.innerHTML = '<option value="">auto</option>';
-            sizeSelect.value = "";
-            sizeSelect.disabled = true;
+            sizeValue.textContent = "auto";
+            sizeMenu.innerHTML = "";
+            sizeButton.disabled = true;
             sizeWrap?.classList.add("disabled");
         }
-        sizeSelect.style.display = "inline-block";
+        sizeButton.style.display = "inline-flex";
 
         if (variant === "color") {
             currentColorToggle.disabled = true;
@@ -1328,6 +1805,11 @@ class IconBrowser {
             currentColorToggle.classList.toggle("active", enabled);
             currentColorToggle.setAttribute("aria-pressed", enabled ? "true" : "false");
         }
+
+        requestAnimationFrame(() => {
+            this.syncPanelActionPlacement();
+            this.syncToolbarScrollIndicators();
+        });
     }
 
     toggleCurrentColorForActiveVariant() {
@@ -1338,6 +1820,16 @@ class IconBrowser {
 
         this.panelCurrentColorEnabled[variant] = !this.panelCurrentColorEnabled[variant];
         this.syncPanelToolbarControls();
+    }
+
+    syncIncludeBoundsToggle() {
+        const toggle = document.getElementById("panelIncludeBoundsToggle");
+        if (!toggle) {
+            return;
+        }
+
+        toggle.classList.toggle("active", this.includeBoundsEnabled);
+        toggle.setAttribute("aria-pressed", this.includeBoundsEnabled ? "true" : "false");
     }
 
     getVariantSelection(variant) {
@@ -1483,6 +1975,77 @@ function setActionFeedback(button, success) {
     }, 1200);
 }
 
+function formatSvgCoordinate(value) {
+    const rounded = Number(value.toFixed(6));
+    return Object.is(rounded, -0) ? "0" : String(rounded);
+}
+
+function withTransparentViewBoxBounds(svgText) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgText, "image/svg+xml");
+    const root = doc.documentElement;
+    const parserError = doc.querySelector("parsererror");
+
+    if (parserError || !root || root.tagName.toLowerCase() !== "svg") {
+        throw new Error("Cannot copy SVG: source markup is invalid");
+    }
+
+    const viewBox = root.getAttribute("viewBox")
+        ?.trim()
+        .split(/[\s,]+/)
+        .map(Number);
+
+    if (
+        !viewBox ||
+        viewBox.length !== 4 ||
+        !viewBox.every(Number.isFinite) ||
+        viewBox[2] <= 0 ||
+        viewBox[3] <= 0
+    ) {
+        throw new Error("Cannot copy SVG: source has no valid viewBox");
+    }
+
+    const [minX, minY, width, height] = viewBox;
+    const maxX = minX + width;
+    const maxY = minY + height;
+    const boundsPath = doc.createElementNS("http://www.w3.org/2000/svg", "path");
+
+    boundsPath.setAttribute(
+        "d",
+        `M ${formatSvgCoordinate(minX)} ${formatSvgCoordinate(minY)} ` +
+        `H ${formatSvgCoordinate(maxX)} V ${formatSvgCoordinate(maxY)} ` +
+        `H ${formatSvgCoordinate(minX)} Z`
+    );
+    boundsPath.setAttribute("fill", "#000000");
+    boundsPath.setAttribute("fill-opacity", "0");
+    boundsPath.setAttribute("stroke", "none");
+    boundsPath.setAttribute("data-viewbox-bounds", "true");
+
+    const artworkGroup = doc.createElementNS("http://www.w3.org/2000/svg", "g");
+    const rootLevelTags = new Set(["defs", "style", "title", "desc", "metadata"]);
+    const originalNodes = [...root.childNodes];
+
+    artworkGroup.setAttribute("data-viewbox-bounds-group", "true");
+    artworkGroup.appendChild(boundsPath);
+
+    for (const node of originalNodes) {
+        const isRootLevelElement =
+            node.nodeType === Node.ELEMENT_NODE &&
+            rootLevelTags.has(node.tagName.toLowerCase());
+        const isFormattingWhitespace =
+            node.nodeType === Node.TEXT_NODE &&
+            !node.textContent.trim();
+
+        if (!isRootLevelElement && !isFormattingWhitespace) {
+            artworkGroup.appendChild(node);
+        }
+    }
+
+    root.appendChild(artworkGroup);
+
+    return new XMLSerializer().serializeToString(root);
+}
+
 function toCurrentColorSvg(svgText) {
     try {
         const parser = new DOMParser();
@@ -1550,6 +2113,16 @@ function toCurrentColorSvg(svgText) {
     }
 }
 
+function prepareSvgOutput(originalSvg, variant) {
+    const colorAdjustedSvg = iconBrowser.shouldUseCurrentColor(variant)
+        ? toCurrentColorSvg(originalSvg)
+        : originalSvg;
+
+    return iconBrowser.includeBoundsEnabled
+        ? withTransparentViewBoxBounds(colorAdjustedSvg)
+        : colorAdjustedSvg;
+}
+
 async function copyToClipboard(clickEvent, variant) {
     const selection = iconBrowser.getVariantSelection(variant);
     if (!selection) {
@@ -1559,8 +2132,9 @@ async function copyToClipboard(clickEvent, variant) {
     const button = clickEvent?.currentTarget || clickEvent?.target;
 
     try {
-        const svgText = selection.svgText || (await fetchSvgText(selection.sourceUrl));
-        await navigator.clipboard.writeText(svgText);
+        const originalSvg = selection.svgText || (await fetchSvgText(selection.sourceUrl));
+        const copiedSvg = prepareSvgOutput(originalSvg, variant);
+        await navigator.clipboard.writeText(copiedSvg);
         setActionFeedback(button, true);
     } catch (error) {
         console.error("Failed to copy SVG:", error);
@@ -1576,14 +2150,16 @@ async function downloadIcon(variant) {
 
     try {
         const originalSvg = selection.svgText || (await fetchSvgText(selection.sourceUrl));
-        const applyCurrentColor = iconBrowser.shouldUseCurrentColorOnDownload(variant);
-        const finalSvg = applyCurrentColor ? toCurrentColorSvg(originalSvg) : originalSvg;
+        const applyCurrentColor = iconBrowser.shouldUseCurrentColor(variant);
+        const includeBounds = iconBrowser.includeBoundsEnabled;
+        const finalSvg = prepareSvgOutput(originalSvg, variant);
 
         const blob = new Blob([finalSvg], { type: "image/svg+xml" });
         const url = URL.createObjectURL(blob);
         const anchor = document.createElement("a");
         const sizePart = selection.size ? `_${selection.size}` : "";
-        const suffix = applyCurrentColor ? "_currentcolor" : "";
+        const suffix = `${applyCurrentColor ? "_currentcolor" : ""}` +
+            `${includeBounds ? "_bounds" : ""}`;
 
         anchor.href = url;
         anchor.download = `${iconBrowser.currentIcon.name}${sizePart}_${variant}${suffix}.svg`;

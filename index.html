@@ -12,9 +12,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="icon" href="icons/fluent-icons.svg" type="image/svg+xml">
-    <link rel="icon" href="icons/fluent-icons-192.png" type="image/png">
-    <link rel="apple-touch-icon" href="icons/fluent-icons-192.png">
+    <link rel="icon" href="icons/fluent-icons.svg?v=4" type="image/svg+xml">
+    <link rel="icon" href="icons/fluent-icons-192.png?v=4" type="image/png">
+    <link rel="apple-touch-icon" href="icons/fluent-icons-192.png?v=4">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Fluent Icons">
     <meta property="og:description" content="Browse Fluent System and Fabric MDL2 icons by name, meaning, and visual variant.">
@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=31">
     <script>
         if ("serviceWorker" in navigator) {
             const appVersionKey = "fluent-icons-app-version";
@@ -146,10 +146,13 @@
                     <h1 class="brand-title" aria-label="Icons">
                         <span class="brand-logo" aria-hidden="true">
                             <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-                                <rect x="3" y="3" width="8" height="8" rx="2"></rect>
-                                <rect x="13" y="3" width="8" height="8" rx="2"></rect>
-                                <rect x="3" y="13" width="8" height="8" rx="2"></rect>
-                                <rect x="13" y="13" width="8" height="8" rx="2"></rect>
+                                <defs>
+                                    <path id="brand-inner-squircle" d="M 7.00 3.50 L 6.99 4.60 L 6.97 5.05 L 6.92 5.39 L 6.86 5.67 L 6.79 5.90 L 6.69 6.11 L 6.58 6.29 L 6.44 6.44 L 6.29 6.58 L 6.11 6.69 L 5.90 6.79 L 5.67 6.86 L 5.39 6.92 L 5.05 6.97 L 4.60 6.99 L 3.50 7.00 L 2.40 6.99 L 1.95 6.97 L 1.61 6.92 L 1.33 6.86 L 1.10 6.79 L 0.89 6.69 L 0.71 6.58 L 0.56 6.44 L 0.42 6.29 L 0.31 6.11 L 0.21 5.90 L 0.14 5.67 L 0.08 5.39 L 0.03 5.05 L 0.01 4.60 L 0.00 3.50 L 0.01 2.40 L 0.03 1.95 L 0.08 1.61 L 0.14 1.33 L 0.21 1.10 L 0.31 0.89 L 0.42 0.71 L 0.56 0.56 L 0.71 0.42 L 0.89 0.31 L 1.10 0.21 L 1.33 0.14 L 1.61 0.08 L 1.95 0.03 L 2.40 0.01 L 3.50 0.00 L 4.60 0.01 L 5.05 0.03 L 5.39 0.08 L 5.67 0.14 L 5.90 0.21 L 6.11 0.31 L 6.29 0.42 L 6.44 0.56 L 6.58 0.71 L 6.69 0.89 L 6.79 1.10 L 6.86 1.33 L 6.92 1.61 L 6.97 1.95 L 6.99 2.40 L 7.00 3.50 Z"></path>
+                                </defs>
+                                <use href="#brand-inner-squircle" x="3.5" y="3.5"></use>
+                                <use href="#brand-inner-squircle" x="13.5" y="3.5"></use>
+                                <use href="#brand-inner-squircle" x="3.5" y="13.5"></use>
+                                <use href="#brand-inner-squircle" x="13.5" y="13.5"></use>
                             </svg>
                         </span>
                         <span class="brand-text">Icons</span>
@@ -257,17 +260,13 @@
 
     <div id="iconModal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <button type="button" class="close" aria-label="Close details panel">
-                <svg class="close-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M4.39705 4.55379L4.46967 4.46967C4.73594 4.2034 5.1526 4.1792 5.44621 4.39705L5.53033 4.46967L12 10.939L18.4697 4.46967C18.7626 4.17678 19.2374 4.17678 19.5303 4.46967C19.8232 4.76256 19.8232 5.23744 19.5303 5.53033L13.061 12L19.5303 18.4697C19.7966 18.7359 19.8208 19.1526 19.6029 19.4462L19.5303 19.5303C19.2641 19.7966 18.8474 19.8208 18.5538 19.6029L18.4697 19.5303L12 13.061L5.53033 19.5303C5.23744 19.8232 4.76256 19.8232 4.46967 19.5303C4.17678 19.2374 4.17678 18.7626 4.46967 18.4697L10.939 12L4.46967 5.53033C4.2034 5.26406 4.1792 4.8474 4.39705 4.55379L4.46967 4.46967L4.39705 4.55379Z" fill="currentColor"/>
-                </svg>
-            </button>
             <div class="panel-layout">
                 <div class="modal-header panel-meta">
                     <h2 class="panel-title">
                         <button type="button" class="panel-title-trigger" id="modalTitle" aria-label="Show icon details" aria-controls="panelMetaDetails" aria-expanded="false"></button>
                     </h2>
                     <div class="panel-meta-details" id="panelMetaDetails">
+                        <p id="modalFullTitle" class="panel-meta-full-title" hidden></p>
                         <p id="modalDescription"></p>
                         <div id="metaphorsList"></div>
                     </div>
@@ -287,13 +286,24 @@
                                     <span class="style-mode-icon color-icon" aria-hidden="true"></span>
                                 </button>
                             </div>
-                            <span class="panel-size-wrap">
-                                <select id="panelSizeSelect" class="panel-size-select" aria-label="Icon size"></select>
+                            <span class="panel-size-wrap" id="panelSizeWrap">
+                                <button type="button" id="panelSizeButton" class="panel-size-button" aria-label="Icon size" aria-haspopup="listbox" aria-expanded="false" aria-controls="panelSizeMenu">
+                                    <span id="panelSizeValue" class="panel-size-value"></span>
+                                    <span class="panel-size-chevron" aria-hidden="true"></span>
+                                </button>
                             </span>
-                            <button type="button" class="panel-icon-toggle" id="panelCurrentColorToggle" aria-pressed="false" aria-label="Use currentColor on download" title="Use currentColor on download">
-                                <span class="toolbar-icon currentcolor-icon" aria-hidden="true"></span>
+                            <button type="button" class="panel-icon-toggle" id="panelCurrentColorToggle" aria-pressed="false" aria-label="Use currentColor" title="Use currentColor">
+                                <svg class="fluent-toolbar-icon currentcolor-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20V4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20Z" fill="currentColor"></path>
+                                </svg>
                             </button>
-                            <div class="panel-actions-group">
+                            <button type="button" class="panel-icon-toggle" id="panelIncludeBoundsToggle" aria-pressed="false" aria-label="Include bounding box" title="Include bounding box">
+                                <svg class="style-mode-icon bounds-toggle-icon" viewBox="0 0 14 14" focusable="false" aria-hidden="true">
+                                    <rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"></rect>
+                                </svg>
+                            </button>
+                            <span id="panelActionsAnchor" hidden></span>
+                            <div class="panel-actions-group" id="panelActionsGroup">
                                 <button type="button" class="panel-action-btn" id="panelCopyBtn" aria-label="Copy SVG" title="Copy SVG">
                                     <svg class="fluent-toolbar-icon" viewBox="0 0 16 16" focusable="false" aria-hidden="true">
                                         <path d="M5 9C5 10.6569 6.34315 12 8 12H10C10 13.1046 9.10457 14 8 14H4C2.89543 14 2 13.1046 2 12V7C2 5.89543 2.89543 5 4 5H5V9ZM12 2C13.1046 2 14 2.89543 14 4V9C14 10.1046 13.1046 11 12 11H8C6.89543 11 6 10.1046 6 9V4C6 2.89543 6.89543 2 8 2H12Z" fill="currentColor"></path>
@@ -330,6 +340,8 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="panelSizeMenu" class="panel-size-menu" role="listbox" aria-label="Icon size" hidden></div>
+
+    <script src="script.js?v=12"></script>
 </body>
 </html>
