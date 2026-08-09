@@ -1,5 +1,6 @@
 # History
 
+- Removed the enclosing favicon tile and outlined treatment, then uniformly expanded the four shared `n=3` inner tiles to the former outer `24×24` bounds as a filled blue mark on transparency.
 - Rounded the four shared inner favicon/header tiles from Lamé `n=4` to `n=3` while retaining the `n=4` outer favicon silhouette, tile geometry, stroke weight, and action-blue identity.
 
 ## 2026-07-26: Include Branded Fabric MDL2 Components
