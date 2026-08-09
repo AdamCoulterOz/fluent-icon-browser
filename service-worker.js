@@ -7,9 +7,9 @@ const APP_SHELL = [
     "style.css?v=31",
     "script.js?v=12",
     "icon-data.json",
-    "icons/fluent-icons.svg?v=6",
-    "icons/fluent-icons-192.png?v=6",
-    "icons/fluent-icons-512.png?v=6"
+    "icons/fluent-icons.svg?v=7",
+    "icons/fluent-icons-192.png?v=7",
+    "icons/fluent-icons-512.png?v=7"
 ];
 
 self.addEventListener("install", (event) => {
