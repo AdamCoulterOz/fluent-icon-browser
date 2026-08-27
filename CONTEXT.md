@@ -91,7 +91,7 @@ The UI loads `icon-data.json` at runtime and provides:
 ## Key Files
 
 - `index.html`: page layout and modal structure.
-- `style.css`: all styling, including dark mode behavior and icon action button masks.
+- `keel.css (vendored design system) and style.css`: all styling, including dark mode behavior and icon action button masks.
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
 - `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
 - `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` plus ordinary/branded MDL2 components and emits commit-pinned source URLs + native sizes.
