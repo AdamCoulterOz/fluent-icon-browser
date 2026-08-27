@@ -1,5 +1,6 @@
 # History
 
+- Added a contextual × control inside the search field that clears active terms immediately while preserving the icon set and returning focus to search, and restored the intended `442px` desktop width clamp while retaining full-width compact behavior.
 - Tightened the four-tile favicon/header composition by moving each unchanged tile `1.5` artboard units toward the centre while retaining the `24×24` canvas.
 - Removed the enclosing favicon tile and outlined treatment, then uniformly expanded the four shared `n=3` inner tiles to the former outer `24×24` bounds as a filled blue mark on transparency.
 - Rounded the four shared inner favicon/header tiles from Lamé `n=4` to `n=3` while retaining the `n=4` outer favicon silhouette, tile geometry, stroke weight, and action-blue identity.

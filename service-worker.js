@@ -4,8 +4,8 @@ const ICON_CACHE_CONCURRENCY = 60;
 const APP_SHELL = [
     "./",
     "index.html",
-    "style.css?v=31",
-    "script.js?v=12",
+    "style.css?v=33",
+    "script.js?v=13",
     "icon-data.json",
     "icons/fluent-icons.svg?v=7",
     "icons/fluent-icons-192.png?v=7",

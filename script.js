@@ -135,6 +135,7 @@ class IconBrowser {
 
     setupEventListeners() {
         const searchInput = document.getElementById("searchInput");
+        const searchClearButton = document.getElementById("searchClearButton");
         const modalTitle = document.getElementById("modalTitle");
         const panelMeta = document.querySelector(".panel-meta");
         const panel = document.getElementById("iconModal");
@@ -144,6 +145,7 @@ class IconBrowser {
 
         searchInput.addEventListener("input", (event) => {
             const nextValue = event.target.value;
+            this.updateSearchClearButton();
             if (this.searchDebounceTimer) {
                 clearTimeout(this.searchDebounceTimer);
             }
@@ -151,6 +153,20 @@ class IconBrowser {
                 this.filterIcons(nextValue);
             }, this.searchDebounceMs);
         });
+
+        searchClearButton.addEventListener("click", () => {
+            if (this.searchDebounceTimer) {
+                clearTimeout(this.searchDebounceTimer);
+                this.searchDebounceTimer = null;
+            }
+
+            searchInput.value = "";
+            this.updateSearchClearButton();
+            this.filterIcons("");
+            searchInput.focus();
+        });
+
+        this.updateSearchClearButton();
 
         document.querySelectorAll(".style-mode-button").forEach((button) => {
             button.addEventListener("click", () => {
@@ -959,6 +975,7 @@ class IconBrowser {
             const searchInput = document.getElementById("searchInput");
             if (searchInput) {
                 searchInput.value = query;
+                this.updateSearchClearButton();
             }
             this.filterIcons(query);
 
@@ -1441,6 +1458,19 @@ class IconBrowser {
 
         this.renderIcons();
         this.updateStats();
+    }
+
+    updateSearchClearButton() {
+        const searchInput = document.getElementById("searchInput");
+        const clearButton = document.getElementById("searchClearButton");
+        const searchWrap = searchInput?.closest(".search-wrap");
+        if (!searchInput || !clearButton || !searchWrap) {
+            return;
+        }
+
+        const hasValue = searchInput.value.length > 0;
+        clearButton.hidden = !hasValue;
+        searchWrap.classList.toggle("has-search-value", hasValue);
     }
 
     renderIcons() {

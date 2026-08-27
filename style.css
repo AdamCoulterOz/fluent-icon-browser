@@ -784,7 +784,7 @@ body::-webkit-scrollbar {
     min-width: 0;
     height: var(--toolbar-control-height);
     box-sizing: border-box;
-    padding: 0 calc(var(--search-count-width, 22px) + 13px) 0 34px;
+    padding: 0 calc(var(--search-count-width, 22px) + var(--search-clear-reserve, 0px) + 13px) 0 34px;
     line-height: 1;
     font-size: 14px;
     border: none;
@@ -808,9 +808,13 @@ body::-webkit-scrollbar {
 .search-wrap {
     position: relative;
     width: 100%;
-    max-width: none;
+    max-width: 442px;
     min-width: 0;
     justify-self: center;
+}
+
+.search-wrap.has-search-value {
+    --search-clear-reserve: 26px;
 }
 
 .search-icon {
@@ -838,6 +842,47 @@ body::-webkit-scrollbar {
 
 .search-wrap:focus-within .search-icon {
     color: var(--nav-input-text);
+}
+
+.search-clear-button {
+    position: absolute;
+    right: calc(var(--search-count-width, 22px) + 9px);
+    top: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--nav-input-placeholder);
+    font: inherit;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.search-clear-button[hidden] {
+    display: none;
+}
+
+.search-clear-button:hover {
+    background: var(--nav-segment-hover-bg);
+    color: var(--nav-input-text);
+}
+
+.search-clear-button:focus-visible {
+    outline: none;
+    color: var(--nav-input-text);
+    box-shadow: var(--ring);
+}
+
+.search-clear-button span {
+    transform: translateY(-1px);
 }
 
 .search-count-pill {
@@ -1863,6 +1908,14 @@ body.icon-panel-open .icon-grid {
 
     #searchInput {
         padding-right: 16px;
+    }
+
+    .search-wrap.has-search-value #searchInput {
+        padding-right: 34px;
+    }
+
+    .search-clear-button {
+        right: 5px;
     }
 }
 
