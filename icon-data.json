@@ -96268,6 +96268,7 @@
   "sets": {
     "fluent": {
       "label": "Fluent System Icons",
+      "shortLabel": "Fluent",
       "source": "microsoft/fluentui-system-icons",
       "upstreamSha": "fb047fb395f45ccf1129f8eaee672c9dfa99152e",
       "cdnBase": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons",
@@ -192538,6 +192539,7 @@
     },
     "fabric": {
       "label": "Fabric MDL2 Icons",
+      "shortLabel": "MDL2",
       "source": "microsoft/fluentui/packages/react-icons-mdl2",
       "sources": [
         "microsoft/fluentui/packages/react-icons-mdl2",

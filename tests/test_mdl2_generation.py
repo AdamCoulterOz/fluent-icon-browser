@@ -46,6 +46,47 @@ def write_component(directory: Path, name: str) -> None:
 
 
 class Mdl2GenerationTests(unittest.TestCase):
+    def test_collection_descriptors_support_an_additional_collection(self) -> None:
+        collections = icon_data.assemble_collections(
+            [
+                icon_data.CollectionDescriptor(
+                    key="fluent",
+                    label="Fluent System Icons",
+                    short_label="Fluent",
+                    source="example/fluent",
+                    sources=(),
+                    upstream_sha="fluent-sha",
+                    cdn_base="https://cdn.example.test/fluent",
+                    build_icons=lambda: [{"name": "access_time"}],
+                ),
+                icon_data.CollectionDescriptor(
+                    key="fabric",
+                    label="Fabric MDL2 Icons",
+                    short_label="MDL2",
+                    source="example/fabric",
+                    sources=("example/fabric",),
+                    upstream_sha="fabric-sha",
+                    cdn_base="https://cdn.example.test/fabric",
+                    build_icons=lambda: [{"name": "accept"}],
+                ),
+                icon_data.CollectionDescriptor(
+                    key="synthetic",
+                    label="Synthetic Icons",
+                    short_label="Synthetic",
+                    source="example/synthetic",
+                    sources=("example/synthetic",),
+                    upstream_sha="synthetic-sha",
+                    cdn_base="https://cdn.example.test/synthetic",
+                    build_icons=lambda: [{"name": "test_icon"}],
+                ),
+            ]
+        )
+
+        self.assertEqual(["fluent", "fabric", "synthetic"], list(collections))
+        self.assertEqual("Synthetic Icons", collections["synthetic"]["label"])
+        self.assertEqual("Synthetic", collections["synthetic"]["shortLabel"])
+        self.assertEqual([{"name": "test_icon"}], collections["synthetic"]["icons"])
+
     def test_branded_components_are_included_and_tagged(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)

@@ -9,7 +9,7 @@ import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Callable, Dict, Iterable, List, Optional
 from urllib.parse import quote
 
 SUPPORTED_VARIANTS = ("regular", "filled", "color")
@@ -24,6 +24,44 @@ KNOWN_FABRIC_SIZES = {8, 10, 12, 16, 20, 24, 28, 32, 48, 64}
 SVG_BLOCK_PATTERN = re.compile(r"<svg[\s\S]*?</svg>", flags=re.IGNORECASE)
 DISPLAY_NAME_PATTERN = re.compile(r"displayName:\s*'([^']+)'")
 FABRIC_VARIANT_SUFFIXES = {"solid": "filled", "fill": "filled", "filled": "filled"}
+
+
+class CollectionDescriptor:
+    """Private generator description for one coherent icon collection."""
+
+    __slots__ = (
+        "key",
+        "label",
+        "short_label",
+        "source",
+        "sources",
+        "upstream_sha",
+        "cdn_base",
+        "build_icons",
+    )
+
+    def __init__(
+        self,
+        *,
+        key: str,
+        label: str,
+        short_label: str,
+        source: str,
+        sources: tuple[str, ...],
+        upstream_sha: str,
+        cdn_base: str,
+        build_icons: Callable[[], list[dict]],
+    ) -> None:
+        self.key = key
+        self.label = label
+        self.short_label = short_label
+        self.source = source
+        self.sources = sources
+        self.upstream_sha = upstream_sha
+        self.cdn_base = cdn_base
+        self.build_icons = build_icons
+
+
 SEMANTIC_INVERSE_TOKENS = {
     "add": "remove",
     "back": "forward",
@@ -706,6 +744,37 @@ def generate_fabric_icons(
     return icons
 
 
+def assemble_collections(
+    descriptors: Iterable[CollectionDescriptor],
+) -> Dict[str, dict]:
+    """Build the generated collection map without exposing source adapters to the UI."""
+
+    collections: Dict[str, dict] = {}
+    for descriptor in descriptors:
+        if not descriptor.key:
+            raise ValueError("Collection keys must not be empty")
+        if descriptor.key in collections:
+            raise ValueError(f"Duplicate collection key: {descriptor.key}")
+
+        collection = {
+            "label": descriptor.label,
+            "shortLabel": descriptor.short_label,
+            "source": descriptor.source,
+        }
+        if descriptor.sources:
+            collection["sources"] = list(descriptor.sources)
+        collection.update(
+            {
+                "upstreamSha": descriptor.upstream_sha,
+                "cdnBase": descriptor.cdn_base,
+                "icons": descriptor.build_icons(),
+            }
+        )
+        collections[descriptor.key] = collection
+
+    return collections
+
+
 def generate_icon_data(
     fluent_icons_dir: Path,
     fabric_components_dir: Path,
@@ -719,47 +788,54 @@ def generate_icon_data(
 ) -> tuple[int, int]:
     fabric_metadata = load_fabric_metadata(fabric_metadata_path)
 
-    fluent_icons = generate_fluent_icons(
-        icons_dir=fluent_icons_dir,
-        upstream_sha=fluent_upstream_sha,
-        cdn_base=fluent_cdn_base,
+    descriptors = (
+        CollectionDescriptor(
+            key="fluent",
+            label="Fluent System Icons",
+            short_label="Fluent",
+            source="microsoft/fluentui-system-icons",
+            sources=(),
+            upstream_sha=fluent_upstream_sha,
+            cdn_base=fluent_cdn_base,
+            build_icons=lambda: generate_fluent_icons(
+                icons_dir=fluent_icons_dir,
+                upstream_sha=fluent_upstream_sha,
+                cdn_base=fluent_cdn_base,
+            ),
+        ),
+        CollectionDescriptor(
+            key="fabric",
+            label="Fabric MDL2 Icons",
+            short_label="MDL2",
+            source="microsoft/fluentui/packages/react-icons-mdl2",
+            sources=(
+                "microsoft/fluentui/packages/react-icons-mdl2",
+                *(
+                    ("microsoft/fluentui/packages/react-icons-mdl2-branded",)
+                    if fabric_branded_components_dir is not None
+                    else ()
+                ),
+            ),
+            upstream_sha=fabric_upstream_sha,
+            cdn_base=fabric_cdn_base,
+            build_icons=lambda: generate_fabric_icons(
+                components_dir=fabric_components_dir,
+                upstream_sha=fabric_upstream_sha,
+                cdn_base=fabric_cdn_base,
+                metadata_by_id=fabric_metadata,
+                branded_components_dir=fabric_branded_components_dir,
+            ),
+        ),
     )
-    fabric_icons = generate_fabric_icons(
-        components_dir=fabric_components_dir,
-        upstream_sha=fabric_upstream_sha,
-        cdn_base=fabric_cdn_base,
-        metadata_by_id=fabric_metadata,
-        branded_components_dir=fabric_branded_components_dir,
-    )
+    collections = assemble_collections(descriptors)
+    fluent_icons = collections["fluent"]["icons"]
+    fabric_icons = collections["fabric"]["icons"]
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "defaultSet": "fluent",
         "icons": fluent_icons,
-        "sets": {
-            "fluent": {
-                "label": "Fluent System Icons",
-                "source": "microsoft/fluentui-system-icons",
-                "upstreamSha": fluent_upstream_sha,
-                "cdnBase": fluent_cdn_base,
-                "icons": fluent_icons,
-            },
-            "fabric": {
-                "label": "Fabric MDL2 Icons",
-                "source": "microsoft/fluentui/packages/react-icons-mdl2",
-                "sources": [
-                    "microsoft/fluentui/packages/react-icons-mdl2",
-                    *(
-                        ["microsoft/fluentui/packages/react-icons-mdl2-branded"]
-                        if fabric_branded_components_dir is not None
-                        else []
-                    ),
-                ],
-                "upstreamSha": fabric_upstream_sha,
-                "cdnBase": fabric_cdn_base,
-                "icons": fabric_icons,
-            },
-        },
+        "sets": collections,
     }
 
     output_file.write_text(

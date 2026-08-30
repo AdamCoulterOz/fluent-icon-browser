@@ -70,6 +70,7 @@ class IconBrowser {
                 sets: {
                     fluent: {
                         label: "Fluent System Icons",
+                        shortLabel: "Fluent",
                         source: "microsoft/fluentui-system-icons",
                         icons: payload,
                     },
@@ -81,7 +82,7 @@ class IconBrowser {
             if (payload.sets && typeof payload.sets === "object") {
                 return {
                     defaultSet: payload.defaultSet || "fluent",
-                    sets: payload.sets,
+                    sets: this.addLegacySetShortLabels(payload.sets),
                 };
             }
 
@@ -91,6 +92,7 @@ class IconBrowser {
                 sets: {
                     fluent: {
                         label: "Fluent System Icons",
+                        shortLabel: "Fluent",
                         source: payload.source || "microsoft/fluentui-system-icons",
                         icons,
                     },
@@ -103,11 +105,28 @@ class IconBrowser {
             sets: {
                 fluent: {
                     label: "Fluent System Icons",
+                    shortLabel: "Fluent",
                     source: "microsoft/fluentui-system-icons",
                     icons: [],
                 },
             },
         };
+    }
+
+    addLegacySetShortLabels(sets) {
+        const legacyShortLabels = {
+            fluent: "Fluent",
+            fabric: "MDL2",
+        };
+
+        return Object.fromEntries(
+            Object.entries(sets).map(([key, set]) => {
+                if (!set || typeof set !== "object" || set.shortLabel || !legacyShortLabels[key]) {
+                    return [key, set];
+                }
+                return [key, { ...set, shortLabel: legacyShortLabels[key] }];
+            })
+        );
     }
 
     async loadIcons() {
@@ -127,6 +146,7 @@ class IconBrowser {
             this.currentSetKey = availableSetKeys.includes(preferredSet)
                 ? preferredSet
                 : availableSetKeys[0] || "fluent";
+            this.renderSetTabs();
         } catch (error) {
             console.error("Error loading icons:", error);
             this.showError("Failed to load icons. Please make sure icon-data.json exists.");
@@ -184,11 +204,13 @@ class IconBrowser {
             });
         });
 
-        document.querySelectorAll(".set-tab").forEach((button) => {
-            button.addEventListener("click", () => {
-                const setKey = button.dataset.set;
-                this.switchSet(setKey);
-            });
+        const iconSetTabs = document.getElementById("iconSetTabs");
+        iconSetTabs?.addEventListener("click", (event) => {
+            const button = event.target.closest?.(".set-tab");
+            this.switchSet(button?.dataset.set);
+        });
+        iconSetTabs?.addEventListener("keydown", (event) => {
+            this.handleSetTabKeydown(event);
         });
 
         document.querySelectorAll(".panel-variant-tab").forEach((button) => {
@@ -901,6 +923,61 @@ class IconBrowser {
         this.applyCurrentSet();
     }
 
+    renderSetTabs() {
+        const tabList = document.getElementById("iconSetTabs");
+        if (!tabList) {
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        Object.entries(this.iconSets).forEach(([key, set], index) => {
+            const button = document.createElement("button");
+            const label =
+                typeof set?.shortLabel === "string" && set.shortLabel.trim()
+                    ? set.shortLabel
+                    : typeof set?.label === "string" && set.label.trim()
+                        ? set.label
+                        : key;
+            button.type = "button";
+            button.className = "segment-btn set-tab";
+            button.id = `setTab${index}`;
+            button.dataset.set = key;
+            button.setAttribute("role", "tab");
+            button.setAttribute("aria-controls", "iconGrid");
+            button.textContent = label;
+            fragment.appendChild(button);
+        });
+        tabList.replaceChildren(fragment);
+    }
+
+    handleSetTabKeydown(event) {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+            return;
+        }
+
+        const tabs = Array.from(document.querySelectorAll(".set-tab"));
+        const currentIndex = tabs.indexOf(document.activeElement);
+        if (currentIndex < 0 || tabs.length === 0) {
+            return;
+        }
+
+        event.preventDefault();
+        let nextIndex = currentIndex;
+        if (event.key === "ArrowLeft") {
+            nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        } else if (event.key === "ArrowRight") {
+            nextIndex = (currentIndex + 1) % tabs.length;
+        } else if (event.key === "Home") {
+            nextIndex = 0;
+        } else if (event.key === "End") {
+            nextIndex = tabs.length - 1;
+        }
+
+        const nextTab = tabs[nextIndex];
+        this.switchSet(nextTab.dataset.set);
+        nextTab.focus();
+    }
+
     applyCurrentSet() {
         const fallbackSet = Object.keys(this.iconSets)[0];
         if (!this.iconSets[this.currentSetKey] && fallbackSet) {
@@ -1012,13 +1089,13 @@ class IconBrowser {
     syncSetTabs() {
         document.querySelectorAll(".set-tab").forEach((button) => {
             const setKey = button.dataset.set;
-            const isAvailable = Boolean(this.iconSets[setKey]);
             const isActive = setKey === this.currentSetKey;
 
-            button.style.display = isAvailable ? "inline-flex" : "none";
             button.classList.toggle("active", isActive);
             button.setAttribute("aria-selected", isActive ? "true" : "false");
+            button.tabIndex = isActive ? 0 : -1;
         });
+        this.syncToolbarScrollIndicators();
     }
 
     updateSetSubtitle() {

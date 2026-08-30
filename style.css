@@ -631,9 +631,8 @@ body::-webkit-scrollbar {
 }
 
 .icon-set-tabs {
-    width: 125px;
     min-width: 125px;
-    max-width: 125px;
+    max-width: none;
 }
 
 .icon-set-tabs .segment-btn {

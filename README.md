@@ -13,6 +13,7 @@ Static browser UI for searching icons from:
 
 - Searches by icon name, description, and metaphors.
 - Switches between icon sets (`Fluent System`, `Fabric MDL2`).
+- Renders collection tabs from the generated index, so a future approved collection can be added without a browser code fork.
 - Filters by variant (`regular`, `filled`, `color`) where applicable to the active set.
 - Shows SVG previews sourced from pinned upstream assets.
 - Supports native size selection per variant in the modal panel.
@@ -80,6 +81,8 @@ Install the site from a browser's install menu after opening it over HTTPS (or f
 - Fluent entries use pinned raw GitHub URLs to upstream SVG files.
 - Fabric entries include parsed SVG payloads and source links to ordinary or branded upstream MDL2 component files.
 
+The generator assembles these collections through private descriptors. Collection keys and `shortLabel` values in the generated `sets` map drive the compact browser tabs, while full labels continue to drive source context; source-specific extraction and normalization remain generator internals. The only currently published keys are `fluent` and `fabric`.
+
 ### `.github/workflows/deploy-pages.yml`
 
 - Runs on push to `main`.
@@ -100,3 +103,4 @@ Install the site from a browser's install menu after opening it over HTTPS (or f
 ## Notes
 
 - This project consumes icon assets from Microsoft’s Fluent repositories. Branded MDL2 assets are governed by the Microsoft Fabric Assets License referenced by the upstream `react-icons-mdl2-branded` package; review all relevant license and usage terms before redistribution.
+- Legacy Azure icon assets are not imported, indexed, or published here. Their provenance and licensing must be established before an Azure collection is proposed; the current Azure Architecture Center terms cover diagrams, training materials, and documentation rather than this browser's public preview/copy/download catalogue.

@@ -1,7 +1,18 @@
 # History
 
+## 2026-08-30: Generalize Coherent Icon Collections
+
+- Replaced the generator's fixed two-set assembly with private collection descriptors while preserving the public `fluent` and `fabric` keys; added compatible `shortLabel` metadata for compact tabs.
+- Changed the static browser to render its accessible set tabs from the generated `sets` map, including keyboard navigation for future approved collections.
+- Recorded legacy Azure icons as blocked: no Azure asset, source, URL, or set is imported or published until provenance and licensing are verified.
+
+## 2026-08-28: Refine Keel Presentation and Search
+
 - Took the design tokens from the keel package instead of restating them, vendoring `keel.css` from AdamCoulterOz/keel via `update-keel.sh`. The palette values are unchanged; the focus ring and the elevated shadows now come from keel's scales.
 - Added a contextual × control inside the search field that clears active terms immediately while preserving the icon set and returning focus to search, and restored the intended `442px` desktop width clamp while retaining full-width compact behavior.
+
+## 2026-08-09: Refine the App Mark
+
 - Tightened the four-tile favicon/header composition by moving each unchanged tile `1.5` artboard units toward the centre while retaining the `24×24` canvas.
 - Removed the enclosing favicon tile and outlined treatment, then uniformly expanded the four shared `n=3` inner tiles to the former outer `24×24` bounds as a filled blue mark on transparency.
 - Rounded the four shared inner favicon/header tiles from Lamé `n=4` to `n=3` while retaining the `n=4` outer favicon silhouette, tile geometry, stroke weight, and action-blue identity.

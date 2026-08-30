@@ -14,7 +14,7 @@
 
 ## Domain Model
 
-- Icon set: a named icon collection, currently Fluent System icons and Fabric MDL2 icons.
+- Icon set: a named icon collection from the generated `sets` map. Each set has a full `label` and an additive compact `shortLabel`; the browser renders an accessible tab for every supplied collection. The currently published keys are `fluent` (Fluent System) and `fabric` (Fabric MDL2).
 - Icon: a searchable, selectable icon family with display metadata and available visual variants.
 - Variant: a renderable regular, filled, or color representation when present.
 - Branded MDL2 icon: an icon sourced from the upstream branded component package and tagged `branded` within the existing Fabric set.
@@ -39,6 +39,7 @@
 - Deep-link URLs must remain implementation-independent: external consumers may rely on query parameters, not internal JavaScript function names or DOM structure.
 - Upstream icon source URLs remain pinned to upstream SHAs recorded in the generated index.
 - The `fabric` set is the union of ordinary and branded MDL2 component sources; branded icons must remain searchable by the `branded` tag.
+- A future collection must have verified provenance and licensing before its assets, source locations, or public set key are added. Legacy Azure assets are explicitly blocked pending that verification; Microsoft Learn's Azure Architecture Center terms do not currently establish permission for this browser's public preview/copy/download catalogue.
 
 ## Side Effects
 
@@ -72,6 +73,7 @@
 - No package distribution contract for consumers.
 - No guarantee that undocumented icon metadata fields or normalization details remain stable.
 - No ownership of upstream icon naming, availability, or asset semantics.
+- No import, publication, or implied approval of legacy Azure icon assets.
 
 ## Agent Guidance
 
