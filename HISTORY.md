@@ -1,5 +1,12 @@
 # History
 
+## 2026-08-31: Add Bounded Azure Portal Remote Sources
+
+- Published the additive `azure` collection alongside `fluent` and `segoe`; `fabric` remains a compatibility alias to `segoe` while no direct `fabric` set exists.
+- Added current generated-state evidence of 1,374 Azure families from 342 core families and 1,032 default extension-manifest families, with 1,400 unique SVG descriptors.
+- Defined digest-bound `remoteSource` descriptors and lazy, no-eval browser resolution from public CORS Microsoft Portal sources; Azure SVG payloads remain absent from the repository and Pages artifact.
+- Bounded discovery to the deterministic default public Portal surface and kept the 105 legacy Documents SVGs unimported/unpublished. Future Microsoft product adapters remain open work.
+
 ## 2026-08-30: Rename the MDL2 Collection to Segoe
 
 - Renamed the published MDL2 collection from `fabric` to `segoe`, with full and compact labels both `Segoe`; source-package attribution is unchanged.
@@ -9,7 +16,7 @@
 
 - Replaced the generator's fixed two-set assembly with private collection descriptors while preserving the public `fluent` and `fabric` keys; added compatible `shortLabel` metadata for compact tabs.
 - Changed the static browser to render its accessible set tabs from the generated `sets` map, including keyboard navigation for future approved collections.
-- Recorded legacy Azure icons as blocked: no Azure asset, source, URL, or set is imported or published until provenance and licensing are verified.
+- Recorded the then-current decision to block legacy Azure assets pending provenance and licensing; this was superseded by the bounded public Azure Portal remote-source architecture on 2026-08-31.
 
 ## 2026-08-28: Refine Keel Presentation and Search
 

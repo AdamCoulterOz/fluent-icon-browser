@@ -1,12 +1,13 @@
-const CACHE_NAME = "fluent-icons-v3";
-const ICON_CACHE_NAME = "fluent-icons-assets-v3";
+const CACHE_NAME = "fluent-icons-v6";
+const ICON_CACHE_NAME = "fluent-icons-assets-v6";
 const ICON_CACHE_CONCURRENCY = 60;
 const APP_SHELL = [
     "./",
     "index.html",
     "keel.css?v=33",
     "style.css?v=33",
-    "script.js?v=13",
+    "remote-icon-source.js?v=2",
+    "script.js?v=14",
     "icon-data.json",
     "icons/fluent-icons.svg?v=7",
     "icons/fluent-icons-192.png?v=7",
@@ -35,9 +36,11 @@ self.addEventListener("fetch", (event) => {
     }
 
     const url = new URL(event.request.url);
-    const isRemoteSvg = url.origin !== self.location.origin && url.pathname.endsWith(".svg");
+    const isRemoteIconAsset =
+        url.origin !== self.location.origin &&
+        /\.(?:svg|js|json)$/i.test(url.pathname);
 
-    if (isRemoteSvg) {
+    if (isRemoteIconAsset) {
         event.respondWith(cacheIconAsset(event.request));
         return;
     }
@@ -81,10 +84,29 @@ async function cacheIconAsset(request) {
     }
 
     const response = await fetch(request);
-    if (response.ok || (acceptsOpaqueResponse && response.type === "opaque")) {
+    if (isCacheableRemoteIconResponse(request, response, acceptsOpaqueResponse)) {
         await cache.put(request, response.clone());
     }
     return response;
+}
+
+function isCacheableRemoteIconResponse(request, response, acceptsOpaqueResponse = false) {
+    if (response.type === "opaque") {
+        return acceptsOpaqueResponse;
+    }
+    if (!response.ok) {
+        return false;
+    }
+
+    const pathname = new URL(request.url).pathname.toLowerCase();
+    const contentType = response.headers?.get("content-type")?.toLowerCase() || "";
+    if (!contentType || !/\.(?:js|json)$/.test(pathname)) {
+        return true;
+    }
+    if (pathname.endsWith(".js")) {
+        return /(?:application|text)\/(?:javascript|ecmascript)|application\/x-javascript/.test(contentType);
+    }
+    return /(?:application|text)\/json|application\/[a-z0-9.+-]+\+json/.test(contentType);
 }
 
 async function cacheIconAssets(urls, statusPort) {
@@ -116,7 +138,7 @@ async function cacheIconAssets(urls, statusPort) {
                 const cachedResponse = await cache.match(request);
                 if (!cachedResponse || cachedResponse.type === "opaque") {
                     const response = await fetch(request);
-                    if (!response.ok || response.type === "opaque") {
+                    if (!isCacheableRemoteIconResponse(request, response)) {
                         throw new Error(`Failed to fetch ${url}`);
                     }
                     await cache.put(request, response);

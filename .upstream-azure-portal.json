@@ -1,0 +1,69 @@
+{
+  "portalBaseUrl": "https://portal.azure.com/",
+  "pageVersion": "18.221.0.1",
+  "bootstrapConfigHash": "LRY-LcK11DKA",
+  "requireConfigHash": "HgH9d13ws0c7",
+  "requireConfigUrl": "https://portal.azure.com/Content/PortalRequireConfig/HgH9d13ws0c7.js",
+  "amdBundleUrls": [
+    "https://portal.azure.com/Content/Dynamic/5s0BdLjfzVBw.js",
+    "https://portal.azure.com/Content/Dynamic/98QbjMJwnLma.js",
+    "https://portal.azure.com/Content/Dynamic/BLEHWBT2oF8H.js",
+    "https://portal.azure.com/Content/Dynamic/C1EB1JWhknQ2.js",
+    "https://portal.azure.com/Content/Dynamic/CI3fPD0wM9t1.js",
+    "https://portal.azure.com/Content/Dynamic/FdXVmKQNbCiw.js",
+    "https://portal.azure.com/Content/Dynamic/GCuMNM1uZSUU.js",
+    "https://portal.azure.com/Content/Dynamic/LMHnE3glHixc.js",
+    "https://portal.azure.com/Content/Dynamic/N-VHnVYj0Ql5.js",
+    "https://portal.azure.com/Content/Dynamic/SuN5dtgSPZqm.js",
+    "https://portal.azure.com/Content/Dynamic/Y6PL9tTO9SsA.js",
+    "https://portal.azure.com/Content/Dynamic/ZobXKERWq2k_.js",
+    "https://portal.azure.com/Content/Dynamic/_O3M6Ci7ejg1.js",
+    "https://portal.azure.com/Content/Dynamic/_WRkcQyWV-2m.js",
+    "https://portal.azure.com/Content/Dynamic/a0SY2_9ZQ_Si.js",
+    "https://portal.azure.com/Content/Dynamic/bcLm9BitBWYA.js",
+    "https://portal.azure.com/Content/Dynamic/ciuiJYMQ29Tl.js",
+    "https://portal.azure.com/Content/Dynamic/e7Xylu2ELaDw.js",
+    "https://portal.azure.com/Content/Dynamic/fdTbEt5kFOCF.js",
+    "https://portal.azure.com/Content/Dynamic/fqKw6wTvDDKU.js",
+    "https://portal.azure.com/Content/Dynamic/hRgOdZ4OJ5vK.js",
+    "https://portal.azure.com/Content/Dynamic/ijBNxkKhkg34.js",
+    "https://portal.azure.com/Content/Dynamic/l8WJE9EN10JJ.js",
+    "https://portal.azure.com/Content/Dynamic/mGaG3dqfoPn4.js",
+    "https://portal.azure.com/Content/Dynamic/ouCAKebOLwLt.js",
+    "https://portal.azure.com/Content/Dynamic/qwgSYj2_1exx.js",
+    "https://portal.azure.com/Content/Dynamic/sIzQohbrLcma.js",
+    "https://portal.azure.com/Content/Dynamic/uCb8t24agcdR.js",
+    "https://portal.azure.com/Content/Dynamic/vwF1Azj__juk.js",
+    "https://portal.azure.com/Content/Dynamic/xaItxhAZuweA.js"
+  ],
+  "extensionManifestSources": [
+    {
+      "category": "assetTypes",
+      "url": "https://portal.azure.com/Content/ExtensionManifest/8IWAPZ_A1RNG.json"
+    },
+    {
+      "category": "assetTypesBrowse",
+      "url": "https://portal.azure.com/Content/ExtensionManifest/FU7pAYY3j-5T.json"
+    },
+    {
+      "category": "assetTypesMenu",
+      "url": "https://portal.azure.com/Content/ExtensionManifest/6zn-QRDbsVfg.json"
+    },
+    {
+      "category": "browseMenus",
+      "url": "https://portal.azure.com/Content/ExtensionManifest/ePxZ5TISgNs-.json"
+    },
+    {
+      "category": "portalServices",
+      "url": "https://portal.azure.com/Content/ExtensionManifest/6HHA0GlgWT1v.json"
+    }
+  ],
+  "coreIndexedCount": 342,
+  "coreUniqueSvgCount": 368,
+  "manifestIndexedCount": 1032,
+  "manifestUniqueSvgCount": 1032,
+  "indexedCount": 1374,
+  "uniqueSvgCount": 1400,
+  "sourceDigest": "7199441765283a67770bd59b04b13d5670a326d6729f5e67eccefde7b2628b92",
+  "indexDigest": "3f35feb9c3a89cc571c3a8953c88b53724974d92a8f5f30288ec4c7ce9604e74"
+}

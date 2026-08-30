@@ -53,12 +53,24 @@ jobs:
           echo "fluent_sha=$fluent_sha" >> "$GITHUB_OUTPUT"
           echo "fabric_sha=$fabric_sha" >> "$GITHUB_OUTPUT"
 
+      - name: Probe Azure Portal icon sources
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          python azure_portal_icons.py \
+            --source-lock .tmp/azure-portal-source.json \
+            --previous-source-lock .upstream-azure-portal.json \
+            --minimum-count 250 \
+            --manifest-minimum-count 100
+
       - name: Decide if rebuild is needed
         id: decision
         run: |
           set -euo pipefail
           current_fluent="$(cat .upstream-sha 2>/dev/null || true)"
           current_fabric="$(cat .upstream-fabric-sha 2>/dev/null || true)"
+          current_azure_lock=".upstream-azure-portal.json"
+          probed_azure_lock=".tmp/azure-portal-source.json"
           upstream_fluent="${{ steps.upstream.outputs.fluent_sha }}"
           upstream_fabric="${{ steps.upstream.outputs.fabric_sha }}"
           force="${{ github.event.inputs.force_rebuild || 'false' }}"
@@ -66,7 +78,7 @@ jobs:
 
           if [ "$force" = "true" ]; then
             changed="true"
-          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ]; then
+          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
             changed="true"
           fi
 
@@ -75,6 +87,7 @@ jobs:
           echo "Upstream Fluent SHA: $upstream_fluent"
           echo "Current Fabric SHA: ${current_fabric:-<none>}"
           echo "Upstream Fabric SHA: $upstream_fabric"
+          echo "Azure Portal source changed: $(if cmp -s "$current_azure_lock" "$probed_azure_lock"; then echo false; else echo true; fi)"
           echo "Force rebuild: $force"
 
       - name: Sparse clone Fluent System assets
@@ -111,10 +124,15 @@ jobs:
             --fabric-metadata fabric-mdl2-metadata.json \
             --output icon-data.json \
             --fluent-upstream-sha "${{ steps.upstream.outputs.fluent_sha }}" \
-            --fabric-upstream-sha "${{ steps.upstream.outputs.fabric_sha }}"
+            --fabric-upstream-sha "${{ steps.upstream.outputs.fabric_sha }}" \
+            --azure-source-lock .tmp/azure-portal-source.json \
+            --azure-previous-source-lock .upstream-azure-portal.json \
+            --azure-minimum-count 250 \
+            --azure-manifest-minimum-count 100
 
           echo "${{ steps.upstream.outputs.fluent_sha }}" > .upstream-sha
           echo "${{ steps.upstream.outputs.fabric_sha }}" > .upstream-fabric-sha
+          cp .tmp/azure-portal-source.json .upstream-azure-portal.json
 
       - name: Commit and push
         if: steps.decision.outputs.changed == 'true'
@@ -122,7 +140,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha
+          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
@@ -131,5 +149,5 @@ jobs:
 
           fluent_short_sha="$(echo '${{ steps.upstream.outputs.fluent_sha }}' | cut -c1-7)"
           fabric_short_sha="$(echo '${{ steps.upstream.outputs.fabric_sha }}' | cut -c1-7)"
-          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha}"
+          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} azure-portal"
           git push

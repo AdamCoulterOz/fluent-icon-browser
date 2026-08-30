@@ -786,10 +786,14 @@ def generate_icon_data(
     fabric_upstream_sha: str,
     fluent_cdn_base: str,
     fabric_cdn_base: str,
+    azure_source_lock_path: Optional[Path] = None,
+    azure_previous_source_lock_path: Optional[Path] = None,
+    azure_minimum_count: int = 250,
+    azure_manifest_minimum_count: int = 100,
 ) -> tuple[int, int]:
     fabric_metadata = load_fabric_metadata(fabric_metadata_path)
 
-    descriptors = (
+    descriptors: list[CollectionDescriptor] = [
         CollectionDescriptor(
             key="fluent",
             label="Fluent System Icons",
@@ -827,10 +831,34 @@ def generate_icon_data(
                 branded_components_dir=fabric_branded_components_dir,
             ),
         ),
-    )
+    ]
+    if azure_source_lock_path is not None:
+        from azure_portal_icons import generate_azure_icons
+
+        descriptors.append(
+            CollectionDescriptor(
+                key="azure",
+                label="Azure Portal Icons",
+                short_label="Azure",
+                source=(
+                    "Microsoft Azure Portal public core SVG modules and default "
+                    "extension manifests (bounded public subset)"
+                ),
+                sources=(),
+                upstream_sha="portal-bootstrap",
+                cdn_base="https://portal.azure.com",
+                build_icons=lambda: generate_azure_icons(
+                    source_lock_path=azure_source_lock_path,
+                    previous_source_lock_path=azure_previous_source_lock_path,
+                    core_minimum_count=azure_minimum_count,
+                    manifest_minimum_count=azure_manifest_minimum_count,
+                ),
+            )
+        )
     collections = assemble_collections(descriptors)
     fluent_icons = collections["fluent"]["icons"]
     segoe_icons = collections["segoe"]["icons"]
+    azure_icons = collections.get("azure", {}).get("icons", [])
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -847,6 +875,7 @@ def generate_icon_data(
     print(
         "Generated "
         f"{len(fluent_icons)} fluent icons + {len(segoe_icons)} Segoe icons "
+        f"+ {len(azure_icons)} Azure Portal icons "
         f"-> {output_file}"
     )
     return len(fluent_icons), len(segoe_icons)
@@ -911,6 +940,28 @@ def parse_args() -> argparse.Namespace:
         default="https://cdn.jsdelivr.net/gh/microsoft/fluentui",
         help="CDN base URL for Fabric source files",
     )
+    parser.add_argument(
+        "--azure-source-lock",
+        default="",
+        help="Output path for the Azure Portal source lock; enables the Azure collection",
+    )
+    parser.add_argument(
+        "--azure-previous-source-lock",
+        default="",
+        help="Prior committed Azure Portal source lock for drift detection",
+    )
+    parser.add_argument(
+        "--azure-minimum-count",
+        type=int,
+        default=250,
+        help="Minimum Azure Portal core icon count before failing generation",
+    )
+    parser.add_argument(
+        "--azure-manifest-minimum-count",
+        type=int,
+        default=100,
+        help="Minimum Azure Portal extension-manifest icon count before failing generation",
+    )
     return parser.parse_args()
 
 
@@ -940,6 +991,14 @@ def main() -> None:
         fabric_upstream_sha=fabric_upstream_sha,
         fluent_cdn_base=args.fluent_cdn_base.rstrip("/"),
         fabric_cdn_base=args.fabric_cdn_base.rstrip("/"),
+        azure_source_lock_path=Path(args.azure_source_lock)
+        if args.azure_source_lock
+        else None,
+        azure_previous_source_lock_path=Path(args.azure_previous_source_lock)
+        if args.azure_previous_source_lock
+        else None,
+        azure_minimum_count=args.azure_minimum_count,
+        azure_manifest_minimum_count=args.azure_manifest_minimum_count,
     )
 
 

@@ -49,6 +49,12 @@ class IconBrowser {
         this.panelSwipeGesture = null;
         this.panelSwipeAnimationTimer = null;
         this.panelSizeMenuCloseTimer = null;
+        this.remoteIconSourceResolver = globalThis.RemoteIconSource
+            ? new globalThis.RemoteIconSource.RemoteIconSourceResolver()
+            : null;
+        this.remotePreviewObserver = null;
+        this.remotePreviewFallbackScheduled = false;
+        this.remotePreviewRequestSequence = 0;
         this.init();
     }
 
@@ -60,6 +66,7 @@ class IconBrowser {
         await this.loadIcons();
         this.setupEventListeners();
         this.setupFooterOffset();
+        this.setupRemotePreviewHydration();
         this.applyCurrentSet();
         this.applyDeepLink();
     }
@@ -1264,18 +1271,22 @@ class IconBrowser {
         if (entry && typeof entry === "object") {
             const url = typeof entry.url === "string" ? entry.url : null;
             const svg = typeof entry.svg === "string" ? entry.svg : null;
+            const remoteSource = entry.remoteSource && typeof entry.remoteSource === "object"
+                ? entry.remoteSource
+                : null;
             const sourceUrl =
                 typeof entry.sourceUrl === "string"
                     ? entry.sourceUrl
                     : url ||
                       (typeof variantData?.sourceUrl === "string" ? variantData.sourceUrl : null);
 
-            return { url, svg, sourceUrl };
+            return { url, svg, sourceUrl, remoteSource };
         }
 
         return {
             url: null,
             svg: null,
+            remoteSource: null,
             sourceUrl:
                 typeof variantData?.sourceUrl === "string" ? variantData.sourceUrl : null,
         };
@@ -1291,6 +1302,7 @@ class IconBrowser {
                 size: null,
                 url: null,
                 svg: variantData,
+                remoteSource: null,
                 sourceUrl: null,
             };
         }
@@ -1312,6 +1324,7 @@ class IconBrowser {
                 size: defaultSize,
                 url: null,
                 svg: variantData.previewSvg,
+                remoteSource: null,
                 sourceUrl:
                     typeof variantData.sourceUrl === "string" ? variantData.sourceUrl : null,
             };
@@ -1322,6 +1335,7 @@ class IconBrowser {
                 size: defaultSize,
                 url: variantData.previewUrl,
                 svg: null,
+                remoteSource: null,
                 sourceUrl: variantData.previewUrl,
             };
         }
@@ -1338,6 +1352,7 @@ class IconBrowser {
             size: defaultSize,
             url: null,
             svg: null,
+            remoteSource: null,
             sourceUrl:
                 typeof variantData.sourceUrl === "string" ? variantData.sourceUrl : null,
         };
@@ -1434,13 +1449,17 @@ class IconBrowser {
 
         const previewVariant = this.getPreviewVariantForMode(icon, styleMode);
         const variantData = previewVariant ? this.getVariantData(icon, previewVariant) : null;
+        const asset = variantData
+            ? this.resolveVariantAsset(variantData, this.getDefaultSize(variantData))
+            : null;
         const previewMarkup = variantData
-            ? this.renderPreviewMarkup(icon, previewVariant, variantData)
+            ? this.renderPreviewMarkup(icon, previewVariant, variantData, asset)
             : '<div style="color: #ccc;">No preview</div>';
         const colorClass = previewVariant === "color" ? "has-color-variant" : "";
 
         const cached = {
             variant: previewVariant,
+            asset,
             markup: previewMarkup,
             colorClass,
         };
@@ -1467,6 +1486,14 @@ class IconBrowser {
         iconView.className = `icon-view ${preview.colorClass}`.trim();
         iconView.innerHTML = preview.markup;
         card.dataset.previewMode = styleMode;
+        card.dataset.hasRemotePreview = preview.asset?.remoteSource ? "true" : "false";
+        const nextRemotePreviewKey = preview.asset?.remoteSource
+            ? this.remoteAssetKey(preview.asset)
+            : "";
+        if (nextRemotePreviewKey || card.dataset.remotePreviewKey !== nextRemotePreviewKey) {
+            delete card.dataset.remotePreviewStatus;
+            delete card.dataset.remotePreviewKey;
+        }
     }
 
     toggleNoResultsMessage(isVisible) {
@@ -1523,10 +1550,11 @@ class IconBrowser {
 
         this.lastAppliedStyleMode = styleMode;
         this.toggleNoResultsMessage(visibleCount === 0);
+        this.syncRemotePreviewObservation();
     }
 
-    renderPreviewMarkup(icon, variant, variantData) {
-        const asset = this.resolveVariantAsset(variantData, this.getDefaultSize(variantData));
+    renderPreviewMarkup(icon, variant, variantData, resolvedAsset = null) {
+        const asset = resolvedAsset || this.resolveVariantAsset(variantData, this.getDefaultSize(variantData));
         if (!asset) {
             return '<div style="color: #ccc;">No preview</div>';
         }
@@ -1535,8 +1563,14 @@ class IconBrowser {
             return asset.svg;
         }
 
+        if (asset.remoteSource) {
+            const label = `${this.getIconDisplayName(icon)} ${variant}`;
+            const escapedLabel = this.escapeHtmlAttribute(label);
+            return `<span class="remote-icon-placeholder" role="img" aria-label="${escapedLabel} loading">...</span>`;
+        }
+
         if (asset.url) {
-            const label = `${this.formatName(icon.name)} ${variant}`;
+            const label = `${this.getIconDisplayName(icon)} ${variant}`;
             const escapedLabel = this.escapeHtmlAttribute(label);
             if (variant !== "color") {
                 const escapedUrl = this.escapeHtmlAttribute(asset.url);
@@ -1615,19 +1649,21 @@ class IconBrowser {
         }
 
         this.applyStyleModeToRenderedCards();
+        this.syncRemotePreviewObservation();
     }
 
     renderIconCard(icon) {
         const styleMode = this.getActiveStyleMode();
         const preview = this.getCachedPreviewForMode(icon, styleMode);
         const escapedName = this.escapeHtmlAttribute(icon.name);
-        const displayName = this.formatName(icon.name);
+        const displayName = this.getIconDisplayName(icon);
         const escapedDisplayName = this.escapeHtmlAttribute(displayName);
 
         return `
             <div class="icon-card"
                 data-icon-name="${escapedName}"
                 data-preview-mode="${styleMode}"
+                data-has-remote-preview="${preview.asset?.remoteSource ? "true" : "false"}"
                 title="${escapedDisplayName}"
                 aria-label="${escapedDisplayName}"
                 onclick="iconBrowser.openModal('${icon.name}')">
@@ -1638,11 +1674,175 @@ class IconBrowser {
         `;
     }
 
+    setupRemotePreviewHydration() {
+        if (!this.remoteIconSourceResolver) {
+            console.error("Remote icon source support did not load; descriptor-backed icons are unavailable.");
+            return;
+        }
+
+        if ("IntersectionObserver" in window) {
+            this.remotePreviewObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+                        this.remotePreviewObserver?.unobserve(entry.target);
+                        const icon = this.iconByName.get(entry.target.dataset.iconName);
+                        if (icon) {
+                            void this.hydrateCardRemotePreview(entry.target, icon);
+                        }
+                    });
+                },
+                { rootMargin: "480px 0px" }
+            );
+            return;
+        }
+
+        const scheduleFallback = () => this.scheduleRemotePreviewFallback();
+        window.addEventListener("scroll", scheduleFallback, { passive: true });
+        window.addEventListener("resize", scheduleFallback);
+    }
+
+    syncRemotePreviewObservation() {
+        if (!this.remoteIconSourceResolver) {
+            return;
+        }
+
+        const cards = [...this.cardByName.values()].filter(
+            (card) =>
+                card.dataset.hasRemotePreview === "true" &&
+                !card.classList.contains("is-hidden") &&
+                card.dataset.remotePreviewStatus !== "complete" &&
+                card.dataset.remotePreviewStatus !== "failed"
+        );
+        if (this.remotePreviewObserver) {
+            this.remotePreviewObserver.disconnect();
+            cards.forEach((card) => this.remotePreviewObserver.observe(card));
+            return;
+        }
+        this.scheduleRemotePreviewFallback(cards);
+    }
+
+    scheduleRemotePreviewFallback(cards = null) {
+        if (this.remotePreviewFallbackScheduled) {
+            return;
+        }
+        this.remotePreviewFallbackScheduled = true;
+        requestAnimationFrame(() => {
+            this.remotePreviewFallbackScheduled = false;
+            const candidates = cards || [...this.cardByName.values()].filter(
+                (card) =>
+                    card.dataset.hasRemotePreview === "true" &&
+                    !card.classList.contains("is-hidden") &&
+                    card.dataset.remotePreviewStatus !== "complete" &&
+                    card.dataset.remotePreviewStatus !== "failed"
+            );
+            const viewportBottom = window.innerHeight + 480;
+            candidates
+                .filter((card) => {
+                    const bounds = card.getBoundingClientRect();
+                    return bounds.bottom >= -480 && bounds.top <= viewportBottom;
+                })
+                .slice(0, 24)
+                .forEach((card) => {
+                    const icon = this.iconByName.get(card.dataset.iconName);
+                    if (icon) {
+                        void this.hydrateCardRemotePreview(card, icon);
+                    }
+                });
+        });
+    }
+
+    remoteAssetKey(asset) {
+        const source = asset?.remoteSource;
+        return source
+            ? [source.url, source.format, source.selector, source.sha256 || ""].join("\n")
+            : "";
+    }
+
+    async resolveAssetSvg(asset) {
+        if (asset?.svg) {
+            return asset.svg;
+        }
+        if (asset?.remoteSource) {
+            if (!this.remoteIconSourceResolver) {
+                throw new Error("Remote icon source support did not load");
+            }
+            return this.remoteIconSourceResolver.resolve(asset.remoteSource);
+        }
+        if (asset?.url) {
+            return fetchSvgText(asset.url);
+        }
+        throw new Error("The selected icon has no SVG source");
+    }
+
+    async hydrateCardRemotePreview(card, icon) {
+        const preview = this.getCachedPreviewForMode(icon, card.dataset.previewMode || "");
+        const asset = preview.asset;
+        if (!asset?.remoteSource || card.classList.contains("is-hidden")) {
+            return;
+        }
+
+        const key = this.remoteAssetKey(asset);
+        if (
+            card.dataset.remotePreviewKey === key &&
+            (card.dataset.remotePreviewStatus === "loading" || card.dataset.remotePreviewStatus === "complete")
+        ) {
+            return;
+        }
+
+        const iconView = card.querySelector(".icon-view");
+        if (!iconView) {
+            return;
+        }
+        card.dataset.remotePreviewKey = key;
+        card.dataset.remotePreviewStatus = "loading";
+        try {
+            const svg = await this.resolveAssetSvg(asset);
+            if (card.dataset.remotePreviewKey !== key || card.classList.contains("is-hidden")) {
+                return;
+            }
+            iconView.innerHTML = svg;
+            card.dataset.remotePreviewStatus = "complete";
+        } catch (error) {
+            if (card.dataset.remotePreviewKey !== key) {
+                return;
+            }
+            console.error(`Failed to hydrate remote preview for '${icon.name}' from ${asset.remoteSource.url}:`, error);
+            iconView.innerHTML = '<span class="remote-icon-error" role="img" aria-label="Preview unavailable">!</span>';
+            card.dataset.remotePreviewStatus = "failed";
+        }
+    }
+
+    async hydrateDetailRemotePreview(iconDiv, asset, label) {
+        const requestId = String(++this.remotePreviewRequestSequence);
+        iconDiv.dataset.remotePreviewRequest = requestId;
+        iconDiv.innerHTML = '<div class="remote-preview-status" role="status">Loading preview...</div>';
+        try {
+            const svg = await this.resolveAssetSvg(asset);
+            if (iconDiv.dataset.remotePreviewRequest !== requestId) {
+                return;
+            }
+            iconDiv.innerHTML = svg;
+        } catch (error) {
+            if (iconDiv.dataset.remotePreviewRequest !== requestId) {
+                return;
+            }
+            console.error(`Failed to resolve remote preview for ${label} from ${asset.remoteSource.url}:`, error);
+            iconDiv.innerHTML = '<div class="remote-preview-status" role="alert">Preview unavailable</div>';
+        }
+    }
+
     formatName(name) {
         return name
             .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
+    }
+
+    getIconDisplayName(icon) {
+        return icon?.displayName || this.formatName(icon?.name || "");
     }
 
     configureVariantControls(variant, variantData) {
@@ -1684,6 +1884,9 @@ class IconBrowser {
         }
 
         const iconDiv = document.getElementById(`${variant}Icon`);
+        if (!iconDiv) {
+            return;
+        }
         const colorClass = variant === "color" ? "has-color-variant" : "";
 
         iconDiv.className = `icon-view ${colorClass} icon-large`;
@@ -1692,17 +1895,24 @@ class IconBrowser {
         const asset = this.resolveVariantAsset(variantData, selectedSize);
 
         if (!asset) {
+            iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
             iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
             return;
         }
 
         if (asset.svg) {
+            iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
             iconDiv.innerHTML = asset.svg;
+        } else if (asset.remoteSource) {
+            const label = `${this.getIconDisplayName(this.currentIcon)} ${variant}`;
+            void this.hydrateDetailRemotePreview(iconDiv, asset, label);
         } else if (asset.url) {
-            const label = `${this.formatName(this.currentIcon.name)} ${variant}`;
+            iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
+            const label = `${this.getIconDisplayName(this.currentIcon)} ${variant}`;
             const escapedLabel = this.escapeHtmlAttribute(label);
             iconDiv.innerHTML = `<img src="${asset.url}" alt="${escapedLabel}" decoding="async">`;
         } else {
+            iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
             iconDiv.innerHTML = '<div style="color: #ccc;">No preview</div>';
         }
     }
@@ -1721,7 +1931,7 @@ class IconBrowser {
         this.setSelectedIcon(iconName);
         this.currentIcon = icon;
         document.getElementById("modalTitle").textContent =
-            icon.displayName || this.formatName(icon.name);
+            this.getIconDisplayName(icon);
         const modalDescription = document.getElementById("modalDescription");
         const descriptionText =
             typeof icon.description === "string" ? icon.description.trim() : "";
@@ -1732,7 +1942,6 @@ class IconBrowser {
         availableVariants.forEach((variant) => {
             const variantData = this.getVariantData(icon, variant);
             this.configureVariantControls(variant, variantData);
-            this.updateModalVariantPreview(variant);
         });
 
         const metaphorsList = document.getElementById("metaphorsList");
@@ -1852,6 +2061,7 @@ class IconBrowser {
         this.syncPanelVariantTabs(availableVariants);
         this.syncPanelToolbarControls(availableVariants);
         this.syncActiveVariantPanels();
+        this.updateModalVariantPreview(this.activePanelVariant);
     }
 
     syncPanelToolbarControls(availableVariants = this.getAvailableVariantsForIcon()) {
@@ -1988,6 +2198,8 @@ class IconBrowser {
         return {
             svgText: asset.svg,
             sourceUrl: asset.url,
+            remoteSource: asset.remoteSource,
+            asset,
             size: asset.size,
         };
     }
@@ -2021,9 +2233,28 @@ class IconBrowser {
 const iconCacheVersionKey = "fluent-icons-icon-cache-version-v2";
 
 function getIconCacheUrls(payload) {
-    return [...new Set(
-        [...JSON.stringify(payload).matchAll(/https?:[^"\\]+\.svg/g)].map((match) => match[0])
-    )];
+    const urls = new Set();
+    const visit = (value, isRemoteDescriptor = false) => {
+        if (typeof value === "string") {
+            if (!isRemoteDescriptor && /^https?:[^"\\]+\.svg(?:[?#][^"\\]*)?$/i.test(value)) {
+                urls.add(value);
+            }
+            return;
+        }
+        if (Array.isArray(value)) {
+            value.forEach((entry) => visit(entry, isRemoteDescriptor));
+            return;
+        }
+        if (!value || typeof value !== "object") {
+            return;
+        }
+        Object.entries(value).forEach(([key, entry]) => {
+            visit(entry, isRemoteDescriptor || key === "remoteSource");
+        });
+    };
+
+    visit(payload);
+    return [...urls];
 }
 
 function updateCacheLoader(completed, total, failed = 0) {
@@ -2269,7 +2500,7 @@ async function copyToClipboard(clickEvent, variant) {
     const button = clickEvent?.currentTarget || clickEvent?.target;
 
     try {
-        const originalSvg = selection.svgText || (await fetchSvgText(selection.sourceUrl));
+        const originalSvg = await iconBrowser.resolveAssetSvg(selection.asset);
         const copiedSvg = prepareSvgOutput(originalSvg, variant);
         await navigator.clipboard.writeText(copiedSvg);
         setActionFeedback(button, true);
@@ -2286,7 +2517,7 @@ async function downloadIcon(variant) {
     }
 
     try {
-        const originalSvg = selection.svgText || (await fetchSvgText(selection.sourceUrl));
+        const originalSvg = await iconBrowser.resolveAssetSvg(selection.asset);
         const applyCurrentColor = iconBrowser.shouldUseCurrentColor(variant);
         const includeBounds = iconBrowser.includeBoundsEnabled;
         const finalSvg = prepareSvgOutput(originalSvg, variant);

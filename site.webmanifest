@@ -1,7 +1,7 @@
 {
   "name": "Fluent Icons",
   "short_name": "Fluent Icons",
-  "description": "Browse Fluent System and Fabric MDL2 icons by name, meaning, and visual variant.",
+  "description": "Browse Fluent System, Segoe, and Azure icons by name, meaning, and visual variant.",
   "start_url": ".",
   "scope": "./",
   "display": "standalone",

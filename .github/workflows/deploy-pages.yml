@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp index.html style.css script.js service-worker.js site.webmanifest icon-data.json robots.txt sitemap.xml _site/
+          cp index.html style.css script.js remote-icon-source.js service-worker.js site.webmanifest icon-data.json robots.txt sitemap.xml _site/
           cp -R icons _site/icons
           export DEPLOYMENT_VERSION="$GITHUB_SHA"
           export DEPLOYMENT_SUMMARY="$(git log -1 --pretty=%s)"

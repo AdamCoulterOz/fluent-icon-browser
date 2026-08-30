@@ -6,22 +6,23 @@ Static browser UI for searching icons from:
 
 - [microsoft/fluentui-system-icons](https://github.com/microsoft/fluentui-system-icons) (Fluent System)
 - [microsoft/fluentui](https://github.com/microsoft/fluentui) `react-icons-mdl2` and `react-icons-mdl2-branded` (Segoe)
+- Public Microsoft Azure Portal core icon modules and default extension manifests (Azure)
 
 ...with automatic index refresh and GitHub Pages hosting.
 
 ## What It Does
 
 - Searches by icon name, description, and metaphors.
-- Switches between icon sets (`Fluent System`, `Segoe`).
+- Switches between icon sets (`Fluent System`, `Segoe`, `Azure`).
 - Renders collection tabs from the generated index, so a future approved collection can be added without a browser code fork.
 - Filters by variant (`regular`, `filled`, `color`) where applicable to the active set.
-- Shows SVG previews sourced from pinned upstream assets.
+- Shows SVG previews sourced from pinned upstream assets or resolved lazily from public Microsoft Azure Portal sources.
 - Supports native size selection per variant in the modal panel.
 - Copies/downloads the selected native-size SVG.
 - Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
 - Includes committed MDL2 metadata (`description` + `metaphors`) for all Segoe icons to improve search relevance.
 - Tags every icon sourced from `react-icons-mdl2-branded` with the searchable `branded` metaphor.
-- Auto-refreshes `icon-data.json` when upstream Fluent System or Segoe source icons change.
+- Auto-refreshes `icon-data.json` when upstream Fluent System, Segoe, or Azure Portal source indexes change.
 - Deploys the site to GitHub Pages from `main`.
 - Supports installation as a PWA with offline access to the app shell and recently viewed icon SVG assets.
 
@@ -38,6 +39,17 @@ python generate-icon-data.py \
   --fluent-upstream-sha <fluent-system-commit-sha> \
   --fabric-upstream-sha <fluentui-commit-sha> \
   --output icon-data.json
+```
+
+The Azure collection is enabled by supplying an Azure source lock produced by `azure_portal_icons.py`:
+
+```bash
+python azure_portal_icons.py \
+  --source-lock .tmp/azure-portal-source.json \
+  --previous-source-lock .upstream-azure-portal.json
+python generate-icon-data.py ... \
+  --azure-source-lock .tmp/azure-portal-source.json \
+  --azure-previous-source-lock .upstream-azure-portal.json
 ```
 
 ### Optional: regenerate Fabric metadata
@@ -69,19 +81,23 @@ Install the site from a browser's install menu after opening it over HTTPS (or f
 - Checks current upstream SHAs for:
   - `microsoft/fluentui-system-icons` (`main`)
   - `microsoft/fluentui` (`master`, for `react-icons-mdl2` and `react-icons-mdl2-branded`)
-- Rebuilds only when either upstream SHA changes (or `force_rebuild=true`).
+- Probes the public Azure Portal bootstrap, RequireConfig/dependency tree, and default extension manifests; schema drift or a collapsed count fails the run.
+- Rebuilds when either upstream SHA or the Azure source lock changes (or `force_rebuild=true`).
 - Pipeline:
   - sparse clone Fluent System `assets/`
   - sparse clone ordinary and branded MDL2 component sources for Segoe
+  - temporarily download public Microsoft Portal JS/JSON to parse and index the deterministic default public Azure surface, without evaluating JavaScript
   - run `generate-fabric-metadata.py`
   - run `generate-icon-data.py`
-  - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha`
+  - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha` + `.upstream-azure-portal.json`
 
-`icon-data.json` stores both icon sets:
+`icon-data.json` stores the published collections:
 - Fluent entries use pinned raw GitHub URLs to upstream SVG files.
 - Segoe entries include parsed SVG payloads and source links to ordinary or branded upstream MDL2 component files.
+- Azure currently contains 1,374 generated families from 342 public core families plus 1,032 default public extension-manifest families, with 1,400 unique SVG descriptors. These are current generated-state counts, not eternal contract guarantees.
+- Azure variants retain `remoteSource` descriptors containing `url`, `format`, `selector`, and `sha256`; the static browser fetches and verifies the selected public SVG at use time. No Azure SVG payload is retained in this repository or its Pages artifact, and the browser/service worker only caches resolved assets client-side.
 
-The generator assembles these collections through private descriptors. Collection keys and `shortLabel` values in the generated `sets` map drive the compact browser tabs, while full labels continue to drive source context; source-specific extraction and normalization remain generator internals. The currently published keys are `fluent` and `segoe`; the generated `fabric` alias preserves existing deep links. If a real `fabric` collection is introduced later, its collision with that alias requires an explicit compatibility decision.
+The generator assembles these collections through private descriptors. Collection keys and `shortLabel` values in the generated `sets` map drive the compact browser tabs, while full labels continue to drive source context. The published keys are `fluent`, `segoe`, and `azure`; `fabric` remains a compatibility alias to `segoe` only while no direct `fabric` set exists.
 
 ### `.github/workflows/deploy-pages.yml`
 
@@ -92,7 +108,8 @@ The generator assembles these collections through private descriptors. Collectio
 
 - `index.html`, `style.css`, `script.js`: static UI.
 - `process.py`: optional transform/consolidation script (not used by CI sync).
-- `generate-icon-data.py`: generates browser index (`icon-data.json`) for both icon sets.
+- `generate-icon-data.py`: generates browser index (`icon-data.json`) for the published collections.
+- `azure_portal_icons.py`, `remote-icon-source.js`: bounded Azure source discovery/indexing and browser-side remote SVG adapters.
 - `generate-fabric-metadata.py`: generates/maintains `fabric-mdl2-metadata.json` (`id`, `name`, `description`, `metaphors`) for all Segoe icons.
 - `fabric-mdl2-metadata.json`: committed metadata used to enrich Segoe icon search.
 - `icons/`: small UI glyph assets for modal action buttons.
@@ -102,5 +119,7 @@ The generator assembles these collections through private descriptors. Collectio
 
 ## Notes
 
-- This project consumes icon assets from Microsoft’s Fluent repositories. Branded MDL2 assets are governed by the Microsoft Fabric Assets License referenced by the upstream `react-icons-mdl2-branded` package; review all relevant license and usage terms before redistribution.
-- Legacy Azure icon assets are not imported, indexed, or published here. Their provenance and licensing must be established before an Azure collection is proposed; the current Azure Architecture Center terms cover diagrams, training materials, and documentation rather than this browser's public preview/copy/download catalogue.
+- This project consumes Microsoft Fluent, Segoe, and public Azure Portal sources. Branded MDL2 assets are governed by the Microsoft Fabric Assets License referenced by the upstream `react-icons-mdl2-branded` package; review all relevant license and usage terms before redistribution.
+- Azure source URLs are retained as attribution and resolution inputs, not as rehosted assets. The weekly pipeline never touches the 105 legacy Documents SVGs; those local assets remain unimported and unpublished and are not the Azure source.
+- The Azure index covers the deterministic default public surface discovered from portal bootstrap, current RequireConfig/dependency data, and default extension-manifest hashes. It does not claim authenticated or flight-specific inner blades, and this project does not own upstream source availability or semantics.
+- Future coherent Microsoft adapters (Fabric, Azure DevOps, Power Platform, Entra, Microsoft 365, and Dynamics 365) are open future direction, not implemented or public collections.
