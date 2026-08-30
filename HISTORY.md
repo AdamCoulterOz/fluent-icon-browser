@@ -1,5 +1,10 @@
 # History
 
+## 2026-08-30: Rename the MDL2 Collection to Segoe
+
+- Renamed the published MDL2 collection from `fabric` to `segoe`, with full and compact labels both `Segoe`; source-package attribution is unchanged.
+- Added the generated `fabric` compatibility alias for existing deep links. Direct set keys take precedence over aliases, so any future `fabric` collection needs an explicit compatibility decision.
+
 ## 2026-08-30: Generalize Coherent Icon Collections
 
 - Replaced the generator's fixed two-set assembly with private collection descriptors while preserving the public `fluent` and `fabric` keys; added compatible `shortLabel` metadata for compact tabs.

@@ -96265,6 +96265,9 @@
       }
     }
   ],
+  "setAliases": {
+    "fabric": "segoe"
+  },
   "sets": {
     "fluent": {
       "label": "Fluent System Icons",
@@ -192537,9 +192540,9 @@
         }
       ]
     },
-    "fabric": {
-      "label": "Fabric MDL2 Icons",
-      "shortLabel": "MDL2",
+    "segoe": {
+      "label": "Segoe",
+      "shortLabel": "Segoe",
       "source": "microsoft/fluentui/packages/react-icons-mdl2",
       "sources": [
         "microsoft/fluentui/packages/react-icons-mdl2",

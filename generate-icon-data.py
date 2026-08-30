@@ -24,6 +24,7 @@ KNOWN_FABRIC_SIZES = {8, 10, 12, 16, 20, 24, 28, 32, 48, 64}
 SVG_BLOCK_PATTERN = re.compile(r"<svg[\s\S]*?</svg>", flags=re.IGNORECASE)
 DISPLAY_NAME_PATTERN = re.compile(r"displayName:\s*'([^']+)'")
 FABRIC_VARIANT_SUFFIXES = {"solid": "filled", "fill": "filled", "filled": "filled"}
+SET_ALIASES = {"fabric": "segoe"}
 
 
 class CollectionDescriptor:
@@ -804,9 +805,9 @@ def generate_icon_data(
             ),
         ),
         CollectionDescriptor(
-            key="fabric",
-            label="Fabric MDL2 Icons",
-            short_label="MDL2",
+            key="segoe",
+            label="Segoe",
+            short_label="Segoe",
             source="microsoft/fluentui/packages/react-icons-mdl2",
             sources=(
                 "microsoft/fluentui/packages/react-icons-mdl2",
@@ -829,12 +830,13 @@ def generate_icon_data(
     )
     collections = assemble_collections(descriptors)
     fluent_icons = collections["fluent"]["icons"]
-    fabric_icons = collections["fabric"]["icons"]
+    segoe_icons = collections["segoe"]["icons"]
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "defaultSet": "fluent",
         "icons": fluent_icons,
+        "setAliases": SET_ALIASES,
         "sets": collections,
     }
 
@@ -844,10 +846,10 @@ def generate_icon_data(
 
     print(
         "Generated "
-        f"{len(fluent_icons)} fluent icons + {len(fabric_icons)} fabric icons "
+        f"{len(fluent_icons)} fluent icons + {len(segoe_icons)} Segoe icons "
         f"-> {output_file}"
     )
-    return len(fluent_icons), len(fabric_icons)
+    return len(fluent_icons), len(segoe_icons)
 
 
 def parse_args() -> argparse.Namespace:

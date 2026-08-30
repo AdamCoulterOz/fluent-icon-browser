@@ -21,6 +21,7 @@ function writeIncludeBoundsPreference(enabled) {
 class IconBrowser {
     constructor() {
         this.iconSets = {};
+        this.setAliases = {};
         this.currentSetKey = "fluent";
         this.currentSet = null;
         this.styleMode = "";
@@ -67,6 +68,7 @@ class IconBrowser {
         if (Array.isArray(payload)) {
             return {
                 defaultSet: "fluent",
+                setAliases: {},
                 sets: {
                     fluent: {
                         label: "Fluent System Icons",
@@ -82,6 +84,7 @@ class IconBrowser {
             if (payload.sets && typeof payload.sets === "object") {
                 return {
                     defaultSet: payload.defaultSet || "fluent",
+                    setAliases: this.normalizeSetAliases(payload.setAliases),
                     sets: this.addLegacySetShortLabels(payload.sets),
                 };
             }
@@ -89,6 +92,7 @@ class IconBrowser {
             const icons = Array.isArray(payload.icons) ? payload.icons : [];
             return {
                 defaultSet: "fluent",
+                setAliases: {},
                 sets: {
                     fluent: {
                         label: "Fluent System Icons",
@@ -102,6 +106,7 @@ class IconBrowser {
 
         return {
             defaultSet: "fluent",
+            setAliases: {},
             sets: {
                 fluent: {
                     label: "Fluent System Icons",
@@ -116,7 +121,7 @@ class IconBrowser {
     addLegacySetShortLabels(sets) {
         const legacyShortLabels = {
             fluent: "Fluent",
-            fabric: "MDL2",
+            segoe: "Segoe",
         };
 
         return Object.fromEntries(
@@ -129,6 +134,30 @@ class IconBrowser {
         );
     }
 
+    normalizeSetAliases(aliases) {
+        if (!aliases || typeof aliases !== "object" || Array.isArray(aliases)) {
+            return {};
+        }
+
+        return Object.fromEntries(
+            Object.entries(aliases).filter(
+                ([alias, target]) => typeof alias === "string" && typeof target === "string"
+            )
+        );
+    }
+
+    resolveSetKey(requestedKey) {
+        if (!requestedKey) {
+            return null;
+        }
+        if (this.iconSets[requestedKey]) {
+            return requestedKey;
+        }
+
+        const aliasTarget = this.setAliases[requestedKey];
+        return aliasTarget && this.iconSets[aliasTarget] ? aliasTarget : null;
+    }
+
     async loadIcons() {
         try {
             const response = await fetch("./icon-data.json");
@@ -139,6 +168,7 @@ class IconBrowser {
             const payload = await response.json();
             const normalized = this.normalizePayload(payload);
             this.iconSets = normalized.sets;
+            this.setAliases = normalized.setAliases;
             void warmIconCache(payload);
 
             const availableSetKeys = Object.keys(this.iconSets);
@@ -1024,7 +1054,7 @@ class IconBrowser {
             return;
         }
 
-        let targetSetKey = setParam && this.iconSets[setParam] ? setParam : null;
+        let targetSetKey = this.resolveSetKey(setParam);
         if (!targetSetKey && iconParam) {
             for (const [key, set] of Object.entries(this.iconSets)) {
                 const icons = Array.isArray(set.icons) ? set.icons : [];

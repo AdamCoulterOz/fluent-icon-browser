@@ -3,6 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -60,9 +61,9 @@ class Mdl2GenerationTests(unittest.TestCase):
                     build_icons=lambda: [{"name": "access_time"}],
                 ),
                 icon_data.CollectionDescriptor(
-                    key="fabric",
-                    label="Fabric MDL2 Icons",
-                    short_label="MDL2",
+                    key="segoe",
+                    label="Segoe",
+                    short_label="Segoe",
                     source="example/fabric",
                     sources=("example/fabric",),
                     upstream_sha="fabric-sha",
@@ -82,10 +83,47 @@ class Mdl2GenerationTests(unittest.TestCase):
             ]
         )
 
-        self.assertEqual(["fluent", "fabric", "synthetic"], list(collections))
+        self.assertEqual(["fluent", "segoe", "synthetic"], list(collections))
+        self.assertEqual("Segoe", collections["segoe"]["label"])
+        self.assertEqual("Segoe", collections["segoe"]["shortLabel"])
         self.assertEqual("Synthetic Icons", collections["synthetic"]["label"])
         self.assertEqual("Synthetic", collections["synthetic"]["shortLabel"])
         self.assertEqual([{"name": "test_icon"}], collections["synthetic"]["icons"])
+
+    def test_generated_payload_uses_segoe_and_preserves_fabric_alias(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_file = Path(temp_dir) / "icon-data.json"
+            with (
+                patch.object(
+                    icon_data,
+                    "generate_fluent_icons",
+                    return_value=[{"name": "access_time"}],
+                ),
+                patch.object(
+                    icon_data,
+                    "generate_fabric_icons",
+                    return_value=[{"name": "accept"}],
+                ),
+            ):
+                counts = icon_data.generate_icon_data(
+                    fluent_icons_dir=Path(temp_dir) / "fluent",
+                    fabric_components_dir=Path(temp_dir) / "mdl2",
+                    fabric_branded_components_dir=None,
+                    fabric_metadata_path=Path(temp_dir) / "metadata.json",
+                    output_file=output_file,
+                    fluent_upstream_sha="fluent-sha",
+                    fabric_upstream_sha="mdl2-sha",
+                    fluent_cdn_base="https://cdn.example.test/fluent",
+                    fabric_cdn_base="https://cdn.example.test/mdl2",
+                )
+
+            payload = json.loads(output_file.read_text(encoding="utf-8"))
+
+        self.assertEqual((1, 1), counts)
+        self.assertEqual(["fluent", "segoe"], list(payload["sets"]))
+        self.assertEqual({"fabric": "segoe"}, payload["setAliases"])
+        self.assertEqual("Segoe", payload["sets"]["segoe"]["label"])
+        self.assertEqual("Segoe", payload["sets"]["segoe"]["shortLabel"])
 
     def test_branded_components_are_included_and_tagged(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

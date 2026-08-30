@@ -5,23 +5,23 @@
 Static browser UI for searching icons from:
 
 - [microsoft/fluentui-system-icons](https://github.com/microsoft/fluentui-system-icons) (Fluent System)
-- [microsoft/fluentui](https://github.com/microsoft/fluentui) `react-icons-mdl2` and `react-icons-mdl2-branded` (Fabric/MDL2)
+- [microsoft/fluentui](https://github.com/microsoft/fluentui) `react-icons-mdl2` and `react-icons-mdl2-branded` (Segoe)
 
 ...with automatic index refresh and GitHub Pages hosting.
 
 ## What It Does
 
 - Searches by icon name, description, and metaphors.
-- Switches between icon sets (`Fluent System`, `Fabric MDL2`).
+- Switches between icon sets (`Fluent System`, `Segoe`).
 - Renders collection tabs from the generated index, so a future approved collection can be added without a browser code fork.
 - Filters by variant (`regular`, `filled`, `color`) where applicable to the active set.
 - Shows SVG previews sourced from pinned upstream assets.
 - Supports native size selection per variant in the modal panel.
 - Copies/downloads the selected native-size SVG.
 - Optional download-time transform for regular/filled icons to replace hardcoded fills with `currentColor`.
-- Includes committed MDL2 metadata (`description` + `metaphors`) for all Fabric icons to improve search relevance.
+- Includes committed MDL2 metadata (`description` + `metaphors`) for all Segoe icons to improve search relevance.
 - Tags every icon sourced from `react-icons-mdl2-branded` with the searchable `branded` metaphor.
-- Auto-refreshes `icon-data.json` when upstream Fluent System or Fabric MDL2 icons change.
+- Auto-refreshes `icon-data.json` when upstream Fluent System or Segoe source icons change.
 - Deploys the site to GitHub Pages from `main`.
 - Supports installation as a PWA with offline access to the app shell and recently viewed icon SVG assets.
 
@@ -72,16 +72,16 @@ Install the site from a browser's install menu after opening it over HTTPS (or f
 - Rebuilds only when either upstream SHA changes (or `force_rebuild=true`).
 - Pipeline:
   - sparse clone Fluent System `assets/`
-  - sparse clone ordinary and branded Fabric MDL2 component sources
+  - sparse clone ordinary and branded MDL2 component sources for Segoe
   - run `generate-fabric-metadata.py`
   - run `generate-icon-data.py`
   - commit updated `icon-data.json` + `fabric-mdl2-metadata.json` + `.upstream-sha` + `.upstream-fabric-sha`
 
 `icon-data.json` stores both icon sets:
 - Fluent entries use pinned raw GitHub URLs to upstream SVG files.
-- Fabric entries include parsed SVG payloads and source links to ordinary or branded upstream MDL2 component files.
+- Segoe entries include parsed SVG payloads and source links to ordinary or branded upstream MDL2 component files.
 
-The generator assembles these collections through private descriptors. Collection keys and `shortLabel` values in the generated `sets` map drive the compact browser tabs, while full labels continue to drive source context; source-specific extraction and normalization remain generator internals. The only currently published keys are `fluent` and `fabric`.
+The generator assembles these collections through private descriptors. Collection keys and `shortLabel` values in the generated `sets` map drive the compact browser tabs, while full labels continue to drive source context; source-specific extraction and normalization remain generator internals. The currently published keys are `fluent` and `segoe`; the generated `fabric` alias preserves existing deep links. If a real `fabric` collection is introduced later, its collision with that alias requires an explicit compatibility decision.
 
 ### `.github/workflows/deploy-pages.yml`
 
@@ -93,8 +93,8 @@ The generator assembles these collections through private descriptors. Collectio
 - `index.html`, `style.css`, `script.js`: static UI.
 - `process.py`: optional transform/consolidation script (not used by CI sync).
 - `generate-icon-data.py`: generates browser index (`icon-data.json`) for both icon sets.
-- `generate-fabric-metadata.py`: generates/maintains `fabric-mdl2-metadata.json` (`id`, `name`, `description`, `metaphors`) for all Fabric icons.
-- `fabric-mdl2-metadata.json`: committed metadata used to enrich Fabric icon search.
+- `generate-fabric-metadata.py`: generates/maintains `fabric-mdl2-metadata.json` (`id`, `name`, `description`, `metaphors`) for all Segoe icons.
+- `fabric-mdl2-metadata.json`: committed metadata used to enrich Segoe icon search.
 - `icons/`: small UI glyph assets for modal action buttons.
 - `icon-data.json`: generated icon index served by the browser.
 - `requirements.txt`: optional Python dependency for `process.py`.
