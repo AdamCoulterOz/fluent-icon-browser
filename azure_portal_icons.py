@@ -32,6 +32,32 @@ SVG_ASSIGNMENT_PATTERN = re.compile(
     r"(?:\bdata|\.data)\s*=\s*(?P<svg>\"(?:\\.|[^\"])*\")"
 )
 CAMEL_WORD_PATTERN = re.compile(r"([A-Z]+)([A-Z][a-z])|([a-z0-9])([A-Z])")
+STYLE_DECLARATION_PATTERN = re.compile(r"(?P<property>[-A-Za-z]+)\s*:\s*(?P<value>[^;]+)")
+RGB_COLOR_PATTERN = re.compile(
+    r"rgba?\(\s*(?P<red>\d+(?:\.\d+)?)\s*[ ,/]\s*"
+    r"(?P<green>\d+(?:\.\d+)?)\s*[ ,/]\s*"
+    r"(?P<blue>\d+(?:\.\d+)?)(?:\s*[/,]\s*[^)]*)?\s*\)",
+    re.IGNORECASE,
+)
+HSL_COLOR_PATTERN = re.compile(
+    r"hsla?\(\s*[^, ]+(?:\s*,\s*|\s+)(?P<saturation>\d+(?:\.\d+)?)%",
+    re.IGNORECASE,
+)
+PAINT_PROPERTIES = {"fill", "stroke", "color", "stop-color", "flood-color", "lighting-color"}
+NON_VISIBLE_ELEMENT_NAMES = {
+    "defs",
+    "clipPath",
+    "mask",
+    "marker",
+    "linearGradient",
+    "radialGradient",
+    "pattern",
+    "filter",
+    "symbol",
+    # Runtime sanitization removes stylesheet and external-instance content.
+    "style",
+    "use",
+}
 
 
 class AzurePortalSchemaError(RuntimeError):
@@ -305,6 +331,112 @@ def canonical_svg_text(svg_text: str) -> str:
     return ET.canonicalize(svg_text, with_comments=False, strip_text=True)
 
 
+def _local_name(value: str) -> str:
+    return value.rsplit("}", 1)[-1]
+
+
+def _style_paints(style_text: str) -> list[str]:
+    return [
+        match.group("value").strip()
+        for match in STYLE_DECLARATION_PATTERN.finditer(style_text)
+        if match.group("property").lower() in PAINT_PROPERTIES
+    ]
+
+
+def _style_property(style_text: str, property_name: str) -> Optional[str]:
+    selected: Optional[str] = None
+    selected_important = False
+    for match in STYLE_DECLARATION_PATTERN.finditer(style_text):
+        if match.group("property").lower() == property_name:
+            value = match.group("value").strip().lower()
+            important = bool(re.search(r"\s*!important\s*$", value, flags=re.IGNORECASE))
+            if selected is None or important or not selected_important:
+                selected = value
+                selected_important = important
+    return selected
+
+
+def _normalize_style_keyword(value: Optional[str]) -> str:
+    return re.sub(r"\s*!important\s*$", "", value or "", flags=re.IGNORECASE).strip().lower()
+
+
+def _is_chromatic_paint(value: str) -> bool:
+    paint = value.strip().lower()
+    if paint in {"none", "currentcolor", "inherit", "initial", "unset", "context-fill", "context-stroke"}:
+        return False
+    if paint.startswith("url("):
+        return True
+    if paint.startswith("#"):
+        hex_value = paint[1:]
+        try:
+            if len(hex_value) in {3, 4}:
+                red, green, blue = (
+                    int(component * 2, 16) for component in hex_value[:3]
+                )
+            elif len(hex_value) in {6, 8}:
+                red, green, blue = (
+                    int(hex_value[index : index + 2], 16) for index in (0, 2, 4)
+                )
+            else:
+                return True
+        except ValueError:
+            return True
+        return not (red == green == blue)
+    rgb_match = RGB_COLOR_PATTERN.fullmatch(paint)
+    if rgb_match:
+        red, green, blue = (float(rgb_match.group(component)) for component in ("red", "green", "blue"))
+        return not (red == green == blue)
+    hsl_match = HSL_COLOR_PATTERN.match(paint)
+    if hsl_match:
+        return float(hsl_match.group("saturation")) != 0
+    return paint not in {"black", "white", "gray", "grey", "transparent"}
+
+
+def preserve_source_colors(svg_text: str) -> bool:
+    """Return whether visible SVG artwork needs its authored paint values preserved."""
+
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise AzurePortalSchemaError("AMD module has invalid SVG text") from exc
+
+    paints: set[str] = set()
+
+    def visit(element: ET.Element, hidden: bool) -> bool:
+        element_name = _local_name(element.tag)
+        style_text = element.get("style", "")
+        style_paints = _style_paints(style_text)
+        display = _normalize_style_keyword(
+            element.get("display") or _style_property(style_text, "display")
+        )
+        visibility = _normalize_style_keyword(
+            element.get("visibility") or _style_property(style_text, "visibility")
+        )
+        hidden = (
+            hidden
+            or element_name in NON_VISIBLE_ELEMENT_NAMES
+            or display == "none"
+            or visibility == "hidden"
+        )
+        if not hidden:
+            element_paints = [
+                value
+                for property_name, value in element.attrib.items()
+                if _local_name(property_name).lower() in PAINT_PROPERTIES
+            ] + style_paints
+            for paint in element_paints:
+                normalized = paint.strip().lower()
+                if normalized.startswith("url(") or _is_chromatic_paint(normalized):
+                    return True
+                if normalized not in {"", "none", "currentcolor", "inherit", "initial", "unset", "context-fill", "context-stroke"}:
+                    paints.add(normalized)
+            if len(paints) > 1:
+                return True
+        return any(visit(child, hidden) for child in element)
+
+    return visit(root, False)
+
+
 def parse_amd_svg_modules(bundle_text: str) -> list[tuple[str, str]]:
     """Return named public SVG AMD modules and canonical SVG text from one bundle."""
 
@@ -474,6 +606,7 @@ def _manifest_record(
         "style": "regular",
         "tags": sorted(tags),
         "descriptor": descriptor,
+        "preserveSourceColors": preserve_source_colors(canonical_svg),
     }
 
 
@@ -583,6 +716,9 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
                 ),
                 "remoteSource": primary["descriptor"],
                 "remoteSources": [record["descriptor"] for record in ordered],
+                "preserveSourceColors": any(
+                    record.get("preserveSourceColors", False) for record in ordered
+                ),
             }
         )
 
@@ -626,6 +762,8 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
         }
         if len(member["remoteSources"]) > 1:
             variant["remoteSources"] = member["remoteSources"]
+        if member["preserveSourceColors"]:
+            variant["preserveSourceColors"] = True
         family["variants"][member["style"]] = variant
 
     icons: list[dict] = []
@@ -671,6 +809,7 @@ def _core_records(
                     "style": style,
                     "tags": ["azure", "portal", "core", *tags],
                     "descriptor": _source_descriptor(bundle_url, module_name, canonical_svg),
+                    "preserveSourceColors": preserve_source_colors(canonical_svg),
                 }
             )
     if not records:

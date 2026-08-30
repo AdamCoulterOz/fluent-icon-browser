@@ -135,6 +135,90 @@ class AzurePortalIconsTests(unittest.TestCase):
             "color", next(icon for icon in icons if icon["name"] == "learn")["variants"]
         )
 
+    def test_preserves_authored_source_colors_only_when_svg_paints_need_it(self) -> None:
+        fixtures = {
+            "neutral": '<svg><path fill="#666" d="M0 0h1v1H0z"/></svg>',
+            "chromatic": '<svg><path style="fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "multiple": '<svg><path fill="#000" d="M0 0h1v1H0z"/><path stroke="#fff" d="M1 1h1v1H1z"/></svg>',
+            "gradient": '<svg><defs><linearGradient id="a"><stop stop-color="#0078d4"/></linearGradient></defs><path fill="url(#a)" d="M0 0h1v1H0z"/></svg>',
+            "pattern": '<svg><defs><pattern id="a" width="1" height="1"><path fill="#0078d4" d="M0 0h1v1H0z"/></pattern></defs><path style="fill: url(#a)" d="M0 0h1v1H0z"/></svg>',
+            "hidden": '<svg><path style="display: none; fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "hidden_display_important": '<svg><path style="display: none !important; fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "hidden_visibility_important": '<svg><path style="visibility: hidden !IMPORTANT; fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "hidden_duplicate": '<svg><path style="display: block; display: none; fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "visible_duplicate_important": '<svg><path style="display: none; display: block !important; fill: #0078d4" d="M0 0h1v1H0z"/></svg>',
+            "removed_style": '<svg><style>.icon { fill: #0078d4; }</style><path class="icon" d="M0 0h1v1H0z"/></svg>',
+            "removed_use": '<svg><defs><path id="icon" fill="#0078d4" d="M0 0h1v1H0z"/></defs><use href="#icon" fill="#0078d4"/></svg>',
+        }
+
+        self.assertFalse(azure.preserve_source_colors(fixtures["neutral"]))
+        self.assertTrue(azure.preserve_source_colors(fixtures["chromatic"]))
+        self.assertTrue(azure.preserve_source_colors(fixtures["multiple"]))
+        self.assertTrue(azure.preserve_source_colors(fixtures["gradient"]))
+        self.assertTrue(azure.preserve_source_colors(fixtures["pattern"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["hidden"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["hidden_display_important"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["hidden_visibility_important"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["hidden_duplicate"]))
+        self.assertTrue(azure.preserve_source_colors(fixtures["visible_duplicate_important"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["removed_style"]))
+        self.assertFalse(azure.preserve_source_colors(fixtures["removed_use"]))
+
+        records = [
+            {
+                "name": name,
+                "displayName": name.title(),
+                "description": "Fixture.",
+                "style": "regular",
+                "tags": [],
+                "descriptor": {
+                    "url": "https://portal.azure.com/a",
+                    "selector": f"/{name}",
+                    "sha256": hashlib.sha256(
+                        azure.canonical_svg_text(svg).encode("utf-8")
+                    ).hexdigest(),
+                },
+                "preserveSourceColors": azure.preserve_source_colors(svg),
+            }
+            for name, svg in fixtures.items()
+        ]
+        icons, unique_count = azure._collapse_records(records)
+        payload = json.dumps(icons)
+
+        self.assertEqual(len(fixtures), unique_count)
+        self.assertNotIn("<svg", payload)
+        for name in (
+            "neutral",
+            "hidden",
+            "hidden_display_important",
+            "hidden_visibility_important",
+            "hidden_duplicate",
+            "removed_style",
+            "removed_use",
+        ):
+            self.assertNotIn(
+                "preserveSourceColors",
+                next(icon for icon in icons if icon["name"] == name)["variants"]["regular"],
+            )
+        for name in ("chromatic", "multiple", "gradient", "pattern", "visible_duplicate_important"):
+            self.assertTrue(
+                next(icon for icon in icons if icon["name"] == name)["variants"]["regular"]["preserveSourceColors"]
+            )
+
+    def test_deduplication_propagates_source_color_preservation(self) -> None:
+        descriptor = {"url": "https://portal.azure.com/a", "selector": "/a", "sha256": "a" * 64}
+        records = [
+            {"name": "first", "displayName": "First", "description": "First.", "style": "regular", "tags": [], "descriptor": descriptor, "preserveSourceColors": False},
+            {"name": "second", "displayName": "Second", "description": "Second.", "style": "regular", "tags": [], "descriptor": {**descriptor, "selector": "/b"}, "preserveSourceColors": True},
+        ]
+
+        icons, unique_count = azure._collapse_records(records)
+
+        self.assertEqual(1, unique_count)
+        variant = icons[0]["variants"]["regular"]
+        self.assertTrue(variant["preserveSourceColors"])
+        self.assertEqual(2, len(variant["remoteSources"]))
+
     def test_manifest_icon_data_uses_json_pointer_and_deduplicates_aliases(self) -> None:
         first_svg = '<svg viewBox="0 0 16 16"><path d="M0 0h16v16H0z"/></svg>'
         second_svg = '<svg viewBox="0 0 16 16"><path d="M2 2h12v12H2z"/></svg>'

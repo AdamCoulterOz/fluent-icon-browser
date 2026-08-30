@@ -23,6 +23,148 @@
         "use",
         "video",
     ]);
+    const SAFE_STYLE_PRESENTATION_PROPERTIES = new Set([
+        "color",
+        "display",
+        "fill",
+        "fill-opacity",
+        "fill-rule",
+        "flood-color",
+        "flood-opacity",
+        "lighting-color",
+        "opacity",
+        "stop-color",
+        "stop-opacity",
+        "stroke",
+        "stroke-dasharray",
+        "stroke-dashoffset",
+        "stroke-linecap",
+        "stroke-linejoin",
+        "stroke-miterlimit",
+        "stroke-opacity",
+        "stroke-width",
+        "visibility",
+    ]);
+    const LOCAL_FRAGMENT_URL = /^url\s*\(\s*#[-\w:.]+\s*\)$/i;
+
+    function splitStyleDeclarations(styleText) {
+        const declarations = [];
+        let declarationStart = 0;
+        let parenthesisDepth = 0;
+        let quote = null;
+
+        for (let index = 0; index < styleText.length; index += 1) {
+            const character = styleText[index];
+            if (quote) {
+                if (character === quote) {
+                    quote = null;
+                }
+                continue;
+            }
+            if (character === "\"" || character === "'") {
+                quote = character;
+                continue;
+            }
+            if (character === "(") {
+                parenthesisDepth += 1;
+                continue;
+            }
+            if (character === ")") {
+                parenthesisDepth -= 1;
+                if (parenthesisDepth < 0) {
+                    return [];
+                }
+                continue;
+            }
+            if (character === ";" && parenthesisDepth === 0) {
+                declarations.push(styleText.slice(declarationStart, index));
+                declarationStart = index + 1;
+            }
+        }
+
+        if (quote || parenthesisDepth !== 0) {
+            return [];
+        }
+        declarations.push(styleText.slice(declarationStart));
+        return declarations;
+    }
+
+    function findStyleDeclarationSeparator(declaration) {
+        let parenthesisDepth = 0;
+        let quote = null;
+        for (let index = 0; index < declaration.length; index += 1) {
+            const character = declaration[index];
+            if (quote) {
+                if (character === quote) {
+                    quote = null;
+                }
+                continue;
+            }
+            if (character === "\"" || character === "'") {
+                quote = character;
+                continue;
+            }
+            if (character === "(") {
+                parenthesisDepth += 1;
+                continue;
+            }
+            if (character === ")") {
+                parenthesisDepth -= 1;
+                continue;
+            }
+            if (character === ":" && parenthesisDepth === 0) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    function isSafeStylePresentationValue(value) {
+        const compactValue = value.toLowerCase().replace(/\s+/g, "");
+        return Boolean(
+            value &&
+                !/[\u0000-\u001f\u007f<>"'\\{}]/.test(value) &&
+                !/(?:javascript|vbscript|data):/i.test(compactValue) &&
+                !/\b(?:expression|@import|-moz-binding)\s*\(/i.test(value) &&
+                (!/url\s*\(/i.test(value) || LOCAL_FRAGMENT_URL.test(value))
+        );
+    }
+
+    // This deliberately accepts only presentation properties that can preserve SVG paint and visibility.
+    function normalizeSafeStyleDeclarations(styleText) {
+        if (typeof styleText !== "string") {
+            return [];
+        }
+
+        const normalizedDeclarations = new Map();
+        for (const declaration of splitStyleDeclarations(styleText)) {
+            const separator = findStyleDeclarationSeparator(declaration);
+            if (separator === -1) {
+                continue;
+            }
+            const property = declaration.slice(0, separator).trim().toLowerCase();
+            let value = declaration.slice(separator + 1).trim();
+            if (!SAFE_STYLE_PRESENTATION_PROPERTIES.has(property)) {
+                continue;
+            }
+
+            const importantMatch = /\s*!important\s*$/i.exec(value);
+            const important = Boolean(importantMatch);
+            if (important) {
+                value = value.slice(0, importantMatch.index).trim();
+            }
+            if (value.includes("!") || !isSafeStylePresentationValue(value)) {
+                continue;
+            }
+
+            const previous = normalizedDeclarations.get(property);
+            if (!previous || important || !previous.important) {
+                normalizedDeclarations.set(property, { value, important });
+            }
+        }
+
+        return [...normalizedDeclarations].map(([property, declaration]) => [property, declaration.value]);
+    }
 
     function isWhitespace(character) {
         return /\s/.test(character);
@@ -349,9 +491,15 @@
                 const normalizedValue = value.toLowerCase().replace(/\s+/g, "");
                 const hasUnsafeUrl =
                     /^\s*(?:javascript|vbscript|data):/i.test(value) ||
-                    (/url\s*\(/i.test(value) && !/url\s*\(\s*#[-\w:.]+\s*\)/i.test(value));
+                    (/url\s*\(/i.test(value) && !LOCAL_FRAGMENT_URL.test(value));
+                if (name === "style") {
+                    normalizeSafeStyleDeclarations(value).forEach(([property, styleValue]) => {
+                        element.setAttribute(property, styleValue);
+                    });
+                    element.removeAttribute(attribute.name);
+                    return;
+                }
                 if (
-                    name === "style" ||
                     name.startsWith("on") ||
                     name === "href" ||
                     name.endsWith(":href") ||
@@ -544,6 +692,7 @@
         extractAmdSvgModule,
         extractJsonPointerSvg,
         isRemoteSourceDescriptor,
+        normalizeSafeStyleDeclarations,
         sanitizeSvg,
         canonicalizeSvgForDigest,
         verifySha256,

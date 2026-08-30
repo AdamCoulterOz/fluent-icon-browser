@@ -44,6 +44,7 @@
 - Azure currently indexes 1,374 generated families from 342 public core families and 1,032 default public extension-manifest families, with 1,400 unique SVG descriptors. These counts describe current generated state, not a permanent cardinality contract.
 - Azure discovery is bounded to the deterministic default public surface exposed by portal bootstrap, current RequireConfig/dependency data, and default extension-manifest hashes. Authenticated or flight-specific inner blades are outside scope; schema drift or count collapse must fail synchronization.
 - Azure formats `portal-amd-svg-module` and `portal-json-pointer-svg` are private adapters. The browser fetches public CORS sources lazily, extracts without eval, verifies the digest, sanitizes, and renders the resolved SVG inline for preview/copy/download.
+- Azure artwork with intrinsic chromatic, multi-paint, gradient, or pattern styling must retain its authored colours in gallery and detail previews. This rendering property is independent of the upstream regular, filled, or color variant taxonomy.
 - The repository and Pages artifact retain no Azure SVG payload. The 105 legacy Documents SVGs remain unimported and unpublished and are not the Azure source. Future coherent adapters for Fabric, Azure DevOps, Power Platform, Entra, Microsoft 365, and Dynamics 365 are direction only, not implemented contract.
 
 ## Side Effects

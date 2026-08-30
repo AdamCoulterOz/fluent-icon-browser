@@ -1209,6 +1209,10 @@ class IconBrowser {
         return icon?.variants?.[variant] || null;
     }
 
+    shouldPreserveSourceColors(variant, variantData) {
+        return variant === "color" || variantData?.preserveSourceColors === true;
+    }
+
     hasVariant(icon, variant) {
         return Boolean(this.getVariantData(icon, variant));
     }
@@ -1455,7 +1459,9 @@ class IconBrowser {
         const previewMarkup = variantData
             ? this.renderPreviewMarkup(icon, previewVariant, variantData, asset)
             : '<div style="color: #ccc;">No preview</div>';
-        const colorClass = previewVariant === "color" ? "has-color-variant" : "";
+        const colorClass = this.shouldPreserveSourceColors(previewVariant, variantData)
+            ? "has-color-variant"
+            : "";
 
         const cached = {
             variant: previewVariant,
@@ -1887,7 +1893,9 @@ class IconBrowser {
         if (!iconDiv) {
             return;
         }
-        const colorClass = variant === "color" ? "has-color-variant" : "";
+        const colorClass = this.shouldPreserveSourceColors(variant, variantData)
+            ? "has-color-variant"
+            : "";
 
         iconDiv.className = `icon-view ${colorClass} icon-large`;
 

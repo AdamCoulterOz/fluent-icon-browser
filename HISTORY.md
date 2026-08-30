@@ -1,5 +1,11 @@
 # History
 
+## 2026-08-31: Preserve Intrinsic Azure Artwork Colours
+
+- Fixed Azure extension-manifest artwork being flattened into monochrome silhouettes in dark mode when its source variant was labelled `regular`.
+- Added deterministic per-variant paint analysis for chromatic colours, multiple paints, gradients, and patterns while preserving the upstream regular/filled/color taxonomy and descriptor-only index.
+- Applied the generated preservation metadata consistently to gallery and detail previews; copy/download source resolution and stable deep links are unchanged.
+
 ## 2026-08-31: Add Bounded Azure Portal Remote Sources
 
 - Published the additive `azure` collection alongside `fluent` and `segoe`; `fabric` remains a compatibility alias to `segoe` while no direct `fabric` set exists.

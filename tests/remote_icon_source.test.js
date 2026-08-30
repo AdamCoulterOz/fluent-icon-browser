@@ -6,6 +6,8 @@ const {
     decodeJsonPointer,
     extractAmdSvgModule,
     extractJsonPointerSvg,
+    normalizeSafeStyleDeclarations,
+    sanitizeSvg,
 } = require("../remote-icon-source.js");
 
 async function sha256Hex(text) {
@@ -13,7 +15,106 @@ async function sha256Hex(text) {
     return Buffer.from(digest).toString("hex");
 }
 
+function createFakeSvgElement(localName, attributes = {}) {
+    const attributeValues = new Map(Object.entries(attributes));
+    return {
+        localName,
+        get attributes() {
+            return [...attributeValues].map(([name, value]) => ({ name, value }));
+        },
+        getAttribute(name) {
+            return attributeValues.get(name);
+        },
+        removeAttribute(name) {
+            attributeValues.delete(name);
+        },
+        setAttribute(name, value) {
+            attributeValues.set(name, String(value));
+        },
+    };
+}
+
+function sanitizeWithFakeSvgDom(root) {
+    const originalXmlSerializer = global.XMLSerializer;
+    global.XMLSerializer = class {
+        serializeToString() {
+            return "<svg/>";
+        }
+    };
+    try {
+        return sanitizeSvg("<svg/>", {
+            parseFromString() {
+                return {
+                    documentElement: root,
+                    querySelector: () => null,
+                };
+            },
+        });
+    } finally {
+        if (originalXmlSerializer === undefined) {
+            delete global.XMLSerializer;
+        } else {
+            global.XMLSerializer = originalXmlSerializer;
+        }
+    }
+}
+
 async function run() {
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("fill: #0078d4 !important; stroke: #00188f; stroke-width: 1.5"),
+        [["fill", "#0078d4"], ["stroke", "#00188f"], ["stroke-width", "1.5"]]
+    );
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("fill: url(#azureGradient); stop-color: #00a4ef"),
+        [["fill", "url(#azureGradient)"], ["stop-color", "#00a4ef"]]
+    );
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("display: none; visibility: hidden; opacity: .35"),
+        [["display", "none"], ["visibility", "hidden"], ["opacity", ".35"]]
+    );
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("fill: #0078d4; filter: url(#blur); stroke: url(https://example.test/paint); color: #fff"),
+        [["fill", "#0078d4"], ["color", "#fff"]]
+    );
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("fill: url(data:image/svg+xml,unsafe); stroke: url(javascript:alert(1)); fill-opacity: .5"),
+        [["fill-opacity", ".5"]]
+    );
+    assert.deepEqual(
+        normalizeSafeStyleDeclarations("fill: red !important; fill: blue; stroke: black; stroke: white !important"),
+        [["fill", "red"], ["stroke", "white"]]
+    );
+
+    const root = createFakeSvgElement("svg", {
+        style: "display: none; visibility: hidden",
+    });
+    const styledPath = createFakeSvgElement("path", {
+        style: "fill: #0078d4; stroke: url(#azureGradient); filter: url(#blur); stroke-width: 1.5",
+    });
+    const unsafePaintPath = createFakeSvgElement("path", {
+        style: "fill: url(https://example.test/paint); stroke: url(data:image/svg+xml,unsafe); fill-opacity: .5",
+    });
+    const mixedUrlPath = createFakeSvgElement("path", {
+        fill: "url(#azureGradient) url(https://example.test/paint)",
+        stroke: "url(#azureGradient)",
+    });
+    root.querySelectorAll = () => [styledPath, unsafePaintPath, mixedUrlPath];
+    sanitizeWithFakeSvgDom(root);
+    assert.equal(root.getAttribute("style"), undefined);
+    assert.equal(root.getAttribute("display"), "none");
+    assert.equal(root.getAttribute("visibility"), "hidden");
+    assert.equal(styledPath.getAttribute("style"), undefined);
+    assert.equal(styledPath.getAttribute("fill"), "#0078d4");
+    assert.equal(styledPath.getAttribute("stroke"), "url(#azureGradient)");
+    assert.equal(styledPath.getAttribute("stroke-width"), "1.5");
+    assert.equal(styledPath.getAttribute("filter"), undefined);
+    assert.equal(unsafePaintPath.getAttribute("style"), undefined);
+    assert.equal(unsafePaintPath.getAttribute("fill"), undefined);
+    assert.equal(unsafePaintPath.getAttribute("stroke"), undefined);
+    assert.equal(unsafePaintPath.getAttribute("fill-opacity"), ".5");
+    assert.equal(mixedUrlPath.getAttribute("fill"), undefined);
+    assert.equal(mixedUrlPath.getAttribute("stroke"), "url(#azureGradient)");
+
     const amdSource = [
         '// define("portal/icons/azure~logo", [], function () { return "<svg/>"; });',
         'define("portal/icons/azure~logo", [], function () {',
