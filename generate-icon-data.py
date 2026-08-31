@@ -26,6 +26,26 @@ SVG_BLOCK_PATTERN = re.compile(r"<svg[\s\S]*?</svg>", flags=re.IGNORECASE)
 DISPLAY_NAME_PATTERN = re.compile(r"displayName:\s*'([^']+)'")
 FABRIC_VARIANT_SUFFIXES = {"solid": "filled", "fill": "filled", "filled": "filled"}
 SET_ALIASES = {"fabric": "segoe"}
+DISPLAY_METAPHOR_MAX_LENGTH = 48
+DISPLAY_METAPHOR_MAX_WORDS = 6
+HASH_TOKEN_PATTERN = re.compile(r"(?i)[a-f0-9]{12,}")
+STRUCTURED_IDENTIFIER_PATTERN = re.compile(r"(?i)^[a-z0-9]+(?:\.[a-z0-9]+)+$")
+IMPLEMENTATION_IDENTIFIER_PATTERN = re.compile(
+    r"(?i)(?:icon|micro_?ui|extension|module|template)$"
+)
+SENTENCE_FRAGMENT_PREFIXES = {
+    "and",
+    "but",
+    "for",
+    "from",
+    "including",
+    "or",
+    "that",
+    "to",
+    "which",
+    "while",
+    "with",
+}
 
 
 class CollectionDescriptor:
@@ -266,6 +286,74 @@ def normalize_metaphors(raw_metaphors: object) -> list[str]:
     if isinstance(raw_metaphors, str) and raw_metaphors.strip():
         return [raw_metaphors]
     return []
+
+
+def is_display_metaphor(value: str) -> bool:
+    """Keep only concise, human-readable metadata in the visible chip surface.
+
+    Generated source names, paths, hashes, and prose remain valuable search
+    evidence, but they are not useful labels in the details panel. This stays
+    conservative so short product names and abbreviations remain visible.
+    """
+
+    normalized = value.strip()
+    if not normalized or len(normalized) > DISPLAY_METAPHOR_MAX_LENGTH:
+        return False
+    if any(character in normalized for character in ("\n", "\r", "\t", "_", "/", "\\")):
+        return False
+    if "//" in normalized or any(character in normalized for character in ("#", "?", "&", "=")):
+        return False
+    if HASH_TOKEN_PATTERN.search(normalized):
+        return False
+    if normalized.endswith((".", "!", "?", ";")):
+        return False
+    if STRUCTURED_IDENTIFIER_PATTERN.fullmatch(normalized):
+        return False
+    if IMPLEMENTATION_IDENTIFIER_PATTERN.search(normalized):
+        return False
+    words = normalized.split()
+    if len(words) > DISPLAY_METAPHOR_MAX_WORDS:
+        return False
+    if words[0].casefold() in SENTENCE_FRAGMENT_PREFIXES:
+        return False
+    return not (len(words) >= 4 and words[0][0].islower())
+
+
+def split_display_metadata(
+    metaphors: object, search_terms: object = None
+) -> tuple[list[str], list[str]]:
+    """Separate visible chips from hidden search corpus without dropping terms."""
+
+    visible: list[str] = []
+    hidden: list[str] = []
+    seen: set[str] = set()
+
+    def add(value: str, target: list[str]) -> None:
+        normalized = value.strip()
+        dedupe_key = normalized.casefold()
+        if normalized and dedupe_key not in seen:
+            seen.add(dedupe_key)
+            target.append(normalized)
+
+    for value in normalize_metaphors(metaphors):
+        add(value, visible if is_display_metaphor(value) else hidden)
+    for value in normalize_metaphors(search_terms):
+        add(value, hidden)
+
+    return visible, hidden
+
+
+def apply_display_metadata_hygiene(icon: dict) -> None:
+    """Normalize optional display/search metadata for every generated icon."""
+
+    visible, hidden = split_display_metadata(
+        icon.get("metaphors"), icon.get("searchTerms")
+    )
+    icon["metaphors"] = visible
+    if hidden:
+        icon["searchTerms"] = hidden
+    else:
+        icon.pop("searchTerms", None)
 
 
 def load_fabric_metadata(path: Path) -> Dict[str, dict]:
@@ -1197,6 +1285,11 @@ def assemble_collections(
                 "icons": descriptor.build_icons(),
             }
         )
+        for icon in collection["icons"]:
+            if isinstance(icon, dict) and (
+                "metaphors" in icon or "searchTerms" in icon
+            ):
+                apply_display_metadata_hygiene(icon)
         collections[descriptor.key] = collection
 
     return collections

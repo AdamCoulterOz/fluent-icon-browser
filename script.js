@@ -48,14 +48,22 @@ function getIconAliases(icon) {
     return Array.isArray(icon?.aliases) ? icon.aliases : [];
 }
 
+function getIconMetaphors(icon) {
+    return Array.isArray(icon?.metaphors) ? icon.metaphors : [];
+}
+
+function getIconSearchTerms(icon) {
+    return Array.isArray(icon?.searchTerms) ? icon.searchTerms : [];
+}
+
 function getIconSearchParts(icon) {
-    const metaphors = Array.isArray(icon?.metaphors) ? icon.metaphors : [];
     return [
         icon?.name || "",
         icon?.displayName || "",
         icon?.description || "",
         ...getIconAliases(icon),
-        ...metaphors,
+        ...getIconMetaphors(icon),
+        ...getIconSearchTerms(icon),
     ]
         .filter(Boolean)
         .map((part) => String(part));
@@ -2247,10 +2255,11 @@ class IconBrowser {
         });
 
         const metaphorsList = document.getElementById("metaphorsList");
-        if (icon.metaphors && icon.metaphors.length > 0) {
+        const metaphors = getIconMetaphors(icon);
+        if (metaphors.length > 0) {
             metaphorsList.innerHTML = `
                 <div class="metaphors-list">
-                    ${icon.metaphors
+                    ${metaphors
                         .map((metaphor) => `<span class="metaphor-tag">${metaphor}</span>`)
                         .join("")}
                 </div>
@@ -2880,7 +2889,9 @@ if (typeof module !== "undefined" && module.exports) {
         getIconCacheUrls,
         getInitialIconCacheUrls,
         getIconAliases,
+        getIconMetaphors,
         getIconSearchParts,
+        getIconSearchTerms,
         isThemeColorPaint,
         matchesIconGroup,
         hasColorPreservingVariant,

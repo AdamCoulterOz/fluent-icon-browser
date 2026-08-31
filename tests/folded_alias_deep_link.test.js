@@ -1,6 +1,12 @@
 const assert = require("node:assert/strict");
 
-const { getIconSearchParts, resolveIconEntry, resolveIconSetEntry } = require("../script.js");
+const {
+    getIconMetaphors,
+    getIconSearchParts,
+    getIconSearchTerms,
+    resolveIconEntry,
+    resolveIconSetEntry,
+} = require("../script.js");
 const iconData = require("../icon-data.json");
 
 const vault = {
@@ -24,6 +30,21 @@ assert.equal(resolveIconEntry([vault], "missing_icon"), null);
 assert.ok(
     getIconSearchParts(vault).includes("vault_secrets_square_color"),
     "a folded alias should remain searchable through the canonical icon"
+);
+
+const displayMetadata = {
+    name: "private_link_scope",
+    metaphors: ["Azure Monitor", "k8s"],
+    searchTerms: ["Microsoft.Insights/privateLinkScopes", "raw_transport_id"],
+};
+assert.deepEqual(getIconMetaphors(displayMetadata), ["Azure Monitor", "k8s"]);
+assert.deepEqual(
+    getIconSearchTerms(displayMetadata),
+    ["Microsoft.Insights/privateLinkScopes", "raw_transport_id"]
+);
+assert.ok(
+    getIconSearchParts(displayMetadata).includes("Microsoft.Insights/privateLinkScopes"),
+    "hidden search terms should remain searchable"
 );
 
 assert.deepEqual(

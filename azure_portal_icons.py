@@ -26,6 +26,166 @@ MANIFEST_GROUPS = (
     "browseMenus",
     "portalServices",
 )
+RESOURCE_TYPE_PATTERN = re.compile(
+    r"^(?P<provider>[A-Za-z][A-Za-z0-9-]*(?:\.[A-Za-z][A-Za-z0-9-]*)+)/"
+    r"[A-Za-z0-9][A-Za-z0-9._-]*(?:/[A-Za-z0-9][A-Za-z0-9._-]*)*$"
+)
+# Match provider namespaces, never individual resource types or icon identifiers.
+# A trailing `*` intentionally matches a provider-name family such as
+# `Microsoft.StorageMover` without depending on resource display text.
+PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
+    ("microsoft.compute", "Compute"),
+    ("microsoft.classiccompute", "Compute"),
+    ("microsoft.batch", "Compute"),
+    ("microsoft.desktopvirtualization", "Compute"),
+    ("microsoft.devcenter", "Compute"),
+    ("microsoft.labservices", "Compute"),
+    ("microsoft.hybridcompute", "Compute"),
+    ("microsoft.azurestackhci", "Compute"),
+    ("microsoft.connectedvmwarevsphere", "Compute"),
+    ("microsoft.scvmm", "Compute"),
+    ("microsoft.virtualmachineimages", "Compute"),
+    ("microsoft.computeschedule", "Compute"),
+    ("microsoft.standbypool", "Compute"),
+    ("microsoft.baremetalinfrastructure", "Compute"),
+    ("microsoft.azurelargeinstance", "Compute"),
+    ("microsoft.avs", "Compute"),
+    ("microsoft.containerservice", "Containers"),
+    ("microsoft.containerinstance", "Containers"),
+    ("microsoft.containerregistry", "Containers"),
+    ("microsoft.kubernetes", "Containers"),
+    ("microsoft.redhatopenshift", "Containers"),
+    ("microsoft.servicefabric", "Containers"),
+    ("microsoft.app", "Containers"),
+    ("microsoft.network", "Networking"),
+    ("microsoft.managednetworkfabric", "Networking"),
+    ("microsoft.networkcloud", "Networking"),
+    ("microsoft.hybridnetwork", "Networking"),
+    ("microsoft.hybridconnectivity", "Networking"),
+    ("microsoft.networkfunction", "Networking"),
+    ("microsoft.peering", "Networking"),
+    ("microsoft.cdn", "Networking"),
+    ("microsoft.relay", "Networking"),
+    ("microsoft.servicenetworking", "Networking"),
+    ("microsoft.devtunnels", "Networking"),
+    ("microsoft.maps", "Networking"),
+    ("microsoft.storage*", "Storage"),
+    ("microsoft.classicstorage", "Storage"),
+    ("microsoft.netapp", "Storage"),
+    ("microsoft.databox", "Storage"),
+    ("microsoft.databoxedge", "Storage"),
+    ("microsoft.fileshares", "Storage"),
+    ("microsoft.elasticsan", "Storage"),
+    ("microsoft.connectedcache", "Storage"),
+    ("microsoft.sql", "Databases"),
+    ("microsoft.dbfor", "Databases"),
+    ("microsoft.dbfor*", "Databases"),
+    ("microsoft.documentdb", "Databases"),
+    ("microsoft.cache", "Databases"),
+    ("microsoft.cosmic", "Databases"),
+    ("microsoft.kusto", "Databases"),
+    ("microsoft.horizondb", "Databases"),
+    ("microsoft.oriondb", "Databases"),
+    ("microsoft.hanaonazure", "Databases"),
+    ("microsoft.azurearcdata", "Databases"),
+    ("microsoft.databasewatcher", "Databases"),
+    ("microsoft.cognitiveservices", "AI + Machine Learning"),
+    ("microsoft.machinelearningservices", "AI + Machine Learning"),
+    ("microsoft.search", "AI + Machine Learning"),
+    ("microsoft.botservice", "AI + Machine Learning"),
+    ("microsoft.healthdataaiservices", "AI + Machine Learning"),
+    ("microsoft.copilot", "AI + Machine Learning"),
+    ("microsoft.videoindexer", "AI + Machine Learning"),
+    ("microsoft.synapse", "Analytics"),
+    ("microsoft.datafactory", "Analytics"),
+    ("microsoft.datalake*", "Analytics"),
+    ("microsoft.datashare", "Analytics"),
+    ("microsoft.databricks", "Analytics"),
+    ("microsoft.analysisservices", "Analytics"),
+    ("microsoft.streamanalytics", "Analytics"),
+    ("microsoft.powerbidedicated", "Analytics"),
+    ("microsoft.fabric", "Analytics"),
+    ("microsoft.purview", "Analytics"),
+    ("microsoft.hdinsight", "Analytics"),
+    ("microsoft.eventgrid", "Integration"),
+    ("microsoft.eventhub", "Integration"),
+    ("microsoft.servicebus", "Integration"),
+    ("microsoft.logic", "Integration"),
+    ("microsoft.apimanagement", "Integration"),
+    ("microsoft.signalrservice", "Integration"),
+    ("microsoft.communication", "Integration"),
+    ("microsoft.notificationhubs", "Integration"),
+    ("microsoft.fluidrelay", "Integration"),
+    ("microsoft.durabletask", "Integration"),
+    ("microsoft.integrationspaces", "Integration"),
+    ("microsoft.appconfiguration", "Integration"),
+    ("microsoft.confluent", "Integration"),
+    ("microsoft.apicenter", "Integration"),
+    ("microsoft.keyvault", "Security"),
+    ("microsoft.security*", "Security"),
+    ("microsoft.authorization", "Security"),
+    ("microsoft.attestation", "Security"),
+    ("microsoft.confidentialledger", "Security"),
+    ("microsoft.codesigning", "Security"),
+    ("microsoft.easm", "Security"),
+    ("microsoft.aadiam", "Identity"),
+    ("microsoft.managedidentity", "Identity"),
+    ("microsoft.azureactivedirectory", "Identity"),
+    ("microsoft.insights", "Monitoring"),
+    ("microsoft.operationalinsights", "Monitoring"),
+    ("microsoft.monitor", "Monitoring"),
+    ("microsoft.alertsmanagement", "Monitoring"),
+    ("microsoft.operationsmanagement", "Monitoring"),
+    ("microsoft.scom", "Monitoring"),
+    ("microsoft.loadtestservice", "Monitoring"),
+    ("microsoft.cloudhealth", "Monitoring"),
+    ("microsoft.chaos", "Monitoring"),
+    ("microsoft.datadog", "Monitoring"),
+    ("microsoft.devices", "IoT"),
+    ("microsoft.deviceregistry", "IoT"),
+    ("microsoft.iot*", "IoT"),
+    ("microsoft.digitaltwins", "IoT"),
+    ("microsoft.deviceupdate", "IoT"),
+    ("microsoft.azuresphere", "IoT"),
+    ("microsoft.resources", "Management"),
+    ("microsoft.management", "Management"),
+    ("microsoft.recoveryservices", "Management"),
+    ("microsoft.providerhub", "Management"),
+    ("microsoft.deploymentmanager", "Management"),
+    ("microsoft.extendedlocation", "Management"),
+    ("microsoft.features", "Management"),
+    ("microsoft.billing*", "Management"),
+    ("microsoft.capacity", "Management"),
+    ("microsoft.solutions", "Management"),
+    ("microsoft.relationships", "Management"),
+    ("microsoft.resourcegraph", "Management"),
+    ("microsoft.portal", "Management"),
+    ("microsoft.portal*", "Management"),
+    ("microsoft.managedservices", "Management"),
+    ("microsoft.azurefleet", "Management"),
+    ("microsoft.maintenance", "Management"),
+    ("microsoft.migrate", "Management"),
+    ("microsoft.all", "Management"),
+    ("microsoft.web", "Web"),
+    ("microsoft.appplatform", "Web"),
+    ("microsoft.devops", "DevOps"),
+)
+SURFACE_CATEGORIES = {
+    "core": "General UI",
+    "assetTypes": "Portal Assets",
+    "assetTypesBrowse": "Browse & Discover",
+    "assetTypesMenu": "Portal Commands",
+    "browseMenus": "Browse & Discover",
+    "portalServices": "Portal Services",
+}
+SURFACE_CATEGORY_PRIORITY = (
+    "Portal Commands",
+    "Browse & Discover",
+    "Portal Services",
+    "Portal Assets",
+    "General UI",
+)
+NON_SEMANTIC_AZURE_TAGS = {"azure", "core", "polychromatic", "portal"}
 AMD_DEFINE_PATTERN = re.compile(
     r"define\(\s*(?P<module>\"(?:\\.|[^\"])*\")\s*,\s*\[\s*\"require\"\s*,\s*\"exports\"\s*\]"
 )
@@ -608,7 +768,11 @@ def _module_metadata(module_name: str) -> tuple[str, str, list[str]]:
     if raw_name.endswith("Filled"):
         raw_name = raw_name[: -len("Filled")]
         style = "filled"
-    tags = [_snake_case(part).replace("_", " ") for part in category]
+    tags = [
+        tag
+        for tag in (_snake_case(part).replace("_", " ") for part in category)
+        if tag.casefold() not in NON_SEMANTIC_AZURE_TAGS
+    ]
     return _snake_case(raw_name), style, tags
 
 
@@ -798,14 +962,71 @@ def _manifest_context_name(entry: dict, fallback: str) -> str:
     return fallback
 
 
-def _manifest_category_tags(category: str) -> list[str]:
-    return {
-        "assetTypes": ["resource", "asset type"],
-        "assetTypesBrowse": ["command", "browse"],
-        "assetTypesMenu": ["menu", "command"],
-        "browseMenus": ["browse", "menu"],
-        "portalServices": ["service", "portal"],
-    }.get(category, [category])
+def parse_resource_provider_namespace(resource_type_name: str) -> str:
+    """Return the ARM provider namespace from a typed resource type name."""
+
+    match = RESOURCE_TYPE_PATTERN.fullmatch(resource_type_name)
+    if match is None:
+        raise AzurePortalSchemaError(
+            f"Unsupported ARM resource type name: {resource_type_name!r}"
+        )
+    return match.group("provider")
+
+
+def provider_category(provider_namespace: str) -> str:
+    """Map an ARM provider namespace to its deterministic browse-domain category."""
+
+    normalized = provider_namespace.lower()
+    for prefix, domain in PROVIDER_CATEGORY_MATCHERS:
+        if prefix.endswith("*"):
+            if normalized.startswith(prefix[:-1]):
+                return f"Resource / {domain}"
+        elif normalized == prefix or normalized.startswith(f"{prefix}."):
+            return f"Resource / {domain}"
+    return "Resource / Other Providers"
+
+
+def _record_category_provenance(surface: str, provider_namespace: Optional[str] = None) -> dict:
+    if surface not in SURFACE_CATEGORIES:
+        raise AzurePortalSchemaError(f"Unsupported Azure icon source surface: {surface}")
+    if surface == "assetTypes" and provider_namespace is not None:
+        return {
+            "surface": surface,
+            "providerNamespace": provider_namespace,
+            "category": provider_category(provider_namespace),
+        }
+    return {"surface": surface, "category": SURFACE_CATEGORIES[surface]}
+
+
+def _category_from_provenance(provenance: list[dict]) -> str:
+    if not provenance:
+        raise AzurePortalSchemaError("Azure icon record has no category provenance")
+    categories: set[str] = set()
+    for item in provenance:
+        surface = item.get("surface")
+        if not isinstance(surface, str) or surface not in SURFACE_CATEGORIES:
+            raise AzurePortalSchemaError("Azure icon record has unsupported source surface")
+        provider_namespace = item.get("providerNamespace")
+        if provider_namespace is not None:
+            if surface != "assetTypes" or not isinstance(provider_namespace, str):
+                raise AzurePortalSchemaError("Azure icon record has invalid provider provenance")
+            expected_category = provider_category(provider_namespace)
+        else:
+            expected_category = SURFACE_CATEGORIES[surface]
+        if item.get("category") != expected_category:
+            raise AzurePortalSchemaError("Azure icon record has invalid category provenance")
+        categories.add(expected_category)
+    resource_categories = sorted(
+        category for category in categories if category.startswith("Resource / ")
+    )
+    if len(resource_categories) == 1:
+        return resource_categories[0]
+    if len(resource_categories) > 1:
+        return "Resource / Shared"
+    for category in SURFACE_CATEGORY_PRIORITY:
+        if category in categories:
+            return category
+    raise AzurePortalSchemaError("Azure icon record has unsupported source category")
 
 
 def _manifest_record(
@@ -816,6 +1037,7 @@ def _manifest_record(
     entry: dict,
     svg_text: str,
     palette: Optional[dict[str, str]] = None,
+    provider_namespace: Optional[str] = None,
 ) -> dict:
     canonical_svg = canonical_svg_text(svg_text)
     label = _manifest_entry_label(entry)
@@ -823,22 +1045,31 @@ def _manifest_record(
     name = "_".join(
         part for part in (_snake_case(part) for part in name_parts) if part
     )
-    tags = {
-        "azure",
-        "portal",
-        "extension manifest",
-        *_manifest_category_tags(source.category),
+    # Source routing and copy remain searchable, but only authored keywords belong
+    # in the visible metaphor-chip surface.
+    tags: set[str] = set()
+    search_terms = {
         *_text_values(extension_name),
         *_text_values(context_name),
         *_text_values(label),
     }
-    for field in ("keywords", "description", "toolTip", "tooltip", "ariaLabel"):
+    for field in ("keywords",):
         value = entry.get(field)
         if isinstance(value, list):
             for item in value:
                 tags.update(_text_values(item))
         else:
             tags.update(_text_values(value))
+    tags = {
+        tag for tag in tags if tag.casefold() not in NON_SEMANTIC_AZURE_TAGS
+    }
+    for field in ("description", "toolTip", "tooltip", "ariaLabel"):
+        value = entry.get(field)
+        if isinstance(value, list):
+            for item in value:
+                search_terms.update(_text_values(item))
+        else:
+            search_terms.update(_text_values(value))
     description = next(
         (
             text
@@ -866,8 +1097,12 @@ def _manifest_record(
         "description": description,
         "style": "regular",
         "tags": sorted(tags),
+        "searchTerms": sorted(search_terms),
         "descriptor": descriptor,
         "preserveSourceColors": preserve_source_colors(canonical_svg) or bool(paint_map),
+        "categoryProvenance": _record_category_provenance(
+            source.category, provider_namespace
+        ),
     }
 
 
@@ -890,8 +1125,26 @@ def _manifest_icon_records(
         pointer: list[str],
         extension_name: str,
         context_name: str,
+        provider_namespace: Optional[str] = None,
     ) -> None:
         if isinstance(value, dict):
+            current_provider_namespace = provider_namespace
+            if source.category == "assetTypes" and "resourceType" in value:
+                resource_type = value["resourceType"]
+                if not isinstance(resource_type, dict):
+                    raise AzurePortalSchemaError(
+                        "Typed assetTypes entry has an invalid resourceType object"
+                    )
+                resource_type_name = _meaningful_text(
+                    resource_type.get("resourceTypeName")
+                )
+                if resource_type_name is None:
+                    raise AzurePortalSchemaError(
+                        "Typed assetTypes entry has no resourceType.resourceTypeName"
+                    )
+                current_provider_namespace = parse_resource_provider_namespace(
+                    resource_type_name
+                )
             icon = value.get("icon")
             if isinstance(icon, dict) and isinstance(icon.get("data"), str):
                 if has_vector_svg_content(icon["data"]):
@@ -904,12 +1157,19 @@ def _manifest_icon_records(
                             value,
                             icon["data"],
                             palette,
+                            current_provider_namespace,
                         )
                     )
             for key, child in value.items():
                 if key == "icon":
                     continue
-                visit(child, pointer + [key], extension_name, context_name)
+                visit(
+                    child,
+                    pointer + [key],
+                    extension_name,
+                    context_name,
+                    current_provider_namespace,
+                )
         elif isinstance(value, list):
             for index, child in enumerate(value):
                 child_context = context_name
@@ -922,7 +1182,13 @@ def _manifest_icon_records(
                         if context_name == extension_name
                         else f"{context_name}_{item_context}"
                     )
-                visit(child, pointer + [str(index)], extension_name, child_context)
+                visit(
+                    child,
+                    pointer + [str(index)],
+                    extension_name,
+                    child_context,
+                    provider_namespace,
+                )
 
     manifest = manifest_payload["manifest"]
     for extension_name, extension_value in sorted(manifest.items()):
@@ -950,6 +1216,16 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
 
     by_hash: dict[str, list[dict]] = {}
     for record in records:
+        descriptor = record.get("descriptor")
+        if not isinstance(descriptor, dict) or descriptor.get("format") not in {
+            "portal-amd-svg-module",
+            "portal-json-pointer-svg",
+        }:
+            raise AzurePortalSchemaError("Azure icon record has unsupported source format")
+        provenance = record.get("categoryProvenance")
+        if not isinstance(provenance, dict):
+            raise AzurePortalSchemaError("Azure icon record has no category provenance")
+        _category_from_provenance([provenance])
         by_hash.setdefault(record["descriptor"]["sha256"], []).append(record)
 
     style_rank = {"regular": 0, "filled": 1, "color": 2}
@@ -972,6 +1248,13 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
                 "description": primary["description"],
                 "style": primary["style"],
                 "tags": sorted({tag for record in ordered for tag in record["tags"]}),
+                "searchTerms": sorted(
+                    {
+                        term
+                        for record in ordered
+                        for term in record.get("searchTerms", [])
+                    }
+                ),
                 "aliases": sorted(
                     {
                         record["name"]
@@ -984,6 +1267,9 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
                 "preserveSourceColors": any(
                     record.get("preserveSourceColors", False) for record in ordered
                 ),
+                "categoryProvenance": [
+                    record["categoryProvenance"] for record in ordered
+                ],
             }
         )
 
@@ -1014,12 +1300,16 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
                 "displayName": member["displayName"],
                 "description": member["description"],
                 "tags": set(),
+                "searchTerms": set(),
                 "aliases": set(),
                 "variants": {},
+                "categoryProvenance": [],
             }
             families[family_name] = family
         family["tags"].update(member["tags"])
+        family["searchTerms"].update(member.get("searchTerms", []))
         family["aliases"].update(member["aliases"])
+        family["categoryProvenance"].extend(member["categoryProvenance"])
         variant = {
             "defaultSize": 16,
             "remoteSource": member["remoteSource"],
@@ -1038,11 +1328,14 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
             "displayName": family["displayName"],
             "description": family["description"],
             "metaphors": sorted(family["tags"]),
+            "category": _category_from_provenance(family["categoryProvenance"]),
             "variants": {
                 style: family["variants"][style]
                 for style in sorted(family["variants"], key=style_rank.__getitem__)
             },
         }
+        if family["searchTerms"]:
+            icon["searchTerms"] = sorted(family["searchTerms"])
         aliases = sorted(alias for alias in family["aliases"] if alias != name)
         if aliases:
             icon["aliases"] = aliases
@@ -1087,10 +1380,11 @@ def _core_records(
                     "displayName": _display_name(name),
                     "description": f"Azure Portal core icon: {_display_name(name)}.",
                     "style": style,
-                    "tags": ["azure", "portal", "core", *tags],
+                    "tags": tags,
                     "descriptor": descriptor,
                     "preserveSourceColors": preserve_source_colors(canonical_svg)
                     or bool(descriptor.get("paintMap")),
+                    "categoryProvenance": _record_category_provenance("core"),
                 }
             )
     if not records:

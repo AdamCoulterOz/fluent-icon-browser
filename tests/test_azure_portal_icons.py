@@ -2,6 +2,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 from urllib.error import HTTPError
 
@@ -473,12 +474,14 @@ class AzurePortalIconsTests(unittest.TestCase):
                 "tags": [],
                 "descriptor": {
                     "url": "https://portal.azure.com/a",
+                    "format": "portal-amd-svg-module",
                     "selector": f"/{name}",
                     "sha256": hashlib.sha256(
                         azure.canonical_svg_text(svg).encode("utf-8")
                     ).hexdigest(),
                 },
                 "preserveSourceColors": azure.preserve_source_colors(svg),
+                "categoryProvenance": {"surface": "core", "category": "General UI"},
             }
             for name, svg in fixtures.items()
         ]
@@ -506,10 +509,33 @@ class AzurePortalIconsTests(unittest.TestCase):
             )
 
     def test_deduplication_propagates_source_color_preservation(self) -> None:
-        descriptor = {"url": "https://portal.azure.com/a", "selector": "/a", "sha256": "a" * 64}
+        descriptor = {
+            "url": "https://portal.azure.com/a",
+            "format": "portal-amd-svg-module",
+            "selector": "/a",
+            "sha256": "a" * 64,
+        }
         records = [
-            {"name": "first", "displayName": "First", "description": "First.", "style": "regular", "tags": [], "descriptor": descriptor, "preserveSourceColors": False},
-            {"name": "second", "displayName": "Second", "description": "Second.", "style": "regular", "tags": [], "descriptor": {**descriptor, "selector": "/b"}, "preserveSourceColors": True},
+            {
+                "name": "first",
+                "displayName": "First",
+                "description": "First.",
+                "style": "regular",
+                "tags": [],
+                "descriptor": descriptor,
+                "preserveSourceColors": False,
+                "categoryProvenance": {"surface": "core", "category": "General UI"},
+            },
+            {
+                "name": "second",
+                "displayName": "Second",
+                "description": "Second.",
+                "style": "regular",
+                "tags": [],
+                "descriptor": {**descriptor, "selector": "/b"},
+                "preserveSourceColors": True,
+                "categoryProvenance": {"surface": "core", "category": "General UI"},
+            },
         ]
 
         icons, unique_count = azure._collapse_records(records)
@@ -532,7 +558,7 @@ class AzurePortalIconsTests(unittest.TestCase):
                         {
                             "name": "Widgets",
                             "singularDisplayName": "Widget",
-                            "keywords": ["sample", "resource"],
+                            "keywords": ["sample", "resource", "Azure"],
                             "icon": {"data": first_svg},
                             "resourceType": {
                                 "resourceTypeName": "Microsoft.Demo/widgets",
@@ -569,11 +595,180 @@ class AzurePortalIconsTests(unittest.TestCase):
             records[0]["descriptor"]["selector"],
         )
         self.assertIn("resource", shared["metaphors"])
+        self.assertNotIn("Azure", shared["metaphors"])
+        self.assertIn("DemoExtension", shared["searchTerms"])
+        self.assertIn("Microsoft.Demo/widgets", shared["searchTerms"])
+        self.assertEqual("Resource / Other Providers", shared["category"])
+        self.assertEqual(
+            "Microsoft.Demo", records[1]["categoryProvenance"]["providerNamespace"]
+        )
+        self.assertNotIn("microsoft.demo/widgets", shared["metaphors"])
+        self.assertNotIn("demoextension", shared["metaphors"])
+        self.assertEqual(
+            "Portal Assets",
+            next(icon for icon in icons if icon["name"].endswith("widget"))["category"],
+        )
         self.assertIn(
             "azure_demo_extension_asset_types_microsoft_demo_widgets_widget",
             shared["aliases"],
         )
         self.assertEqual(len(icons), len({icon["name"] for icon in icons}))
+
+    def test_resource_provider_namespace_parser_and_matcher_are_deterministic(self) -> None:
+        fixtures = {
+            "Microsoft.Compute/virtualMachines": "Resource / Compute",
+            "Microsoft.ContainerService/managedClusters": "Resource / Containers",
+            "Microsoft.CognitiveServices/accounts": "Resource / AI + Machine Learning",
+            "Microsoft.StorageMover/storageMovers": "Resource / Storage",
+            "Microsoft.DBforPostgreSQL/flexibleServers": "Resource / Databases",
+            "Microsoft.Unlisted/widgets": "Resource / Other Providers",
+        }
+
+        for resource_type_name, expected in fixtures.items():
+            with self.subTest(resource_type_name=resource_type_name):
+                provider = azure.parse_resource_provider_namespace(resource_type_name)
+                self.assertEqual(expected, azure.provider_category(provider))
+
+        with self.assertRaisesRegex(azure.AzurePortalSchemaError, "resource type name"):
+            azure.parse_resource_provider_namespace("not-an-arm-resource-type")
+
+    def test_manifest_source_surfaces_assign_complete_categories(self) -> None:
+        svg = '<svg><path d="M0 0h1v1H0z"/></svg>'
+        expected = {
+            "assetTypes": "Portal Assets",
+            "assetTypesBrowse": "Browse & Discover",
+            "assetTypesMenu": "Portal Commands",
+            "browseMenus": "Browse & Discover",
+            "portalServices": "Portal Services",
+        }
+        records = [
+            {
+                "name": "core_fixture",
+                "displayName": "Core Fixture",
+                "description": "Fixture.",
+                "style": "regular",
+                "tags": [],
+                "descriptor": {
+                    "url": "https://portal.azure.com/Content/Dynamic/core.js",
+                    "format": "portal-amd-svg-module",
+                    "selector": "_generated/MsPortalImpl/Svg/Library/Core.svg",
+                    "sha256": "f" * 64,
+                },
+                "categoryProvenance": azure._record_category_provenance("core"),
+            }
+        ]
+        for index, (surface, category) in enumerate(expected.items()):
+            source = azure.ManifestSource(
+                category=surface,
+                url=f"https://portal.azure.com/Content/ExtensionManifest/{surface}.json",
+            )
+            items = [
+                {
+                    "name": surface,
+                    "icon": {"data": svg.replace("1v1", f"{index + 1}v1")},
+                }
+            ]
+            if surface == "assetTypes":
+                items.append(
+                    {
+                        "name": "compute",
+                        "resourceType": {
+                            "resourceTypeName": "Microsoft.Compute/virtualMachines"
+                        },
+                        "icon": {"data": svg.replace("1v1", "9v1")},
+                    }
+                )
+            payload = {
+                "manifest": {
+                    "DemoExtension": {
+                        surface: items
+                    }
+                }
+            }
+            surface_records = azure._manifest_icon_records(source, payload)
+            self.assertEqual(category, surface_records[0]["categoryProvenance"]["category"])
+            records.extend(surface_records)
+
+        icons, _unique_count = azure._collapse_records(records)
+        self.assertEqual(
+            Counter(
+                {
+                    "General UI": 1,
+                    "Portal Assets": 1,
+                    "Resource / Compute": 1,
+                    "Browse & Discover": 2,
+                    "Portal Commands": 1,
+                    "Portal Services": 1,
+                }
+            ),
+            Counter(icon["category"] for icon in icons),
+        )
+        self.assertTrue(all("category" in icon for icon in icons))
+
+    def test_deduplicated_provenance_uses_resource_then_surface_priority(self) -> None:
+        def record(name: str, selector: str, provenance: dict) -> dict:
+            return {
+                "name": name,
+                "displayName": name.title(),
+                "description": "Fixture.",
+                "style": "regular",
+                "tags": [],
+                "descriptor": {
+                    "url": "https://portal.azure.com/fixture",
+                    "format": "portal-amd-svg-module",
+                    "selector": selector,
+                    "sha256": "a" * 64,
+                },
+                "categoryProvenance": provenance,
+            }
+
+        compute = azure._record_category_provenance("assetTypes", "Microsoft.Compute")
+        storage = azure._record_category_provenance("assetTypes", "Microsoft.Storage")
+        command = azure._record_category_provenance("assetTypesMenu")
+        browse = azure._record_category_provenance("browseMenus")
+        records = [
+            record("zeta", "/zeta", command),
+            record("alpha", "/alpha", browse),
+            record("beta", "/beta", compute),
+            record("gamma", "/gamma", storage),
+        ]
+
+        icons, _unique_count = azure._collapse_records(records)
+        reverse_icons, _reverse_count = azure._collapse_records(list(reversed(records)))
+
+        self.assertEqual(icons, reverse_icons)
+        self.assertEqual("alpha", icons[0]["name"])
+        self.assertEqual(["beta", "gamma", "zeta"], icons[0]["aliases"])
+        self.assertEqual("Resource / Shared", icons[0]["category"])
+
+        surface_only = [
+            record("zeta", "/zeta", command),
+            record("alpha", "/alpha", browse),
+        ]
+        surface_icons, _surface_count = azure._collapse_records(surface_only)
+        self.assertEqual("Portal Commands", surface_icons[0]["category"])
+
+    def test_rejects_unsupported_category_provenance_and_source_format(self) -> None:
+        record = {
+            "name": "fixture",
+            "displayName": "Fixture",
+            "description": "Fixture.",
+            "style": "regular",
+            "tags": [],
+            "descriptor": {
+                "url": "https://portal.azure.com/fixture",
+                "format": "unknown",
+                "selector": "/fixture",
+                "sha256": "a" * 64,
+            },
+            "categoryProvenance": {"surface": "unknown", "category": "Unknown"},
+        }
+        with self.assertRaisesRegex(azure.AzurePortalSchemaError, "source format"):
+            azure._collapse_records([record])
+
+        record["descriptor"]["format"] = "portal-amd-svg-module"
+        with self.assertRaisesRegex(azure.AzurePortalSchemaError, "source surface"):
+            azure._collapse_records([record])
 
     def test_same_count_content_drift_changes_source_and_index_digests(self) -> None:
         source = azure.PortalSource(
@@ -613,7 +808,13 @@ class AzurePortalIconsTests(unittest.TestCase):
                 "description": "First.",
                 "style": "regular",
                 "tags": [],
-                "descriptor": {"url": "https://portal.azure.com/a", "selector": "/a", "sha256": "a" * 64},
+                "descriptor": {
+                    "url": "https://portal.azure.com/a",
+                    "format": "portal-amd-svg-module",
+                    "selector": "/a",
+                    "sha256": "a" * 64,
+                },
+                "categoryProvenance": {"surface": "core", "category": "General UI"},
             },
             {
                 "name": "duplicate",
@@ -621,7 +822,13 @@ class AzurePortalIconsTests(unittest.TestCase):
                 "description": "Second.",
                 "style": "regular",
                 "tags": [],
-                "descriptor": {"url": "https://portal.azure.com/b", "selector": "/b", "sha256": "b" * 64},
+                "descriptor": {
+                    "url": "https://portal.azure.com/b",
+                    "format": "portal-amd-svg-module",
+                    "selector": "/b",
+                    "sha256": "b" * 64,
+                },
+                "categoryProvenance": {"surface": "core", "category": "General UI"},
             },
         ]
 

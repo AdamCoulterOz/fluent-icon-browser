@@ -88,6 +88,11 @@
 - Tightened the Azure Portal source boundary to publish only SVGs containing renderable vector artwork. SVG wrappers with raster `<image>` or `foreignObject` content are excluded, including a local `<use>` that targets an embedded image; valid local `<use>` references to vector SVG definitions remain eligible.
 - The live source rebuild removed the two affected extension-manifest families, Cloud HSM Overview and Orbital Geo Catalogs Overview. The generated observation is now 1,372 Azure families from 342 core and 1,030 extension-manifest families, with 1,398 unique SVG descriptors; the 156 colour-capable family count is unchanged.
 
+## 2026-09-01: Clean Metadata and Group Azure Semantically
+
+- Split generated metadata into concise visible `metaphors` and non-displayed `searchTerms`. Source paths, implementation identifiers, hash/template tokens, and description fragments no longer appear as chips, but search still indexes them alongside names, descriptions, aliases, and visible metaphors.
+- Added deterministic Azure categories. Core Portal SVG modules are `General UI`; typed resource assets use ARM-provider-derived `Resource / <domain>` groups; untyped assets, commands, browse/discover artifacts, portal services, unknown providers, and multi-domain shared symbols remain explicit instead of relying on icon-name heuristics.
+
 ## 2026-08-31: Harden Azure Sync Source-Lock Handoff
 
 - Kept the initial Portal probe's drift and count gates against the committed Azure source lock.

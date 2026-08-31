@@ -113,6 +113,50 @@ class Mdl2GenerationTests(unittest.TestCase):
         self.assertEqual("example/synthetic", collections["synthetic"]["sources"][0]["reference"])
         self.assertEqual("Synthetic", collections["synthetic"]["sources"][0]["name"])
 
+    def test_display_metadata_hygiene_preserves_hidden_search_terms(self) -> None:
+        source_terms = [
+            "branded",
+            "k8s",
+            "Azure Monitor",
+            "raw_transport_id",
+            "Microsoft.Insights/privateLinkScopes",
+            "Microsoft.Insights",
+            "template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-90",
+            "This phrase is useful search context but too long to display",
+            "and 24x7 support.",
+            "including native vector search capabilities",
+        ]
+        collections = icon_data.assemble_collections(
+            [
+                icon_data.CollectionDescriptor(
+                    key="synthetic",
+                    label="Synthetic Icons",
+                    short_label="Synthetic",
+                    source="example/synthetic",
+                    sources=(),
+                    upstream_sha="synthetic-sha",
+                    cdn_base="https://cdn.example.test/synthetic",
+                    build_icons=lambda: [
+                        {
+                            "name": "test_icon",
+                            "metaphors": source_terms,
+                            "searchTerms": ["legacy_transport_name"],
+                        }
+                    ],
+                )
+            ]
+        )
+        icon = collections["synthetic"]["icons"][0]
+
+        self.assertEqual(["branded", "k8s", "Azure Monitor"], icon["metaphors"])
+        self.assertEqual(
+            source_terms[3:] + ["legacy_transport_name"], icon["searchTerms"]
+        )
+        self.assertEqual(
+            set(source_terms + ["legacy_transport_name"]),
+            set(icon["metaphors"] + icon["searchTerms"]),
+        )
+
     def test_generated_payload_uses_segoe_and_preserves_fabric_alias(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             output_file = Path(temp_dir) / "icon-data.json"
