@@ -95,6 +95,21 @@ function previewThemeColorClass(variantData) {
     return variantData?.previewThemeColor === true ? "preview-theme-color" : "";
 }
 
+function resolveThemeSource(entry, prefersDark = Boolean(
+    globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches
+)) {
+    if (!entry || typeof entry !== "object") {
+        return entry;
+    }
+
+    const themeSources = entry.themeSources;
+    const theme = prefersDark ? "dark" : "light";
+    const remoteSource = themeSources?.[theme];
+    return remoteSource && typeof remoteSource === "object"
+        ? { ...entry, remoteSource }
+        : entry;
+}
+
 function variantPreservesSourceColors(variant, variantData) {
     return Boolean(variantData) && (
         variant === "color" || variantData.preserveSourceColors === true
@@ -218,10 +233,25 @@ class IconBrowser {
     async init() {
         await this.loadIcons();
         this.setupEventListeners();
+        this.setupColorSchemeRefresh();
         this.setupFooterOffset();
         this.setupRemotePreviewHydration();
         this.applyCurrentSet();
         this.applyDeepLink();
+    }
+
+    setupColorSchemeRefresh() {
+        const colorScheme = globalThis.matchMedia?.("(prefers-color-scheme: dark)");
+        colorScheme?.addEventListener?.("change", () => {
+            this.icons.forEach((icon) => {
+                delete icon._previewCache;
+            });
+            this.lastAppliedStyleMode = null;
+            this.renderIcons();
+            if (this.currentIcon && this.activePanelVariant) {
+                this.updateModalVariantPreview(this.activePanelVariant);
+            }
+        });
     }
 
     normalizePayload(payload) {
@@ -1497,6 +1527,7 @@ class IconBrowser {
         }
 
         if (entry && typeof entry === "object") {
+            entry = resolveThemeSource(entry);
             const url = typeof entry.url === "string" ? entry.url : null;
             const svg = typeof entry.svg === "string" ? entry.svg : null;
             const remoteSource = entry.remoteSource && typeof entry.remoteSource === "object"
@@ -2854,6 +2885,7 @@ if (typeof module !== "undefined" && module.exports) {
         matchesIconGroup,
         hasColorPreservingVariant,
         previewThemeColorClass,
+        resolveThemeSource,
         getPreviewVariantForStyleMode,
         resolveIconEntry,
         resolveIconSetEntry,

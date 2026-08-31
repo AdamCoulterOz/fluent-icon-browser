@@ -44,6 +44,7 @@ CATEGORY_SIZE_DIRECTORY_PATTERN = re.compile(r"^Arch-Category_(?P<size>16|32|48|
 RESOURCE_THEME_DIRECTORY_PATTERN = re.compile(
     r"^Res_(?P<size>16|32|48|64)_(?P<theme>Dark|Light)$", re.IGNORECASE
 )
+EMBEDDED_THEME_NAME_PATTERN = re.compile(r"^(?P<name>.+)_(?P<theme>Dark|Light)$", re.IGNORECASE)
 MINIMUM_ASSET_COUNT = 1500
 MINIMUM_KIND_COUNTS = {"Service": 900, "Resource": 350, "Category": 80, "Group": 10}
 PREFERRED_SIZES = (32, 48, 64, 16)
@@ -218,11 +219,68 @@ def _content_digest(entries: list[AwsArchiveEntry]) -> str:
 
 
 def _family_count(entries: list[AwsArchiveEntry]) -> int:
-    return len({_family_key(entry) for entry in entries})
+    embedded_theme_pairs = _paired_embedded_theme_families(entries)
+    return len({_family_key(entry, embedded_theme_pairs) for entry in entries})
 
 
-def _family_key(entry: AwsArchiveEntry) -> tuple[str, str, str, str]:
-    return entry.kind, entry.source_category, entry.source_name, entry.theme
+def _embedded_theme_candidate(entry: AwsArchiveEntry) -> tuple[str, str, str, str] | None:
+    if entry.theme:
+        return None
+    match = EMBEDDED_THEME_NAME_PATTERN.fullmatch(entry.source_name)
+    if match is None:
+        return None
+    return (
+        entry.kind,
+        entry.source_category,
+        match.group("name"),
+        match.group("theme").lower(),
+    )
+
+
+def _paired_embedded_theme_families(entries: list[AwsArchiveEntry]) -> set[tuple[str, str, str]]:
+    by_family: dict[tuple[str, str, str], dict[int, set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    for entry in entries:
+        candidate = _embedded_theme_candidate(entry)
+        if candidate is None:
+            continue
+        kind, category, source_name, theme = candidate
+        by_family[(kind, category, source_name)][entry.size].add(theme)
+
+    return {
+        family
+        for family, themes_by_size in by_family.items()
+        if themes_by_size and all(themes == {"dark", "light"} for themes in themes_by_size.values())
+    }
+
+
+def _semantic_source_name(
+    entry: AwsArchiveEntry, embedded_theme_pairs: set[tuple[str, str, str]]
+) -> str:
+    candidate = _embedded_theme_candidate(entry)
+    if candidate is None:
+        return entry.source_name
+    kind, category, source_name, _theme = candidate
+    return source_name if (kind, category, source_name) in embedded_theme_pairs else entry.source_name
+
+
+def _appearance_theme(
+    entry: AwsArchiveEntry, embedded_theme_pairs: set[tuple[str, str, str]]
+) -> str:
+    if entry.theme:
+        return entry.theme.lower()
+    candidate = _embedded_theme_candidate(entry)
+    if candidate is None:
+        return ""
+    kind, category, source_name, theme = candidate
+    return theme if (kind, category, source_name) in embedded_theme_pairs else ""
+
+
+def _family_key(
+    entry: AwsArchiveEntry, embedded_theme_pairs: set[tuple[str, str, str]]
+) -> tuple[str, str, str]:
+    return entry.kind, entry.source_category, _semantic_source_name(entry, embedded_theme_pairs)
 
 
 def discover_archive_url(
@@ -385,7 +443,17 @@ def _icon_category(entry: AwsArchiveEntry) -> str:
     return entry.kind
 
 
-def _icon_name(entry: AwsArchiveEntry) -> str:
+def _icon_name(
+    entry: AwsArchiveEntry, embedded_theme_pairs: set[tuple[str, str, str]]
+) -> str:
+    parts = [entry.kind]
+    if entry.source_category:
+        parts.append(entry.source_category)
+    parts.append(_semantic_source_name(entry, embedded_theme_pairs))
+    return _slugify(" ".join(parts))
+
+
+def _legacy_themed_icon_name(entry: AwsArchiveEntry) -> str:
     parts = [entry.kind]
     if entry.source_category:
         parts.append(entry.source_category)
@@ -406,30 +474,62 @@ def generate_icons(archive_path: Path, source_lock_path: Path) -> list[dict]:
         raise ValueError("AWS archive release does not match its source lock")
     _validate_lock_entries(lock, entries)
 
-    grouped: dict[tuple[str, str, str, str], list[AwsArchiveEntry]] = defaultdict(list)
+    embedded_theme_pairs = _paired_embedded_theme_families(entries)
+    grouped: dict[tuple[str, str, str], list[AwsArchiveEntry]] = defaultdict(list)
     for entry in entries:
-        grouped[_family_key(entry)].append(entry)
+        grouped[_family_key(entry, embedded_theme_pairs)].append(entry)
 
     icons: list[dict] = []
     for family_entries in grouped.values():
         representative = family_entries[0]
-        # AWS publishes authored colour artwork for every Architecture Icon,
-        # including the non-Dark/Light source files.
+        # AWS publishes authored colour artwork for every Architecture Icon.
+        # Dark and Light exports are semantic source alternatives, not distinct icons.
         style = "color"
         sizes: dict[str, dict] = {}
-        for entry in sorted(family_entries, key=lambda candidate: candidate.size):
-            size_key = str(entry.size)
-            if size_key in sizes:
-                raise ValueError(f"AWS archive has duplicate family size: {entry.path}")
-            sizes[size_key] = {
+        entries_by_size: dict[int, list[AwsArchiveEntry]] = defaultdict(list)
+        for entry in family_entries:
+            entries_by_size[entry.size].append(entry)
+
+        for size, entries_at_size in sorted(entries_by_size.items()):
+            size_key = str(size)
+            entries_by_theme = {
+                _appearance_theme(entry, embedded_theme_pairs): entry for entry in entries_at_size
+            }
+            if len(entries_by_theme) != len(entries_at_size):
+                raise ValueError(
+                    f"AWS archive has duplicate family size/theme: {entries_at_size[0].path}"
+                )
+            fallback = (
+                entries_by_theme.get("")
+                or entries_by_theme.get("light")
+                or entries_by_theme.get("dark")
+            )
+            if fallback is None:
+                raise ValueError(f"AWS archive has no source for size {size_key}")
+            size_entry = {
                 "remoteSource": {
                     "url": lock["archiveUrl"],
                     "format": "zip-svg-entry",
-                    "entry": entry.path,
+                    "entry": fallback.path,
                     "archiveSha256": lock["archiveSha256"],
-                    "entrySha256": entry.sha256,
+                    "entrySha256": fallback.sha256,
                 }
             }
+            themed_entries = {
+                theme: entry for theme, entry in entries_by_theme.items() if theme
+            }
+            if themed_entries:
+                size_entry["themeSources"] = {
+                    theme: {
+                        "url": lock["archiveUrl"],
+                        "format": "zip-svg-entry",
+                        "entry": entry.path,
+                        "archiveSha256": lock["archiveSha256"],
+                        "entrySha256": entry.sha256,
+                    }
+                    for theme, entry in sorted(themed_entries.items())
+                }
+            sizes[size_key] = size_entry
         available_sizes = [int(size) for size in sizes]
         default_size = _default_size(available_sizes)
         variant = {
@@ -438,11 +538,16 @@ def generate_icons(archive_path: Path, source_lock_path: Path) -> list[dict]:
             "sourceCapabilities": {"currentColor": False, "boundingBox": False},
             "sizes": sizes,
         }
-        display_name = _humanize(representative.source_name)
-        if representative.theme:
-            display_name = f"{display_name} {representative.theme}"
+        display_name = _humanize(_semantic_source_name(representative, embedded_theme_pairs))
+        aliases = sorted(
+            {
+                _legacy_themed_icon_name(entry)
+                for entry in family_entries
+                if _appearance_theme(entry, embedded_theme_pairs)
+            }
+        )
         icon = {
-            "name": _icon_name(representative),
+            "name": _icon_name(representative, embedded_theme_pairs),
             "displayName": display_name,
             "description": f"AWS {representative.kind.lower()} architecture icon: {display_name}.",
             "category": _icon_category(representative),
@@ -452,14 +557,23 @@ def generate_icons(archive_path: Path, source_lock_path: Path) -> list[dict]:
                         "aws",
                         representative.kind.lower(),
                         representative.source_category.lower(),
-                        representative.source_name.lower(),
-                        representative.source_name.replace("-", " ").replace("_", " ").lower(),
-                        *( [representative.theme.lower()] if representative.theme else [] ),
+                        _semantic_source_name(representative, embedded_theme_pairs).lower(),
+                        _semantic_source_name(representative, embedded_theme_pairs)
+                        .replace("-", " ")
+                        .replace("_", " ")
+                        .lower(),
+                        *(
+                            _appearance_theme(entry, embedded_theme_pairs)
+                            for entry in family_entries
+                            if _appearance_theme(entry, embedded_theme_pairs)
+                        ),
                     ]
                 )
             ),
             "variants": {style: variant},
         }
+        if aliases:
+            icon["aliases"] = aliases
         icons.append(icon)
     icons.sort(key=lambda icon: icon["name"])
     if len({icon["name"] for icon in icons}) != len(icons):

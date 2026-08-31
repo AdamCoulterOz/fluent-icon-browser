@@ -41,6 +41,13 @@ MODULE_KEY_PATTERN = re.compile(
     r"^k=boq-cloud-client\.(?P<module>[A-Za-z0-9]+(?:MicroUi|StandaloneUi))\.en_US(?:\.[A-Za-z0-9._-]+)?$"
 )
 URL_PATTERN = re.compile(r"https://[^\s\"'<>]+")
+DRAWABLE_SVG_ELEMENTS = frozenset({
+    "circle", "ellipse", "line", "path", "polygon", "polyline", "rect", "text",
+})
+NON_RENDERING_SVG_CONTAINERS = frozenset({
+    "clippath", "defs", "marker", "mask", "pattern", "symbol",
+})
+LOCAL_FRAGMENT_REFERENCE_PATTERN = re.compile(r"^#[-\w:.]+$")
 
 
 @dataclass(frozen=True)
@@ -410,6 +417,88 @@ def _validate_svg_template(
         module=module,
         template_index=template_index,
     )
+
+
+def svg_has_renderable_content(svg_text: str) -> bool:
+    """Return whether browser sanitization leaves a visibly drawable SVG element.
+
+    This deliberately models only unambiguous blankness: active/external
+    elements are removed by the browser sanitizer, definitions do not render on
+    their own, and fully hidden or unpainted primitives cannot produce a card
+    preview. It is not a geometry renderer.
+    """
+
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise ValueError("GCP Console SVG is malformed") from exc
+    if root.tag.rsplit("}", 1)[-1].lower() != "svg":
+        raise ValueError("GCP Console SVG is not an SVG root")
+
+    def style_values(element: ET.Element) -> dict[str, str]:
+        values = {
+            key.rsplit("}", 1)[-1].lower(): value.strip()
+            for key, value in element.attrib.items()
+        }
+        for declaration in values.get("style", "").split(";"):
+            key, separator, value = declaration.partition(":")
+            if separator:
+                values[key.strip().lower()] = value.strip()
+        return values
+
+    def hidden_or_transparent(values: dict[str, str]) -> bool:
+        if values.get("display", "").lower() == "none" or values.get("visibility", "").lower() in {"hidden", "collapse"}:
+            return True
+        try:
+            if "opacity" in values and float(values["opacity"]) <= 0:
+                return True
+        except ValueError:
+            pass
+        return False
+
+    def has_paint(values: dict[str, str]) -> bool:
+        fill = values.get("fill", "black").replace(" ", "").lower()
+        stroke = values.get("stroke", "none").replace(" ", "").lower()
+        transparent = {"none", "transparent", "rgba(0,0,0,0)"}
+        try:
+            fill_visible = fill not in transparent and float(values.get("fill-opacity", "1")) > 0
+        except ValueError:
+            fill_visible = fill not in transparent
+        try:
+            stroke_visible = stroke not in transparent and float(values.get("stroke-opacity", "1")) > 0
+        except ValueError:
+            stroke_visible = stroke not in transparent
+        return fill_visible or stroke_visible
+
+    elements_by_id = {
+        element.get("id"): element
+        for element in root.iter()
+        if isinstance(element.get("id"), str)
+    }
+
+    def visit(
+        element: ET.Element,
+        inherited: dict[str, str],
+        in_definition: bool,
+        referenced_ids: frozenset[str] = frozenset(),
+    ) -> bool:
+        name = element.tag.rsplit("}", 1)[-1].lower()
+        values = {**inherited, **style_values(element)}
+        is_definition = in_definition or name in NON_RENDERING_SVG_CONTAINERS
+        if name == "use":
+            reference = values.get("href") or values.get("xlink:href")
+            if isinstance(reference, str) and LOCAL_FRAGMENT_REFERENCE_PATTERN.fullmatch(reference):
+                reference_id = reference[1:]
+                target = elements_by_id.get(reference_id)
+                if target is not None and reference_id not in referenced_ids:
+                    return visit(target, values, False, referenced_ids | {reference_id})
+        if name in DRAWABLE_SVG_ELEMENTS and not is_definition:
+            if not hidden_or_transparent(values) and has_paint(values):
+                if name != "path" or values.get("d", "").strip():
+                    return True
+        return any(visit(child, values, is_definition, referenced_ids) for child in element)
+
+    return visit(root, {}, False)
 
 
 def extract_literal_svg_templates(module: Module, javascript: bytes) -> list[ExtractedIcon]:

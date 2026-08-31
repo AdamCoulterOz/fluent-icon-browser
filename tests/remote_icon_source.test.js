@@ -206,6 +206,16 @@ async function run() {
     assert.equal(mixedUrlPath.getAttribute("fill"), undefined);
     assert.equal(mixedUrlPath.getAttribute("stroke"), "url(#azureGradient)");
 
+    const useRoot = createFakeSvgElement("svg");
+    const localUse = createFakeSvgElement("use", { "xlink:href": "#local-path" });
+    const externalUse = createFakeSvgElement("use", { href: "https://example.test/icon.svg#path" });
+    let externalUseRemoved = false;
+    externalUse.remove = () => { externalUseRemoved = true; };
+    useRoot.querySelectorAll = () => [localUse, externalUse];
+    sanitizeWithFakeSvgDom(useRoot);
+    assert.equal(localUse.getAttribute("xlink:href"), "#local-path");
+    assert.equal(externalUseRemoved, true);
+
     const paletteRoot = createFakeSvgElement("svg");
     const galleryPaintPath = createFakeSvgElement("path", {
         class: "card-art msportalfx-svg-c19",

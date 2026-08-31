@@ -467,6 +467,36 @@ def humanize_gcp_extension(extension: str) -> str:
     return humanize_snake(gcp_snake_case(extension))
 
 
+def gcp_family_name(entry: dict) -> str:
+    """Return the legacy per-module GCP family id for alias compatibility."""
+
+    data_icon_name = entry["dataIconName"]
+    readable_identity = (
+        gcp_snake_case(data_icon_name) if data_icon_name is not None else "template"
+    ) or "icon"
+    return "_".join(
+        (
+            "gcp",
+            gcp_snake_case(entry["extension"]),
+            gcp_snake_case(entry["module"]),
+            readable_identity,
+            gcp_snake_case(entry["name"]),
+        )
+    )
+
+
+def gcp_entry_sort_key(entry: dict) -> tuple[str, str, int, str]:
+    """Choose a reproducible representative independent of manifest ordering."""
+
+    data_icon_name = entry["dataIconName"]
+    return (
+        gcp_snake_case(data_icon_name) if data_icon_name is not None else "template",
+        entry["moduleId"],
+        entry["templateIndex"],
+        entry["name"],
+    )
+
+
 def generate_gcp_console_icons(
     directory: Path,
 ) -> tuple[dict, list[dict], str]:
@@ -476,6 +506,7 @@ def generate_gcp_console_icons(
     from gcp_console_icons import (
         LOCK_NAME,
         build_archive_from_source_tree,
+        svg_has_renderable_content,
         validate_source_tree,
     )
 
@@ -500,29 +531,35 @@ def generate_gcp_console_icons(
         raise ValueError("GCP Console source lock has duplicate or invalid module ids")
 
     archive_sha256 = hashlib.sha256(archive_bytes).hexdigest()
+    entries_by_digest: dict[str, list[dict]] = {}
+    for entry in manifest["icons"]:
+        entries_by_digest.setdefault(entry["sha256"], []).append(entry)
+
     icons: list[dict] = []
     seen_family_names: set[str] = set()
-    for entry in manifest["icons"]:
+    grouped_entries: list[tuple[str, list[dict]]] = []
+    for digest, digest_entries in sorted(entries_by_digest.items()):
+        entries = sorted(digest_entries, key=gcp_entry_sort_key)
+        if len({entry["moduleId"] for entry in entries}) > 1:
+            grouped_entries.append((digest, entries))
+        else:
+            grouped_entries.extend((digest, [entry]) for entry in entries)
+    for digest, entries in grouped_entries:
+        entry = entries[0]
         module_id = entry["moduleId"]
         module_record = modules_by_id.get(module_id)
         if module_record is None or not isinstance(module_record.get("url"), str):
             raise ValueError("GCP Console source tree icon has no matching locked module URL")
-        extension = entry["extension"]
-        module = entry["module"]
-        entry_name = entry["name"]
         data_icon_name = entry["dataIconName"]
-        display_name = data_icon_name if data_icon_name is not None else entry_name
+        display_name = data_icon_name if data_icon_name is not None else entry["name"]
         readable_identity = (
             gcp_snake_case(data_icon_name) if data_icon_name is not None else "template"
         ) or "icon"
-        family_name = "_".join(
-            (
-                "gcp",
-                gcp_snake_case(extension),
-                gcp_snake_case(module),
-                readable_identity,
-                gcp_snake_case(entry_name),
-            )
+        is_common_ui = len({candidate["moduleId"] for candidate in entries}) > 1
+        family_name = (
+            f"gcp_common_ui_{readable_identity}_{digest}"
+            if is_common_ui
+            else gcp_family_name(entry)
         )
         if not family_name or family_name in seen_family_names:
             raise ValueError("GCP Console source tree has colliding generated family ids")
@@ -536,6 +573,8 @@ def generate_gcp_console_icons(
             "entrySha256": entry["sha256"],
         }
         svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
+        if not svg_has_renderable_content(svg_text):
+            continue
         style = "color" if preserve_source_colors(svg_text) else "regular"
         default_size = (
             parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox"))
@@ -550,11 +589,32 @@ def generate_gcp_console_icons(
         if style == "color":
             variant["preserveSourceColors"] = True
             variant["sourceCapabilities"] = {"currentColor": False, "boundingBox": False}
-        search_metadata = [display_name, entry_name, extension, module, module_id]
+        if is_common_ui:
+            search_metadata = [
+                value
+                for candidate in entries
+                for value in (
+                    candidate["dataIconName"] or candidate["name"],
+                    candidate["name"],
+                    candidate["extension"],
+                    candidate["module"],
+                    candidate["moduleId"],
+                    gcp_family_name(candidate),
+                )
+            ]
+            aliases = list(dict.fromkeys([display_name, *search_metadata]))
+        else:
+            search_metadata = [
+                display_name,
+                entry["name"],
+                entry["extension"],
+                entry["module"],
+                entry["moduleId"],
+            ]
+            aliases = [display_name]
+            if entry["name"] != display_name:
+                aliases.append(entry["name"])
         metaphors = list(dict.fromkeys(search_metadata))
-        aliases = [display_name]
-        if entry_name != display_name:
-            aliases.append(entry_name)
         icons.append(
             {
                 "name": family_name,
@@ -562,7 +622,7 @@ def generate_gcp_console_icons(
                 "description": "",
                 "metaphors": metaphors,
                 "aliases": aliases,
-                "category": humanize_gcp_extension(extension),
+                "category": "Common UI" if is_common_ui else humanize_gcp_extension(entry["extension"]),
                 "variants": {style: variant},
             }
         )

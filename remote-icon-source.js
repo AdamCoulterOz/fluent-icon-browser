@@ -46,6 +46,7 @@
         "visibility",
     ]);
     const LOCAL_FRAGMENT_URL = /^url\s*\(\s*#[-\w:.]+\s*\)$/i;
+    const LOCAL_FRAGMENT_REFERENCE = /^#[-\w:.]+$/;
     const PAINT_MAP_CLASS = /^msportalfx-svg-c\d{2}$/;
     const PAINT_MAP_FILL = /^#[0-9a-f]{6}$/i;
     const SHA256_HEX = /^[0-9a-f]{64}$/i;
@@ -542,6 +543,14 @@
             throw new Error("Resolved remote payload is not valid SVG");
         }
 
+        const isSafeLocalUse = (element) => {
+            if (element.localName?.toLowerCase() !== "use") {
+                return false;
+            }
+            const reference = element.getAttribute("href") || element.getAttribute("xlink:href");
+            return typeof reference === "string" && LOCAL_FRAGMENT_REFERENCE.test(reference.trim());
+        };
+
         const sanitizeAttributes = (element) => {
             [...element.attributes].forEach((attribute) => {
                 const name = attribute.name.toLowerCase();
@@ -559,8 +568,7 @@
                 }
                 if (
                     name.startsWith("on") ||
-                    name === "href" ||
-                    name.endsWith(":href") ||
+                    ((name === "href" || name.endsWith(":href")) && !isSafeLocalUse(element)) ||
                     normalizedValue.includes("javascript:") ||
                     hasUnsafeUrl
                 ) {
@@ -571,11 +579,11 @@
 
         sanitizeAttributes(root);
         root.querySelectorAll("*").forEach((element) => {
-            if (ACTIVE_OR_EXTERNAL_ELEMENTS.has(element.localName.toLowerCase())) {
+            sanitizeAttributes(element);
+            if (ACTIVE_OR_EXTERNAL_ELEMENTS.has(element.localName.toLowerCase()) && !isSafeLocalUse(element)) {
                 element.remove();
                 return;
             }
-            sanitizeAttributes(element);
         });
         applyPaintMap(root, normalizePaintMap(paintMap));
         return new XMLSerializer().serializeToString(root);

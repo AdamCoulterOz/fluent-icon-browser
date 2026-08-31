@@ -41,6 +41,27 @@ def discovered_two_modules() -> list[dict[str, str]]:
 
 
 class GcpConsoleIconTests(unittest.TestCase):
+    def test_distinguishes_renderable_svg_templates_from_source_authored_blanks(self) -> None:
+        self.assertTrue(
+            gcp_console_icons.svg_has_renderable_content(
+                '<svg><path d="M0 0h20v20H0z"/></svg>'
+            )
+        )
+        for svg in (
+            "<svg/>",
+            '<svg><path d="M0 0" fill="none"/></svg>',
+            '<svg><path d="M0 0" opacity="0"/></svg>',
+            '<svg><defs><path d="M0 0h20v20H0z"/></defs></svg>',
+            '<svg><use href="#external-definition"/></svg>',
+        ):
+            with self.subTest(svg=svg):
+                self.assertFalse(gcp_console_icons.svg_has_renderable_content(svg))
+        self.assertTrue(
+            gcp_console_icons.svg_has_renderable_content(
+                '<svg><defs><path id="visible" d="M0 0h20v20H0z"/></defs><use href="#visible"/></svg>'
+            )
+        )
+
     def test_discovers_public_routemap_modules_with_required_xssi_prefix(self) -> None:
         discovered = discovered_two_modules()
         self.assertEqual([

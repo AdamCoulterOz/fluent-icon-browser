@@ -15,6 +15,12 @@ def write_archive(path: Path, *, include_invalid_layout: bool = False) -> None:
     entries = {
         "Architecture-Service-Icons_20260731/Arch_Compute/16/Arch_Amazon-EC2_16.svg": SVG,
         "Architecture-Service-Icons_20260731/Arch_Compute/32/Arch_Amazon-EC2_32.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/16/Arch_AWS-Marketplace_Dark_16.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/16/Arch_AWS-Marketplace_Light_16.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/32/Arch_AWS-Marketplace_Dark_32.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/32/Arch_AWS-Marketplace_Light_32.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/16/Arch_AWS-Unpaired_Dark_16.svg": SVG,
+        "Architecture-Service-Icons_20260731/Arch_General-Icons/16/Arch_AWS-Lightweight_16.svg": SVG,
         "Resource-Icons_20260731/Res_Storage/Res_Amazon-S3-Bucket_48.svg": SVG,
         "Resource-Icons_20260731/Res_General-Icons/Res_48_Dark/Res_AWS-Management-Console_48_Dark.svg": SVG,
         "Resource-Icons_20260731/Res_General-Icons/Res_48_Light/Res_AWS-Management-Console_48_Light.svg": SVG,
@@ -56,10 +62,10 @@ class AwsIconTests(unittest.TestCase):
             icons = aws_icons.generate_icons(archive_path, lock_path)
             by_name = {icon["name"]: icon for icon in icons}
 
-            self.assertEqual(9, lock["indexedAssetCount"])
-            self.assertEqual(7, lock["indexedFamilyCount"])
+            self.assertEqual(15, lock["indexedAssetCount"])
+            self.assertEqual(8, lock["indexedFamilyCount"])
             self.assertEqual(
-                {"Service": 2, "Resource": 3, "Category": 2, "Group": 2},
+                {"Service": 8, "Resource": 3, "Category": 2, "Group": 2},
                 lock["kindCounts"],
             )
             self.assertEqual("20260731", lock["release"])
@@ -68,13 +74,50 @@ class AwsIconTests(unittest.TestCase):
                 ["16", "32"],
                 list(by_name["service_compute_amazon_ec2"]["variants"]["color"]["sizes"]),
             )
+            marketplace = by_name["service_general_icons_aws_marketplace"]
             self.assertEqual(
-                ["color"],
-                list(by_name["resource_general_icons_aws_management_console_dark"]["variants"]),
+                [
+                    "service_general_icons_aws_marketplace_dark",
+                    "service_general_icons_aws_marketplace_light",
+                ],
+                marketplace["aliases"],
             )
-            self.assertIn("resource_general_icons_aws_management_console_light", by_name)
+            self.assertEqual(["16", "32"], list(marketplace["variants"]["color"]["sizes"]))
+            marketplace_size = marketplace["variants"]["color"]["sizes"]["32"]
+            self.assertEqual(
+                "Architecture-Service-Icons_20260731/Arch_General-Icons/32/Arch_AWS-Marketplace_Dark_32.svg",
+                marketplace_size["themeSources"]["dark"]["entry"],
+            )
+            self.assertEqual(
+                "Architecture-Service-Icons_20260731/Arch_General-Icons/32/Arch_AWS-Marketplace_Light_32.svg",
+                marketplace_size["themeSources"]["light"]["entry"],
+            )
+            self.assertIn("service_general_icons_aws_unpaired_dark", by_name)
+            self.assertIn("service_general_icons_aws_lightweight", by_name)
+            management_console = by_name["resource_general_icons_aws_management_console"]
+            self.assertEqual(["color"], list(management_console["variants"]))
+            self.assertEqual(
+                [
+                    "resource_general_icons_aws_management_console_dark",
+                    "resource_general_icons_aws_management_console_light",
+                ],
+                management_console["aliases"],
+            )
+            console_size = management_console["variants"]["color"]["sizes"]["48"]
+            self.assertEqual(
+                "Resource-Icons_20260731/Res_General-Icons/Res_48_Light/Res_AWS-Management-Console_48_Light.svg",
+                console_size["remoteSource"]["entry"],
+            )
+            self.assertEqual(
+                "Resource-Icons_20260731/Res_General-Icons/Res_48_Dark/Res_AWS-Management-Console_48_Dark.svg",
+                console_size["themeSources"]["dark"]["entry"],
+            )
+            self.assertEqual(console_size["remoteSource"], console_size["themeSources"]["light"])
             self.assertIn("group_aws_cloud", by_name)
-            self.assertIn("group_aws_cloud_dark", by_name)
+            cloud_size = by_name["group_aws_cloud"]["variants"]["color"]["sizes"]["32"]
+            self.assertEqual(["group_aws_cloud_dark"], by_name["group_aws_cloud"]["aliases"])
+            self.assertIn("themeSources", cloud_size)
+            self.assertNotIn("light", cloud_size["themeSources"])
             category = by_name["category_compute"]
             self.assertEqual(["16", "32"], list(category["variants"]["color"]["sizes"]))
 
@@ -85,6 +128,7 @@ class AwsIconTests(unittest.TestCase):
                 next(entry["sha256"] for entry in lock["entries"] if entry["path"] == descriptor["entry"]),
                 descriptor["entrySha256"],
             )
+            self.assertEqual(8, len(icons))
             for icon in icons:
                 self.assertEqual(["color"], list(icon["variants"]))
                 variant = next(iter(icon["variants"].values()))

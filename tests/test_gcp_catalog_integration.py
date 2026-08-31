@@ -247,6 +247,83 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "does not match its manifest digest"):
                 icon_data.generate_gcp_console_icons(root / "changed-svg")
 
+    def test_groups_cross_module_digest_matches_as_common_ui_with_legacy_aliases(self) -> None:
+        route_map = {
+            "routes/features/home/extensions/alpha": json.dumps(
+                {"moduleUrl": module_url("AlphaMicroUi")}
+            ),
+            "routes/features/home/extensions/beta": json.dumps(
+                {"moduleUrl": module_url("BetaStandaloneUi")}
+            ),
+        }
+        discovered = gcp_console_icons.discover_modules(
+            gcp_console_icons.XSSI_PREFIX
+            + json.dumps({"routeDetails": route_map}).encode("utf-8")
+        )
+        shared_svg = b'<svg data-icon-name="closeIcon" viewBox="0 0 20 20"><path d="M0 0h20v20H0z"/></svg>'
+        payloads = {
+            module_url("AlphaMicroUi"): (
+                b"const shared = '" + shared_svg + b"';"
+                b"const sameName = '<svg data-icon-name=\"sameName\"><path d=\"M1 1\"/></svg>';"
+            ),
+            module_url("BetaStandaloneUi"): (
+                b"const shared = '" + shared_svg + b"';"
+                b"const sameName = '<svg data-icon-name=\"sameName\"><path d=\"M2 2\"/></svg>';"
+            ),
+        }
+        registry = gcp_console_icons.pin_modules(discovered, payloads.__getitem__)
+        archive = gcp_console_icons.build_archive(
+            registry,
+            {record["id"]: payloads[record["url"]] for record in discovered},
+        )
+        manifest = manifest_from_archive(archive)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            payload = self.generate_payload(root, archive)
+
+        icons = payload["sets"]["gcp"]["icons"]
+        self.assertEqual(3, len(icons))
+        common = next(icon for icon in icons if icon["category"] == "Common UI")
+        self.assertEqual("closeIcon", common["displayName"])
+        self.assertTrue(common["name"].startswith("gcp_common_ui_close_icon_"))
+        shared_entries = [entry for entry in manifest["icons"] if entry["dataIconName"] == "closeIcon"]
+        self.assertEqual(2, len(shared_entries))
+        self.assertEqual(
+            {icon_data.gcp_family_name(entry) for entry in shared_entries},
+            set(common["aliases"]) & {icon_data.gcp_family_name(entry) for entry in shared_entries},
+        )
+        self.assertEqual(
+            2,
+            len([icon for icon in icons if icon["displayName"] == "sameName"]),
+        )
+
+    def test_excludes_source_authored_blank_templates_but_keeps_source_tree_complete(self) -> None:
+        route_map = {
+            "routes/features/home/extensions/alpha": json.dumps(
+                {"moduleUrl": module_url("AlphaMicroUi")}
+            ),
+        }
+        discovered = gcp_console_icons.discover_modules(
+            gcp_console_icons.XSSI_PREFIX
+            + json.dumps({"routeDetails": route_map}).encode("utf-8")
+        )
+        payload = (
+            b"const blank = '<svg data-icon-name=\"blank\"></svg>';"
+            b"const visible = '<svg data-icon-name=\"visible\"><path d=\"M0 0h20v20H0z\"/></svg>';"
+        )
+        registry = gcp_console_icons.pin_modules(discovered, lambda _url: payload)
+        archive = gcp_console_icons.build_archive(registry, {"alpha": payload})
+        manifest = manifest_from_archive(archive)
+        self.assertEqual(2, manifest["iconCount"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            generated = self.generate_payload(root, archive)
+
+        icons = generated["sets"]["gcp"]["icons"]
+        self.assertEqual(["visible"], [icon["displayName"] for icon in icons])
+
 
 if __name__ == "__main__":
     unittest.main()

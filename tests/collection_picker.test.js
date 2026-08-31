@@ -6,8 +6,23 @@ const {
     getCollectionPickerOption,
     isThemeColorPaint,
     previewThemeColorClass,
+    resolveThemeSource,
     sourceAllowsTransform,
 } = require("../script.js");
+
+const themedEntry = {
+    remoteSource: { entry: "light.svg" },
+    themeSources: {
+        light: { entry: "light.svg" },
+        dark: { entry: "dark.svg" },
+    },
+};
+assert.equal(resolveThemeSource(themedEntry, false).remoteSource.entry, "light.svg");
+assert.equal(resolveThemeSource(themedEntry, true).remoteSource.entry, "dark.svg");
+assert.equal(
+    resolveThemeSource({ remoteSource: { entry: "default.svg" } }, true).remoteSource.entry,
+    "default.svg"
+);
 
 assert.deepEqual(
     getCollectionPickerOption(

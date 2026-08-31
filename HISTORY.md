@@ -1,5 +1,16 @@
 # History
 
+## 2026-09-01: Consolidate Shared Google Cloud Console UI Templates
+
+- Folded GCP catalogue entries into a `Common UI` group only when their retained SVG SHA-256 is shared across more than one source module. The SVG source tree, manifest, source lock, and Pages ZIP contract remain complete and unchanged; module-local duplicate names are not folded.
+- Common cards use a digest-bound canonical family and retain every replaced per-module family id as a deep-link alias.
+- Excluded 514 source-authored empty SVG templates from browsing while retaining them as source evidence. Preserved valid local SVG `<use>` references through sanitization after finding that their previous removal blanked one retained icon.
+
+## 2026-09-01: Merge AWS Theme Source Variants
+
+- Merged official AWS Architecture Icon Light/Dark exports into their semantic canonical families, including paired terminal-name service exports such as AWS Marketplace, using generic per-size theme descriptors selected by `prefers-color-scheme`. The terminal-name normalization requires an exact Light/Dark pair at every matching size. Former themed AWS names remain aliases, and the generated observation is now 809 families across 45 source categories.
+- Preserved archive and entry digest verification, client-side extraction/sanitization, and unthemed source fallback; no upstream SVG payloads were added.
+
 ## 2026-09-01: Add Deterministic Google Cloud Console Discovery
 
 - Added canonical `gcp` discovery from the public Console `routemapdata` index. The route map deterministically names the public gstatic MicroUI/StandaloneUI module surface, avoiding manual Console traversal and retaining no source JavaScript.
