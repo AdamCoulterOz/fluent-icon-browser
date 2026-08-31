@@ -88,11 +88,15 @@ class SourceCollectionTests(unittest.TestCase):
             by_name = {icon["name"]: icon for icon in icons}
 
             self.assertEqual("10.17.0", lock["packageVersion"])
-            self.assertEqual(5, lock["indexedAssetCount"])
-            self.assertEqual(["utility"], lock["excludedCategories"])
+            self.assertEqual(6, lock["indexedAssetCount"])
+            self.assertEqual(
+                ["action", "custom", "doctype", "standard", "utility"],
+                lock["includedCategories"],
+            )
+            self.assertEqual([], lock["excludedCategories"])
             self.assertIn("standard_mulesoft", by_name)
             self.assertIn("standard_account", by_name)
-            self.assertNotIn("utility_mulesoft", by_name)
+            self.assertIn("utility_mulesoft", by_name)
             self.assertEqual(["color"], list(by_name["standard_mulesoft"]["variants"]))
             descriptor = by_name["standard_mulesoft"]["variants"]["color"]["sizes"]["120"]["remoteSource"]
             self.assertEqual("npm-tgz-svg-entry", descriptor["format"])
@@ -102,6 +106,19 @@ class SourceCollectionTests(unittest.TestCase):
             self.assertFalse(by_name["standard_mulesoft"]["variants"]["color"]["sourceCapabilities"]["boundingBox"])
             self.assertTrue(by_name["standard_mulesoft"]["variants"]["color"]["previewThemeColor"])
             self.assertNotIn("previewThemeColor", by_name["standard_account"]["variants"]["color"])
+            utility_descriptor = by_name["utility_mulesoft"]["variants"]["color"]["sizes"]["120"]["remoteSource"]
+            self.assertEqual("npm-tgz-svg-entry", utility_descriptor["format"])
+            self.assertEqual(lock["archiveSha256"], utility_descriptor["archiveSha256"])
+            self.assertEqual(
+                "package/dist/salesforce-lightning-design-system-icons/utility/mulesoft.svg",
+                utility_descriptor["entry"],
+            )
+            self.assertEqual(
+                next(entry["sha256"] for entry in lock["entries"] if entry["path"] == utility_descriptor["entry"]),
+                utility_descriptor["entrySha256"],
+            )
+            self.assertFalse(by_name["utility_mulesoft"]["variants"]["color"]["sourceCapabilities"]["currentColor"])
+            self.assertFalse(by_name["utility_mulesoft"]["variants"]["color"]["sourceCapabilities"]["boundingBox"])
             self.assertNotIn("<svg", json.dumps(icons))
 
     def test_salesforce_contrast_classification_requires_explicit_light_only_paint(self) -> None:

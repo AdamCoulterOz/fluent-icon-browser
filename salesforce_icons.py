@@ -18,8 +18,7 @@ REGISTRY_URL = "https://registry.npmjs.org/@salesforce-ux/icons"
 LICENSE = "CC BY-ND 4.0"
 LICENSE_URL = "https://creativecommons.org/licenses/by-nd/4.0/"
 PACKAGE_PREFIX = "package/dist/salesforce-lightning-design-system-icons"
-APPROVED_CATEGORIES = ("action", "custom", "doctype", "standard")
-EXCLUDED_CATEGORIES = ("utility",)
+APPROVED_CATEGORIES = ("action", "custom", "doctype", "standard", "utility")
 LIGHT_PAINT_LUMINANCE = 0.88
 STYLE_PAINT_PATTERN = re.compile(r"(?:^|;)\s*(fill|stroke|stop-color)\s*:\s*([^;]+)", re.IGNORECASE)
 HEX_COLOR_PATTERN = re.compile(r"^#(?P<value>[0-9a-f]{3}|[0-9a-f]{6})$", re.IGNORECASE)
@@ -211,7 +210,7 @@ def write_source_lock(archive_path: Path, output_path: Path) -> dict:
         "archiveSha256": _sha256_bytes(archive_path.read_bytes()),
         "contentSha256": _content_digest(entries),
         "includedCategories": list(APPROVED_CATEGORIES),
-        "excludedCategories": list(EXCLUDED_CATEGORIES),
+        "excludedCategories": [],
         "indexedAssetCount": len(entries),
         "indexedFamilyCount": len(entries),
         "entries": entries,

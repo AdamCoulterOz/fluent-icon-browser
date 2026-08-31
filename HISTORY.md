@@ -1,5 +1,15 @@
 # History
 
+## 2026-08-31: Include Salesforce Utility Artwork
+
+- Accepted the Salesforce generated-state refresh: the published `standard`, `action`, `doctype`, `custom`, and `utility` individual-SVG families total 1,780.
+- Kept the five `*-sprite` SVG/RTL sprite sheets excluded as generated support artifacts; `Product` is not a sixth `@salesforce-ux/icons` category.
+- Preserved CC BY-ND 4.0, verified archive and entry digests, no source-transforming output, and no-rehosting semantics.
+
+## 2026-08-31: Refresh Vendored Keel Assets
+
+- Accepted the Keel `v0.4.4` vendor refresh: `keel.css` is sourced from the official tag by `update-keel.sh`, and its asset revision/cache advances with bundle updates.
+
 ## 2026-08-31: Theme-Adapt Monochrome Source Previews
 
 - Replaced the Salesforce contrast tile with generic `previewThemeColor` metadata. Light-only Salesforce artwork now previews as black in light mode and white in dark mode, with no preview background; the verified runtime, copy, and download source bytes remain unchanged.
@@ -9,7 +19,7 @@
 
 ## 2026-08-31: Add Salesforce SLDS Archive Collection
 
-- Added the canonical `salesforce` collection from the official `@salesforce-ux/icons` 10.17.0 registry archive under CC BY-ND 4.0, covering `standard`, `action`, `doctype`, and `custom` artwork with first-party MuleSoft; `utility` remains excluded.
+- Added the canonical `salesforce` collection from the official `@salesforce-ux/icons` 10.17.0 registry archive under CC BY-ND 4.0, covering the then-approved `standard`, `action`, `doctype`, and `custom` artwork with first-party MuleSoft; `utility` was excluded at that stage.
 - Locked the archive SHA-256 and every selected entry SHA-256. The browser fetches the owner-hosted archive, verifies both values before extraction/sanitization, and retains no upstream SVG payloads in the repository or Pages artifact.
 - Preserved intrinsic source colours and disabled `currentColor` and bounding-box output transforms for this no-derivatives source. Stable links use `?set=salesforce&icon=<category>_<source-name>`.
 

@@ -1,6 +1,6 @@
-/* vendored from AdamCoulterOz/keel v0.1.2. Refresh with ./update-keel.sh, do not edit. */
-/* keel - generated bundle. Do not edit.
- *
+/* vendored from AdamCoulterOz/keel v0.4.4. Refresh with ./update-keel.sh, do not edit. */
+/* keel - generated bundle, unversioned working copy. Do not edit. */
+/*
  * keel.css and everything it imports, flattened into one file so a site
  * that cannot reference the NuGet package can still use keel from a
  * single <link>.
@@ -66,6 +66,7 @@
   --gray-400: #a1a1aa;
   --gray-500: #86868b;
   --gray-600: #6e6e73;
+  --gray-650: #5d5d62;  /* 5.51:1 on --gray-100, 5.74 on the tightest tint. -600 is 4.27 and 4.45. */
   --gray-700: #48484a;
   --gray-800: #2c2c2e;
   --gray-900: #1d1d1f;
@@ -91,6 +92,7 @@
   --midnight-600: #28407e;
 
   /* ---- Signal: sharp citron, small accents only ---- */
+  --signal-800: #4d6a00;  /* 5.23:1 on --gray-100, 5.80 on --signal-50. -700 is 2.22 and 2.46. */
   --signal-700: #7fae00;
   --signal-600: #a8d81f;
   --signal-500: #c6f23c;
@@ -101,15 +103,18 @@
   --green-500: #34c759;
   --green-600: #1fa855;
   --green-700: #157f40;
+  --green-800: #126e38;  /* 5.33:1 on --gray-100. -700 is 4.26 there and fails AA as ink. */
   --green-50:  #e9f9ee;
 
   --amber-500: #ff9f0a;
   --amber-600: #e08600;
-  --amber-700: #ad6800;
+  --amber-700: #b45309;  /* 5.02:1 on white. #ad6800 was 4.41 and failed AA as --cb-n. */
+  --amber-800: #9b4808;  /* 5.31:1 on --gray-100. -700 is 4.22 there and fails AA as ink. */
   --amber-50:  #fff4e0;
 
   --red-500: #ff3b30;
-  --red-600: #e5322a;
+  --red-600: #d12a22;  /* White reads 5.17:1 here. #e5322a was 4.36 and no ink cleared it:
+                          white 4.36, near black 4.52, pure black 4.82 as the ceiling. */
   --red-700: #b8261f;
   --red-50:  #ffece9;
 
@@ -120,15 +125,61 @@
      SEMANTIC ALIASES - reference these, not the ramps above
      ===================================================================== */
 
-  /* Text */
+  /* ---- Text ----
+     The reading weights are 900 / 700 / 650, and they used to be 900 / 600 /
+     500. Both lower rungs moved because neither could be read where it was
+     being drawn:
+
+       --text-tertiary was --gray-500, 3.62:1 on white. Not a near miss on an
+       awkward ground, a failure on the plainest ground keel has, and it is the
+       weight captions are set in.
+       --text-secondary was --gray-600, 4.27:1 on --surface-sunken.
+
+     Nothing was misusing these. They are text tokens, named for text, drawn as
+     text on the grounds keel offers. The values were wrong, so the values moved
+     rather than a variant being added beside them.
+
+     ALL THREE ARE PROMISED ON EVERY SURFACE, sunken included. The surfaces
+     cluster tightly enough for that to be one rule rather than a table: in
+     light the tightest ground needs ink at or below luminance 0.1462 and the
+     loosest 0.1833, so an ink chosen for the worst one clears the rest.
+
+     A TINTED ground is different, and takes --text-primary. In light the tints
+     cluster with the surfaces and every weight clears them, but in dark they
+     are alpha bands that render LIGHTER than the surfaces they sit on:
+     --signal-subtle over --surface-sunken comes out #3d472b, where secondary
+     reads 3.50:1 and tertiary 3.10:1. No neutral ink below primary reaches it.
+     Promising the quiet weights there would be a promise that holds in light
+     and fails in dark, which is the shape of bug this whole change is about.
+     keel's own callout already sets --text-primary on all four of its tinted
+     grounds.
+
+     --text-disabled is deliberately outside the promise. WCAG exempts inactive
+     controls, and disabled text that met AA would not read as disabled. It is
+     asserted to stay weaker than tertiary instead. */
   --text-primary:     var(--gray-900);
-  --text-secondary:   var(--gray-600);
-  --text-tertiary:    var(--gray-500);
+  --text-secondary:   var(--gray-700);
+  --text-tertiary:    var(--gray-650);
   --text-disabled:    var(--gray-400);
   --text-inverse:     var(--gray-0);
   --text-on-midnight: rgba(255, 255, 255, 0.92);
-  --text-on-accent:   var(--gray-0);
-  --text-link:        var(--blue-600);
+
+  /* Both of these are second names for a value defined elsewhere, declared once
+     here and never mapped by a theme trigger. They pick up whatever the token
+     they point at resolves to in the scope they are read in, so they cannot
+     drift from it and no trigger can forget to restore them.
+
+     --text-on-accent was white in both schemes and had no dark override. The
+     dark accent is lifted for vibrance, so white on it is 3.95:1: every primary
+     button, solid icon button and destructive button failed AA in dark. Nothing
+     about the token looked wrong, which is the point. White on brand reads as
+     self-evidently safe right up until the brand moves underneath it.
+
+     --text-link was --blue-600, which is fill strength. As ink that is 4.31:1
+     on --surface-sunken in light and 3.85:1 on --surface-sunken in dark. A link
+     is accent ink on a page surface, which is what --accent-text is for. */
+  --text-on-accent:   var(--accent-on);
+  --text-link:        var(--accent-text);
 
   /* Surfaces */
   --surface-base:            var(--gray-0);
@@ -137,14 +188,26 @@
   --surface-card:            var(--gray-0);
   --surface-overlay:         rgba(255, 255, 255, 0.72);
   --surface-inverse:         var(--gray-900);
-  --surface-midnight:        var(--midnight-900);
-  --surface-midnight-raised: var(--midnight-800);
   --scrim:                   rgba(6, 11, 26, 0.55);
 
-  /* The footer band. Deliberately midnight in BOTH themes: it is a branded
-     anchor at the foot of the page, and blue against a neutral dark ground is
-     a band, not the blue-on-blue that --surface-midnight was toned out of. */
-  --surface-footer: var(--midnight-900);
+  /* ---- Midnight ----
+     A ROLE, not a description of a colour, and the name is shorthand for a rule
+     the same way --signal is:
+
+       A surface that deliberately opts out of theming. It is the same in light
+       and dark, on purpose, and it is for moments the page chooses to go dark:
+       a footer band, a stats band, a hero. Rare by design. If a surface should
+       follow the theme, it is not this one.
+
+     That fixed quality is the whole reason it needs its own ink, borders and
+     accent below. Everything on a ground that never moves must never move
+     either, and a semantic token that re-themes would slide out from under it.
+
+     There is no --surface-footer. A token named for one place it is used cannot
+     be used anywhere else without lying, and a footer is simply the most common
+     midnight moment rather than a different thing. */
+  --surface-midnight:        var(--midnight-900);
+  --surface-midnight-raised: var(--midnight-800);
 
   /* Borders */
   --border-subtle:      var(--gray-200);
@@ -153,6 +216,35 @@
   --border-inverse:     rgba(255, 255, 255, 0.16);
   --border-on-midnight: rgba(255, 255, 255, 0.12);
 
+  /* ---- The five families, and what each suffix means ----
+     accent, signal, success, warning and danger carry the same four members,
+     because they are the same shape of thing: a colour the page uses to say
+     something, drawn either as a field or as a mark on one.
+
+       (bare)   the FILL. Full strength, meant to be sat on.
+       -text    INK strength, for text or an icon on a light or neutral page
+                surface. Clears 4.5:1 on every surface keel has, including
+                --surface-sunken and the family's own -subtle tint.
+       -subtle  the TINT. A quiet field the same colour is at home on.
+       -on      ink placed ON the fill, for a label or glyph inside it.
+
+     signal keeps the four names and now keeps the -text promise with them. It
+     used to be the exception: --signal-text was --signal-700, which is 2.22:1
+     on --surface-sunken and 2.46:1 on its own tint, under even the 3:1 a
+     non-text mark needs. The exception was written as though it only cost the
+     token its use as body copy. It cost the token every use.
+
+     The fill is still the small-pop colour it always was. Only the ink rung
+     moved, and it had to go to a dark olive to be read at small sizes on a pale
+     citron tint. That is what legible citron ink is. See --signal-800.
+
+     A fill and an ink are two jobs and one value cannot do both. success,
+     warning and danger had only the fill, so every place that drew them as
+     text borrowed a value picked to be sat on. That failed AA throughout light
+     and passed throughout dark, because a colour lifted enough to read on a
+     dark ground is legible as text by accident. The split exists so the two
+     jobs cannot be confused again. */
+
   /* Accent */
   --accent:         var(--blue-600);
   --accent-hover:   var(--blue-700);
@@ -160,24 +252,80 @@
   --accent-subtle:  var(--blue-50);
   --accent-ring:    rgba(11, 95, 255, 0.32);
 
+  /* --accent-text is a rung deeper than the fill. --accent reads 5.13:1 on
+     white, which looks like enough, and 4.31:1 on --surface-sunken, which is a
+     ground keel documents ink for. --blue-700 clears all of them at 6.07:1 or
+     better. It shares a rung with --accent-hover; they mean different things
+     and can diverge.
+
+     --accent-on is white HERE ONLY. In dark it is near black, because the dark
+     accent is lifted for vibrance and white on it is 3.95:1. --text-on-accent
+     is a second name for it, so the two agree in both schemes now; the older
+     name is kept because consumers write it. See theme-dark.css. */
+  --accent-text:    var(--blue-700);
+  --accent-on:      var(--gray-0);
+
+  /* Accent marks on a midnight ground. Completes the on-midnight family, which
+     exists so ink on a ground that never shifts does not shift either, without
+     anyone reaching for a ramp to get that.
+
+     blue-300 rather than blue-400: 7.87:1 on midnight against 5.23:1. The
+     siblings are chosen FOR this ground rather than borrowed from a scale, and
+     this should be too. A token that means "legible on midnight" pointing at
+     the rung hardest to see there had inherited the wrong default. */
+  --accent-on-midnight: var(--blue-300);
+
   /* Signal. Pair the fill with midnight ink; never body or link colour. */
   --signal:        var(--signal-500);
-  --signal-text:   var(--signal-700);
+  --signal-text:   var(--signal-800);
   --signal-on:     var(--midnight-900);
   --signal-subtle: var(--signal-50);
+
+  /* Tinted borders, each matching its -subtle fill.
+     A subtle fill on a card has almost no edge of its own, and the border is
+     what makes it read as a chip rather than as tinted text. Alpha rather than
+     opaque, so they hold over any ground and not only over a card. */
+  --accent-border:  rgba(11, 95, 255, 0.28);
+  --signal-border:  rgba(198, 242, 60, 0.55);
+  --success-border: rgba(31, 168, 85, 0.28);
+  --warning-border: rgba(224, 134, 0, 0.30);
+  --danger-border:  rgba(209, 42, 34, 0.28);   /* tracks --red-600 */
 
   /* Fills and control tracks */
   --fill-secondary:       var(--gray-100);
   --fill-secondary-hover: var(--gray-200);
   --track-off:            var(--gray-300);
 
-  /* State */
+  /* State. The same four members as accent and signal.
+
+     Every -text rung is deeper than its fill, because ink and fill are not the
+     same job. --danger-text and --danger-hover both land on --red-700, which
+     is fine; they mean different things and may diverge.
+
+     --success-on and --warning-on are near black, because both fills are light
+     enough to be sat on rather than read: white is 3.09:1 on --success and
+     2.77:1 on --warning.
+
+     --danger-on is white, and --danger is deeper than it was. The old fill sat
+     where no ink cleared: white 4.36:1, near black 4.52:1, pure black 4.82:1 as
+     the absolute ceiling. A fill nothing can be written on is broken whichever
+     ink a component reaches for, so the fill moved rather than the ink. It now
+     reads 5.17:1 under white, which is the footing --accent already had at
+     5.13:1, and a destructive button is as legible as a primary one. */
   --success:        var(--green-600);
+  --success-text:   var(--green-800);
   --success-subtle: var(--green-50);
+  --success-on:     var(--gray-950);
+
   --warning:        var(--amber-600);
+  --warning-text:   var(--amber-800);
   --warning-subtle: var(--amber-50);
+  --warning-on:     var(--gray-950);
+
   --danger:         var(--red-600);
+  --danger-text:    var(--red-700);
   --danger-subtle:  var(--red-50);
+  --danger-on:      var(--gray-0);
   --danger-hover:   var(--red-700);
 
   /* ---- Code windows ----
@@ -189,7 +337,7 @@
      punching a hole in it. */
   --code-bg:      var(--gray-950);
   --code-fg:      #e6e6ea;
-  --code-comment: #6e7781;
+  --code-comment: #78818b;  /* 4.98:1 on --code-bg. #6e7781 was 4.33 and failed AA. */
   --code-keyword: #84a9ff;
   --code-string:  #5fd49a;
   --code-type:    #6fd4e0;
@@ -301,7 +449,10 @@
   --radius-xs:   4px;
   --radius-sm:   6px;
   --radius-md:   10px;
-  --radius-lg:   14px;
+  --radius-lg:   12px;   /* 12, not the export's 14. md and xl agree with the
+                            page that was tuned against real content; only lg
+                            differed, which made 14 the outlier. The code block
+                            is the main consumer and was designed at 12. */
   --radius-xl:   18px;
   --radius-2xl:  24px;
   --radius-3xl:  32px;
@@ -326,9 +477,17 @@
   --shadow-pop: 0 18px 44px rgba(11, 11, 12, 0.18);
 
   /* Focus ring. A dedicated ring colour rather than the subtle fill, so it
-     reads on both grounds; destructive controls get the red one. */
+     reads on both grounds; destructive controls get the red one.
+
+     The danger ring carries its own literal because a shadow needs alpha and
+     there is no way to take a hex token and add some, which is the same reason
+     --accent-ring and the five tinted borders carry theirs. A literal copy is
+     a thing that can drift, so it says what it tracks: --red-600, the value
+     behind --danger. It was rgba(229, 50, 42) for a while after --danger moved
+     to #d12a22, so the ring round a destructive control was the colour of the
+     control it used to be. */
   --ring:        0 0 0 4px var(--accent-ring);
-  --ring-danger: 0 0 0 4px rgba(229, 50, 42, 0.28);
+  --ring-danger: 0 0 0 4px rgba(209, 42, 34, 0.28);   /* tracks --red-600 */
 
   /* Inner top-edge highlight, for crispness on dark surfaces */
   --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -366,15 +525,75 @@ code, pre, kbd, samp {
 /* Nothing below sets a colour or a layout: keel styles its own components and
    leaves the host's document alone. A consuming app opts into the page ground
    itself, which is one line - see docs/consuming.md. */
+
+/* Reduced motion.
+ *
+ * This list was kept true by hand and was not true. .keel-radio__dot::after
+ * animated a spring and was covered by nothing, and .keel-icon-btn had been
+ * named here since the beginning without ever being a class keel defines, so
+ * the icon button was uncovered too and the list read one entry longer than it
+ * was. A test now enumerates what animates and what is answered and names the
+ * difference in both directions, so neither can drift again.
+ *
+ * The answer for a state change is to make it instant. Nothing in the tween is
+ * information the end state does not already carry, so removing it costs the
+ * reader nothing.
+ *
+ * The two that loop are answered beside the rules that declare them, and they
+ * are slowed rather than stopped: a spinner and an indeterminate bar are both
+ * saying that something is still happening, and one that freezes says the page
+ * has hung instead. Reduced means reduced, not removed.
+ *
+ * !important because this file is imported before the component stylesheets,
+ * so at equal specificity the component's own rule would win and this would
+ * silently do nothing.
+ */
 @media (prefers-reduced-motion: reduce) {
-  .keel-card,
+  /* Core */
   .keel-btn,
-  .keel-icon-btn,
+  .keel-iconbtn,
+  .keel-chip--interactive,
+  .keel-chip__x,
+
+  /* Forms */
+  .keel-input,
+  .keel-textarea,
+  .keel-select select,
+  .keel-check__box,
+  .keel-check__box svg,
+  .keel-radio__dot,
+  .keel-radio__dot::after,
+  .keel-switch__track,
   .keel-switch__thumb,
+
+  /* Layout */
+  .keel-card,
+  .keel-tab,
+  .keel-seg__opt,
   .keel-seg__thumb,
+
+  /* Feedback */
   .keel-tip__pop,
+
+  /* Code */
+  .keel-cb__tab,
+  .keel-cb__action,
+
+  /* Social */
+  .keel-ghb--minimal,
+  .keel-ghb--outline,
+  .keel-ghb--split,
+  .keel-ghb__seg--label,
+
+  /* Navigation */
+  .keel-nav__link,
+  .keel-nav__burger,
+  .keel-scrim,
   .keel-drawer,
-  .keel-scrim {
+  .keel-drawer__link,
+  .keel-menu__btn,
+  .keel-menu__panel,
+  .keel-menu__item {
     transition: none !important;
     animation: none !important;
   }
@@ -417,23 +636,54 @@ code, pre, kbd, samp {
   --kd-surface-card:            #1e2021;
   --kd-surface-overlay:         rgba(24, 26, 27, 0.72);
   --kd-surface-inverse:         #d5d1cc;
-  --kd-surface-midnight:        #141617;
-  --kd-surface-midnight-raised: #1c1f21;
   --kd-scrim:                   rgba(10, 10, 9, 0.6);
 
-  /* Text. The warm ink is the signature of this scheme. */
+  /* Text. The warm ink is the signature of this scheme.
+
+     Light compressed two rungs to make its reading weights legible. Dark needed
+     one, and which one is measured here rather than copied across: secondary
+     already cleared 4.5:1 on every surface including sunken, at 5.42:1, so it
+     did not move. Tertiary was #7e776c, 3.44:1 on --surface-sunken, and it did.
+     Mirroring light would have moved a value that was not wrong.
+
+     The binding ground is --surface-sunken, which needs ink at or above
+     luminance 0.2604. #979082 clears it at 4.80:1.
+
+     It does NOT stay clearly quieter than secondary, and an earlier version of
+     this comment said it did, on the grounds that tertiary reads 4.80 and
+     secondary 5.42 against that ground. Those are two ink-against-GROUND
+     numbers and their gap describes nothing about how the two inks compare to
+     each other. Measured directly, tertiary against secondary is 1.13:1, down
+     from 1.58:1, and it is now the tightest ink pair in either scheme.
+
+     So the rung is legible and barely distinguishable from the one above it.
+     That is the cost of promising AA at caption sizes on a dark ground, taken
+     knowingly. A consumer relying on colour alone to separate secondary from
+     tertiary will not get it here; separate them by weight, size or family.
+
+     Disabled is outside the promise here as it is in light. */
   --kd-text-primary:   #d5d1cc;
   --kd-text-secondary: #a2998d;
-  --kd-text-tertiary:  #7e776c;
+  --kd-text-tertiary:  #979082;
   --kd-text-disabled:  #5e574e;
   --kd-text-inverse:   #181a1b;
-  --kd-text-link:      #3b78ff;
 
   /* Borders. Solid warm-neutral rather than white-alpha, so a hairline holds
      its weight over the card surface as well as the page. */
   --kd-border-subtle:  #393e40;
   --kd-border-default: #4a4f51;
   --kd-border-strong:  #5c6164;
+
+  /* The edge for --surface-inverse, which is the one surface that swaps role
+     between the schemes: near black in light, light warm in dark. A white
+     hairline was correct for the first and invisible on the second, rendering
+     #dcd8d4 on #d5d1cc at 1.07:1.
+
+     Black alpha rather than a darkened white, because the ground did not just
+     shift, it inverted. The alpha is picked to land on 1.65:1, the weight the
+     light value has on the light inverse surface, so the edge reads the same in
+     both rather than merely existing in both. */
+  --kd-border-inverse: rgba(0, 0, 0, 0.22);
 
   /* Accent. Lifted for vibrance on dark, and hover LIGHTENS rather than
      darkening, because a darker hover disappears into the ground. */
@@ -443,20 +693,60 @@ code, pre, kbd, samp {
   --kd-accent-subtle:  rgba(59, 120, 255, 0.18);
   --kd-accent-ring:    rgba(91, 146, 255, 0.42);
 
+  /* Accent ink, and it is not the accent. --kd-accent is fill strength: as
+     text it is 4.42:1 on --surface-base and 3.11:1 on its own tint over
+     --surface-sunken, so it needs a lifted rung.
+
+     blue-300, not #5e92ff. #5e92ff is 5.85:1 on the page, which reads like
+     plenty, and 4.12:1 on that tint, which is the ground that decides it.
+     blue-300 is 5.33:1 there. Chosen for the worst ground it is documented
+     for, not for the nearest rung. */
+  --kd-accent-text:    #84a9ff;
+
   /* Signal citron. Legible enough on dark to be its own text colour. */
   --kd-signal-text:   #c6f23c;
   --kd-signal-subtle: rgba(198, 242, 60, 0.16);
 
+  /* Tinted borders. Lower alpha than light: the fills they edge are themselves
+     translucent here, so the same value reads louder. */
+  --kd-accent-border:  rgba(91, 146, 255, 0.42);
+  --kd-signal-border:  rgba(198, 242, 60, 0.40);
+  --kd-success-border: rgba(48, 209, 88, 0.38);
+  --kd-warning-border: rgba(224, 163, 74, 0.38);
+  --kd-danger-border:  rgba(255, 129, 120, 0.38);
+
   /* State. Vivid hues, and the subtle fills become translucent tints so they
-     pick up whatever surface they land on. */
+     pick up whatever surface they land on.
+
+     The -text values come out the same as the fills, because these fills were
+     already picked light enough to read on a dark page. Written out rather
+     than pointed at the fill above: they are two jobs that happen to agree
+     here, and if a fill is ever retuned for how it looks as a field the ink
+     must not follow it without anyone measuring. The worst ground is the
+     family's own tint over --surface-sunken, where they read 5.53:1, 5.09:1
+     and 4.76:1. */
   --kd-success:        #30d158;
+  --kd-success-text:   #30d158;
   --kd-success-subtle: rgba(48, 209, 88, 0.16);
   --kd-warning:        #e0a34a;
+  --kd-warning-text:   #e0a34a;
   --kd-warning-subtle: rgba(224, 163, 74, 0.16);
   --kd-danger:         #ff8178;
   --kd-danger-hover:   #ff9a93;
+  --kd-danger-text:    #ff8178;
   --kd-danger-subtle:  rgba(255, 129, 120, 0.16);
   --kd-ring-danger:    0 0 0 4px rgba(255, 129, 120, 0.32);
+
+  /* Ink ON the fills, near black on all four including accent. Every fill in
+     this scheme is lifted for vibrance, so white on them runs 2.42:1 to
+     3.95:1 and none of them clears. Light says white for accent and near
+     black for the rest; dark says near black for all four. The answer inverts
+     between the schemes, which is why it is measured in each rather than
+     carried across. */
+  --kd-accent-on:      #0b0b0c;
+  --kd-success-on:     #0b0b0c;
+  --kd-warning-on:     #0b0b0c;
+  --kd-danger-on:      #0b0b0c;
 
   /* Fills and tracks. White-alpha on purpose: a fill sits on several different
      surfaces and a solid value can only match one of them. */
@@ -465,10 +755,15 @@ code, pre, kbd, samp {
   --kd-track-off:            rgba(255, 255, 255, 0.22);
 
   /* Code window. Lifted off pure black so it reads as a surface sitting on the
-     page, and the foreground warms to match the body ink. */
+     page, and the foreground warms to match the body ink.
+
+     The comment was #7e776b, 4.17:1 on this ground. Every other syntax colour
+     was held to 4.5:1 and the comment was left out of the list, so the one that
+     failed was the one nothing measured. A comment is body-sized text in a
+     window a reader reads. */
   --kd-code-bg:      #121415;
   --kd-code-fg:      #e3dfd9;
-  --kd-code-comment: #7e776b;
+  --kd-code-comment: #8a8377;
 
   /* Shadows. Deeper and blacker so they register against a dark ground; dark
      elevation also leans on the lighter raised surface above. */
@@ -487,21 +782,26 @@ code, pre, kbd, samp {
     --surface-base: var(--kd-surface-base); --surface-subtle: var(--kd-surface-subtle);
     --surface-sunken: var(--kd-surface-sunken); --surface-card: var(--kd-surface-card);
     --surface-overlay: var(--kd-surface-overlay); --surface-inverse: var(--kd-surface-inverse);
-    --surface-midnight: var(--kd-surface-midnight);
-    --surface-midnight-raised: var(--kd-surface-midnight-raised);
     --scrim: var(--kd-scrim);
     --text-primary: var(--kd-text-primary); --text-secondary: var(--kd-text-secondary);
     --text-tertiary: var(--kd-text-tertiary); --text-disabled: var(--kd-text-disabled);
-    --text-inverse: var(--kd-text-inverse); --text-link: var(--kd-text-link);
+    --text-inverse: var(--kd-text-inverse);
     --border-subtle: var(--kd-border-subtle); --border-default: var(--kd-border-default);
-    --border-strong: var(--kd-border-strong);
+    --border-strong: var(--kd-border-strong); --border-inverse: var(--kd-border-inverse);
     --accent: var(--kd-accent); --accent-hover: var(--kd-accent-hover);
     --accent-pressed: var(--kd-accent-pressed); --accent-subtle: var(--kd-accent-subtle);
     --accent-ring: var(--kd-accent-ring);
+    --accent-text: var(--kd-accent-text); --accent-on: var(--kd-accent-on);
     --signal-text: var(--kd-signal-text); --signal-subtle: var(--kd-signal-subtle);
+    --accent-border: var(--kd-accent-border); --signal-border: var(--kd-signal-border);
+    --success-border: var(--kd-success-border); --warning-border: var(--kd-warning-border);
+    --danger-border: var(--kd-danger-border);
     --success: var(--kd-success); --success-subtle: var(--kd-success-subtle);
+    --success-text: var(--kd-success-text); --success-on: var(--kd-success-on);
     --warning: var(--kd-warning); --warning-subtle: var(--kd-warning-subtle);
+    --warning-text: var(--kd-warning-text); --warning-on: var(--kd-warning-on);
     --danger: var(--kd-danger); --danger-hover: var(--kd-danger-hover);
+    --danger-text: var(--kd-danger-text); --danger-on: var(--kd-danger-on);
     --danger-subtle: var(--kd-danger-subtle); --ring-danger: var(--kd-ring-danger);
     --fill-secondary: var(--kd-fill-secondary); --fill-secondary-hover: var(--kd-fill-secondary-hover);
     --track-off: var(--kd-track-off);
@@ -517,21 +817,26 @@ code, pre, kbd, samp {
   --surface-base: var(--kd-surface-base); --surface-subtle: var(--kd-surface-subtle);
   --surface-sunken: var(--kd-surface-sunken); --surface-card: var(--kd-surface-card);
   --surface-overlay: var(--kd-surface-overlay); --surface-inverse: var(--kd-surface-inverse);
-  --surface-midnight: var(--kd-surface-midnight);
-  --surface-midnight-raised: var(--kd-surface-midnight-raised);
   --scrim: var(--kd-scrim);
   --text-primary: var(--kd-text-primary); --text-secondary: var(--kd-text-secondary);
   --text-tertiary: var(--kd-text-tertiary); --text-disabled: var(--kd-text-disabled);
-  --text-inverse: var(--kd-text-inverse); --text-link: var(--kd-text-link);
+  --text-inverse: var(--kd-text-inverse);
   --border-subtle: var(--kd-border-subtle); --border-default: var(--kd-border-default);
-  --border-strong: var(--kd-border-strong);
+  --border-strong: var(--kd-border-strong); --border-inverse: var(--kd-border-inverse);
   --accent: var(--kd-accent); --accent-hover: var(--kd-accent-hover);
   --accent-pressed: var(--kd-accent-pressed); --accent-subtle: var(--kd-accent-subtle);
   --accent-ring: var(--kd-accent-ring);
+  --accent-text: var(--kd-accent-text); --accent-on: var(--kd-accent-on);
   --signal-text: var(--kd-signal-text); --signal-subtle: var(--kd-signal-subtle);
+  --accent-border: var(--kd-accent-border); --signal-border: var(--kd-signal-border);
+  --success-border: var(--kd-success-border); --warning-border: var(--kd-warning-border);
+  --danger-border: var(--kd-danger-border);
   --success: var(--kd-success); --success-subtle: var(--kd-success-subtle);
+  --success-text: var(--kd-success-text); --success-on: var(--kd-success-on);
   --warning: var(--kd-warning); --warning-subtle: var(--kd-warning-subtle);
+  --warning-text: var(--kd-warning-text); --warning-on: var(--kd-warning-on);
   --danger: var(--kd-danger); --danger-hover: var(--kd-danger-hover);
+  --danger-text: var(--kd-danger-text); --danger-on: var(--kd-danger-on);
   --danger-subtle: var(--kd-danger-subtle); --ring-danger: var(--kd-ring-danger);
   --fill-secondary: var(--kd-fill-secondary); --fill-secondary-hover: var(--kd-fill-secondary-hover);
   --track-off: var(--kd-track-off);
@@ -547,24 +852,30 @@ code, pre, kbd, samp {
   --surface-base: var(--gray-0); --surface-subtle: var(--gray-50);
   --surface-sunken: var(--gray-100); --surface-card: var(--gray-0);
   --surface-overlay: rgba(255, 255, 255, 0.72); --surface-inverse: var(--gray-900);
-  --surface-midnight: var(--midnight-900); --surface-midnight-raised: var(--midnight-800);
   --scrim: rgba(6, 11, 26, 0.55);
-  --text-primary: var(--gray-900); --text-secondary: var(--gray-600);
-  --text-tertiary: var(--gray-500); --text-disabled: var(--gray-400);
-  --text-inverse: var(--gray-0); --text-link: var(--blue-600);
+  --text-primary: var(--gray-900); --text-secondary: var(--gray-700);
+  --text-tertiary: var(--gray-650); --text-disabled: var(--gray-400);
+  --text-inverse: var(--gray-0);
   --border-subtle: var(--gray-200); --border-default: var(--gray-300);
-  --border-strong: var(--gray-400);
+  --border-strong: var(--gray-400); --border-inverse: rgba(255, 255, 255, 0.16);
   --accent: var(--blue-600); --accent-hover: var(--blue-700);
   --accent-pressed: var(--blue-800); --accent-subtle: var(--blue-50);
   --accent-ring: rgba(11, 95, 255, 0.32);
-  --signal-text: var(--signal-700); --signal-subtle: var(--signal-50);
+  --accent-text: var(--blue-700); --accent-on: var(--gray-0);
+  --signal-text: var(--signal-800); --signal-subtle: var(--signal-50);
+  --accent-border: rgba(11, 95, 255, 0.28); --signal-border: rgba(198, 242, 60, 0.55);
+  --success-border: rgba(31, 168, 85, 0.28); --warning-border: rgba(224, 134, 0, 0.30);
+  --danger-border: rgba(209, 42, 34, 0.28);
   --success: var(--green-600); --success-subtle: var(--green-50);
+  --success-text: var(--green-800); --success-on: var(--gray-950);
   --warning: var(--amber-600); --warning-subtle: var(--amber-50);
+  --warning-text: var(--amber-800); --warning-on: var(--gray-950);
   --danger: var(--red-600); --danger-hover: var(--red-700); --danger-subtle: var(--red-50);
-  --ring-danger: 0 0 0 4px rgba(229, 50, 42, 0.28);
+  --danger-text: var(--red-700); --danger-on: var(--gray-0);
+  --ring-danger: 0 0 0 4px rgba(209, 42, 34, 0.28);   /* tracks --red-600, as elevation.css does */
   --fill-secondary: var(--gray-100); --fill-secondary-hover: var(--gray-200);
   --track-off: var(--gray-300);
-  --code-bg: var(--gray-950); --code-fg: #e6e6ea; --code-comment: #6e7781;
+  --code-bg: var(--gray-950); --code-fg: #e6e6ea; --code-comment: #78818b;
   --shadow-xs:  0 1px 1px rgba(11, 11, 12, 0.04);
   --shadow-sm:  0 1px 2px rgba(11, 11, 12, 0.06), 0 1px 1px rgba(11, 11, 12, 0.04);
   --shadow-md:  0 4px 12px rgba(11, 11, 12, 0.07), 0 1px 3px rgba(11, 11, 12, 0.05);
@@ -622,6 +933,50 @@ code, pre, kbd, samp {
 .keel-btn--destructive:hover { background: var(--danger-hover); }
 .keel-btn--destructive:focus-visible { box-shadow: var(--ring-danger); }
 
+/* Pressed is a state, not a step on the emphasis scale, so it overrides the
+   variant's fill the way disabled overrides a chip's tone. A tint alone would
+   separate from ghost hover by hue only, so the state is said twice: the accent
+   tint, and a ring that survives greyscale and colour vision deficiency.
+
+   The ink is --accent-text, and which token that is matters. --accent-hover on
+   this tint is 4.42:1 in dark over a card, under the 4.5:1 a button label needs.
+   --accent-text is 6.43:1 in light and 5.33 to 6.13 across the dark surfaces,
+   because it is the ink-strength member of the family rather than a fill.
+
+   Reaching for the fill token here and finding it illegible is the same mistake
+   the state tokens shipped for months. The family now has an ink member; use it.
+
+   THE RING IS THAT SAME INK, AND THE REASON IS THE REASON ABOVE. It was
+   --accent, the fill member, which is chosen to be sat on rather than to be
+   seen against its own tint, and it measured 3.11:1 on --accent-subtle over
+   --surface-sunken in dark. That cleared the 3:1 a non-text mark takes with
+   0.11 to spare, on a token nothing promises anything about on this ground, for
+   the one mark that still says the toggle is on once colour is gone.
+   --accent-text is 5.33:1 there and 6.43:1 in light, and it is already measured
+   on exactly this ground: StateInkTests puts every -text member against every
+   surface and its own tint in all four themes. So the ring stops depending on a
+   value that happens to work and starts depending on one that is asserted to.
+
+   .keel-chip--selected had this right first. It draws its on-state ring in
+   currentColor, which for a toned chip is the family's ink, at this same
+   thickness. One state drawn two ways by two controls was the tell.
+
+   Hover thickens the ring instead of recolouring it. There is no ink member
+   above --accent-text to move to, and moving back to a fill member is the thing
+   this rule just stopped doing. Thickness also reads in greyscale, which is the
+   population the ring exists for. The fill does not move, because the fill is
+   what says the toggle is on. */
+.keel-btn--pressed {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  box-shadow: inset 0 0 0 1.5px var(--accent-text);
+}
+.keel-btn--pressed:hover {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  box-shadow: inset 0 0 0 2px var(--accent-text);
+}
+
 .keel-btn--pill { border-radius: var(--radius-pill); }
 .keel-btn--block { width: 100%; }
 .keel-btn:disabled,
@@ -653,10 +1008,25 @@ code, pre, kbd, samp {
 .keel-iconbtn--solid:hover { background: var(--accent-hover); color: var(--text-on-accent); }
 .keel-iconbtn--outline { box-shadow: inset 0 0 0 1px var(--border-default); color: var(--text-primary); }
 .keel-iconbtn--outline:hover { background: var(--surface-subtle); }
+/* Same state, same answer, so the two cannot drift. See the note on
+   .keel-btn--pressed for why the ink is not the accent. */
+.keel-iconbtn--pressed {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  box-shadow: inset 0 0 0 1.5px var(--accent-text);
+}
+.keel-iconbtn--pressed:hover {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  box-shadow: inset 0 0 0 2px var(--accent-text);
+}
 .keel-iconbtn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 
-/* ----------------------------------------------------------------- Badge -- */
-.keel-badge {
+/* ------------------------------------------------------------------ Chip --
+   One control on three axes. Badge and Tag are presets that fix Emphasis; both
+   render this. Tone says what it is, Emphasis how loudly, and the interaction
+   classes follow from which parameters the caller set. */
+.keel-chip {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -665,49 +1035,164 @@ code, pre, kbd, samp {
   font-size: 12px;
   line-height: 1;
   padding: 4px 9px;
+  border: none;
   border-radius: var(--radius-pill);
   white-space: nowrap;
+  text-decoration: none;
+  background: none;
+  color: inherit;
 }
-/* A child element rather than ::before, so the dot survives in hand-written
-   markup that sets its own content, and so it can be given a tone of its own. */
-.keel-badge__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+.keel-chip--mono { font-family: var(--font-mono); font-size: 11.5px; }
+.keel-chip__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
 
-.keel-badge--neutral { background: var(--surface-sunken); color: var(--text-secondary); }
-.keel-badge--accent  { background: var(--accent-subtle); color: var(--accent-hover); }
-.keel-badge--success { background: var(--success-subtle); color: var(--success); }
-.keel-badge--warning { background: var(--warning-subtle); color: var(--warning); }
-.keel-badge--danger  { background: var(--danger-subtle); color: var(--danger); }
-.keel-badge--signal  { background: var(--signal); color: var(--signal-on); }
-.keel-badge--solid   { background: var(--accent); color: var(--text-on-accent); }
+/* ---- What happens to a label that will not fit ----
+   Three behaviours, and the third is not the absence of the other two.
 
-/* ------------------------------------------------------------------- Tag -- */
-.keel-tag {
-  font-family: var(--font-sans);
-  font-weight: var(--fw-medium);
-  font-size: 13px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-base);
-  color: var(--text-secondary);
-  box-shadow: inset 0 0 0 1px var(--border-subtle);
+   Wrap and ellipsis are layout choices: how a page would like a long label
+   drawn. Never-truncate is a promise, because the content might be a name. A
+   shortened host is exactly what a lookalike host relies on, so drawing
+   api.example.com.evil.test as api.example.com renders the deception instead of
+   the name. That is not a preference about lines and markers, and something
+   that only holds until a page adds an ellipsis for an unrelated reason is not
+   a promise, so the guarantee is written with !important and the other two are
+   not. Both classes on one element is a page asking for two things at once,
+   and the guarantee wins.
+
+   The vocabulary is Overflow, which is shared and says nothing about chips. The
+   classes are the chip's because the chip is the only control implementing it
+   today. When a button or an input takes the same axis, it joins these
+   selectors; it does not copy the declarations to a name of its own. */
+
+/* anywhere rather than break-word: only anywhere lets the break points count
+   towards the minimum content size, so a chip holding a URL can actually give
+   way in a narrow column instead of forcing it wider and wrapping inside a box
+   that never shrank. line-height is the chip's own, since a chip that can be
+   two lines needs the lines apart and one that cannot never sees this. */
+.keel-chip--wrap { white-space: normal; overflow-wrap: anywhere; line-height: 1.35; }
+
+/* text-overflow paints on a block container, and the chip is a flex container,
+   so this lands on the label element rather than on the chip. Both boxes need
+   to be allowed below their content width or nothing ever overflows to shorten:
+   the chip so the row can squeeze it, the label so the chip can. */
+.keel-chip--ellipsis { min-width: 0; }
+.keel-chip--ellipsis .keel-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.keel-tag--mono { font-family: var(--font-mono); font-size: 12px; }
-.keel-tag__x {
+
+/* ONE DECLARATION IS THE WHOLE GUARANTEE, and the others were considered and
+   left out rather than forgotten. A box that can never be narrower than its
+   content has nothing to clip and nowhere to put an ellipsis, and min-width
+   beats width and max-width by the cascade's own rules, so text-overflow: clip
+   and overflow: visible have nothing left to defend. white-space is the same:
+   max-content is measured as if nothing wrapped, so a page setting normal gets
+   a box that is already wide enough not to.
+
+   It is said twice because there are two boxes a page can reach. Holding the
+   chip open does not stop a rule that squeezes the label inside it.
+
+   What this cannot do is stop an ANCESTOR clipping the chip, and a clean clip
+   reads as the end of a string in a way an ellipsis at least admits to. keel
+   answers that where the ancestor is keel's: see the bar in navigation.css and
+   the test on it. */
+.keel-chip--never-truncate,
+.keel-chip--never-truncate .keel-chip__label { min-width: max-content !important; }
+
+/* Filled: a state, meant to be seen before it is read.
+
+   THE INK IS THE FAMILY'S -text MEMBER, on every toned form of this chip. A
+   fill is chosen to be sat on and a -text is chosen to be read, and drawing one
+   as the other is how --success shipped at 2.83:1 on its own tint in light and
+   --warning at 2.54. Neither is a near miss; both are under the 3:1 a non-text
+   mark needs, in a chip whose entire job is to be read at 12px.
+
+   info reads --accent-text and not --accent-hover, which is the same rule
+   catching a value that happened to pass. --accent-hover is fine in light, and
+   it is a hover state doing duty as ink: 4.12:1 in dark on this tint over the
+   sunken surface. A hover state is not an ink member and cannot be measured as
+   one, so it goes whether or not the number came out.
+
+   new is the one tone that sits ON a fill rather than on a tint, so it takes
+   --signal-on. neutral sits on a surface and takes a reading weight. Both are
+   already the right shape and neither moves. */
+.keel-chip--filled.keel-chip--neutral  { background: var(--surface-sunken); color: var(--text-secondary); }
+.keel-chip--filled.keel-chip--info     { background: var(--accent-subtle); color: var(--accent-text); }
+.keel-chip--filled.keel-chip--good     { background: var(--success-subtle); color: var(--success-text); }
+.keel-chip--filled.keel-chip--warning  { background: var(--warning-subtle); color: var(--warning-text); }
+.keel-chip--filled.keel-chip--bad      { background: var(--danger-subtle); color: var(--danger-text); }
+.keel-chip--filled.keel-chip--new      { background: var(--signal); color: var(--signal-on); }
+
+
+/* Outlined: a label. The tint sits in the edge and the ink, which is what keeps
+   a tag distinct from a badge now that both can carry a tone.
+
+   Same ink rule as filled above, and it bites harder here: this form has no
+   background of its own, so the ink lands on whatever page surface it is given.
+   --surface-sunken is the binding one, where the fills read 2.60, 2.33 and 4.34
+   in light. The -text members are measured against every surface by
+   construction, which is what makes them the answer rather than deeper values
+   that happen to work. */
+.keel-chip--outlined { box-shadow: inset 0 0 0 1px var(--border-subtle); color: var(--text-secondary); }
+.keel-chip--outlined.keel-chip--info    { color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent-border); }
+.keel-chip--outlined.keel-chip--good    { color: var(--success-text); box-shadow: inset 0 0 0 1px var(--success-border); }
+.keel-chip--outlined.keel-chip--warning { color: var(--warning-text); box-shadow: inset 0 0 0 1px var(--warning-border); }
+.keel-chip--outlined.keel-chip--bad     { color: var(--danger-text); box-shadow: inset 0 0 0 1px var(--danger-border); }
+.keel-chip--outlined.keel-chip--new     { color: var(--signal-text); box-shadow: inset 0 0 0 1px var(--signal-border); }
+/* Disabled is its own axis, so it overrides whatever tone is set rather than
+   replacing it. Both routes in: the parameter puts the modifier on, and a
+   fieldset[disabled] round a group disables the button form without adding a
+   class, which would otherwise leave a dead chip in its enabled ink. */
+.keel-chip--disabled,
+.keel-chip:disabled { color: var(--text-disabled) !important; opacity: .6; }
+
+/* Quiet: the tone carried by the text alone. For a dense column, where the
+   chrome is the thing that makes forty rows unreadable rather than the colour.
+
+   This is the form with the least to fall back on. There is no fill and no
+   edge, so the colour is the entire signal and the ink has to carry it. Same
+   -text members, same reason. */
+.keel-chip--quiet { padding: 0; background: none; box-shadow: none; }
+.keel-chip--quiet.keel-chip--neutral { color: var(--text-secondary); }
+.keel-chip--quiet.keel-chip--info    { color: var(--accent-text); }
+.keel-chip--quiet.keel-chip--good    { color: var(--success-text); }
+.keel-chip--quiet.keel-chip--warning { color: var(--warning-text); }
+.keel-chip--quiet.keel-chip--bad     { color: var(--danger-text); }
+.keel-chip--quiet.keel-chip--new     { color: var(--signal-text); }
+/* A quiet chip cannot show hover as an inset edge, since it has no box. */
+.keel-chip--quiet.keel-chip--interactive:hover { box-shadow: none; text-decoration: underline; }
+
+/* Interactive, whether it is a link, a button or a toggle. */
+.keel-chip--interactive {
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+.keel-chip--interactive:hover { box-shadow: inset 0 0 0 1px currentColor; }
+.keel-chip--interactive:focus-visible { outline: none; box-shadow: var(--ring); }
+.keel-chip--interactive:active { transform: scale(0.97); }
+.keel-chip--interactive:disabled,
+.keel-chip--interactive[aria-disabled="true"] { cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Selected reads as pressed: the outline fills in rather than gaining a second
+   edge, so a row of filter chips shows its state at a glance. */
+.keel-chip--selected.keel-chip--outlined { box-shadow: inset 0 0 0 1.5px currentColor; }
+.keel-chip--selected.keel-chip--filled { box-shadow: inset 0 0 0 1.5px currentColor; }
+
+.keel-chip__x {
   cursor: pointer;
   display: inline-flex;
-  color: var(--text-tertiary);
+  color: currentColor;
+  opacity: .6;
   border: none;
   background: none;
   padding: 0;
   margin: -1px -2px -1px 0;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: opacity var(--dur-fast) var(--ease-out);
 }
-.keel-tag__x:hover { color: var(--text-primary); }
-.keel-tag__x:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-xs); }
+.keel-chip__x:hover { opacity: 1; }
+.keel-chip__x:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-xs); }
 
 /* ---------------------------------------------------------------- Avatar -- */
 .keel-avatar {
@@ -748,11 +1233,18 @@ code, pre, kbd, samp {
 /* ==== forms.css ==== */
 /* keel - Forms: Input, Textarea, Select, Checkbox, Radio, Switch, Field
    Inputs carry their border as an inset box-shadow, so focus can thicken it to
-   1.5px and add the ring without any layout shift. */
+   1.5px and add the ring without any layout shift.
+
+   Every control here greys out from the input's own :disabled as well as from
+   its modifier class. A fieldset[disabled] wrapper disables everything inside
+   it for real, and the browser does that without adding a class, so a rule that
+   reads only the class leaves a control that is dead and still looks live. The
+   modifier stays for the direct case; the :has() is what reaches the cascade. */
 
 /* ----------------------------------------------------------------- Input -- */
 .keel-input {
   font-family: var(--font-sans);
+  font-size: 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -767,13 +1259,14 @@ code, pre, kbd, samp {
 }
 .keel-input:hover { box-shadow: inset 0 0 0 1px var(--border-strong); }
 .keel-input:focus-within { box-shadow: inset 0 0 0 1.5px var(--accent), var(--ring); }
-.keel-input--sm { height: 32px; font-size: 13px; }
-.keel-input--md { height: 40px; font-size: 15px; }
+.keel-input--sm { height: 32px; font-size: 16px; }
+.keel-input--md { height: 40px; font-size: 16px; }
 .keel-input--lg { height: 48px; font-size: 17px; }
 .keel-input--mono input { font-family: var(--font-mono); }
 .keel-input--invalid { box-shadow: inset 0 0 0 1.5px var(--danger); }
 .keel-input--invalid:focus-within { box-shadow: inset 0 0 0 1.5px var(--danger), var(--ring-danger); }
-.keel-input--disabled { background: var(--surface-subtle); opacity: .6; cursor: not-allowed; }
+.keel-input--disabled,
+.keel-input:has(input:disabled) { background: var(--surface-subtle); opacity: .6; cursor: not-allowed; }
 .keel-input input {
   border: none;
   outline: none;
@@ -790,7 +1283,7 @@ code, pre, kbd, samp {
 /* -------------------------------------------------------------- Textarea -- */
 .keel-textarea {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   width: 100%;
   box-sizing: border-box;
@@ -809,10 +1302,10 @@ code, pre, kbd, samp {
 .keel-textarea:focus { box-shadow: inset 0 0 0 1.5px var(--accent), var(--ring); }
 .keel-textarea--invalid { box-shadow: inset 0 0 0 1.5px var(--danger); }
 .keel-textarea--invalid:focus { box-shadow: inset 0 0 0 1.5px var(--danger), var(--ring-danger); }
-.keel-textarea--mono { font-family: var(--font-mono); font-size: 13px; }
+.keel-textarea--mono { font-family: var(--font-mono); font-size: 16px; }
 
 /* ---------------------------------------------------------------- Select -- */
-.keel-select { position: relative; display: inline-flex; align-items: center; width: 100%; font-family: var(--font-sans); }
+.keel-select { position: relative; display: inline-flex; align-items: center; width: 100%; font-family: var(--font-sans); font-size: 16px; }
 .keel-select select {
   appearance: none;
   -webkit-appearance: none;
@@ -830,8 +1323,8 @@ code, pre, kbd, samp {
 }
 .keel-select select:hover { box-shadow: inset 0 0 0 1px var(--border-strong); }
 .keel-select select:focus-visible { box-shadow: inset 0 0 0 1.5px var(--accent), var(--ring); }
-.keel-select--sm select { height: 32px; font-size: 13px; }
-.keel-select--md select { height: 40px; font-size: 15px; }
+.keel-select--sm select { height: 32px; font-size: 16px; }
+.keel-select--md select { height: 40px; font-size: 16px; }
 .keel-select--lg select { height: 48px; font-size: 17px; }
 .keel-select--invalid select { box-shadow: inset 0 0 0 1.5px var(--danger); }
 .keel-select__chev { position: absolute; right: 12px; pointer-events: none; color: var(--text-tertiary); display: inline-flex; }
@@ -873,7 +1366,8 @@ code, pre, kbd, samp {
 .keel-check input:checked + .keel-check__box svg { opacity: 1; transform: scale(1); }
 .keel-check:hover input:checked + .keel-check__box { box-shadow: inset 0 0 0 1.5px var(--accent); }
 .keel-check input:focus-visible + .keel-check__box { box-shadow: inset 0 0 0 1.5px var(--accent), var(--ring); }
-.keel-check--disabled { opacity: .45; cursor: not-allowed; }
+.keel-check--disabled,
+.keel-check:has(input:disabled) { opacity: .45; cursor: not-allowed; }
 
 /* ----------------------------------------------------------------- Radio -- */
 .keel-radio {
@@ -911,7 +1405,8 @@ code, pre, kbd, samp {
 .keel-radio input:checked + .keel-radio__dot { background: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
 .keel-radio input:checked + .keel-radio__dot::after { transform: scale(1); }
 .keel-radio input:focus-visible + .keel-radio__dot { box-shadow: inset 0 0 0 1.5px var(--accent), var(--ring); }
-.keel-radio--disabled { opacity: .45; cursor: not-allowed; }
+.keel-radio--disabled,
+.keel-radio:has(input:disabled) { opacity: .45; cursor: not-allowed; }
 
 /* ---------------------------------------------------------------- Switch -- */
 .keel-switch {
@@ -945,7 +1440,8 @@ code, pre, kbd, samp {
 .keel-switch input:checked + .keel-switch__track { background: var(--accent); }
 .keel-switch input:checked + .keel-switch__track .keel-switch__thumb { transform: translateX(18px); }
 .keel-switch input:focus-visible + .keel-switch__track { box-shadow: var(--ring); }
-.keel-switch--disabled { opacity: .45; cursor: not-allowed; }
+.keel-switch--disabled,
+.keel-switch:has(input:disabled) { opacity: .45; cursor: not-allowed; }
 
 /* ----------------------------------------------------------------- Field -- */
 .keel-formfield { font-family: var(--font-sans); display: flex; flex-direction: column; gap: 6px; width: 100%; }
@@ -957,13 +1453,27 @@ code, pre, kbd, samp {
   gap: 6px;
   align-items: center;
 }
-.keel-formfield__req { color: var(--danger); }
+/* Required is not a state the field is in, it is a permanent fact about its
+   shape, so no state colour is the right answer and reaching for a different
+   one would be the same mistake in a different hue. The marker separates by
+   weight instead, which survives greyscale and colour vision deficiency where
+   the amber-red did not.
+
+   Bold rather than the label's own semibold, because the marker sits inside
+   the label and inherits from it: at the same weight the rule would render
+   identically to no rule at all. */
+.keel-formfield__req { color: var(--text-primary); font-weight: var(--fw-bold); }
 .keel-formfield__hint { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
-.keel-formfield__error { font-size: 12px; color: var(--danger); line-height: 1.4; font-weight: var(--fw-medium); }
+/* --danger-text, not --danger. This is the message a user reads to find out
+   what is wrong with what they typed, set at 12px on whatever page surface the
+   form is on. The fill was 4.34:1 on --surface-sunken. The marker above was
+   taken off --danger for the same reason and this line was left behind, which
+   is the whole shape of the ink-token gap: one member of a pair gets looked at. */
+.keel-formfield__error { font-size: 12px; color: var(--danger-text); line-height: 1.4; font-weight: var(--fw-medium); }
 
 
 /* ==== layout.css ==== */
-/* keel - Layout: Card, Tabs, Segmented, Separator */
+/* keel - Layout: Card, Tabs, Segmented, Separator, Disclosure */
 
 /* ------------------------------------------------------------------ Card -- */
 .keel-card {
@@ -1071,6 +1581,7 @@ code, pre, kbd, samp {
 .keel-seg--sm .keel-seg__opt { height: 28px; padding: 0 12px; font-size: 13px; }
 .keel-seg--md .keel-seg__opt { height: 34px; padding: 0 16px; font-size: 14px; }
 .keel-seg__opt--active { color: var(--text-primary); font-weight: var(--fw-semibold); }
+
 .keel-seg__opt:focus-visible { outline: none; box-shadow: var(--ring); }
 .keel-seg__thumb {
   position: absolute;
@@ -1105,6 +1616,125 @@ code, pre, kbd, samp {
 .keel-sep--label::before,
 .keel-sep--label::after { content: ""; flex: 1; height: 1px; background: var(--border-subtle); }
 
+/* ------------------------------------------------------------ Disclosure --
+   details and summary do the work. The semantics, the keyboard behaviour and
+   find-on-page opening a closed section are the platform's, not ours, and a
+   hand-rolled version loses all three.
+
+   interpolate-size is set HERE and not on :root, because keel styles its own
+   components and leaves the host document alone. It inherits, so the
+   ::details-content box picks it up and nothing outside a disclosure changes
+   behaviour.
+
+   A browser without ::details-content still opens and closes correctly; it
+   just does it instantly. That is the right way for this to degrade, and it
+   is why the animation is allowed to be the newer part. */
+.keel-disclosure {
+  interpolate-size: allow-keywords;
+  font-family: var(--font-sans);
+}
+.keel-disclosure__summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+/* Three ways to drop the default triangle, because which one applies depends
+   on the browser and on summary's display type. */
+.keel-disclosure__summary::-webkit-details-marker { display: none; }
+.keel-disclosure__summary::marker { content: ""; }
+.keel-disclosure__summary:hover { background: var(--surface-sunken); }
+.keel-disclosure__summary:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* The chevron, drawn from two borders rather than an icon, so plain markup
+   gets one without hand-writing an SVG. Same borders in both states and only
+   the angle changes, which is what lets it animate; currentColor keeps it on
+   the heading's ink in both themes. */
+.keel-disclosure__summary::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-inline: 2px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+/* Direct child, or an open disclosure would turn a nested one's chevron too. */
+.keel-disclosure[open] > .keel-disclosure__summary::before { transform: rotate(45deg); }
+
+/* WHO YIELDS WHEN THE SUMMARY RUNS OUT OF WIDTH. The row holds a name and a
+   trailing slot, and in every row narrow enough to matter one of them has to
+   give. keel decided that silently, by writing flex: none on the trailing and
+   min-width: 0 on the label, and a consumer whose trailing content was a meter
+   found out by watching a phone scroll sideways and pinned the bar's width in
+   their own stylesheet to stop it.
+
+   The default stands, and here is the reason it is the default. A count, a
+   badge, a status word is meaningless truncated and short enough that keeping
+   it costs the name almost nothing, so the name ellipses and the trailing
+   holds its content's size. The label carries min-width: 0 for that: a flex
+   item will not shrink below its content without it, so an ellipsis needs the
+   floor taken off before it can happen at all.
+
+   The other answer is a real one and it is the caller's, so it is a modifier
+   rather than a second default. Content that reads by how wide it is drawn,
+   a meter or a bar or a sparkline, has no useful intrinsic width: inside a
+   flex: none slot it sizes to nothing, which is what forced the local override.
+   Two answers, one axis, so a bool. If a third position ever turns up this
+   becomes a shared enum rather than a second bool beside this one. */
+.keel-disclosure__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Pushed to the end, so a count sits opposite the label whatever its length. */
+.keel-disclosure__trailing {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--text-tertiary);
+  font-weight: var(--fw-regular);
+}
+/* Takes the width the name does not need, and the name still ellipses first.
+   The basis is zero so the growth is the whole of the leftover rather than the
+   leftover on top of a content size a meter does not have.
+
+   The floor is what stops a long name squeezing the slot back to nothing,
+   which is the bug this modifier exists to fix and would otherwise reappear at
+   the narrow end. 100px, because the content this is for reports a proportion
+   and the smallest step it can be asked to draw is one percent: at a hundred
+   pixels that step is a whole pixel, and below it the bar starts rounding
+   changes away. It is a floor and not a width; anything wider is free. */
+.keel-disclosure__trailing--grow { flex: 1 1 0%; min-width: 100px; }
+.keel-disclosure__panel { padding-block: 2px 6px; }
+
+/* block-size goes 0 to auto, which only interpolates because of
+   interpolate-size above. content-visibility is a discrete property, so it
+   needs allow-discrete or the panel disappears before it has finished
+   closing. */
+.keel-disclosure::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size var(--dur-base) var(--ease-out),
+              content-visibility var(--dur-base) var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+.keel-disclosure[open]::details-content { block-size: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .keel-disclosure__summary,
+  .keel-disclosure__summary::before,
+  .keel-disclosure::details-content { transition: none; }
+}
+
 
 /* ==== feedback.css ==== */
 /* keel - Feedback: Callout, Tooltip, ProgressBar */
@@ -1122,20 +1752,44 @@ code, pre, kbd, samp {
   align-items: flex-start;
 }
 .keel-callout__icon { flex: none; width: 20px; height: 20px; display: inline-flex; margin-top: 1px; }
+/* The slot owns the size, not the glyph in it. A supplied icon is drawn on
+   whatever grid its author used, and one authored at 24 would sit a row taller
+   than the tone's own and push the title off the first line. */
+.keel-callout__icon svg { width: 100%; height: 100%; }
 .keel-callout__body { flex: 1; min-width: 0; }
 .keel-callout__title { font-weight: var(--fw-semibold); margin-bottom: 2px; }
 
+/* The body ink is --text-primary, set on .keel-callout above, because a tinted
+   ground takes primary. The ICON is the family's own colour, and it is ink on
+   that same tint rather than a field, so it is the -text member and not the
+   fill. The fills were 2.83:1 and 2.54:1 on their own tints in light, under
+   even the 3:1 a non-text mark needs, and --accent was 3.11:1 in dark.
+
+   An icon here is read, not sat on. docs/tokens.md says -text covers "text or
+   an icon", which is this. */
 .keel-callout--info    { background: var(--accent-subtle); }
-.keel-callout--info .keel-callout__icon { color: var(--accent); }
-.keel-callout--success { background: var(--success-subtle); }
-.keel-callout--success .keel-callout__icon { color: var(--success); }
+.keel-callout--info .keel-callout__icon { color: var(--accent-text); }
+.keel-callout--good { background: var(--success-subtle); }
+.keel-callout--good .keel-callout__icon { color: var(--success-text); }
 .keel-callout--warning { background: var(--warning-subtle); }
-.keel-callout--warning .keel-callout__icon { color: var(--warning); }
-.keel-callout--danger  { background: var(--danger-subtle); }
-.keel-callout--danger .keel-callout__icon { color: var(--danger); }
+.keel-callout--warning .keel-callout__icon { color: var(--warning-text); }
+.keel-callout--bad  { background: var(--danger-subtle); }
+.keel-callout--bad .keel-callout__icon { color: var(--danger-text); }
 
 /* --------------------------------------------------------------- Tooltip -- */
 .keel-tip { position: relative; display: inline-flex; }
+/* keel's element rather than the caller's. The pop has to be pointed at by an
+   aria-describedby for role="tooltip" to relate it to anything, and the trigger
+   arrives as content, so this is the only element keel can put that attribute
+   on. It hugs what it wraps and draws nothing, so the trigger lays out as it
+   did when it was the flex item itself. */
+.keel-tip__trigger { display: inline-flex; }
+/* The pop hides with opacity and stays in the accessibility tree, which reads
+   as the bug the drawer and the menu panel both had and is not one. Those hide
+   with visibility because they hold links, and a link that is off-screen and
+   still focusable is a tab stop into nothing. A tooltip holds text. Taking it
+   out of the tree would take the label with it, and the describedby above
+   points at it precisely so it can be read. Leave the visibility alone. */
 .keel-tip__pop {
   position: absolute;
   z-index: 50;
@@ -1164,6 +1818,22 @@ code, pre, kbd, samp {
 /* A label longer than a few words needs to wrap, or it runs off the viewport. */
 .keel-tip__pop--wrap { white-space: normal; width: max-content; max-width: 220px; text-align: center; }
 
+/* Placement is one of two fixed offsets, so a tooltip near the edge of the
+   viewport is clipped and keel cannot flip it. CSS anchor positioning and
+   position-try answer that with no script, and the answer today is not yet.
+
+   Measured 2026-08-28: Chrome and Edge from 125, Safari from 26, Firefox from
+   147, Baseline newly available since January 2026, caniuse coverage 84%. The
+   floor is the current release of two of the three engines, so roughly one
+   reader in six keeps the clipped tooltip, and the author is not one of them:
+   it flips on the machine it was written on and stays broken everywhere else.
+   Silent, and worse than the bug it half fixes.
+
+   It would also be a second placement mechanism standing beside this one for
+   as long as the fallback is needed, which is the arrangement this repo keeps
+   getting bitten by. What changes the answer is coverage rather than a better
+   argument: when the unsupported share is small enough to drop these rules
+   outright, it becomes one mechanism and it goes in. Not a script, ever. */
 .keel-tip--top .keel-tip__pop { bottom: calc(100% + 8px); left: 50%; transform: translate(-50%, 4px); }
 .keel-tip--top .keel-tip__pop::after { bottom: -3px; left: calc(50% - 3.5px); }
 .keel-tip--bottom .keel-tip__pop { top: calc(100% + 8px); left: 50%; transform: translate(-50%, -4px); }
@@ -1172,6 +1842,11 @@ code, pre, kbd, samp {
 .keel-tip:focus-within .keel-tip__pop { opacity: 1; transform: translate(-50%, 0); }
 
 /* ----------------------------------------------------------- ProgressBar -- */
+/* The bar has no intrinsic width. It fills what it is put in, which means a
+   parent that sizes to its content sizes this to nothing: dropped into a
+   flex: none slot it collapses, and the fix belongs on the slot rather than
+   here. keel-disclosure__trailing--grow is that fix for the summary row.
+   Widening the bar itself would be a width keel picked for one placement. */
 .keel-progress {
   display: block;
   width: 100%;
@@ -1188,9 +1863,9 @@ code, pre, kbd, samp {
   background: var(--accent);
   transition: width var(--dur-slow) var(--ease-out);
 }
-.keel-progress__fill--success { background: var(--success); }
+.keel-progress__fill--good { background: var(--success); }
 .keel-progress__fill--warning { background: var(--warning); }
-.keel-progress__fill--danger  { background: var(--danger); }
+.keel-progress__fill--bad  { background: var(--danger); }
 /* An indeterminate bar has no value to show, so it sweeps instead. */
 .keel-progress--indeterminate .keel-progress__fill {
   width: 35%;
@@ -1200,7 +1875,13 @@ code, pre, kbd, samp {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(320%); }
 }
+/* The determinate bar's answer cannot live in the central list, because that
+   list turns animation off as well as transition and this bar's sweep has to
+   keep running. The two answers are different for the same reason: a bar
+   moving to a value it already knows can jump to it, and one that is saying it
+   does not know yet has to keep saying so. */
 @media (prefers-reduced-motion: reduce) {
+  .keel-progress__fill { transition: none; }
   .keel-progress--indeterminate .keel-progress__fill { animation-duration: 3s; }
 }
 
@@ -1503,7 +2184,7 @@ code, pre, kbd, samp {
 
 
 /* ==== navigation.css ==== */
-/* keel - Navigation: NavBar, NavDrawer, NavMenu
+/* keel - Navigation: NavBar, NavRail, NavDrawer, NavMenu
  * ---------------------------------------------------------------------------
  * Written for keel rather than lifted from the export, which has no nav.
  *
@@ -1547,6 +2228,18 @@ code, pre, kbd, samp {
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
+/* Pushed to the trailing edge, so once the links are hidden the burger goes to
+   the end of the bar instead of sitting against the brand. Scoped to the bar:
+   the rail reuses this same burger, and in a column an auto inline margin would
+   shove it sideways. It is inert while the bar is wide, because the burger is
+   display:none then.
+
+   NAME: keel-nav__burger reads as the bar's, and it is now shared with the
+   rail. That is one control and one set of rules rather than two that drift,
+   which is the right trade, but the name is wrong for a shared thing. It is in
+   the published class inventory, so renaming it is a break and waits for the
+   next batch. Considered, not overlooked. */
+.keel-nav > .keel-nav__burger { margin-inline-start: auto; }
 .keel-nav__burger:hover { background: var(--surface-sunken); color: var(--text-primary); }
 .keel-nav__burger:focus-visible { outline: none; box-shadow: var(--ring); }
 
@@ -1577,7 +2270,19 @@ code, pre, kbd, samp {
 }
 .keel-scrim--open { opacity: 1; visibility: visible; }
 
-/* ---- Drawer ---- */
+/* ---- Drawer ----
+   Closed means hidden, not moved. Sliding it off the edge left it rendered,
+   in the accessibility tree, and every link inside it focusable, so tabbing
+   through the page walked into eleven links nobody could see. The scrim above
+   already had the answer, fourteen lines up, and was not compared against.
+
+   visibility rather than an attribute, because a static consumer copying this
+   markup gets the stylesheet and cannot get an attribute. KeelNavDrawer sets
+   inert as well, which is the better statement for consumers who can have it.
+
+   visibility is in the transition for the same reason it is on the scrim: it
+   flips to visible at the start of the way in and holds until the end of the
+   way out, so the slide is not cut short at either end. */
 .keel-drawer {
   position: fixed;
   top: 0; right: 0; bottom: 0;
@@ -1594,11 +2299,13 @@ code, pre, kbd, samp {
   border-left: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-xl);
   transform: translateX(100%);
-  transition: transform var(--dur-base) var(--ease-out);
+  visibility: hidden;
+  transition: transform var(--dur-base) var(--ease-out),
+              visibility var(--dur-base) var(--ease-out);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-.keel-drawer--open { transform: translateX(0); }
+.keel-drawer--open { transform: translateX(0); visibility: visible; }
 .keel-drawer--left { right: auto; left: 0; border-left: none; border-right: 1px solid var(--border-subtle); transform: translateX(-100%); }
 .keel-drawer--left.keel-drawer--open { transform: translateX(0); }
 
@@ -1652,6 +2359,15 @@ code, pre, kbd, samp {
 }
 .keel-menu:hover .keel-menu__btn,
 .keel-menu:focus-within .keel-menu__btn { color: var(--text-primary); }
+/* The ring is the focus indicator. The colour shift above is NOT, and the two
+   are not duplicates of each other: :focus-within fires on any descendant
+   taking focus, which is what opens the panel, so that rule says the menu is
+   open rather than which control has focus. It also says it in colour alone,
+   which is weaker than the ring every other focusable control in keel gets.
+
+   The radius lives on the focus rule because the button has none at rest, the
+   same answer .keel-tab and .keel-ghb take. */
+.keel-menu__btn:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }
 .keel-menu__panel {
   position: absolute;
   top: calc(100% + 12px);
@@ -1691,3 +2407,109 @@ code, pre, kbd, samp {
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .keel-menu__item:hover { background: var(--surface-sunken); color: var(--text-primary); }
+
+/* ---- Rail: a persistent side nav ----
+ * The rail collapses on its own width, the same idea as the bar above and for
+ * the same reason. The three rungs are named the same, and the widths behind
+ * them are deliberately NOT the same numbers: the bar spans a page, so 880px
+ * reads as "this bar has run out of room", while a healthy rail is a couple of
+ * hundred pixels wide and would be past that threshold at every width it ever
+ * has. The rung is the vocabulary, the number is keel's to pick per component.
+ *
+ * What each rail threshold is for:
+ *   sm  140px  below this an icon plus even one short word does not fit, so
+ *              the rail has stopped showing navigation and is showing icons
+ *   md  180px  below this a two-word label no longer fits beside its icon and
+ *              starts truncating
+ *   lg  220px  below this a group heading with a count beside it and a link
+ *              with an icon are competing for the same line. The default,
+ *              because handing over early beats showing a cramped rail.
+ *
+ * The :has() guard is what keeps a CSS-only consumer safe. The tree hides only
+ * when there is a burger present to open the drawer with, and the burger is
+ * rendered by the component. A static page that copies the collapse class from
+ * the docs therefore keeps a visible rail instead of hiding its navigation
+ * behind a control that does not exist.
+ *
+ * Same caveat as the bar: the rail is its own container, so it measures the
+ * width its parent gives it. In a parent that shrink-wraps to its content that
+ * is circular, because hiding the tree is what makes the rail narrow. Put a
+ * rail in a sized column, which is where a rail goes anyway.
+ */
+.keel-rail {
+  container-type: inline-size;
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+/* The burger is the bar's, not a second one. One control, one set of rules,
+   and a rail that cannot drift away from the bar it sits under. */
+.keel-rail > .keel-nav__burger { align-self: start; }
+.keel-rail__tree { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+@container (max-width: 140px) {
+  .keel-rail--collapse-sm:has(> .keel-nav__burger) > .keel-rail__tree { display: none; }
+  .keel-rail--collapse-sm > .keel-nav__burger { display: inline-flex; }
+}
+@container (max-width: 180px) {
+  .keel-rail--collapse-md:has(> .keel-nav__burger) > .keel-rail__tree { display: none; }
+  .keel-rail--collapse-md > .keel-nav__burger { display: inline-flex; }
+}
+@container (max-width: 220px) {
+  .keel-rail--collapse-lg:has(> .keel-nav__burger) > .keel-rail__tree { display: none; }
+  .keel-rail--collapse-lg > .keel-nav__burger { display: inline-flex; }
+}
+
+.keel-rail__filter { padding: 2px 2px 8px; }
+.keel-rail__group { min-width: 0; }
+.keel-rail__items {
+  list-style: none;
+  margin: 0;
+  padding-inline-start: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.keel-rail__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  min-width: 0;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.keel-rail__link:hover { background: var(--surface-sunken); color: var(--text-primary); }
+.keel-rail__link:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* Keyed off aria-current rather than a modifier class, so the highlight and
+   the announcement cannot disagree. A link that looks current IS current.
+
+   Accent ink on the accent tint, which is the same pair .keel-btn--pressed
+   draws and takes the same answer: --accent-text, not --accent-hover. A hover
+   state is not an ink member. It reads 4.12:1 here in dark, on the tint over
+   --surface-sunken, where --accent-text is 5.33. */
+.keel-rail__link[aria-current="page"] {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  font-weight: var(--fw-semibold);
+}
+.keel-rail__icon { display: inline-flex; align-items: center; flex: none; color: var(--text-tertiary); }
+.keel-rail__link[aria-current="page"] .keel-rail__icon { color: inherit; }
+.keel-rail__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.keel-rail__empty {
+  margin: 0;
+  padding: 8px 10px;
+  font: var(--text-footnote);
+  color: var(--text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keel-rail__link { transition: none; }
+}

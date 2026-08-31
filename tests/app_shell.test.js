@@ -30,7 +30,7 @@ assert.match(indexHtml, /class="icon-set-picker keel-select keel-select--sm"/);
 
 assert.deepEqual(
     currentFrontendAssets,
-    ["keel.css?v=33", "style.css?v=36", "remote-icon-source.js?v=4", "script.js?v=20"]
+    ["keel.css?v=34", "style.css?v=36", "remote-icon-source.js?v=4", "script.js?v=20"]
 );
 
 const appShell = readAppShell();
@@ -39,7 +39,7 @@ const appShellFrontendAssets = appShell.filter((asset) =>
 );
 assert.deepEqual(appShellFrontendAssets, currentFrontendAssets);
 
-assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v12");
+assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v13");
 assert.equal(readConstant("ICON_CACHE_NAME"), "fluent-icons-assets-v6");
 
 console.log("app_shell.test.js: ok");
