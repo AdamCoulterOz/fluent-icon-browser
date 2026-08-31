@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap">
     <link rel="stylesheet" href="keel.css?v=34">
-    <link rel="stylesheet" href="style.css?v=36">
+    <link rel="stylesheet" href="style.css?v=37">
     <script>
         if ("serviceWorker" in navigator) {
             const appVersionKey = "fluent-icons-app-version";
@@ -179,6 +179,13 @@
                     <div class="icon-set-picker keel-select keel-select--sm">
                         <label class="sr-only" for="iconSetSelect">Icon collection</label>
                         <select id="iconSetSelect" aria-describedby="setSubtitle"></select>
+                        <span class="keel-select__chev" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m4 6 4 4 4-4"></path></svg>
+                        </span>
+                    </div>
+                    <div class="icon-group-picker keel-select keel-select--sm" id="iconGroupPicker" hidden>
+                        <label class="sr-only" for="iconGroupSelect">Icon group</label>
+                        <select id="iconGroupSelect" aria-describedby="setSubtitle"></select>
                         <span class="keel-select__chev" aria-hidden="true">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m4 6 4 4 4-4"></path></svg>
                         </span>
@@ -355,6 +362,6 @@
     <div id="panelSizeMenu" class="panel-size-menu" role="listbox" aria-label="Icon size" hidden></div>
 
     <script src="remote-icon-source.js?v=4"></script>
-    <script src="script.js?v=20"></script>
+    <script src="script.js?v=21"></script>
 </body>
 </html>

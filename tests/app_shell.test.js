@@ -27,10 +27,14 @@ assert.match(
     /<label class="sr-only" for="iconSetSelect">Icon collection<\/label>\s*<select id="iconSetSelect" aria-describedby="setSubtitle"><\/select>\s*<span class="keel-select__chev" aria-hidden="true">\s*<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1\.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">/
 );
 assert.match(indexHtml, /class="icon-set-picker keel-select keel-select--sm"/);
+assert.match(
+    indexHtml,
+    /<div class="icon-group-picker keel-select keel-select--sm" id="iconGroupPicker" hidden>\s*<label class="sr-only" for="iconGroupSelect">Icon group<\/label>\s*<select id="iconGroupSelect" aria-describedby="setSubtitle"><\/select>\s*<span class="keel-select__chev" aria-hidden="true">/
+);
 
 assert.deepEqual(
     currentFrontendAssets,
-    ["keel.css?v=34", "style.css?v=36", "remote-icon-source.js?v=4", "script.js?v=20"]
+    ["keel.css?v=34", "style.css?v=37", "remote-icon-source.js?v=4", "script.js?v=21"]
 );
 
 const appShell = readAppShell();
@@ -39,7 +43,7 @@ const appShellFrontendAssets = appShell.filter((asset) =>
 );
 assert.deepEqual(appShellFrontendAssets, currentFrontendAssets);
 
-assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v13");
+assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v14");
 assert.equal(readConstant("ICON_CACHE_NAME"), "fluent-icons-assets-v6");
 
 console.log("app_shell.test.js: ok");

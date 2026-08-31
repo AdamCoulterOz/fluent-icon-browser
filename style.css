@@ -635,6 +635,15 @@ body::-webkit-scrollbar {
     width: clamp(164px, 22vw, 320px);
 }
 
+.icon-group-picker {
+    min-width: 0;
+    width: clamp(132px, 16vw, 228px);
+}
+
+.icon-group-picker[hidden] {
+    display: none;
+}
+
 .style-filter {
     width: 134px;
     min-width: 134px;
@@ -1872,7 +1881,15 @@ body.icon-panel-open .icon-grid {
 
     .top-controls {
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+    }
+
+    .top-controls::-webkit-scrollbar {
+        display: none;
     }
 
     .toolbar-scroll-region--top {
@@ -1896,15 +1913,6 @@ body.icon-panel-open .icon-grid {
     .top-controls {
         min-width: 0;
         max-width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        overflow-y: hidden;
-        overscroll-behavior-x: contain;
-        scrollbar-width: none;
-    }
-
-    .top-controls::-webkit-scrollbar {
-        display: none;
     }
 }
 

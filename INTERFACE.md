@@ -11,6 +11,7 @@
 - Canonical set keys: `fluent`, `segoe`, `azure`, `flight`, `hashicorp`, `salesforce`, and `redhat`.
 - `fabric` is a compatibility alias for `segoe` while no canonical `fabric` set exists. A future key collision requires an explicit compatibility decision.
 - The generated `sets` map supplies each collection's `label`, `shortLabel`, source context, `sources[]` provenance, and icon families. The browser renders collection selection from that map.
+- When a collection has more than one source-supplied `icon.category`, the browser shows a Keel-native group selector. It combines with search and style filtering and resets when the collection changes. No group parameter is added to the stable `?set=<key>&icon=<name>` URL; collections without a multi-category source taxonomy do not show the selector.
 
 The `icon` parameter identifies a visible canonical family. A known folded/non-canonical alias resolves and opens its canonical family while preserving the supplied stable URL; unknown names may fall back to relevant search. Selecting a canonical family updates the URL with `replaceState` so the current view remains shareable.
 
@@ -20,7 +21,7 @@ The `icon` parameter identifies a visible canonical family. A known folded/non-c
 - The browser presents those source and licence URLs as visible external links.
 - Published source boundaries and candidate status live in [SOURCES.md](SOURCES.md). Eligibility requires a deterministic official source boundary: a revisioned or stable per-icon URL, or an official archive with an entry descriptor and digest; unauthenticated, CORS client accessibility; terms compatible with automated indexing, deep-linking/hotlinking, runtime retrieval, and user copy/download; and appropriate attribution, trademark, and no-endorsement treatment. Source metadata is attribution and provenance information, not a warranty of upstream availability or a legal-rights conclusion.
 - Flight, HashiCorp Products, and Red Hat sources are commit-pinned and digest-bound by source locks. Flight is limited to generic concepts, excluding `Products` and `Services`, and its grouping behavior is unchanged. The separate `hashicorp` set contains only official `Products` marks, including Terraform, Vault, Packer, Nomad, and Consul; `Services` remains excluded. Canonical `?set=hashicorp&icon=<base>` links combine upstream `<base>`, `<base>-fill`, and `<base>-color` SVGs as regular, filled, and color variants. `<base>-fill-color` is retained only as a searchable alias, never a fourth visible variant. Red Hat is limited to `standard`, `ui`, and `microns`, excluding `social`.
-- Azure is limited to the deterministic default public Portal core and extension-manifest surface. Its source SVGs are resolved lazily from public sources; the repository and Pages artifact contain no Azure SVG payloads.
+- Azure is limited to the deterministic default public Portal core and extension-manifest surface. Its source SVGs are resolved lazily from public sources; the repository and Pages artifact contain no Azure SVG payloads. Colour filtering is capability-based: any regular, filled, or color variant whose descriptor has `preserveSourceColors` is colour-capable. The current generated observation is 1,216 colour-capable families out of 1,374; counts are not permanent contracts, and upstream variant keys and public deep links remain unchanged.
 - Salesforce SLDS covers the approved `standard`, `action`, `doctype`, `custom`, and `utility` archive paths; these five genuine individual-SVG families total 1,780. The five `*-sprite` SVG/RTL sprite sheets remain excluded as generated support artifacts, and `Product` is not a sixth `@salesforce-ux/icons` category. The client verifies the official registry archive and selected entry SHA-256 values before extraction and sanitization; its CC BY-ND source capability disables `currentColor` and bounding-box output transforms.
 
 ## Invariants
@@ -32,6 +33,7 @@ The `icon` parameter identifies a visible canonical family. A known folded/non-c
 - The Segoe set is the union of ordinary and branded MDL2 components, and branded icons retain the searchable `branded` tag.
 - Azure's 105 legacy local Documents SVGs remain unimported and unpublished.
 - Collection counts are generated-state observations, not permanent interface contracts.
+- AWS Architecture Icons and Google Cloud remain unpublished candidates; their current source and terms blockers are recorded in [SOURCES.md](SOURCES.md).
 
 ## Lifecycle and Side Effects
 

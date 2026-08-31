@@ -11,6 +11,39 @@ function getCollectionPickerOption(set, key) {
     };
 }
 
+function getIconGroupOptions(icons) {
+    const groups = new Set();
+    (Array.isArray(icons) ? icons : []).forEach((icon) => {
+        const group = typeof icon?.category === "string" ? icon.category.trim() : "";
+        if (group) {
+            groups.add(group);
+        }
+    });
+
+    return [...groups]
+        .sort((left, right) => left.localeCompare(right))
+        .map((value) => ({ value, text: value }));
+}
+
+function getIconGroupFilterState(icons, selectedGroup = "") {
+    const options = getIconGroupOptions(icons);
+    const group = typeof selectedGroup === "string" ? selectedGroup : "";
+
+    return {
+        options,
+        isVisible: options.length > 1,
+        selectedGroup: options.some((option) => option.value === group) ? group : "",
+    };
+}
+
+function matchesIconGroup(icon, group = "") {
+    if (!group) {
+        return true;
+    }
+
+    return typeof icon?.category === "string" && icon.category.trim() === group;
+}
+
 function getIconAliases(icon) {
     return Array.isArray(icon?.aliases) ? icon.aliases : [];
 }
@@ -60,6 +93,34 @@ function sourceAllowsTransform(variantData, capability) {
 
 function previewThemeColorClass(variantData) {
     return variantData?.previewThemeColor === true ? "preview-theme-color" : "";
+}
+
+function variantPreservesSourceColors(variant, variantData) {
+    return Boolean(variantData) && (
+        variant === "color" || variantData.preserveSourceColors === true
+    );
+}
+
+function hasColorPreservingVariant(icon) {
+    return ["color", "regular", "filled"].some((variant) =>
+        variantPreservesSourceColors(variant, icon?.variants?.[variant])
+    );
+}
+
+function getPreviewVariantForStyleMode(icon, styleMode = "") {
+    const variants = icon?.variants || {};
+    let previewOrder = ["regular", "filled", "color"];
+
+    if (styleMode === "filled") {
+        previewOrder = ["filled", "regular", "color"];
+    } else if (styleMode === "color") {
+        previewOrder = ["color", "regular", "filled"];
+        return previewOrder.find((variant) =>
+            variantPreservesSourceColors(variant, variants[variant])
+        ) || null;
+    }
+
+    return previewOrder.find((variant) => Boolean(variants[variant])) || null;
 }
 
 function isThemeColorPaint(value) {
@@ -116,6 +177,7 @@ class IconBrowser {
         this.currentSetKey = "fluent";
         this.currentSet = null;
         this.styleMode = "";
+        this.groupFilter = "";
         this.icons = [];
         this.filteredIcons = [];
         this.currentIcon = null;
@@ -334,6 +396,12 @@ class IconBrowser {
 
         document.getElementById("iconSetSelect")?.addEventListener("change", (event) => {
             this.switchSet(event.currentTarget.value);
+        });
+
+        document.getElementById("iconGroupSelect")?.addEventListener("change", (event) => {
+            this.groupFilter = event.currentTarget.value;
+            const searchTerm = document.getElementById("searchInput")?.value || "";
+            this.filterIcons(searchTerm);
         });
 
         document.querySelectorAll(".panel-variant-tab").forEach((button) => {
@@ -1077,6 +1145,7 @@ class IconBrowser {
         };
 
         this.icons = Array.isArray(this.currentSet.icons) ? this.currentSet.icons : [];
+        this.groupFilter = "";
         this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
         this.selectedIconName = null;
@@ -1085,6 +1154,7 @@ class IconBrowser {
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
         this.syncSetPicker();
+        this.syncGroupPicker();
         this.syncStyleModeControlsForSet();
         this.updateSetSubtitle();
 
@@ -1171,6 +1241,35 @@ class IconBrowser {
         if (picker) {
             picker.value = this.currentSetKey;
         }
+        this.syncToolbarScrollIndicators();
+    }
+
+    syncGroupPicker() {
+        const picker = document.getElementById("iconGroupSelect");
+        const pickerContainer = document.getElementById("iconGroupPicker");
+        if (!picker || !pickerContainer) {
+            return;
+        }
+
+        const state = getIconGroupFilterState(this.icons, this.groupFilter);
+        this.groupFilter = state.isVisible ? state.selectedGroup : "";
+        pickerContainer.hidden = !state.isVisible;
+        picker.replaceChildren();
+
+        if (state.isVisible) {
+            const allGroups = document.createElement("option");
+            allGroups.value = "";
+            allGroups.textContent = "All groups";
+            picker.appendChild(allGroups);
+            state.options.forEach((group) => {
+                const option = document.createElement("option");
+                option.value = group.value;
+                option.textContent = group.text;
+                picker.appendChild(option);
+            });
+            picker.value = this.groupFilter;
+        }
+
         this.syncToolbarScrollIndicators();
     }
 
@@ -1274,6 +1373,9 @@ class IconBrowser {
         for (const icon of this.icons) {
             const variantKeys = Object.keys(icon.variants || {});
             variantKeys.forEach((variant) => available.add(variant));
+            if (hasColorPreservingVariant(icon)) {
+                available.add("color");
+            }
         }
 
         return available;
@@ -1332,7 +1434,7 @@ class IconBrowser {
     }
 
     shouldPreserveSourceColors(variant, variantData) {
-        return variant === "color" || variantData?.preserveSourceColors === true;
+        return variantPreservesSourceColors(variant, variantData);
     }
 
     hasVariant(icon, variant) {
@@ -1520,7 +1622,7 @@ class IconBrowser {
             icon._searchNormalized = this.normalizeSearchText(rawText);
             icon._hasRegular = this.hasVariant(icon, "regular");
             icon._hasFilled = this.hasVariant(icon, "filled");
-            icon._hasColor = this.hasVariant(icon, "color");
+            icon._hasColor = hasColorPreservingVariant(icon);
             icon._previewCache = {};
             this.iconByName.set(icon.name, icon);
         });
@@ -1536,14 +1638,7 @@ class IconBrowser {
     }
 
     getPreviewVariantForMode(icon, styleMode = this.getActiveStyleMode()) {
-        let previewOrder = ["regular", "filled", "color"];
-        if (styleMode === "filled") {
-            previewOrder = ["filled", "regular", "color"];
-        } else if (styleMode === "color") {
-            previewOrder = ["color", "regular", "filled"];
-        }
-
-        return previewOrder.find((variant) => this.hasVariant(icon, variant)) || null;
+        return getPreviewVariantForStyleMode(icon, styleMode);
     }
 
     getCachedPreviewForMode(icon, styleMode = this.getActiveStyleMode()) {
@@ -1756,7 +1851,7 @@ class IconBrowser {
                 searchTerms.length === 0 ||
                 searchTerms.every((term) => rawIndex.includes(term) || normalizedIndex.includes(term));
 
-            return searchMatch;
+            return searchMatch && matchesIconGroup(icon, this.groupFilter);
         });
 
         this.renderIcons();
@@ -2749,15 +2844,21 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         getCollectionPickerOption,
+        getIconGroupFilterState,
+        getIconGroupOptions,
         getIconCacheUrls,
         getInitialIconCacheUrls,
         getIconAliases,
         getIconSearchParts,
         isThemeColorPaint,
+        matchesIconGroup,
+        hasColorPreservingVariant,
         previewThemeColorClass,
+        getPreviewVariantForStyleMode,
         resolveIconEntry,
         resolveIconSetEntry,
         sourceAllowsTransform,
         shouldDismissIconPanelFromPointerDown,
+        variantPreservesSourceColors,
     };
 }
