@@ -131,6 +131,54 @@ def _group_assets(assets: list[dict]) -> dict[str, dict]:
     return grouped
 
 
+def _group_product_assets(assets: list[dict]) -> dict[str, dict]:
+    known_names = {
+        (str(asset["category"]), str(asset["iconName"])) for asset in assets
+    }
+    grouped: dict[str, dict] = {}
+    for asset in assets:
+        category = str(asset["category"])
+        source_name = str(asset["iconName"])
+        family_name = source_name
+        style = "regular"
+        excluded_variant = False
+
+        if source_name.endswith("-fill-color"):
+            base_name = source_name[: -len("-fill-color")]
+            if (category, base_name) not in known_names:
+                raise ValueError(
+                    f"HashiCorp product fill-color variant has no base family: {source_name}"
+                )
+            family_name = base_name
+            excluded_variant = True
+        elif source_name.endswith("-color"):
+            base_name = source_name[: -len("-color")]
+            if (category, base_name) in known_names:
+                family_name = base_name
+            style = "color"
+        elif source_name.endswith("-fill"):
+            base_name = source_name[: -len("-fill")]
+            if (category, base_name) in known_names:
+                family_name = base_name
+            style = "filled"
+
+        family = grouped.setdefault(
+            family_name,
+            {
+                "category": category,
+                "members": {"regular": [], "filled": [], "color": []},
+                "aliases": [],
+            },
+        )
+        if family["category"] != category:
+            raise ValueError(f"Flight family spans categories: {family_name}")
+        if source_name != family_name:
+            family["aliases"].append(source_name)
+        if not excluded_variant:
+            family["members"][style].append(asset)
+    return grouped
+
+
 def _write_source_lock(
     package_dir: Path,
     output_path: Path,
@@ -140,6 +188,7 @@ def _write_source_lock(
     included_categories: set[str],
     excluded_categories: set[str],
     collection_name: str,
+    group_assets=_group_assets,
 ) -> dict:
     _validate_license(package_dir)
     package = json.loads((package_dir / "package.json").read_text(encoding="utf-8"))
@@ -149,7 +198,7 @@ def _write_source_lock(
     assets = _included_assets(
         package_dir, included_categories, excluded_categories, collection_name
     )
-    families = _group_assets(assets)
+    families = group_assets(assets)
     payload = {
         "source": source,
         "repositoryUrl": REPOSITORY_URL,
@@ -196,6 +245,7 @@ def write_product_source_lock(package_dir: Path, output_path: Path, commit: str)
         included_categories=PRODUCT_CATEGORIES,
         excluded_categories=PRODUCT_EXCLUDED_CATEGORIES,
         collection_name="HashiCorp Products",
+        group_assets=_group_product_assets,
     )
 
 
@@ -215,6 +265,8 @@ def _generate_icons(
     included_categories: set[str],
     excluded_categories: set[str],
     collection_name: str,
+    group_assets=_group_assets,
+    variant_styles: tuple[str, ...] = ("regular", "filled"),
 ) -> list[dict]:
     _validate_license(package_dir)
     lock = read_lock(source_lock_path, source, commit)
@@ -227,7 +279,7 @@ def _generate_icons(
     if actual_digest != lock["contentSha256"]:
         raise ValueError(f"{collection_name} source content does not match its source lock")
 
-    grouped = _group_assets(
+    grouped = group_assets(
         _included_assets(
             package_dir, included_categories, excluded_categories, collection_name
         )
@@ -237,7 +289,7 @@ def _generate_icons(
     for icon_name in sorted(grouped):
         family = grouped[icon_name]
         members = family["members"]
-        entries = members["regular"] + members["filled"]
+        entries = [entry for style in variant_styles for entry in members[style]]
         category = family["category"]
         description = next(
             (
@@ -248,7 +300,10 @@ def _generate_icons(
             "",
         )
         metaphors = []
-        aliases = []
+        aliases = [
+            source_name.replace("-", "_")
+            for source_name in family.get("aliases", [])
+        ]
         for entry in entries:
             entry_description = entry.get("description")
             if isinstance(entry_description, str):
@@ -264,7 +319,7 @@ def _generate_icons(
         metaphors.extend([category.lower(), icon_name.replace("-", " "), icon_name])
 
         variants: dict[str, dict] = {}
-        for style in ("regular", "filled"):
+        for style in variant_styles:
             style_entries = members[style]
             if not style_entries:
                 continue
@@ -320,4 +375,6 @@ def generate_product_icons(
         included_categories=PRODUCT_CATEGORIES,
         excluded_categories=PRODUCT_EXCLUDED_CATEGORIES,
         collection_name="HashiCorp Products",
+        group_assets=_group_product_assets,
+        variant_styles=("regular", "filled", "color"),
     )

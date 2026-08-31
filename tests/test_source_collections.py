@@ -204,11 +204,16 @@ class SourceCollectionTests(unittest.TestCase):
                 json.dumps(
                     {
                         "assets": [
+                            {"fileName": "terraform-16", "iconName": "terraform", "category": "Products", "size": "16", "description": "infrastructure"},
                             {"fileName": "terraform-24", "iconName": "terraform", "category": "Products", "size": "24", "description": "infrastructure"},
+                            {"fileName": "terraform-fill-16", "iconName": "terraform-fill", "category": "Products", "size": "16", "description": "infrastructure"},
+                            {"fileName": "terraform-fill-24", "iconName": "terraform-fill", "category": "Products", "size": "24", "description": "infrastructure"},
+                            {"fileName": "terraform-color-16", "iconName": "terraform-color", "category": "Products", "size": "16", "description": "infrastructure"},
+                            {"fileName": "terraform-color-24", "iconName": "terraform-color", "category": "Products", "size": "24", "description": "infrastructure"},
+                            {"fileName": "terraform-fill-color-16", "iconName": "terraform-fill-color", "category": "Products", "size": "16", "description": "infrastructure"},
+                            {"fileName": "terraform-fill-color-24", "iconName": "terraform-fill-color", "category": "Products", "size": "24", "description": "infrastructure"},
                             {"fileName": "vault-24", "iconName": "vault", "category": "Products", "size": "24", "description": "secrets"},
-                            {"fileName": "consul-24", "iconName": "consul", "category": "Products", "size": "24", "description": "service networking"},
-                            {"fileName": "packer-24", "iconName": "packer", "category": "Products", "size": "24", "description": "machine images"},
-                            {"fileName": "nomad-24", "iconName": "nomad", "category": "Products", "size": "24", "description": "orchestration"},
+                            {"fileName": "waypoint-color-24", "iconName": "waypoint-color", "category": "Products", "size": "24", "description": "unpaired colour"},
                             {"fileName": "cloud-24", "iconName": "cloud", "category": "Services", "size": "24"},
                             {"fileName": "arrow-24", "iconName": "arrow", "category": "Arrows", "size": "24"},
                         ]
@@ -216,8 +221,19 @@ class SourceCollectionTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            for name in ("terraform", "vault", "consul", "packer", "nomad"):
-                write_svg(package_dir / "svg-original" / f"{name}-24.svg")
+            for name in (
+                "terraform-16",
+                "terraform-24",
+                "terraform-fill-16",
+                "terraform-fill-24",
+                "terraform-color-16",
+                "terraform-color-24",
+                "terraform-fill-color-16",
+                "terraform-fill-color-24",
+                "vault-24",
+                "waypoint-color-24",
+            ):
+                write_svg(package_dir / "svg-original" / f"{name}.svg")
             lock_path = package_dir / "hashicorp-products-lock.json"
             commit = "b" * 40
             lock = flight_icons.write_product_source_lock(package_dir, lock_path, commit)
@@ -225,14 +241,34 @@ class SourceCollectionTests(unittest.TestCase):
 
             self.assertEqual(["Products"], lock["includedCategories"])
             self.assertIn("Services", lock["excludedCategories"])
-            self.assertEqual(5, lock["indexedAssetCount"])
+            self.assertEqual(10, lock["indexedAssetCount"])
+            self.assertEqual(3, lock["indexedFamilyCount"])
+            self.assertEqual(1, lock["groupedFillPairCount"])
             self.assertEqual(
-                ["consul", "nomad", "packer", "terraform", "vault"],
+                ["terraform", "vault", "waypoint_color"],
                 [icon["name"] for icon in icons],
             )
             self.assertEqual("Products", icons[0]["category"])
             self.assertIn(commit, icons[0]["variants"]["regular"]["previewUrl"])
+            terraform = icons[0]
+            self.assertEqual(["regular", "filled", "color"], list(terraform["variants"]))
+            self.assertEqual(
+                ["terraform_color", "terraform_fill", "terraform_fill_color"],
+                terraform["aliases"],
+            )
+            self.assertIn("terraform-fill-24.svg", terraform["variants"]["filled"]["previewUrl"])
+            self.assertIn("terraform-color-24.svg", terraform["variants"]["color"]["previewUrl"])
+            self.assertNotIn("terraform-fill-color-24.svg", json.dumps(terraform["variants"]))
+            waypoint = icons[-1]
+            self.assertEqual("waypoint_color", waypoint["name"])
+            self.assertEqual(["color"], list(waypoint["variants"]))
             self.assertNotIn("<svg", json.dumps(icons))
+
+            (package_dir / "svg-original" / "terraform-fill-color-24.svg").write_text(
+                '<svg viewBox="0 0 24 24"/>', encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "does not match"):
+                flight_icons.generate_product_icons(package_dir, commit, lock_path)
 
     def test_redhat_pairs_fill_variants_and_excludes_social(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

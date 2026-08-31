@@ -11,6 +11,7 @@
 - Added the canonical `hashicorp` collection from the official Flight package's `Products` category, independently locked from the generic `flight` collection.
 - Kept `flight` generic and unchanged: `Products` and `Services` remain excluded there. The new collection includes Terraform, Vault, Packer, Nomad, Consul, and the remaining approved HashiCorp product marks; `Services` remains excluded.
 - Both collections use the same commit-pinned owner-hosted SVG URLs and separate digest-bound locks. No upstream SVG payloads are committed.
+- Normalized each Products `<base>`, `<base>-fill`, and `<base>-color` source group into canonical `?set=hashicorp&icon=<base>` regular, filled, and color variants; retained `<base>-fill-color` only as a search alias rather than a fourth visible variant.
 
 ## 2026-08-31: Publish Federated Technology Icon Catalogue Provenance
 
