@@ -81,6 +81,20 @@ jobs:
           archive_sha="$(shasum -a 256 "$archive_path" | awk '{print $1}')"
           echo "archive_sha=$archive_sha" >> "$GITHUB_OUTPUT"
 
+      - name: Discover and fetch AWS Architecture Icons archive
+        id: aws_archive
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          archive_url="$(python aws_icons.py --discover-archive-url)"
+          archive_path=".tmp/aws-architecture-icons.zip"
+          curl --fail --location --silent --show-error \
+            --output "$archive_path" \
+            "$archive_url"
+          archive_sha="$(shasum -a 256 "$archive_path" | awk '{print $1}')"
+          echo "archive_url=$archive_url" >> "$GITHUB_OUTPUT"
+          echo "archive_sha=$archive_sha" >> "$GITHUB_OUTPUT"
+
       - name: Decide if rebuild is needed
         id: decision
         run: |
@@ -91,6 +105,8 @@ jobs:
           current_hashicorp_products="$(jq -r '.commit // empty' .upstream-hashicorp-products.json 2>/dev/null || true)"
           current_salesforce_version="$(jq -r '.packageVersion // empty' .upstream-salesforce-icons.json 2>/dev/null || true)"
           current_salesforce_archive="$(jq -r '.archiveSha256 // empty' .upstream-salesforce-icons.json 2>/dev/null || true)"
+          current_aws_archive_url="$(jq -r '.archiveUrl // empty' .upstream-aws-icons.json 2>/dev/null || true)"
+          current_aws_archive="$(jq -r '.archiveSha256 // empty' .upstream-aws-icons.json 2>/dev/null || true)"
           current_redhat="$(jq -r '.commit // empty' .upstream-redhat-icons.json 2>/dev/null || true)"
           current_azure_lock=".upstream-azure-portal.json"
           probed_azure_lock=".tmp/azure-portal-source.json"
@@ -100,12 +116,14 @@ jobs:
           upstream_redhat="${{ steps.upstream.outputs.redhat_sha }}"
           upstream_salesforce_version="${{ steps.upstream.outputs.salesforce_version }}"
           upstream_salesforce_archive="${{ steps.salesforce_archive.outputs.archive_sha }}"
+          upstream_aws_archive_url="${{ steps.aws_archive.outputs.archive_url }}"
+          upstream_aws_archive="${{ steps.aws_archive.outputs.archive_sha }}"
           force="${{ github.event.inputs.force_rebuild || 'false' }}"
           changed="false"
 
           if [ "$force" = "true" ]; then
             changed="true"
-          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || [ "$upstream_flight" != "$current_flight" ] || [ "$upstream_flight" != "$current_hashicorp_products" ] || [ "$upstream_redhat" != "$current_redhat" ] || [ "$upstream_salesforce_version" != "$current_salesforce_version" ] || [ "$upstream_salesforce_archive" != "$current_salesforce_archive" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
+          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || [ "$upstream_flight" != "$current_flight" ] || [ "$upstream_flight" != "$current_hashicorp_products" ] || [ "$upstream_redhat" != "$current_redhat" ] || [ "$upstream_salesforce_version" != "$current_salesforce_version" ] || [ "$upstream_salesforce_archive" != "$current_salesforce_archive" ] || [ "$upstream_aws_archive_url" != "$current_aws_archive_url" ] || [ "$upstream_aws_archive" != "$current_aws_archive" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
             changed="true"
           fi
 
@@ -120,6 +138,8 @@ jobs:
           echo "Upstream HashiCorp Products SHA: $upstream_flight"
           echo "Current Salesforce package: ${current_salesforce_version:-<none>} / ${current_salesforce_archive:-<none>}"
           echo "Upstream Salesforce package: $upstream_salesforce_version / $upstream_salesforce_archive"
+          echo "Current AWS archive: ${current_aws_archive_url:-<none>} / ${current_aws_archive:-<none>}"
+          echo "Upstream AWS archive: $upstream_aws_archive_url / $upstream_aws_archive"
           echo "Current Red Hat SHA: ${current_redhat:-<none>}"
           echo "Upstream Red Hat SHA: $upstream_redhat"
           echo "Azure Portal source changed: $(if cmp -s "$current_azure_lock" "$probed_azure_lock"; then echo false; else echo true; fi)"
@@ -181,6 +201,7 @@ jobs:
           hashicorp_products_candidate = Path('.tmp/hashicorp-products-source.candidate.json')
           redhat_candidate = Path('.tmp/redhat-icons-source.candidate.json')
           salesforce_candidate = Path('.tmp/salesforce-icons-source.candidate.json')
+          aws_candidate = Path('.tmp/aws-icons-source.candidate.json')
 
           flight_icons.write_source_lock(
               Path('.tmp/hashicorp-design-system/packages/flight-icons'),
@@ -201,6 +222,12 @@ jobs:
               Path('.tmp/salesforce-icons.tgz'),
               salesforce_candidate,
           )
+          import aws_icons
+          aws_icons.write_source_lock(
+              Path('.tmp/aws-architecture-icons.zip'),
+              aws_candidate,
+              '${{ steps.aws_archive.outputs.archive_url }}',
+          )
           validate_candidate_lock(
               flight_candidate,
               Path('.upstream-flight-icons.json'),
@@ -214,6 +241,10 @@ jobs:
               source=salesforce_icons.SOURCE,
               count_fields=('indexedAssetCount', 'indexedFamilyCount'),
               scope_fields=('includedCategories', 'excludedCategories'),
+          )
+          aws_icons.validate_candidate_lock(
+              aws_candidate,
+              Path('.upstream-aws-icons.json'),
           )
           validate_candidate_lock(
               hashicorp_products_candidate,
@@ -258,6 +289,8 @@ jobs:
             --hashicorp-products-source-lock .tmp/hashicorp-products-source.candidate.json \
             --salesforce-archive .tmp/salesforce-icons.tgz \
             --salesforce-source-lock .tmp/salesforce-icons-source.candidate.json \
+            --aws-archive .tmp/aws-architecture-icons.zip \
+            --aws-source-lock .tmp/aws-icons-source.candidate.json \
             --redhat-icons-dir .tmp/red-hat-icons \
             --redhat-source-lock .tmp/redhat-icons-source.candidate.json \
             --redhat-upstream-sha "${{ steps.upstream.outputs.redhat_sha }}"
@@ -265,6 +298,7 @@ jobs:
           cp .tmp/flight-icons-source.candidate.json .upstream-flight-icons.json
           cp .tmp/hashicorp-products-source.candidate.json .upstream-hashicorp-products.json
           cp .tmp/salesforce-icons-source.candidate.json .upstream-salesforce-icons.json
+          cp .tmp/aws-icons-source.candidate.json .upstream-aws-icons.json
           cp .tmp/redhat-icons-source.candidate.json .upstream-redhat-icons.json
           echo "${{ steps.upstream.outputs.fluent_sha }}" > .upstream-sha
           echo "${{ steps.upstream.outputs.fabric_sha }}" > .upstream-fabric-sha
@@ -276,7 +310,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json .upstream-flight-icons.json .upstream-hashicorp-products.json .upstream-salesforce-icons.json .upstream-redhat-icons.json
+          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json .upstream-flight-icons.json .upstream-hashicorp-products.json .upstream-salesforce-icons.json .upstream-aws-icons.json .upstream-redhat-icons.json
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
@@ -288,5 +322,6 @@ jobs:
           flight_short_sha="$(echo '${{ steps.upstream.outputs.flight_sha }}' | cut -c1-7)"
           redhat_short_sha="$(echo '${{ steps.upstream.outputs.redhat_sha }}' | cut -c1-7)"
           salesforce_version="${{ steps.upstream.outputs.salesforce_version }}"
-          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} hashicorp@${flight_short_sha} salesforce@${salesforce_version} flight@${flight_short_sha} redhat@${redhat_short_sha} azure-portal"
+          aws_short_sha="$(echo '${{ steps.aws_archive.outputs.archive_sha }}' | cut -c1-7)"
+          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} hashicorp@${flight_short_sha} salesforce@${salesforce_version} aws@${aws_short_sha} flight@${flight_short_sha} redhat@${redhat_short_sha} azure-portal"
           git push

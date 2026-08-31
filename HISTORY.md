@@ -1,11 +1,15 @@
 # History
 
+## 2026-08-31: Publish AWS Architecture Icons Collection
+
+- Published canonical `aws` from the official AWS Architecture Icons ZIP for technical documentation and architecture diagrams, with 859 current families across 45 generated source categories.
+- Documented archive and per-entry SHA-256 verification, client-side ZIP extraction/sanitization, no committed upstream SVG payloads, existing group-selector integration, and no source-transforming outputs; Google Cloud remains unindexed because its current owner archives lack browser CORS access and no qualifying mirror exists.
+
 ## 2026-08-31: Document Group Filtering and Cloud Source Boundaries
 
 - Accepted the browser contract for source-taxonomy groups: collections with more than one source-supplied `icon.category` show a Keel-native group selector that combines with search and style filtering and resets on collection switch. No group parameter was added to stable `?set=<key>&icon=<name>` links; collections without a multi-category taxonomy do not show it.
 - Accepted Azure capability-based colour filtering: any regular, filled, or color variant with descriptor `preserveSourceColors` is colour-capable. The current generated observation is 1,216 colour-capable families out of 1,374; upstream variant keys and public deep links are unchanged, and the counts are not permanent contract values.
-- Kept AWS as a candidate/blocker because the current official architecture ZIP is CORS-readable and SVG-only but its visible terms do not establish public indexing, runtime retrieval, or copy/download rights; the browser supports npm tgz entry extraction, not ZIP extraction.
-- Kept Google Cloud as a blocked candidate because its official category/core ZIPs are not CORS-readable, expose no per-icon SVG path, and its licence/brand terms are insufficient for this public runtime and copy/download contract. Neither candidate is published.
+- Kept Google Cloud unindexed because its current owner category/core ZIPs have no ACAO and preflight 405; no qualifying Google-owned CORS mirror was found, and build-time indexing alone cannot make browser extraction work.
 
 ## 2026-08-31: Include Salesforce Utility Artwork
 

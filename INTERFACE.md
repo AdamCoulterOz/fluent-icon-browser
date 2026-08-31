@@ -8,7 +8,7 @@
 
 - Site: `https://adamcoulteroz.github.io/fluent-icon-browser/`
 - Stable selection URL: `?set=<key>&icon=<name>`
-- Canonical set keys: `fluent`, `segoe`, `azure`, `flight`, `hashicorp`, `salesforce`, and `redhat`.
+- Canonical set keys: `fluent`, `segoe`, `azure`, `flight`, `hashicorp`, `salesforce`, `aws`, and `redhat`.
 - `fabric` is a compatibility alias for `segoe` while no canonical `fabric` set exists. A future key collision requires an explicit compatibility decision.
 - The generated `sets` map supplies each collection's `label`, `shortLabel`, source context, `sources[]` provenance, and icon families. The browser renders collection selection from that map.
 - When a collection has more than one source-supplied `icon.category`, the browser shows a Keel-native group selector. It combines with search and style filtering and resets when the collection changes. No group parameter is added to the stable `?set=<key>&icon=<name>` URL; collections without a multi-category source taxonomy do not show the selector.
@@ -23,6 +23,7 @@ The `icon` parameter identifies a visible canonical family. A known folded/non-c
 - Flight, HashiCorp Products, and Red Hat sources are commit-pinned and digest-bound by source locks. Flight is limited to generic concepts, excluding `Products` and `Services`, and its grouping behavior is unchanged. The separate `hashicorp` set contains only official `Products` marks, including Terraform, Vault, Packer, Nomad, and Consul; `Services` remains excluded. Canonical `?set=hashicorp&icon=<base>` links combine upstream `<base>`, `<base>-fill`, and `<base>-color` SVGs as regular, filled, and color variants. `<base>-fill-color` is retained only as a searchable alias, never a fourth visible variant. Red Hat is limited to `standard`, `ui`, and `microns`, excluding `social`.
 - Azure is limited to the deterministic default public Portal core and extension-manifest surface. Its source SVGs are resolved lazily from public sources; the repository and Pages artifact contain no Azure SVG payloads. Colour filtering is capability-based: any regular, filled, or color variant whose descriptor has `preserveSourceColors` is colour-capable. The current generated observation is 1,216 colour-capable families out of 1,374; counts are not permanent contracts, and upstream variant keys and public deep links remain unchanged.
 - Salesforce SLDS covers the approved `standard`, `action`, `doctype`, `custom`, and `utility` archive paths; these five genuine individual-SVG families total 1,780. The five `*-sprite` SVG/RTL sprite sheets remain excluded as generated support artifacts, and `Product` is not a sixth `@salesforce-ux/icons` category. The client verifies the official registry archive and selected entry SHA-256 values before extraction and sanitization; its CC BY-ND source capability disables `currentColor` and bounding-box output transforms.
+- AWS Architecture Icons is published as canonical set `aws` for technical documentation and architecture diagrams. The current generated observation is 859 families across 45 source categories. The official AWS Architecture Icons ZIP is the source boundary; the archive and each selected entry are SHA-256 verified before client-side ZIP extraction and SVG sanitization. Only source descriptors and generated metadata are committed, with no upstream SVG payload or rehosting. Its generated source categories use the existing group selector, and no source-transforming outputs are exposed.
 
 ## Invariants
 
@@ -33,7 +34,7 @@ The `icon` parameter identifies a visible canonical family. A known folded/non-c
 - The Segoe set is the union of ordinary and branded MDL2 components, and branded icons retain the searchable `branded` tag.
 - Azure's 105 legacy local Documents SVGs remain unimported and unpublished.
 - Collection counts are generated-state observations, not permanent interface contracts.
-- AWS Architecture Icons and Google Cloud remain unpublished candidates; their current source and terms blockers are recorded in [SOURCES.md](SOURCES.md).
+- Google Cloud remains unindexed because its current owner category/core ZIPs are not browser-accessible: the current 2025 `services.google.com` assets have no ACAO and preflight 405, with no qualifying Google-owned CORS mirror found. Build-time indexing alone cannot make browser extraction work; no proxy or rehosting is implemented. AWS is published as the bounded `aws` source described in [SOURCES.md](SOURCES.md).
 
 ## Lifecycle and Side Effects
 

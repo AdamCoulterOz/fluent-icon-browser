@@ -819,6 +819,8 @@ def generate_icon_data(
     hashicorp_products_source_lock_path: Optional[Path] = None,
     salesforce_archive_path: Optional[Path] = None,
     salesforce_source_lock_path: Optional[Path] = None,
+    aws_archive_path: Optional[Path] = None,
+    aws_source_lock_path: Optional[Path] = None,
     redhat_icons_dir: Optional[Path] = None,
     redhat_source_lock_path: Optional[Path] = None,
     redhat_upstream_sha: str = "",
@@ -1044,6 +1046,40 @@ def generate_icon_data(
                 ),
             )
         )
+    if aws_archive_path is not None or aws_source_lock_path is not None:
+        if aws_archive_path is None or aws_source_lock_path is None:
+            raise ValueError("AWS icons require archive and source lock")
+        from aws_icons import ARCHITECTURE_ICONS_PAGE_URL
+        from aws_icons import SOURCE as AWS_SOURCE
+        from aws_icons import TERMS_URL as AWS_TERMS_URL
+        from aws_icons import generate_icons as generate_aws_icons
+        from aws_icons import read_source_lock as read_aws_source_lock
+
+        aws_lock = read_aws_source_lock(aws_source_lock_path)
+        descriptors.append(
+            CollectionDescriptor(
+                key="aws",
+                label="AWS Architecture Icons",
+                short_label="AWS",
+                source="AWS Architecture Icons official archive",
+                sources=(
+                    source_record(
+                        label="AWS Architecture Icons",
+                        reference=AWS_SOURCE,
+                        url=ARCHITECTURE_ICONS_PAGE_URL,
+                        revision=aws_lock["release"],
+                        license_name="AWS Site Terms",
+                        license_url=AWS_TERMS_URL,
+                        digest=aws_lock["archiveSha256"],
+                    ),
+                ),
+                upstream_sha=aws_lock["archiveSha256"],
+                cdn_base=aws_lock["archiveUrl"],
+                build_icons=lambda: generate_aws_icons(
+                    aws_archive_path, aws_source_lock_path
+                ),
+            )
+        )
     if redhat_icons_dir is not None or redhat_source_lock_path is not None:
         if redhat_icons_dir is None or redhat_source_lock_path is None or not redhat_upstream_sha:
             raise ValueError("Red Hat icons require directory, source lock, and upstream SHA")
@@ -1086,6 +1122,7 @@ def generate_icon_data(
     flight_icons = collections.get("flight", {}).get("icons", [])
     hashicorp_products = collections.get("hashicorp", {}).get("icons", [])
     salesforce_icons = collections.get("salesforce", {}).get("icons", [])
+    aws_icons = collections.get("aws", {}).get("icons", [])
     redhat_icons = collections.get("redhat", {}).get("icons", [])
 
     payload = {
@@ -1107,6 +1144,7 @@ def generate_icon_data(
         f"+ {len(flight_icons)} HashiCorp Flight icons "
         f"+ {len(hashicorp_products)} HashiCorp product icons "
         f"+ {len(salesforce_icons)} Salesforce SLDS icons "
+        f"+ {len(aws_icons)} AWS Architecture icons "
         f"+ {len(redhat_icons)} Red Hat icons "
         f"-> {output_file}"
     )
@@ -1151,6 +1189,16 @@ def parse_args() -> argparse.Namespace:
         "--salesforce-source-lock",
         default="",
         help="Digest-bound Salesforce package archive source lock",
+    )
+    parser.add_argument(
+        "--aws-archive",
+        default="",
+        help="Official AWS Architecture Icons ZIP archive",
+    )
+    parser.add_argument(
+        "--aws-source-lock",
+        default="",
+        help="Digest-bound AWS Architecture Icons archive source lock",
     )
     parser.add_argument(
         "--redhat-icons-dir",
@@ -1289,6 +1337,10 @@ def main() -> None:
         else None,
         salesforce_source_lock_path=Path(args.salesforce_source_lock)
         if args.salesforce_source_lock
+        else None,
+        aws_archive_path=Path(args.aws_archive) if args.aws_archive else None,
+        aws_source_lock_path=Path(args.aws_source_lock)
+        if args.aws_source_lock
         else None,
         redhat_icons_dir=Path(args.redhat_icons_dir) if args.redhat_icons_dir else None,
         redhat_source_lock_path=Path(args.redhat_source_lock)

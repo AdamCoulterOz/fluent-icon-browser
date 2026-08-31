@@ -1,6 +1,8 @@
 const assert = require("node:assert/strict");
 const crypto = require("node:crypto").webcrypto;
-const { gzipSync } = require("node:zlib");
+const { deflateRawSync, gzipSync } = require("node:zlib");
+
+const ZIP_ENTRY_LIMIT = 10000;
 
 const {
     RemoteIconSourceResolver,
@@ -34,6 +36,74 @@ function tarArchive(entries) {
     }
     chunks.push(Buffer.alloc(1024));
     return Buffer.concat(chunks);
+}
+
+function crc32(bytes) {
+    let crc = 0xffffffff;
+    for (const value of bytes) {
+        crc ^= value;
+        for (let bit = 0; bit < 8; bit += 1) {
+            crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+        }
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+}
+
+function zipArchive(entries) {
+    const localRecords = [];
+    const centralRecords = [];
+    let localOffset = 0;
+
+    for (const { name, content, compression = 0, flags = 0, includeDataDescriptor = Boolean(flags & 8) } of entries) {
+        const nameBytes = Buffer.from(name, "utf8");
+        const sourceBytes = Buffer.from(content);
+        const compressedBytes = compression === 8 ? deflateRawSync(sourceBytes) : sourceBytes;
+        const checksum = crc32(sourceBytes);
+        const dataDescriptor = includeDataDescriptor ? Buffer.alloc(16) : Buffer.alloc(0);
+        if (includeDataDescriptor) {
+            dataDescriptor.writeUInt32LE(0x08074b50, 0);
+            dataDescriptor.writeUInt32LE(checksum, 4);
+            dataDescriptor.writeUInt32LE(compressedBytes.length, 8);
+            dataDescriptor.writeUInt32LE(sourceBytes.length, 12);
+        }
+        const local = Buffer.alloc(30);
+        local.writeUInt32LE(0x04034b50, 0);
+        local.writeUInt16LE(20, 4);
+        local.writeUInt16LE(flags, 6);
+        local.writeUInt16LE(compression, 8);
+        local.writeUInt32LE(includeDataDescriptor ? 0 : checksum, 14);
+        local.writeUInt32LE(includeDataDescriptor ? 0 : compressedBytes.length, 18);
+        local.writeUInt32LE(includeDataDescriptor ? 0 : sourceBytes.length, 22);
+        local.writeUInt16LE(nameBytes.length, 26);
+        local.writeUInt16LE(0, 28);
+        localRecords.push(local, nameBytes, compressedBytes, dataDescriptor);
+
+        const central = Buffer.alloc(46);
+        central.writeUInt32LE(0x02014b50, 0);
+        central.writeUInt16LE(20, 4);
+        central.writeUInt16LE(20, 6);
+        central.writeUInt16LE(flags, 8);
+        central.writeUInt16LE(compression, 10);
+        central.writeUInt32LE(checksum, 16);
+        central.writeUInt32LE(compressedBytes.length, 20);
+        central.writeUInt32LE(sourceBytes.length, 24);
+        central.writeUInt16LE(nameBytes.length, 28);
+        central.writeUInt16LE(0, 30);
+        central.writeUInt16LE(0, 32);
+        central.writeUInt16LE(0, 34);
+        central.writeUInt32LE(localOffset, 42);
+        centralRecords.push(central, nameBytes);
+        localOffset += local.length + nameBytes.length + compressedBytes.length + dataDescriptor.length;
+    }
+
+    const centralDirectory = Buffer.concat(centralRecords);
+    const end = Buffer.alloc(22);
+    end.writeUInt32LE(0x06054b50, 0);
+    end.writeUInt16LE(entries.length, 8);
+    end.writeUInt16LE(entries.length, 10);
+    end.writeUInt32LE(centralDirectory.length, 12);
+    end.writeUInt32LE(localOffset, 16);
+    return Buffer.concat([...localRecords, centralDirectory, end]);
 }
 
 function createFakeSvgElement(localName, attributes = {}) {
@@ -280,6 +350,169 @@ async function run() {
     await assert.rejects(
         () => badArchiveResolver.resolve({ ...archiveDescriptor, archiveSha256: "0".repeat(64) }),
         /SHA-256 does not match/i
+    );
+
+    const storedZipSvg = '<svg viewBox="0 0 16 16"><path fill="#0078d4"/></svg>';
+    const deflatedZipSvg = '<svg viewBox="0 0 24 24"><path fill="#00a4ef"/></svg>';
+    const storedZipEntry = "icons/stored.svg";
+    const deflatedZipEntry = "icons/deflated.svg";
+    const zipBytes = zipArchive([
+        { name: storedZipEntry, content: storedZipSvg },
+        { name: deflatedZipEntry, content: deflatedZipSvg, compression: 8, flags: 8 },
+    ]);
+    const zipArchiveSha256 = await sha256HexBytes(zipBytes);
+    const storedZipDescriptor = {
+        url: "https://registry.example.test/icons.zip",
+        format: "zip-svg-entry",
+        entry: storedZipEntry,
+        archiveSha256: zipArchiveSha256,
+        entrySha256: await sha256Hex(storedZipSvg),
+    };
+    const deflatedZipDescriptor = {
+        ...storedZipDescriptor,
+        entry: deflatedZipEntry,
+        entrySha256: await sha256Hex(deflatedZipSvg),
+    };
+    let zipFetchCount = 0;
+    const zipResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => {
+            zipFetchCount += 1;
+            return {
+                ok: true,
+                status: 200,
+                headers: { get: () => "application/zip" },
+                arrayBuffer: async () => zipBytes.buffer.slice(zipBytes.byteOffset, zipBytes.byteOffset + zipBytes.byteLength),
+            };
+        },
+    });
+    assert.equal(await zipResolver.resolve(storedZipDescriptor), storedZipSvg);
+    assert.equal(await zipResolver.resolve(deflatedZipDescriptor), deflatedZipSvg);
+    assert.equal(await zipResolver.resolve(deflatedZipDescriptor), deflatedZipSvg);
+    assert.equal(zipFetchCount, 1);
+    await assert.rejects(
+        () => zipResolver.resolve({ ...storedZipDescriptor, entrySha256: "0".repeat(64) }),
+        /SHA-256 does not match/i
+    );
+    await assert.rejects(
+        () => zipResolver.resolve({ ...storedZipDescriptor, entry: "../unsafe.svg" }),
+        /safe entry path/i
+    );
+    const unsafeZipBytes = zipArchive([
+        { name: storedZipEntry, content: storedZipSvg },
+        { name: "../escaped.svg", content: storedZipSvg },
+    ]);
+    const unsafeArchiveResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => ({
+            ok: true,
+            status: 200,
+            headers: { get: () => "application/zip" },
+            arrayBuffer: async () => unsafeZipBytes.buffer.slice(unsafeZipBytes.byteOffset, unsafeZipBytes.byteOffset + unsafeZipBytes.byteLength),
+        }),
+    });
+    const unsafeArchiveDescriptor = {
+        ...storedZipDescriptor,
+        url: "https://registry.example.test/unsafe.zip",
+        archiveSha256: await sha256HexBytes(unsafeZipBytes),
+    };
+    await assert.rejects(
+        () => unsafeArchiveResolver.resolve(unsafeArchiveDescriptor),
+        /unsafe entry path/i
+    );
+    await assert.rejects(
+        () => zipResolver.resolve({ ...storedZipDescriptor, archiveSha256: "not-a-digest" }),
+        /hexadecimal SHA-256/i
+    );
+
+    async function rejectsZipMetadata(entry, pattern) {
+        const bytes = zipArchive([entry]);
+        const resolver = new RemoteIconSourceResolver({
+            crypto,
+            sanitize: (svg) => svg,
+            fetch: async () => ({
+                ok: true,
+                status: 200,
+                headers: { get: () => "application/zip" },
+                arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
+            }),
+        });
+        const descriptor = {
+            ...storedZipDescriptor,
+            url: `https://registry.example.test/${entry.name}.zip`,
+            entry: entry.name,
+            archiveSha256: await sha256HexBytes(bytes),
+            entrySha256: await sha256Hex(entry.content),
+        };
+        await assert.rejects(
+            () => resolver.resolve(descriptor),
+            pattern
+        );
+    }
+
+    await rejectsZipMetadata(
+        { name: "icons/encrypted.svg", content: storedZipSvg, flags: 1 },
+        /encrypted.*unsupported compression metadata/i
+    );
+    await rejectsZipMetadata(
+        { name: "icons/data-descriptor.svg", content: storedZipSvg, flags: 8, includeDataDescriptor: false },
+        /data-descriptor/i
+    );
+    await rejectsZipMetadata(
+        { name: "icons/unsupported.svg", content: storedZipSvg, compression: 12 },
+        /unsupported compression/i
+    );
+
+    function zipEntriesAtLimit(count) {
+        return Array.from({ length: count }, (_, index) => ({
+            name: `icons/boundary-${String(index).padStart(5, "0")}.svg`,
+            content: index === count - 1 ? "<svg/>" : "",
+        }));
+    }
+
+    const boundaryEntries = zipEntriesAtLimit(ZIP_ENTRY_LIMIT);
+    const boundaryZipBytes = zipArchive(boundaryEntries);
+    const boundaryDescriptor = {
+        ...storedZipDescriptor,
+        url: "https://registry.example.test/zip-entry-limit.zip",
+        entry: boundaryEntries.at(-1).name,
+        archiveSha256: await sha256HexBytes(boundaryZipBytes),
+        entrySha256: await sha256Hex("<svg/>"),
+    };
+    const boundaryResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => ({
+            ok: true,
+            status: 200,
+            headers: { get: () => "application/zip" },
+            arrayBuffer: async () => boundaryZipBytes.buffer.slice(boundaryZipBytes.byteOffset, boundaryZipBytes.byteOffset + boundaryZipBytes.byteLength),
+        }),
+    });
+    assert.equal(await boundaryResolver.resolve(boundaryDescriptor), "<svg/>");
+
+    const overLimitEntries = zipEntriesAtLimit(ZIP_ENTRY_LIMIT + 1);
+    const overLimitZipBytes = zipArchive(overLimitEntries);
+    const overLimitResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => ({
+            ok: true,
+            status: 200,
+            headers: { get: () => "application/zip" },
+            arrayBuffer: async () => overLimitZipBytes.buffer.slice(overLimitZipBytes.byteOffset, overLimitZipBytes.byteOffset + overLimitZipBytes.byteLength),
+        }),
+    });
+    const overLimitDescriptor = {
+        ...boundaryDescriptor,
+        url: "https://registry.example.test/zip-entry-limit-overflow.zip",
+        archiveSha256: await sha256HexBytes(overLimitZipBytes),
+    };
+    await assert.rejects(
+        () => overLimitResolver.resolve(overLimitDescriptor),
+        /central directory dimensions are unsupported/i
     );
 
     let fetchCount = 0;
