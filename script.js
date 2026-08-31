@@ -11,6 +11,22 @@ function getCollectionPickerOption(set, key) {
     };
 }
 
+function shouldDismissIconPanelFromPointerDown({
+    isPanelOpen,
+    target,
+    panel,
+    panelSizeMenu,
+}) {
+    return Boolean(
+        isPanelOpen &&
+        target &&
+        !panel?.contains(target) &&
+        !panelSizeMenu?.contains(target) &&
+        !target.closest(".icon-card") &&
+        !target.closest(".app-update-banner")
+    );
+}
+
 function readIncludeBoundsPreference() {
     try {
         return sessionStorage.getItem(INCLUDE_BOUNDS_SESSION_KEY) === "true";
@@ -369,13 +385,12 @@ class IconBrowser {
                 this.closePanelMetaDetails();
             }
 
-            if (
-                this.isIconPanelOpen() &&
-                target &&
-                !panel?.contains(target) &&
-                !panelSizeMenu?.contains(target) &&
-                !target.closest(".icon-card")
-            ) {
+            if (shouldDismissIconPanelFromPointerDown({
+                isPanelOpen: this.isIconPanelOpen(),
+                target,
+                panel,
+                panelSizeMenu,
+            })) {
                 this.closeIconPanel();
             }
         });
@@ -2604,5 +2619,8 @@ if (typeof document !== "undefined") {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { getCollectionPickerOption };
+    module.exports = {
+        getCollectionPickerOption,
+        shouldDismissIconPanelFromPointerDown,
+    };
 }
