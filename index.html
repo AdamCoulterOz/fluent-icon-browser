@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap">
     <link rel="stylesheet" href="keel.css?v=33">
-    <link rel="stylesheet" href="style.css?v=33">
+    <link rel="stylesheet" href="style.css?v=34">
     <script>
         if ("serviceWorker" in navigator) {
             const appVersionKey = "fluent-icons-app-version";
@@ -176,7 +176,10 @@
                 </div>
                 <div class="toolbar-scroll-region toolbar-scroll-region--top">
                 <div class="top-controls">
-                    <div class="segmented-control icon-set-tabs" id="iconSetTabs" role="tablist" aria-label="Icon set selection"></div>
+                    <div class="icon-set-picker">
+                        <label class="sr-only" for="iconSetSelect">Icon collection</label>
+                        <select id="iconSetSelect" aria-describedby="setSubtitle"></select>
+                    </div>
                     <div class="segmented-control style-filter" role="tablist" aria-label="Style filter">
                         <button type="button" class="segment-btn style-mode-button icon-mode-button" id="filterModeRegular" data-style-mode="regular" aria-selected="false" aria-label="Regular" title="Regular">
                             <span class="style-mode-icon regular-icon" aria-hidden="true"></span>
@@ -198,6 +201,8 @@
                 </div>
             </div>
         </header>
+
+        <div class="set-subtitle" id="setSubtitle" aria-live="polite"></div>
 
         <aside class="app-update-banner" id="appUpdateBanner" role="status" aria-live="polite" hidden>
             <strong class="app-update-title">Update available</strong>
@@ -347,6 +352,6 @@
     <div id="panelSizeMenu" class="panel-size-menu" role="listbox" aria-label="Icon size" hidden></div>
 
     <script src="remote-icon-source.js?v=3"></script>
-    <script src="script.js?v=15"></script>
+    <script src="script.js?v=16"></script>
 </body>
 </html>

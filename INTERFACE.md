@@ -2,89 +2,49 @@
 
 ## Purpose
 
-`fluent-icon-browser` is a static browser for Fluent System, Segoe, and Azure icons. It owns the generated icon index and public GitHub Pages browsing surface, while not owning upstream sources.
+`fluent-icon-browser` is a static, source-attributed icon catalogue published through GitHub Pages. It owns the browser experience and committed generated index, not upstream icon repositories, licences, or availability.
 
-## Responsibilities
+## Public Surface
 
-- Own the static icon browser UI and committed `icon-data.json` index.
-- Publish the browser through GitHub Pages.
-- Provide stable URL deep links for externally documented icon references.
-- Do not own upstream Fluent, Segoe/MDL2, or Azure Portal source repositories or services.
-- Do not expose generated internal normalization details as a cross-repository contract except where documented here.
+- Site: `https://adamcoulteroz.github.io/fluent-icon-browser/`
+- Stable selection URL: `?set=<key>&icon=<name>`
+- Canonical set keys: `fluent`, `segoe`, `azure`, `flight`, and `redhat`.
+- `fabric` is a compatibility alias for `segoe` while no canonical `fabric` set exists. A future key collision requires an explicit compatibility decision.
+- The generated `sets` map supplies each collection's `label`, `shortLabel`, source context, `sources[]` provenance, and icon families. The browser renders collection selection from that map.
 
-## Domain Model
+The `icon` parameter identifies a visible canonical family. A folded/non-canonical icon name may fall back to a relevant family search. Selecting an icon updates the URL with `replaceState` so the current view remains shareable.
 
-- Icon set: a named icon collection from the generated `sets` map. Each set has a full `label` and compact `shortLabel`; published keys are `fluent`, `segoe`, and `azure`. `fabric` is a compatibility alias to `segoe` only while no direct `fabric` set exists.
-- Icon: a searchable, selectable icon family with display metadata and available visual variants.
-- Variant: a renderable regular, filled, or color representation when present.
-- Branded MDL2 icon: an icon sourced from the upstream branded component package and tagged `branded` within the Segoe set.
-- Azure remote asset: a variant represented by `remoteSource` with `url`, `format`, `selector`, and `sha256`, resolved from a public Microsoft source at use time.
-- Deep link: a URL query identifying an icon set and icon name.
+## Provenance Semantics
 
-## Public Interfaces
-
-- Site URL: `https://adamcoulteroz.github.io/fluent-icon-browser/`
-- Parent project index: `https://adamcoulteroz.github.io/`
-- Crawler policy and sitemap: `robots.txt` and `sitemap.xml` at the site URL.
-- Deep-link query:
-  - `set`: canonical icon set key, currently `fluent`, `segoe`, or `azure`. The `fabric` compatibility alias resolves to `segoe` only when no direct `fabric` set exists.
-  - `icon`: icon name from the active generated index.
-- `?set=<key>&icon=<name>` should switch to the requested set, filter to the requested icon, and open the icon details panel when the icon is a visible canonical card.
-- When `icon` names a folded or normalized variant that is not a visible card, the browser should fall back to search so the link still lands on the relevant canonical family.
-- Selecting an icon updates the browser URL with `replaceState` so the current icon view is copy-shareable.
+- A collection's `sources[]` entries expose attribution/provenance: label, reference, URL, pinned revision, and when supplied, licence name, licence URL, and content digest.
+- The browser presents those source and licence URLs as visible external links.
+- Published source boundaries and candidate status live in [SOURCES.md](SOURCES.md). Source metadata is attribution and provenance information, not a warranty of upstream availability or a legal-rights conclusion.
+- Flight and Red Hat sources are commit-pinned and digest-bound by source locks. Flight is limited to generic concepts, excluding `Products` and `Services`; matched `-fill` entries are variants. Red Hat is limited to `standard`, `ui`, and `microns`, excluding `social`.
+- Azure is limited to the deterministic default public Portal core and extension-manifest surface. Its source SVGs are resolved lazily from public sources; the repository and Pages artifact contain no Azure SVG payloads.
 
 ## Invariants
 
-- The browser remains static-first and must not require a frontend bundler or server runtime.
-- `icon-data.json` remains committed and directly consumable by the static page.
-- Deep-link URLs must remain implementation-independent: external consumers may rely on query parameters, not internal JavaScript function names or DOM structure.
-- Upstream icon source URLs and Azure remote descriptors remain attributable and digest-bound in the generated index; upstream source ownership remains external.
-- The `segoe` set is the union of ordinary and branded MDL2 component sources; branded icons must remain searchable by the `branded` tag.
-- A future canonical `fabric` set would take precedence over the legacy alias. Introducing that collision requires an explicit compatibility decision for existing `fabric` deep links.
-- Azure currently indexes 1,374 generated families from 342 public core families and 1,032 default public extension-manifest families, with 1,400 unique SVG descriptors. These counts describe current generated state, not a permanent cardinality contract.
-- Azure discovery is bounded to the deterministic default public surface exposed by portal bootstrap, current RequireConfig/dependency data, and default extension-manifest hashes. Schema drift or count collapse must fail synchronization. Authenticated or flight-specific inner blades are not part of that default scope; the identified future exception is an embedded-Entra App registrations adapter, which remains blocked on a public revisioned blade-to-asset mapping and must not require login or arbitrary Dynamic-asset crawling.
-- Azure formats `portal-amd-svg-module` and `portal-json-pointer-svg` are private adapters. The browser fetches public CORS sources lazily, extracts without eval, verifies the digest, sanitizes, and renders the resolved SVG inline for preview/copy/download. Private adapter semantics may normalize source palette references only after verification and sanitization to preserve authored colours; their representation is not a downstream contract.
-- Azure artwork with intrinsic chromatic, multi-paint, gradient, or pattern styling must retain its authored colours in gallery and detail previews. This rendering property is independent of the upstream regular, filled, or color variant taxonomy.
-- The repository and Pages artifact retain no Azure SVG payload. The 105 legacy Documents SVGs remain unimported and unpublished and are not the Azure source. Future coherent adapters for Fabric, Azure DevOps, Power Platform, Entra, Microsoft 365, and Dynamics 365 are direction only, not implemented contract.
+- The browser remains static-first: no frontend bundler, server runtime, or server-side icon API is required.
+- `icon-data.json` remains committed and directly consumed by the static page.
+- Deep-link query parameters are the public contract; DOM shape, internal adapters, normalizers, and workflow implementation are not.
+- The Segoe set is the union of ordinary and branded MDL2 components, and branded icons retain the searchable `branded` tag.
+- Azure's 105 legacy local Documents SVGs remain unimported and unpublished.
+- Collection counts are generated-state observations, not permanent interface contracts.
 
-## Side Effects
+## Lifecycle and Side Effects
 
-- Browser runtime fetches `icon-data.json` from the same static site.
-- Browser runtime fetches commit-pinned Fluent SVGs and public Azure source documents cross-origin; Azure resolution is lazy and client/service-worker caching does not rehost assets in the repository.
-- Selecting icons mutates the current browser URL with `history.replaceState`.
-- Copy and download actions interact with the browser clipboard and local download behavior. The preview toolbar exposes `currentColor` and bounds transformations that apply identically to both outputs. Bounds are off by default and retained for the browser-tab session; when enabled, output SVG markup groups its drawable artwork with a zero-opacity path matching the source `viewBox` to preserve document bounds and grouping in native-curve imports.
-- The bounds preference is stored in browser `sessionStorage` and expires when the browser-tab session ends.
-- GitHub workflows may commit generated index updates and deploy the static site to GitHub Pages.
-
-## Dependency Boundaries
-
-- Upstream dependencies: `microsoft/fluentui-system-icons`, plus the `react-icons-mdl2` and `react-icons-mdl2-branded` packages in `microsoft/fluentui`.
-- Downstream consumers: external docs and tools may link to the public site and documented deep-link query contract.
-- Trusted contracts: committed static files, generated icon index shape used by this UI, and documented URL query parameters.
-- Internal-only concerns: search-index preparation, DOM structure, card maps, normalization implementation details, workflow implementation details.
-- Prohibited couplings: downstream consumers should not depend on private JS methods, specific DOM class names, or generated non-canonical variant internals.
-
-## Lifecycle / Execution Model
-
-- The static page loads in the browser, fetches `icon-data.json`, renders the default set, then resolves any deep-link query.
-- The icon details panel updates in place when another icon is selected. It closes when the selected card is toggled, the user presses `Esc`, clicks outside the panel without selecting another icon, or swipes the panel downward on a touch screen. A touch dismissal tracks the finger and owns the active gesture so the underlying gallery does not scroll; an incomplete swipe settles the panel back into place.
-- Without JavaScript, the static page renders catalogue scope, source information, and parent/source links; it does not render or search the icon index.
-- Weekly sync regenerates icon data when upstream SHAs or the Azure source lock change; temporary Portal JS/JSON downloads are parsed without eval, then discarded except for index and small lock metadata.
-- Pages deployment runs after pushes, after successful sync workflow runs, and on a daily repair schedule.
-- The browser is single-user client-side state. The bounds preference persists only in browser `sessionStorage`; selected icon state remains represented by the current URL, and copy/download effects remain browser-mediated.
+- The static page loads the committed index, renders the default set, then resolves an optional deep link.
+- Runtime fetches commit-pinned source SVGs as needed. Browser and service-worker caching is local browser state and does not rehost upstream assets in the repository.
+- Copy/download uses browser clipboard/download facilities. The optional output transforms apply to both actions; the bounding-box preference lasts only for the browser-tab session.
+- Sync may regenerate and commit the index/source metadata; Pages deploys the committed static site after pushes, successful sync, and scheduled repair runs.
 
 ## Anti-Goals
 
-- No server-side icon API.
-- No package distribution contract for consumers.
-- No guarantee that undocumented icon metadata fields or normalization details remain stable.
-- No ownership of upstream icon naming, availability, or asset semantics.
-- No import, publication, or implied approval of the 105 legacy Azure Documents SVG assets; they are separate from the public Azure Portal source.
+- No ownership claim over upstream names, assets, licences, or service behaviour.
+- No public indexing of a source until its source boundary and public-catalogue rights have been deliberately resolved.
+- No implemented local-only licensed-pack architecture.
 
 ## Agent Guidance
 
-- Preserve the documented deep-link query contract when refactoring browser state, search, or selection behavior.
-- Preserve branded source attribution and the `branded` search tag when regenerating or regrouping Segoe MDL2 families.
-- Update this file alongside changes to public URLs, generated index semantics, side effects, or deployment lifecycle.
-- Keep implementation mechanics out of this interface unless they become deliberate public contract.
-- Verify deep-link behavior before deployment when changing selection, filtering, set switching, or panel-opening code.
+- Preserve the deep-link and `sources[]` semantics when changing the generated index or UI.
+- Update this file and [SOURCES.md](SOURCES.md) when public set keys, source boundaries, provenance semantics, or lifecycle behaviour change.

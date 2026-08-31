@@ -1,0 +1,17 @@
+{
+  "source": "RedHat-UX/red-hat-icons",
+  "repositoryUrl": "https://github.com/RedHat-UX/red-hat-icons",
+  "commit": "d4f3eaa75084faa0025a3f82cde4d4796b7e056e",
+  "packageVersion": "2.3.1",
+  "contentSha256": "1c111d70fcadb7d4faae57f112437c23ddcebe3b8be9067d1297ad456b169c0c",
+  "includedCategories": [
+    "standard",
+    "ui",
+    "microns"
+  ],
+  "excludedCategories": [
+    "social"
+  ],
+  "indexedAssetCount": 1193,
+  "indexedFamilyCount": 956
+}

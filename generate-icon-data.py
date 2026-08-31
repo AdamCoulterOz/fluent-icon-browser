@@ -48,7 +48,7 @@ class CollectionDescriptor:
         label: str,
         short_label: str,
         source: str,
-        sources: tuple[str, ...],
+        sources: tuple[dict, ...],
         upstream_sha: str,
         cdn_base: str,
         build_icons: Callable[[], list[dict]],
@@ -175,6 +175,30 @@ def build_fabric_source_url(
     return (
         f"{cdn_base}@{upstream_sha}/packages/{package_name}/src/components/{encoded_file}"
     )
+
+
+def source_record(
+    *,
+    label: str,
+    reference: str,
+    url: str,
+    revision: str,
+    license_name: str = "",
+    license_url: str = "",
+    digest: str = "",
+) -> dict:
+    """Return the stable, human-facing provenance shape for a source."""
+
+    return {
+        "label": label,
+        "name": label,
+        "reference": reference,
+        "url": url,
+        "revision": revision,
+        "license": license_name,
+        "licenseUrl": license_url,
+        "digest": digest,
+    }
 
 
 def pick_default_size(available_sizes: list[int]) -> int:
@@ -762,8 +786,7 @@ def assemble_collections(
             "shortLabel": descriptor.short_label,
             "source": descriptor.source,
         }
-        if descriptor.sources:
-            collection["sources"] = list(descriptor.sources)
+        collection["sources"] = list(descriptor.sources)
         collection.update(
             {
                 "upstreamSha": descriptor.upstream_sha,
@@ -790,6 +813,12 @@ def generate_icon_data(
     azure_previous_source_lock_path: Optional[Path] = None,
     azure_minimum_count: int = 250,
     azure_manifest_minimum_count: int = 100,
+    flight_icons_dir: Optional[Path] = None,
+    flight_source_lock_path: Optional[Path] = None,
+    flight_upstream_sha: str = "",
+    redhat_icons_dir: Optional[Path] = None,
+    redhat_source_lock_path: Optional[Path] = None,
+    redhat_upstream_sha: str = "",
 ) -> tuple[int, int]:
     fabric_metadata = load_fabric_metadata(fabric_metadata_path)
 
@@ -799,7 +828,16 @@ def generate_icon_data(
             label="Fluent System Icons",
             short_label="Fluent",
             source="microsoft/fluentui-system-icons",
-            sources=(),
+            sources=(
+                source_record(
+                    label="Fluent System Icons",
+                    reference="microsoft/fluentui-system-icons",
+                    url="https://github.com/microsoft/fluentui-system-icons",
+                    revision=fluent_upstream_sha,
+                    license_name="MIT",
+                    license_url="https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE",
+                ),
+            ),
             upstream_sha=fluent_upstream_sha,
             cdn_base=fluent_cdn_base,
             build_icons=lambda: generate_fluent_icons(
@@ -814,9 +852,25 @@ def generate_icon_data(
             short_label="Segoe",
             source="microsoft/fluentui/packages/react-icons-mdl2",
             sources=(
-                "microsoft/fluentui/packages/react-icons-mdl2",
+                source_record(
+                    label="Segoe MDL2 Icons",
+                    reference="microsoft/fluentui/packages/react-icons-mdl2",
+                    url="https://github.com/microsoft/fluentui/tree/main/packages/react-icons-mdl2",
+                    revision=fabric_upstream_sha,
+                    license_name="MIT",
+                    license_url="https://github.com/microsoft/fluentui/blob/master/LICENSE",
+                ),
                 *(
-                    ("microsoft/fluentui/packages/react-icons-mdl2-branded",)
+                    (
+                        source_record(
+                            label="Segoe MDL2 Branded Icons",
+                            reference="microsoft/fluentui/packages/react-icons-mdl2-branded",
+                            url="https://github.com/microsoft/fluentui/tree/main/packages/react-icons-mdl2-branded",
+                            revision=fabric_upstream_sha,
+                            license_name="Microsoft Fabric Assets License",
+                            license_url="https://aka.ms/fluentui-assets-license",
+                        ),
+                    )
                     if fabric_branded_components_dir is not None
                     else ()
                 ),
@@ -844,7 +898,14 @@ def generate_icon_data(
                     "Microsoft Azure Portal public core SVG modules and default "
                     "extension manifests (bounded public subset)"
                 ),
-                sources=(),
+                sources=(
+                    source_record(
+                        label="Microsoft Azure Portal",
+                        reference="portal.azure.com public icon sources",
+                        url="https://portal.azure.com/",
+                        revision="portal-bootstrap",
+                    ),
+                ),
                 upstream_sha="portal-bootstrap",
                 cdn_base="https://portal.azure.com",
                 build_icons=lambda: generate_azure_icons(
@@ -855,10 +916,82 @@ def generate_icon_data(
                 ),
             )
         )
+    if flight_icons_dir is not None or flight_source_lock_path is not None:
+        if flight_icons_dir is None or flight_source_lock_path is None or not flight_upstream_sha:
+            raise ValueError("Flight icons require directory, source lock, and upstream SHA")
+        from flight_icons import LICENSE as FLIGHT_LICENSE
+        from flight_icons import LICENSE_URL as FLIGHT_LICENSE_URL
+        from flight_icons import REPOSITORY_URL as FLIGHT_REPOSITORY_URL
+        from flight_icons import SOURCE as FLIGHT_SOURCE
+        from flight_icons import generate_icons as generate_flight_icons
+        from source_lock import read_lock
+
+        flight_lock = read_lock(flight_source_lock_path, FLIGHT_SOURCE, flight_upstream_sha)
+        descriptors.append(
+            CollectionDescriptor(
+                key="flight",
+                label="HashiCorp Flight Icons",
+                short_label="Flight",
+                source="HashiCorp Flight Icons",
+                sources=(
+                    source_record(
+                        label="HashiCorp Flight Icons",
+                        reference=FLIGHT_SOURCE,
+                        url=FLIGHT_REPOSITORY_URL,
+                        revision=flight_upstream_sha,
+                        license_name=FLIGHT_LICENSE,
+                        license_url=FLIGHT_LICENSE_URL,
+                        digest=flight_lock["contentSha256"],
+                    ),
+                ),
+                upstream_sha=flight_upstream_sha,
+                cdn_base="https://raw.githubusercontent.com/hashicorp/design-system",
+                build_icons=lambda: generate_flight_icons(
+                    flight_icons_dir, flight_upstream_sha, flight_source_lock_path
+                ),
+            )
+        )
+    if redhat_icons_dir is not None or redhat_source_lock_path is not None:
+        if redhat_icons_dir is None or redhat_source_lock_path is None or not redhat_upstream_sha:
+            raise ValueError("Red Hat icons require directory, source lock, and upstream SHA")
+        from redhat_icons import LICENSE as REDHAT_LICENSE
+        from redhat_icons import LICENSE_URL as REDHAT_LICENSE_URL
+        from redhat_icons import REPOSITORY_URL as REDHAT_REPOSITORY_URL
+        from redhat_icons import SOURCE as REDHAT_SOURCE
+        from redhat_icons import generate_icons as generate_redhat_icons
+        from source_lock import read_lock
+
+        redhat_lock = read_lock(redhat_source_lock_path, REDHAT_SOURCE, redhat_upstream_sha)
+        descriptors.append(
+            CollectionDescriptor(
+                key="redhat",
+                label="Red Hat Icons",
+                short_label="Red Hat",
+                source="Red Hat Icons",
+                sources=(
+                    source_record(
+                        label="Red Hat Icons",
+                        reference=REDHAT_SOURCE,
+                        url=REDHAT_REPOSITORY_URL,
+                        revision=redhat_upstream_sha,
+                        license_name=REDHAT_LICENSE,
+                        license_url=REDHAT_LICENSE_URL,
+                        digest=redhat_lock["contentSha256"],
+                    ),
+                ),
+                upstream_sha=redhat_upstream_sha,
+                cdn_base="https://raw.githubusercontent.com/RedHat-UX/red-hat-icons",
+                build_icons=lambda: generate_redhat_icons(
+                    redhat_icons_dir, redhat_upstream_sha, redhat_source_lock_path
+                ),
+            )
+        )
     collections = assemble_collections(descriptors)
     fluent_icons = collections["fluent"]["icons"]
     segoe_icons = collections["segoe"]["icons"]
     azure_icons = collections.get("azure", {}).get("icons", [])
+    flight_icons = collections.get("flight", {}).get("icons", [])
+    redhat_icons = collections.get("redhat", {}).get("icons", [])
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -876,6 +1009,8 @@ def generate_icon_data(
         "Generated "
         f"{len(fluent_icons)} fluent icons + {len(segoe_icons)} Segoe icons "
         f"+ {len(azure_icons)} Azure Portal icons "
+        f"+ {len(flight_icons)} HashiCorp Flight icons "
+        f"+ {len(redhat_icons)} Red Hat icons "
         f"-> {output_file}"
     )
     return len(fluent_icons), len(segoe_icons)
@@ -889,6 +1024,36 @@ def parse_args() -> argparse.Namespace:
         "--fluent-icons-dir",
         default="assets",
         help="Path to Fluent icons directory (default: assets)",
+    )
+    parser.add_argument(
+        "--flight-icons-dir",
+        default="",
+        help="Path to HashiCorp Flight package directory",
+    )
+    parser.add_argument(
+        "--flight-source-lock",
+        default="",
+        help="Digest-bound HashiCorp Flight source lock",
+    )
+    parser.add_argument(
+        "--flight-upstream-sha",
+        default="",
+        help="HashiCorp design-system commit SHA",
+    )
+    parser.add_argument(
+        "--redhat-icons-dir",
+        default="",
+        help="Path to Red Hat icons repository directory",
+    )
+    parser.add_argument(
+        "--redhat-source-lock",
+        default="",
+        help="Digest-bound Red Hat icons source lock",
+    )
+    parser.add_argument(
+        "--redhat-upstream-sha",
+        default="",
+        help="Red Hat icons commit SHA",
     )
     parser.add_argument(
         "--fabric-components-dir",
@@ -999,6 +1164,16 @@ def main() -> None:
         else None,
         azure_minimum_count=args.azure_minimum_count,
         azure_manifest_minimum_count=args.azure_manifest_minimum_count,
+        flight_icons_dir=Path(args.flight_icons_dir) if args.flight_icons_dir else None,
+        flight_source_lock_path=Path(args.flight_source_lock)
+        if args.flight_source_lock
+        else None,
+        flight_upstream_sha=args.flight_upstream_sha.strip(),
+        redhat_icons_dir=Path(args.redhat_icons_dir) if args.redhat_icons_dir else None,
+        redhat_source_lock_path=Path(args.redhat_source_lock)
+        if args.redhat_source_lock
+        else None,
+        redhat_upstream_sha=args.redhat_upstream_sha.strip(),
     )
 
 

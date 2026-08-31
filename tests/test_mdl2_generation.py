@@ -55,7 +55,14 @@ class Mdl2GenerationTests(unittest.TestCase):
                     label="Fluent System Icons",
                     short_label="Fluent",
                     source="example/fluent",
-                    sources=(),
+                    sources=(
+                        icon_data.source_record(
+                            label="Fluent",
+                            reference="example/fluent",
+                            url="https://example.test/fluent",
+                            revision="fluent-sha",
+                        ),
+                    ),
                     upstream_sha="fluent-sha",
                     cdn_base="https://cdn.example.test/fluent",
                     build_icons=lambda: [{"name": "access_time"}],
@@ -65,7 +72,14 @@ class Mdl2GenerationTests(unittest.TestCase):
                     label="Segoe",
                     short_label="Segoe",
                     source="example/fabric",
-                    sources=("example/fabric",),
+                    sources=(
+                        icon_data.source_record(
+                            label="Fabric",
+                            reference="example/fabric",
+                            url="https://example.test/fabric",
+                            revision="fabric-sha",
+                        ),
+                    ),
                     upstream_sha="fabric-sha",
                     cdn_base="https://cdn.example.test/fabric",
                     build_icons=lambda: [{"name": "accept"}],
@@ -75,7 +89,14 @@ class Mdl2GenerationTests(unittest.TestCase):
                     label="Synthetic Icons",
                     short_label="Synthetic",
                     source="example/synthetic",
-                    sources=("example/synthetic",),
+                    sources=(
+                        icon_data.source_record(
+                            label="Synthetic",
+                            reference="example/synthetic",
+                            url="https://example.test/synthetic",
+                            revision="synthetic-sha",
+                        ),
+                    ),
                     upstream_sha="synthetic-sha",
                     cdn_base="https://cdn.example.test/synthetic",
                     build_icons=lambda: [{"name": "test_icon"}],
@@ -89,6 +110,8 @@ class Mdl2GenerationTests(unittest.TestCase):
         self.assertEqual("Synthetic Icons", collections["synthetic"]["label"])
         self.assertEqual("Synthetic", collections["synthetic"]["shortLabel"])
         self.assertEqual([{"name": "test_icon"}], collections["synthetic"]["icons"])
+        self.assertEqual("example/synthetic", collections["synthetic"]["sources"][0]["reference"])
+        self.assertEqual("Synthetic", collections["synthetic"]["sources"][0]["name"])
 
     def test_generated_payload_uses_segoe_and_preserves_fabric_alias(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -108,7 +131,7 @@ class Mdl2GenerationTests(unittest.TestCase):
                 counts = icon_data.generate_icon_data(
                     fluent_icons_dir=Path(temp_dir) / "fluent",
                     fabric_components_dir=Path(temp_dir) / "mdl2",
-                    fabric_branded_components_dir=None,
+                    fabric_branded_components_dir=Path(temp_dir) / "branded",
                     fabric_metadata_path=Path(temp_dir) / "metadata.json",
                     output_file=output_file,
                     fluent_upstream_sha="fluent-sha",
@@ -124,6 +147,18 @@ class Mdl2GenerationTests(unittest.TestCase):
         self.assertEqual({"fabric": "segoe"}, payload["setAliases"])
         self.assertEqual("Segoe", payload["sets"]["segoe"]["label"])
         self.assertEqual("Segoe", payload["sets"]["segoe"]["shortLabel"])
+        source = payload["sets"]["fluent"]["sources"][0]
+        self.assertEqual("microsoft/fluentui-system-icons", source["reference"])
+        self.assertEqual("fluent-sha", source["revision"])
+        ordinary_source, branded_source = payload["sets"]["segoe"]["sources"]
+        self.assertEqual("MIT", ordinary_source["license"])
+        self.assertEqual(
+            "Microsoft Fabric Assets License", branded_source["license"]
+        )
+        self.assertEqual(
+            "https://aka.ms/fluentui-assets-license",
+            branded_source["licenseUrl"],
+        )
 
     def test_branded_components_are_included_and_tagged(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

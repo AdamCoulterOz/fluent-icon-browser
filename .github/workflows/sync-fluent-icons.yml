@@ -44,14 +44,18 @@ jobs:
           if [ -z "$fabric_sha" ]; then
             fabric_sha="$(git ls-remote https://github.com/microsoft/fluentui.git refs/heads/main | awk '{print $1}')"
           fi
+          flight_sha="$(git ls-remote https://github.com/hashicorp/design-system.git refs/heads/main | awk '{print $1}')"
+          redhat_sha="$(git ls-remote https://github.com/RedHat-UX/red-hat-icons.git refs/heads/main | awk '{print $1}')"
 
-          if [ -z "$fluent_sha" ] || [ -z "$fabric_sha" ]; then
+          if [ -z "$fluent_sha" ] || [ -z "$fabric_sha" ] || [ -z "$flight_sha" ] || [ -z "$redhat_sha" ]; then
             echo "Unable to resolve one or more upstream SHAs." >&2
             exit 1
           fi
 
           echo "fluent_sha=$fluent_sha" >> "$GITHUB_OUTPUT"
           echo "fabric_sha=$fabric_sha" >> "$GITHUB_OUTPUT"
+          echo "flight_sha=$flight_sha" >> "$GITHUB_OUTPUT"
+          echo "redhat_sha=$redhat_sha" >> "$GITHUB_OUTPUT"
 
       - name: Probe Azure Portal icon sources
         run: |
@@ -69,16 +73,20 @@ jobs:
           set -euo pipefail
           current_fluent="$(cat .upstream-sha 2>/dev/null || true)"
           current_fabric="$(cat .upstream-fabric-sha 2>/dev/null || true)"
+          current_flight="$(jq -r '.commit // empty' .upstream-flight-icons.json 2>/dev/null || true)"
+          current_redhat="$(jq -r '.commit // empty' .upstream-redhat-icons.json 2>/dev/null || true)"
           current_azure_lock=".upstream-azure-portal.json"
           probed_azure_lock=".tmp/azure-portal-source.json"
           upstream_fluent="${{ steps.upstream.outputs.fluent_sha }}"
           upstream_fabric="${{ steps.upstream.outputs.fabric_sha }}"
+          upstream_flight="${{ steps.upstream.outputs.flight_sha }}"
+          upstream_redhat="${{ steps.upstream.outputs.redhat_sha }}"
           force="${{ github.event.inputs.force_rebuild || 'false' }}"
           changed="false"
 
           if [ "$force" = "true" ]; then
             changed="true"
-          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
+          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || [ "$upstream_flight" != "$current_flight" ] || [ "$upstream_redhat" != "$current_redhat" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
             changed="true"
           fi
 
@@ -87,6 +95,10 @@ jobs:
           echo "Upstream Fluent SHA: $upstream_fluent"
           echo "Current Fabric SHA: ${current_fabric:-<none>}"
           echo "Upstream Fabric SHA: $upstream_fabric"
+          echo "Current Flight SHA: ${current_flight:-<none>}"
+          echo "Upstream Flight SHA: $upstream_flight"
+          echo "Current Red Hat SHA: ${current_redhat:-<none>}"
+          echo "Upstream Red Hat SHA: $upstream_redhat"
           echo "Azure Portal source changed: $(if cmp -s "$current_azure_lock" "$probed_azure_lock"; then echo false; else echo true; fi)"
           echo "Force rebuild: $force"
 
@@ -108,6 +120,68 @@ jobs:
             packages/react-icons-mdl2/src/components \
             packages/react-icons-mdl2-branded/src/components
 
+      - name: Sparse clone HashiCorp Flight icons
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/hashicorp/design-system.git .tmp/hashicorp-design-system
+          cd .tmp/hashicorp-design-system
+          git sparse-checkout set packages/flight-icons
+          git fetch --depth 1 origin "${{ steps.upstream.outputs.flight_sha }}"
+          git checkout --detach "${{ steps.upstream.outputs.flight_sha }}"
+          test -f packages/flight-icons/LICENSE.md
+
+      - name: Sparse clone Red Hat icons
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/RedHat-UX/red-hat-icons.git .tmp/red-hat-icons
+          cd .tmp/red-hat-icons
+          git sparse-checkout set src/standard src/ui src/microns
+          git fetch --depth 1 origin "${{ steps.upstream.outputs.redhat_sha }}"
+          git checkout --detach "${{ steps.upstream.outputs.redhat_sha }}"
+          test -f LICENSE_ICONS.md
+
+      - name: Generate and validate candidate source locks
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import flight_icons
+          import redhat_icons
+
+          from source_lock import validate_candidate_lock
+
+          flight_candidate = Path('.tmp/flight-icons-source.candidate.json')
+          redhat_candidate = Path('.tmp/redhat-icons-source.candidate.json')
+
+          flight_icons.write_source_lock(
+              Path('.tmp/hashicorp-design-system/packages/flight-icons'),
+              flight_candidate,
+              '${{ steps.upstream.outputs.flight_sha }}',
+          )
+          redhat_icons.write_source_lock(
+              Path('.tmp/red-hat-icons'),
+              redhat_candidate,
+              '${{ steps.upstream.outputs.redhat_sha }}',
+          )
+          validate_candidate_lock(
+              flight_candidate,
+              Path('.upstream-flight-icons.json'),
+              source=flight_icons.SOURCE,
+              count_fields=('indexedAssetCount', 'indexedFamilyCount'),
+              scope_fields=('includedCategories', 'excludedCategories'),
+          )
+          validate_candidate_lock(
+              redhat_candidate,
+              Path('.upstream-redhat-icons.json'),
+              source=redhat_icons.SOURCE,
+              count_fields=('indexedAssetCount', 'indexedFamilyCount'),
+              scope_fields=('includedCategories', 'excludedCategories'),
+          )
+          PY
+
       - name: Regenerate icon data
         if: steps.decision.outputs.changed == 'true'
         run: |
@@ -128,8 +202,16 @@ jobs:
             --azure-source-lock .tmp/azure-portal-source.json \
             --azure-previous-source-lock .tmp/azure-portal-source.json \
             --azure-minimum-count 250 \
-            --azure-manifest-minimum-count 100
+            --azure-manifest-minimum-count 100 \
+            --flight-icons-dir .tmp/hashicorp-design-system/packages/flight-icons \
+            --flight-source-lock .tmp/flight-icons-source.candidate.json \
+            --flight-upstream-sha "${{ steps.upstream.outputs.flight_sha }}" \
+            --redhat-icons-dir .tmp/red-hat-icons \
+            --redhat-source-lock .tmp/redhat-icons-source.candidate.json \
+            --redhat-upstream-sha "${{ steps.upstream.outputs.redhat_sha }}"
 
+          cp .tmp/flight-icons-source.candidate.json .upstream-flight-icons.json
+          cp .tmp/redhat-icons-source.candidate.json .upstream-redhat-icons.json
           echo "${{ steps.upstream.outputs.fluent_sha }}" > .upstream-sha
           echo "${{ steps.upstream.outputs.fabric_sha }}" > .upstream-fabric-sha
           cp .tmp/azure-portal-source.json .upstream-azure-portal.json
@@ -140,7 +222,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json
+          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json .upstream-flight-icons.json .upstream-redhat-icons.json
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
@@ -149,5 +231,7 @@ jobs:
 
           fluent_short_sha="$(echo '${{ steps.upstream.outputs.fluent_sha }}' | cut -c1-7)"
           fabric_short_sha="$(echo '${{ steps.upstream.outputs.fabric_sha }}' | cut -c1-7)"
-          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} azure-portal"
+          flight_short_sha="$(echo '${{ steps.upstream.outputs.flight_sha }}' | cut -c1-7)"
+          redhat_short_sha="$(echo '${{ steps.upstream.outputs.redhat_sha }}' | cut -c1-7)"
+          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} flight@${flight_short_sha} redhat@${redhat_short_sha} azure-portal"
           git push

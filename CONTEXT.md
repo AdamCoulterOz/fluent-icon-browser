@@ -7,20 +7,24 @@
 - Fluent System icons from `microsoft/fluentui-system-icons`
 - Segoe icons from `microsoft/fluentui` (`react-icons-mdl2` and `react-icons-mdl2-branded`)
 - Azure icons from the deterministic default public surface of Microsoft Azure Portal core modules and extension manifests
+- HashiCorp Flight generic-concept icons from `hashicorp/design-system/packages/flight-icons`
+- Red Hat `standard`, `ui`, and `microns` icons from `RedHat-UX/red-hat-icons`
 
 The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
-- icon-set switching (Fluent/Segoe/Azure)
-- compact 64-pixel sticky frosted header using Meridian's Keel surface treatment, containing title (`Icons`), set switcher, search, and segmented style filter (`regular`, `solid`, `color`)
-  - current control order: brand (`logo + Icons`), search, icon set selector, style selector
+- icon-set switching (Fluent/Segoe/Azure/Flight/Red Hat)
+- compact 64-pixel sticky frosted header using Meridian's Keel surface treatment, containing title (`Icons`), search, a native data-driven collection picker, and segmented style filter (`regular`, `solid`, `color`)
+  - current control order: brand (`logo + Icons`), search, collection picker, style filter
   - search box is constrained to `max-width: 442px` and centered within the available search lane
-  - search input and both segmented selectors share a unified control height (`32px`)
+  - search input, native collection picker, and segmented style filter share a unified control height (`32px`)
   - visible result count is shown as a compact numeric pill inside the search box (right side), replacing the previous standalone "Showing ... icons" line
-  - selector widths are fixed (not elastic): icon set selector `125px`, style selector `134px`
+  - the collection picker width is responsive at `clamp(164px, 22vw, 320px)`; the style filter remains fixed at `134px`
+  - the native picker is populated from the generated `sets` map, displays each collection's compact `shortLabel`, and exposes the full label as option title context
+  - the selected collection's full label and visible source/licence attribution are rendered below the header
   - style options are icon-only buttons with accessible labels: outlined (`regular`), filled (`solid`), and outlined-with-full tricolor fill (`color`)
   - style selection is optional (default unselected) and mutually exclusive; clicking the active option toggles back to no style filter
-  - narrow behavior: title text collapses away and only the logo is shown, while logo + search always remain on the same row
+  - narrow behavior at `<=620px`: the brand title and mark are hidden so search can occupy the full first row, with collection/style controls on the second row
   - spacing tuned for readability: slightly increased gap between brand and search in both desktop and compact layouts
   - top navigation and controls use the exact Keel light/dark surface, border, text, accent, focus, radius, shadow, and motion tokens; the app follows `prefers-color-scheme` and does not persist a separate theme choice
   - the search field is borderless and tints the frosted header beneath it rather than painting an opaque card: a subtle transparent black tint in light mode and transparent white tint in dark mode, strengthened slightly on focus; its placeholder and magnifier share a contrast-adjusted neutral that is modestly darker in light mode and lighter in dark mode
@@ -36,10 +40,10 @@ The UI loads `icon-data.json` at runtime and provides:
   - dense gallery uses fluid grid columns (`minmax(90px, 1fr)`) with centered `90x90` cards to avoid large trailing whitespace on wide rows
   - grid top padding now matches horizontal padding (`20px` desktop, `12px` mobile) so first row spacing mirrors side gutters
   - the light-theme gallery canvas uses a slightly darker `#f7f7f9` base so borderless white tiles remain distinct; dark mode retains its existing base surface
-- header segmented controls have protected minimum widths for stable layout:
-  - icon set selector: `min-width: 125px`, `height: 32px`
-  - style filter selector: `min-width: 134px`, `height: 32px`
-  - segmented button labels use explicit flex centering + fixed line-height to keep vertical alignment stable after runtime tab state updates (notably in Chrome)
+- header collection/style controls have stable dimensions:
+  - native collection picker: `width: clamp(164px, 22vw, 320px)`, `height: 32px`
+  - segmented style filter: fixed `134px` width, `32px` height
+  - style-filter buttons use explicit flex centering and fixed line-height for stable vertical alignment
 - horizontal toolbar overflow on both the header and details panel uses unpainted directional-chevron overlays plus 72px alpha-only content masks with eased opacity stops, keeping control boundaries inside the transparency transition instead of exposing a hard seam
 - docked details panel with copy/download for SVG variants (replaces blocking overlay modal)
   - icon details are presented in a persistent bottom dock (non-blocking) across all screen sizes
@@ -96,6 +100,8 @@ The UI loads `icon-data.json` at runtime and provides:
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
 - `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
 - `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` plus ordinary/branded MDL2 components and emits commit-pinned source URLs + native sizes.
+- `flight_icons.py`, `redhat_icons.py`: validate the approved source subsets, write/read digest-bound locks, and emit commit-pinned remote SVG references without committing their payloads.
+- `source_lock.py`: source-file/path digest helpers shared by digest-bound collection locks.
 - `azure_portal_icons.py`: discovers the bounded public Azure Portal source, validates count/drift gates, and emits descriptor-only Azure records plus a compact source lock; it never retains SVG payloads.
 - `remote-icon-source.js`: resolves Azure descriptors lazily, verifies and sanitizes the source SVG, and applies any private per-descriptor paint normalization before the SVG is previewed, copied, or downloaded.
 - `generate-fabric-metadata.py`: builds `fabric-mdl2-metadata.json` for ordinary and branded MDL2 icons (`id`, `name`, `description`, `metaphors`).
@@ -106,10 +112,11 @@ The UI loads `icon-data.json` at runtime and provides:
   - `semanticDescription` (intended usage meaning)
   - `description` (combined literal + semantic, compatibility field)
 - `icon-data.json`: generated index consumed by the frontend.
-  - Its `sets` map is assembled from private generator collection descriptors; the browser renders its accessible collection tabs from that map rather than a fixed pair of set buttons. Each collection provides an additive `shortLabel` for the compact tab while its full `label` remains available for source context.
+  - Its `sets` map is assembled from private generator collection descriptors; the browser populates its native collection picker from that map. Each collection provides a full `label`, compact picker `shortLabel`, and generalized `sources[]` attribution/provenance records, including visible source/licence links below the header where supplied.
 - `.upstream-sha`: last synced Fluent System upstream commit SHA.
 - `.upstream-fabric-sha`: last synced Fluent/Fabric upstream commit SHA.
 - `.upstream-azure-portal.json`: committed Azure Portal page/source version, URLs, counts, and digests used for bounded drift detection.
+- `.upstream-flight-icons.json`, `.upstream-redhat-icons.json`: committed package version, pinned commit, approved subset, and source-content digest locks.
 
 ## Build + Sync Pipeline
 
@@ -121,11 +128,13 @@ The UI loads `icon-data.json` at runtime and provides:
 
 - `.github/workflows/sync-fluent-icons.yml`
   - runs weekly + manual trigger
-  - checks upstream SHAs and Azure source-lock drift for:
+  - checks approved upstream revisions and source-lock drift for:
     - `microsoft/fluentui-system-icons` `main`
     - `microsoft/fluentui` `master` (Segoe MDL2 components)
     - public Azure Portal bootstrap, RequireConfig/dependency tree, and default extension manifests
-  - only rebuilds when an upstream SHA or Azure source lock changes (or forced)
+    - HashiCorp Flight package sources (generic categories only)
+    - Red Hat icon sources (`standard`, `ui`, and `microns` only)
+  - only rebuilds when an approved upstream revision or source lock changes (or forced)
   - probes Portal drift and count gates against the committed Azure lock, then passes the freshly validated temporary lock to the regeneration pass so a Portal deployment transition cannot make the prior RequireConfig URL a second-pass `404`
   - when a newly advertised RequireConfig returns `403`/`404` during a Portal deployment transition, rebuilds from the complete strictly validated prior Portal snapshot rather than mixing source generations; all locked assets are still fetched, parsed, and count-gated
   - generates combined index from:
@@ -133,12 +142,13 @@ The UI loads `icon-data.json` at runtime and provides:
     - upstream Fluent `assets` (raw GitHub SVG URLs pinned to upstream SHA)
     - upstream ordinary and branded MDL2 component sources for Segoe (parsed inline SVG + source links)
     - temporarily downloaded public Portal JS/JSON parsed without evaluation for Azure remote descriptors
-  - commits updated `icon-data.json`, `fabric-mdl2-metadata.json`, `.upstream-sha`, `.upstream-fabric-sha`, `.upstream-azure-portal.json`; no Azure SVG payload
+    - commit-pinned HashiCorp Flight generic-concept SVG references verified against a digest-bound source lock
+    - commit-pinned Red Hat `standard`/`ui`/`microns` SVG references verified against a digest-bound source lock
+  - commits updated index/metadata and source-lock records; no Azure, Flight, or Red Hat SVG payload
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
   - runs after successful `Sync Icon Indexes` completions on `main`
   - runs daily as a repair path for transient GitHub Pages or Actions failures
-  - checks out `main` directly so scheduled and workflow-run deployments publish the current committed site state
   - builds and deploys in a single job to avoid a second hosted-runner allocation between artifact upload and Pages deployment
   - deploys static site to GitHub Pages
   - public site URL: `https://adamcoulteroz.github.io/fluent-icon-browser/`
@@ -158,18 +168,20 @@ The UI loads `icon-data.json` at runtime and provides:
 - Fabric metadata is maintained in-repo and regenerated by script/workflow; manual overrides are defined in `generate-fabric-metadata.py`.
 - UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
 - `?set=<key>&icon=<name>` is a public, stable deep-link contract for external docs and tools that need to link directly to an icon.
-- Published set keys are `fluent`, `segoe`, and `azure`; `fabric` remains a compatibility alias to `segoe` only while no direct `fabric` set exists. Current generated Azure evidence is 1,374 families from 342 core families plus 1,032 default extension-manifest families, with 1,400 unique SVG descriptors; counts may change as public sources evolve.
+- Published set keys are `fluent`, `segoe`, `azure`, `flight`, and `redhat`; `fabric` remains a compatibility alias to `segoe` only while no direct `fabric` set exists. The current generated snapshot is Fluent 2,975, Segoe 1,787, Azure 1,374, Flight 396, and Red Hat 956 families; these are build observations rather than permanent contracts.
+- Flight package 5.1.0 is MPL-2.0 and includes generic concepts only: `Products` and `Services` are excluded, and matching `-fill` names are grouped as variants. Red Hat package 2.3.1 is CC BY 4.0 and includes only `standard`, `ui`, and `microns`; `social` is excluded. Both use commit-pinned upstream SVG URLs and digest-bound locks; no new SVG payloads are committed.
+- `SOURCES.md` is the concise source-rights registry. It distinguishes published collections from candidates requiring a source-boundary and public-catalogue rights decision; it does not provide legal advice. A local-only licensed-pack architecture is not implemented.
 - Azure variants use `remoteSource` descriptors (`url`, `format`, `selector`, `sha256`). The browser lazily fetches public CORS sources, extracts without eval, verifies and sanitizes the SVG, then uses the resolved inline SVG for preview/copy/download. Generator-side parsing of the locked public Portal Base.Images CSS AMD module adds a private `paintMap` only for palette classes used by a source SVG; after verification/sanitization the browser materializes those fills and removes the matched class tokens. This preserves authored greys and whites alongside chromatic, multi-paint, gradient, and pattern artwork in every preview state without changing the source variant taxonomy. Client/service-worker caching is client-side and is not repository rehosting.
 - Azure discovery is bounded to the deterministic default public surface from portal bootstrap, current RequireConfig/dependency data, and default extension-manifest hashes; schema drift or count collapse fails the sync. The 105 local legacy Documents SVGs remain read-only, unimported, and unpublished: none has a canonical content-hash match in the generated source; reconciliation found 23 exact-name metadata counterparts, 28 high-confidence renamed counterparts, 43 ambiguous items, and 11 initially absent metadata candidates.
 - The missing-11 classification separates existing coverage from coherent future sources: AKS is historical Microsoft.ContainerService/managedClusters artwork; Branding/Application Branding maps to indexed core CustomDomain artwork; Marketplace/Recent/What's new are shell surfaces; Remote Rendering is Microsoft.MixedReality/remoteRenderingAccounts surfaced through Marketplace PNGs; and Dynamics/AppDynamics/Terraform are Marketplace/product artwork. Two bounded discovery gaps remain: Marketplace catalogue image metadata, and Entra App registrations inner-blade symbols such as Manifest. Portal's embedded Entra extension remains relevant despite the separate Entra portal, and known content-addressed Static Content URLs are publicly fetchable; no public revisioned blade-to-asset mapping has been established, so deterministic discovery must not crawl arbitrary Dynamic assets or require login. Future Fabric, Azure DevOps, Power Platform, Entra, Microsoft 365, and Dynamics 365 adapters remain open work only.
 - `index.html`, `robots.txt`, and `sitemap.xml` expose canonical, social, structured, crawler, and no-JavaScript discovery content. The no-JavaScript surface describes the catalogue honestly; search and icon rendering remain client-side features.
 - The normal page footer is fixed to the viewport bottom, links back to the parent project index at `https://adamcoulteroz.github.io/`, and exposes the GitHub repository link at its right edge; its two phrase groups wrap naturally when space requires, and a footer `ResizeObserver` keeps the details dock aligned above its rendered height.
 - Main page container is now full-width fluid (`100%`) rather than capped, to keep Chrome/Safari responsive behavior consistent across window sizes.
-- Header has responsive breakpoints to avoid clipping and preserve selector usability:
-  - `<=620px`: compact 2-row layout (`logo + search` on row 1, then both selectors together on row 2) so selector widths do not influence the search row width
-    - on this compact row, both selector controls are center-aligned as a group
-  - `<=480px`: same header structure is retained (only icon card grid density changes), so selectors remain on one row and do not stack vertically
-  - `<=290px`: only once the selectors' 267px intrinsic group width no longer fits, the second row switches from centred alignment to horizontal scrolling
+- Header has responsive breakpoints to preserve picker and style-filter usability:
+  - the controls' minimum child width is `306px`: `164px` picker + `8px` gap + `134px` style filter
+  - `<=620px`: the header becomes two rows; the brand title/mark is hidden, search occupies the first row, and the collection picker plus style filter remain together and centred on the second row
+  - `<=480px`: the header structure is unchanged; only icon-grid density changes
+  - `<=290px`: the second-row controls become left-aligned and horizontally scrollable
 - Sticky header behavior was hardened for cross-browser reliability:
   - removed root-level overflow clipping behavior that broke `position: sticky` in Chrome
   - `.top-bar` now includes `position: -webkit-sticky` + `position: sticky`

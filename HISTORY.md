@@ -1,5 +1,12 @@
 # History
 
+## 2026-08-31: Publish Federated Technology Icon Catalogue Provenance
+
+- Documented the additive `flight` and `redhat` collections alongside Fluent, Segoe, and Azure, with generalized visible `sources[]` attribution/provenance and source/licence links.
+- Recorded commit-pinned, digest-bound Flight 5.1.0 (MPL-2.0; generic concepts only, `Products`/`Services` excluded, matched `-fill` pairs as variants) and Red Hat 2.3.1 (CC BY 4.0; `standard`/`ui`/`microns` only, `social` excluded) source boundaries. No new SVG payloads are committed.
+- Replaced the growing set-tab row with a scalable native collection picker driven by generated `shortLabel` values, kept full source/licence attribution visible below the header, and advanced the PWA app-shell cache so installed clients receive the picker UI.
+- Added the source registry and held cloud/vendor/logo/social/security candidates outside public indexing until their specific public-catalogue rights and reproducible source boundaries are resolved. A local-only licensed-pack architecture remains unimplemented.
+
 ## 2026-08-31: Preserve Intrinsic Azure Artwork Colours
 
 - Fixed Azure extension-manifest artwork being flattened into monochrome silhouettes in dark mode when its source variant was labelled `regular`.

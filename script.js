@@ -1,6 +1,16 @@
 const INCLUDE_BOUNDS_SESSION_KEY = "fluent-icons-include-bounds";
 const PANEL_SIZE_MENU_HIDE_DELAY_MS = 130;
 
+function getCollectionPickerOption(set, key) {
+    const shortLabel = typeof set?.shortLabel === "string" ? set.shortLabel.trim() : "";
+    const label = typeof set?.label === "string" ? set.label.trim() : "";
+
+    return {
+        text: shortLabel || label || key,
+        title: label || key,
+    };
+}
+
 function readIncludeBoundsPreference() {
     try {
         return sessionStorage.getItem(INCLUDE_BOUNDS_SESSION_KEY) === "true";
@@ -183,7 +193,7 @@ class IconBrowser {
             this.currentSetKey = availableSetKeys.includes(preferredSet)
                 ? preferredSet
                 : availableSetKeys[0] || "fluent";
-            this.renderSetTabs();
+            this.renderSetPicker();
         } catch (error) {
             console.error("Error loading icons:", error);
             this.showError("Failed to load icons. Please make sure icon-data.json exists.");
@@ -241,13 +251,8 @@ class IconBrowser {
             });
         });
 
-        const iconSetTabs = document.getElementById("iconSetTabs");
-        iconSetTabs?.addEventListener("click", (event) => {
-            const button = event.target.closest?.(".set-tab");
-            this.switchSet(button?.dataset.set);
-        });
-        iconSetTabs?.addEventListener("keydown", (event) => {
-            this.handleSetTabKeydown(event);
+        document.getElementById("iconSetSelect")?.addEventListener("change", (event) => {
+            this.switchSet(event.currentTarget.value);
         });
 
         document.querySelectorAll(".panel-variant-tab").forEach((button) => {
@@ -960,59 +965,23 @@ class IconBrowser {
         this.applyCurrentSet();
     }
 
-    renderSetTabs() {
-        const tabList = document.getElementById("iconSetTabs");
-        if (!tabList) {
+    renderSetPicker() {
+        const picker = document.getElementById("iconSetSelect");
+        if (!picker) {
             return;
         }
 
         const fragment = document.createDocumentFragment();
-        Object.entries(this.iconSets).forEach(([key, set], index) => {
-            const button = document.createElement("button");
-            const label =
-                typeof set?.shortLabel === "string" && set.shortLabel.trim()
-                    ? set.shortLabel
-                    : typeof set?.label === "string" && set.label.trim()
-                        ? set.label
-                        : key;
-            button.type = "button";
-            button.className = "segment-btn set-tab";
-            button.id = `setTab${index}`;
-            button.dataset.set = key;
-            button.setAttribute("role", "tab");
-            button.setAttribute("aria-controls", "iconGrid");
-            button.textContent = label;
-            fragment.appendChild(button);
+        Object.entries(this.iconSets).forEach(([key, set]) => {
+            const option = document.createElement("option");
+            const optionLabel = getCollectionPickerOption(set, key);
+
+            option.value = key;
+            option.textContent = optionLabel.text;
+            option.title = optionLabel.title;
+            fragment.appendChild(option);
         });
-        tabList.replaceChildren(fragment);
-    }
-
-    handleSetTabKeydown(event) {
-        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
-            return;
-        }
-
-        const tabs = Array.from(document.querySelectorAll(".set-tab"));
-        const currentIndex = tabs.indexOf(document.activeElement);
-        if (currentIndex < 0 || tabs.length === 0) {
-            return;
-        }
-
-        event.preventDefault();
-        let nextIndex = currentIndex;
-        if (event.key === "ArrowLeft") {
-            nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-        } else if (event.key === "ArrowRight") {
-            nextIndex = (currentIndex + 1) % tabs.length;
-        } else if (event.key === "Home") {
-            nextIndex = 0;
-        } else if (event.key === "End") {
-            nextIndex = tabs.length - 1;
-        }
-
-        const nextTab = tabs[nextIndex];
-        this.switchSet(nextTab.dataset.set);
-        nextTab.focus();
+        picker.replaceChildren(fragment);
     }
 
     applyCurrentSet() {
@@ -1035,7 +1004,7 @@ class IconBrowser {
         this.cardByName = new Map();
         this.renderedAllCards = false;
         this.lastAppliedStyleMode = null;
-        this.syncSetTabs();
+        this.syncSetPicker();
         this.syncStyleModeControlsForSet();
         this.updateSetSubtitle();
 
@@ -1123,15 +1092,11 @@ class IconBrowser {
         }
     }
 
-    syncSetTabs() {
-        document.querySelectorAll(".set-tab").forEach((button) => {
-            const setKey = button.dataset.set;
-            const isActive = setKey === this.currentSetKey;
-
-            button.classList.toggle("active", isActive);
-            button.setAttribute("aria-selected", isActive ? "true" : "false");
-            button.tabIndex = isActive ? 0 : -1;
-        });
+    syncSetPicker() {
+        const picker = document.getElementById("iconSetSelect");
+        if (picker) {
+            picker.value = this.currentSetKey;
+        }
         this.syncToolbarScrollIndicators();
     }
 
@@ -1143,7 +1108,90 @@ class IconBrowser {
 
         const label = this.currentSet?.label || "Icons";
         const source = this.currentSet?.source || "";
-        subtitle.textContent = source ? `${label} (${source})` : label;
+        const sourceEntries = this.getCollectionSources(this.currentSet, source);
+        subtitle.replaceChildren();
+
+        const labelElement = document.createElement("span");
+        labelElement.className = "set-subtitle-label";
+        labelElement.textContent = label;
+        subtitle.appendChild(labelElement);
+
+        if (sourceEntries.length === 0) {
+            return;
+        }
+
+        const sourceList = document.createElement("span");
+        sourceList.className = "set-source-list";
+        sourceList.setAttribute("aria-label", "Collection sources and licenses");
+
+        sourceEntries.forEach((entry, index) => {
+            if (index > 0) {
+                sourceList.append(document.createTextNode(" · "));
+            }
+
+            this.appendCollectionReference(sourceList, entry.label, entry.url, "Collection source");
+            if (entry.license) {
+                sourceList.append(document.createTextNode(" ("));
+                this.appendCollectionReference(sourceList, entry.license, entry.licenseUrl, "License");
+                sourceList.append(document.createTextNode(")"));
+            }
+        });
+
+        subtitle.append(sourceList);
+    }
+
+    getCollectionSources(collection, fallbackSource) {
+        const entries = Array.isArray(collection?.sources) ? collection.sources : [];
+        const normalized = entries.map((entry) => {
+            if (typeof entry === "string") {
+                return { label: entry.trim(), url: "", license: "", licenseUrl: "" };
+            }
+
+            if (!entry || typeof entry !== "object") {
+                return null;
+            }
+
+            return {
+                label: String(entry.label || entry.name || entry.reference || entry.url || "").trim(),
+                url: this.getSafeExternalUrl(entry.url || entry.reference),
+                license: String(entry.license || "").trim(),
+                licenseUrl: this.getSafeExternalUrl(entry.licenseUrl),
+            };
+        }).filter((entry) => entry?.label);
+
+        if (normalized.length === 0 && typeof fallbackSource === "string" && fallbackSource.trim()) {
+            normalized.push({ label: fallbackSource.trim(), url: "", license: "", licenseUrl: "" });
+        }
+
+        return normalized;
+    }
+
+    getSafeExternalUrl(value) {
+        if (typeof value !== "string" || !value.trim()) {
+            return "";
+        }
+
+        try {
+            const url = new URL(value);
+            return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+        } catch (error) {
+            return "";
+        }
+    }
+
+    appendCollectionReference(container, label, url, accessibleType) {
+        if (!url) {
+            container.append(document.createTextNode(label));
+            return;
+        }
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = label;
+        link.setAttribute("aria-label", `${accessibleType}: ${label} (opens in a new tab)`);
+        container.append(link);
     }
 
     getSetAvailableVariants() {
@@ -2549,6 +2597,12 @@ async function downloadIcon(variant) {
 }
 
 let iconBrowser;
-document.addEventListener("DOMContentLoaded", () => {
-    iconBrowser = new IconBrowser();
-});
+if (typeof document !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+        iconBrowser = new IconBrowser();
+    });
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { getCollectionPickerOption };
+}
