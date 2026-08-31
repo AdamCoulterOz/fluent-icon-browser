@@ -598,7 +598,7 @@ class AzurePortalIconsTests(unittest.TestCase):
         self.assertNotIn("Azure", shared["metaphors"])
         self.assertIn("DemoExtension", shared["searchTerms"])
         self.assertIn("Microsoft.Demo/widgets", shared["searchTerms"])
-        self.assertEqual("Resource / Other Providers", shared["category"])
+        self.assertEqual("Other Providers", shared["category"])
         self.assertEqual(
             "Microsoft.Demo", records[1]["categoryProvenance"]["providerNamespace"]
         )
@@ -616,12 +616,12 @@ class AzurePortalIconsTests(unittest.TestCase):
 
     def test_resource_provider_namespace_parser_and_matcher_are_deterministic(self) -> None:
         fixtures = {
-            "Microsoft.Compute/virtualMachines": "Resource / Compute",
-            "Microsoft.ContainerService/managedClusters": "Resource / Containers",
-            "Microsoft.CognitiveServices/accounts": "Resource / AI + Machine Learning",
-            "Microsoft.StorageMover/storageMovers": "Resource / Storage",
-            "Microsoft.DBforPostgreSQL/flexibleServers": "Resource / Databases",
-            "Microsoft.Unlisted/widgets": "Resource / Other Providers",
+            "Microsoft.Compute/virtualMachines": "Compute",
+            "Microsoft.ContainerService/managedClusters": "Containers",
+            "Microsoft.CognitiveServices/accounts": "AI + Machine Learning",
+            "Microsoft.StorageMover/storageMovers": "Storage",
+            "Microsoft.DBforPostgreSQL/flexibleServers": "Databases",
+            "Microsoft.Unlisted/widgets": "Other Providers",
         }
 
         for resource_type_name, expected in fixtures.items():
@@ -631,6 +631,154 @@ class AzurePortalIconsTests(unittest.TestCase):
 
         with self.assertRaisesRegex(azure.AzurePortalSchemaError, "resource type name"):
             azure.parse_resource_provider_namespace("not-an-arm-resource-type")
+
+    def test_reviewed_provider_namespaces_and_kusto_are_deterministic(self) -> None:
+        fixtures = {
+            "Microsoft.AAD/tenants": "Identity",
+            "Microsoft.Bing/accounts": "AI + Machine Learning",
+            "Microsoft.ContainerStorage/pools": "Storage",
+            "Microsoft.Dashboard/grafana": "Monitoring",
+            "Microsoft.DataMigration/services": "Databases",
+            "Microsoft.Elastic/monitors": "Monitoring",
+            "Microsoft.KubernetesConfiguration/extensions": "Containers",
+            "Microsoft.AzureDataTransfer/connections": "Integration",
+            "Microsoft.ChangeSafety/changes": "Management",
+            "Microsoft.DataProtection/backupVaults": "Management",
+            "Microsoft.MachineConfiguration/assignments": "Management",
+            "Microsoft.WebIQ/sites": "Web",
+            "Microsoft.CloudTest/tests": "DevOps",
+            "Microsoft.DevOpsInfrastructure/pools": "DevOps",
+            "Microsoft.DevHub/projects": "DevOps",
+            "Microsoft.AzurePlaywrightService/accounts": "DevOps",
+            "Microsoft.Kusto/clusters": "Analytics",
+        }
+
+        for resource_type_name, expected in fixtures.items():
+            with self.subTest(resource_type_name=resource_type_name):
+                provider = azure.parse_resource_provider_namespace(resource_type_name)
+                self.assertEqual(expected, azure.provider_category(provider))
+
+    def test_core_category_overrides_use_exact_canonical_names(self) -> None:
+        fixtures = {
+            "active_directory": "Identity",
+            "advisor": "Management",
+            "api_management": "Integration",
+            "app_insights": "Monitoring",
+            "virtual_machine": "Compute",
+            "storage_container": "Storage",
+            "sql_database": "Databases",
+            "traffic_manager_enabled": "Networking",
+            "security_center": "Security",
+            "stream_analytics": "Analytics",
+            "website_power": "Web",
+            "cloud_shell": "DevOps",
+            "cloud": "General UI",
+        }
+
+        for core_name, expected in fixtures.items():
+            with self.subTest(core_name=core_name):
+                self.assertEqual(expected, azure.core_category(core_name))
+                provenance = azure._record_category_provenance(
+                    "core", core_name=core_name
+                )
+                self.assertEqual(expected, azure._category_from_provenance([provenance]))
+
+    def test_core_category_override_preserves_public_icon_contract(self) -> None:
+        svg = '<svg><path d="M0 0h1v1H0z"/></svg>'
+        source = azure.PortalSource(
+            portal_base_url=azure.PORTAL_BASE_URL,
+            page_version="99.1.0.0",
+            bootstrap_config_hash="bootstrap-hash",
+            require_config_hash="require-hash",
+            require_config_url=(
+                "https://portal.azure.com/Content/PortalRequireConfig/require-hash.js"
+            ),
+            bundle_urls=("https://portal.azure.com/Content/Dynamic/azure-core.js",),
+            manifest_sources=(),
+        )
+        bundle = "\n".join(
+            [
+                'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+                '["module"], function(e) { return { css: '
+                '".msportalfx-svg-c01{fill:#fff}" }; });',
+                'define("_generated/MsPortalImpl/Svg/Library/ActiveDirectory.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps(svg)
+                + "; });",
+            ]
+        )
+
+        icon = azure.build_azure_catalog(
+            source, fetch_text=lambda _url: bundle
+        ).icons[0]
+
+        self.assertEqual("active_directory", icon["name"])
+        self.assertEqual("Identity", icon["category"])
+        self.assertEqual(["regular"], list(icon["variants"]))
+        self.assertEqual(
+            "_generated/MsPortalImpl/Svg/Library/ActiveDirectory.svg",
+            icon["variants"]["regular"]["remoteSource"]["selector"],
+        )
+
+    def test_nested_asset_type_surfaces_override_enclosing_resource_type(self) -> None:
+        menu_svg = '<svg><path d="M0 0h1v1H0z"/></svg>'
+        browse_svg = '<svg><path d="M1 1h2v2H1z"/></svg>'
+        source = azure.ManifestSource(
+            category="assetTypes",
+            url="https://portal.azure.com/Content/ExtensionManifest/test.json",
+        )
+        payload = {
+            "manifest": {
+                "DemoExtension": {
+                    "assetTypes": [
+                        {
+                            "name": "Menu widget",
+                            "resourceType": {
+                                "resourceTypeName": "Microsoft.Compute/widgets"
+                            },
+                            "icon": {"data": menu_svg},
+                            "assetTypesMenu": [
+                                {"name": "Open", "icon": {"data": menu_svg}}
+                            ],
+                        },
+                        {
+                            "name": "Browse widget",
+                            "resourceType": {
+                                "resourceTypeName": "Microsoft.Storage/widgets"
+                            },
+                            "icon": {"data": browse_svg},
+                            "assetTypesBrowse": [
+                                {"name": "Browse", "icon": {"data": browse_svg}}
+                            ],
+                        },
+                    ]
+                }
+            }
+        }
+
+        records = azure._manifest_icon_records(source, payload)
+        categories_by_selector = {
+            record["descriptor"]["selector"]: record["categoryProvenance"]["category"]
+            for record in records
+        }
+        icons, _unique_count = azure._collapse_records(records)
+
+        self.assertEqual(
+            "Portal Commands",
+            categories_by_selector[
+                "/manifest/DemoExtension/assetTypes/0/assetTypesMenu/0/icon/data"
+            ],
+        )
+        self.assertEqual(
+            "Browse & Discover",
+            categories_by_selector[
+                "/manifest/DemoExtension/assetTypes/1/assetTypesBrowse/0/icon/data"
+            ],
+        )
+        self.assertEqual(
+            {"Portal Commands", "Browse & Discover"},
+            {icon["category"] for icon in icons},
+        )
 
     def test_manifest_source_surfaces_assign_complete_categories(self) -> None:
         svg = '<svg><path d="M0 0h1v1H0z"/></svg>'
@@ -695,7 +843,7 @@ class AzurePortalIconsTests(unittest.TestCase):
                 {
                     "General UI": 1,
                     "Portal Assets": 1,
-                    "Resource / Compute": 1,
+                    "Compute": 1,
                     "Browse & Discover": 2,
                     "Portal Commands": 1,
                     "Portal Services": 1,
@@ -705,7 +853,7 @@ class AzurePortalIconsTests(unittest.TestCase):
         )
         self.assertTrue(all("category" in icon for icon in icons))
 
-    def test_deduplicated_provenance_uses_resource_then_surface_priority(self) -> None:
+    def test_deduplicated_provenance_uses_surface_then_resource_priority(self) -> None:
         def record(name: str, selector: str, provenance: dict) -> dict:
             return {
                 "name": name,
@@ -739,7 +887,7 @@ class AzurePortalIconsTests(unittest.TestCase):
         self.assertEqual(icons, reverse_icons)
         self.assertEqual("alpha", icons[0]["name"])
         self.assertEqual(["beta", "gamma", "zeta"], icons[0]["aliases"])
-        self.assertEqual("Resource / Shared", icons[0]["category"])
+        self.assertEqual("Portal Commands", icons[0]["category"])
 
         surface_only = [
             record("zeta", "/zeta", command),
@@ -747,6 +895,16 @@ class AzurePortalIconsTests(unittest.TestCase):
         ]
         surface_icons, _surface_count = azure._collapse_records(surface_only)
         self.assertEqual("Portal Commands", surface_icons[0]["category"])
+
+        shared_icons, _shared_count = azure._collapse_records(
+            [record("beta", "/beta", compute), record("gamma", "/gamma", storage)]
+        )
+        self.assertEqual("Shared", shared_icons[0]["category"])
+
+        invalid_command = dict(command)
+        invalid_command["category"] = "Browse & Discover"
+        with self.assertRaisesRegex(azure.AzurePortalSchemaError, "category provenance"):
+            azure._category_from_provenance([invalid_command])
 
     def test_rejects_unsupported_category_provenance_and_source_format(self) -> None:
         record = {

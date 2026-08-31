@@ -53,7 +53,9 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.containerservice", "Containers"),
     ("microsoft.containerinstance", "Containers"),
     ("microsoft.containerregistry", "Containers"),
+    ("microsoft.containerstorage", "Storage"),
     ("microsoft.kubernetes", "Containers"),
+    ("microsoft.kubernetesconfiguration", "Containers"),
     ("microsoft.redhatopenshift", "Containers"),
     ("microsoft.servicefabric", "Containers"),
     ("microsoft.app", "Containers"),
@@ -83,13 +85,14 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.documentdb", "Databases"),
     ("microsoft.cache", "Databases"),
     ("microsoft.cosmic", "Databases"),
-    ("microsoft.kusto", "Databases"),
+    ("microsoft.kusto", "Analytics"),
     ("microsoft.horizondb", "Databases"),
     ("microsoft.oriondb", "Databases"),
     ("microsoft.hanaonazure", "Databases"),
     ("microsoft.azurearcdata", "Databases"),
     ("microsoft.databasewatcher", "Databases"),
     ("microsoft.cognitiveservices", "AI + Machine Learning"),
+    ("microsoft.bing", "AI + Machine Learning"),
     ("microsoft.machinelearningservices", "AI + Machine Learning"),
     ("microsoft.search", "AI + Machine Learning"),
     ("microsoft.botservice", "AI + Machine Learning"),
@@ -118,6 +121,7 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.fluidrelay", "Integration"),
     ("microsoft.durabletask", "Integration"),
     ("microsoft.integrationspaces", "Integration"),
+    ("microsoft.azuredatatransfer", "Integration"),
     ("microsoft.appconfiguration", "Integration"),
     ("microsoft.confluent", "Integration"),
     ("microsoft.apicenter", "Integration"),
@@ -129,6 +133,7 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.codesigning", "Security"),
     ("microsoft.easm", "Security"),
     ("microsoft.aadiam", "Identity"),
+    ("microsoft.aad", "Identity"),
     ("microsoft.managedidentity", "Identity"),
     ("microsoft.azureactivedirectory", "Identity"),
     ("microsoft.insights", "Monitoring"),
@@ -141,6 +146,8 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.cloudhealth", "Monitoring"),
     ("microsoft.chaos", "Monitoring"),
     ("microsoft.datadog", "Monitoring"),
+    ("microsoft.dashboard", "Monitoring"),
+    ("microsoft.elastic", "Monitoring"),
     ("microsoft.devices", "IoT"),
     ("microsoft.deviceregistry", "IoT"),
     ("microsoft.iot*", "IoT"),
@@ -149,6 +156,9 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.azuresphere", "IoT"),
     ("microsoft.resources", "Management"),
     ("microsoft.management", "Management"),
+    ("microsoft.changesafety", "Management"),
+    ("microsoft.dataprotection", "Management"),
+    ("microsoft.machineconfiguration", "Management"),
     ("microsoft.recoveryservices", "Management"),
     ("microsoft.providerhub", "Management"),
     ("microsoft.deploymentmanager", "Management"),
@@ -165,11 +175,21 @@ PROVIDER_CATEGORY_MATCHERS: tuple[tuple[str, str], ...] = (
     ("microsoft.azurefleet", "Management"),
     ("microsoft.maintenance", "Management"),
     ("microsoft.migrate", "Management"),
+    ("microsoft.datamigration", "Databases"),
     ("microsoft.all", "Management"),
     ("microsoft.web", "Web"),
+    ("microsoft.webiq", "Web"),
     ("microsoft.appplatform", "Web"),
     ("microsoft.devops", "DevOps"),
+    ("microsoft.cloudtest", "DevOps"),
+    ("microsoft.devopsinfrastructure", "DevOps"),
+    ("microsoft.devhub", "DevOps"),
+    ("microsoft.azureplaywrightservice", "DevOps"),
 )
+RESOURCE_CATEGORY_DOMAINS = frozenset(
+    category for _provider, category in PROVIDER_CATEGORY_MATCHERS
+)
+RESOURCE_CATEGORY_VALUES = RESOURCE_CATEGORY_DOMAINS | {"Other Providers"}
 SURFACE_CATEGORIES = {
     "core": "General UI",
     "assetTypes": "Portal Assets",
@@ -178,12 +198,85 @@ SURFACE_CATEGORIES = {
     "browseMenus": "Browse & Discover",
     "portalServices": "Portal Services",
 }
+CORE_NAME_CATEGORY_OVERRIDES = {
+    "active_directory": "Identity",
+    "advisor": "Management",
+    "automation": "Management",
+    "billing_hub": "Management",
+    "cost_alerts": "Management",
+    "cost_analysis": "Management",
+    "cost_budgets": "Management",
+    "resource_group": "Management",
+    "resource_role": "Management",
+    "api_management": "Integration",
+    "biz_talk": "Integration",
+    "event_grid": "Integration",
+    "event_hub": "Integration",
+    "service_bus": "Integration",
+    "workflow": "Integration",
+    "app_insights": "Monitoring",
+    "insights": "Monitoring",
+    "load_test": "Monitoring",
+    "log_analytics": "Monitoring",
+    "log_diagnostics": "Monitoring",
+    "log_streaming": "Monitoring",
+    "monitoring": "Monitoring",
+    "operational_insights": "Monitoring",
+    "workbooks": "Monitoring",
+    "availability_set": "Compute",
+    "cloud_service": "Compute",
+    "functions": "Compute",
+    "remote_app": "Compute",
+    "virtual_machine": "Compute",
+    "backup": "Storage",
+    "blob_block": "Storage",
+    "blob_page": "Storage",
+    "storage": "Storage",
+    "storage_azure_files": "Storage",
+    "storage_container": "Storage",
+    "storage_queue": "Storage",
+    "stor_simple": "Storage",
+    "cache": "Databases",
+    "clear_db_database": "Databases",
+    "database": "Databases",
+    "production_ready_db": "Databases",
+    "redis": "Databases",
+    "sql_database": "Databases",
+    "sql_database_server": "Databases",
+    "cdn": "Networking",
+    "express_route": "Networking",
+    "ip_address": "Networking",
+    "load_balancer": "Networking",
+    "network_interface_card": "Networking",
+    "traffic_manager": "Networking",
+    "traffic_manager_disabled": "Networking",
+    "traffic_manager_enabled": "Networking",
+    "virtual_network": "Networking",
+    "security_center": "Security",
+    "stream_analytics": "Analytics",
+    "server_farm": "Web",
+    "web_environment": "Web",
+    "web_hosting": "Web",
+    "web_hosting_plan": "Web",
+    "web_jobs": "Web",
+    "web_slots": "Web",
+    "web_test": "Web",
+    "website": "Web",
+    "website_power": "Web",
+    "website_staging": "Web",
+    "cloud_shell": "DevOps",
+    "team_project": "DevOps",
+    "tfsvc_repository": "DevOps",
+}
+NESTED_ASSET_TYPE_SURFACES = {
+    "assetTypesBrowse": "assetTypesBrowse",
+    "assetTypesMenu": "assetTypesMenu",
+}
 SURFACE_CATEGORY_PRIORITY = (
     "Portal Commands",
     "Browse & Discover",
     "Portal Services",
     "Portal Assets",
-    "General UI",
 )
 NON_SEMANTIC_AZURE_TAGS = {"azure", "core", "polychromatic", "portal"}
 AMD_DEFINE_PATTERN = re.compile(
@@ -980,15 +1073,46 @@ def provider_category(provider_namespace: str) -> str:
     for prefix, domain in PROVIDER_CATEGORY_MATCHERS:
         if prefix.endswith("*"):
             if normalized.startswith(prefix[:-1]):
-                return f"Resource / {domain}"
+                return _resource_category(domain)
         elif normalized == prefix or normalized.startswith(f"{prefix}."):
-            return f"Resource / {domain}"
-    return "Resource / Other Providers"
+            return _resource_category(domain)
+    return "Other Providers"
 
 
-def _record_category_provenance(surface: str, provider_namespace: Optional[str] = None) -> dict:
+def _resource_category(domain: str) -> str:
+    if domain not in RESOURCE_CATEGORY_DOMAINS:
+        raise AzurePortalSchemaError(f"Unsupported Azure resource category: {domain}")
+    return domain
+
+
+def core_category(core_name: str) -> str:
+    """Map an exact canonical core-module name to its reviewed Azure category."""
+
+    domain = CORE_NAME_CATEGORY_OVERRIDES.get(core_name)
+    if domain is None:
+        return SURFACE_CATEGORIES["core"]
+    return _resource_category(domain)
+
+
+def _record_category_provenance(
+    surface: str,
+    provider_namespace: Optional[str] = None,
+    core_name: Optional[str] = None,
+) -> dict:
     if surface not in SURFACE_CATEGORIES:
         raise AzurePortalSchemaError(f"Unsupported Azure icon source surface: {surface}")
+    if surface == "core":
+        if provider_namespace is not None:
+            raise AzurePortalSchemaError("Core Azure icons cannot have provider provenance")
+        if core_name is None:
+            return {"surface": surface, "category": SURFACE_CATEGORIES[surface]}
+        return {
+            "surface": surface,
+            "coreName": core_name,
+            "category": core_category(core_name),
+        }
+    if core_name is not None:
+        raise AzurePortalSchemaError("Manifest Azure icons cannot have core provenance")
     if surface == "assetTypes" and provider_namespace is not None:
         return {
             "surface": surface,
@@ -1007,7 +1131,19 @@ def _category_from_provenance(provenance: list[dict]) -> str:
         if not isinstance(surface, str) or surface not in SURFACE_CATEGORIES:
             raise AzurePortalSchemaError("Azure icon record has unsupported source surface")
         provider_namespace = item.get("providerNamespace")
-        if provider_namespace is not None:
+        core_name = item.get("coreName")
+        if surface == "core":
+            if provider_namespace is not None:
+                raise AzurePortalSchemaError("Azure icon record has invalid provider provenance")
+            if core_name is None:
+                expected_category = SURFACE_CATEGORIES[surface]
+            elif isinstance(core_name, str):
+                expected_category = core_category(core_name)
+            else:
+                raise AzurePortalSchemaError("Azure icon record has invalid core provenance")
+        elif core_name is not None:
+            raise AzurePortalSchemaError("Azure icon record has invalid core provenance")
+        elif provider_namespace is not None:
             if surface != "assetTypes" or not isinstance(provider_namespace, str):
                 raise AzurePortalSchemaError("Azure icon record has invalid provider provenance")
             expected_category = provider_category(provider_namespace)
@@ -1016,16 +1152,18 @@ def _category_from_provenance(provenance: list[dict]) -> str:
         if item.get("category") != expected_category:
             raise AzurePortalSchemaError("Azure icon record has invalid category provenance")
         categories.add(expected_category)
+    for category in SURFACE_CATEGORY_PRIORITY:
+        if category in categories:
+            return category
     resource_categories = sorted(
-        category for category in categories if category.startswith("Resource / ")
+        category for category in categories if category in RESOURCE_CATEGORY_VALUES
     )
     if len(resource_categories) == 1:
         return resource_categories[0]
     if len(resource_categories) > 1:
-        return "Resource / Shared"
-    for category in SURFACE_CATEGORY_PRIORITY:
-        if category in categories:
-            return category
+        return "Shared"
+    if "General UI" in categories:
+        return "General UI"
     raise AzurePortalSchemaError("Azure icon record has unsupported source category")
 
 
@@ -1038,6 +1176,7 @@ def _manifest_record(
     svg_text: str,
     palette: Optional[dict[str, str]] = None,
     provider_namespace: Optional[str] = None,
+    surface: Optional[str] = None,
 ) -> dict:
     canonical_svg = canonical_svg_text(svg_text)
     label = _manifest_entry_label(entry)
@@ -1101,7 +1240,7 @@ def _manifest_record(
         "descriptor": descriptor,
         "preserveSourceColors": preserve_source_colors(canonical_svg) or bool(paint_map),
         "categoryProvenance": _record_category_provenance(
-            source.category, provider_namespace
+            surface or source.category, provider_namespace
         ),
     }
 
@@ -1126,10 +1265,12 @@ def _manifest_icon_records(
         extension_name: str,
         context_name: str,
         provider_namespace: Optional[str] = None,
+        surface: Optional[str] = None,
     ) -> None:
+        current_surface = surface or source.category
         if isinstance(value, dict):
             current_provider_namespace = provider_namespace
-            if source.category == "assetTypes" and "resourceType" in value:
+            if current_surface == "assetTypes" and "resourceType" in value:
                 resource_type = value["resourceType"]
                 if not isinstance(resource_type, dict):
                     raise AzurePortalSchemaError(
@@ -1158,17 +1299,24 @@ def _manifest_icon_records(
                             icon["data"],
                             palette,
                             current_provider_namespace,
+                            current_surface,
                         )
                     )
             for key, child in value.items():
                 if key == "icon":
                     continue
+                child_surface = current_surface
+                if source.category == "assetTypes":
+                    child_surface = NESTED_ASSET_TYPE_SURFACES.get(
+                        key, current_surface
+                    )
                 visit(
                     child,
                     pointer + [key],
                     extension_name,
                     context_name,
                     current_provider_namespace,
+                    child_surface,
                 )
         elif isinstance(value, list):
             for index, child in enumerate(value):
@@ -1188,6 +1336,7 @@ def _manifest_icon_records(
                     extension_name,
                     child_context,
                     provider_namespace,
+                    current_surface,
                 )
 
     manifest = manifest_payload["manifest"]
@@ -1384,7 +1533,9 @@ def _core_records(
                     "descriptor": descriptor,
                     "preserveSourceColors": preserve_source_colors(canonical_svg)
                     or bool(descriptor.get("paintMap")),
-                    "categoryProvenance": _record_category_provenance("core"),
+                    "categoryProvenance": _record_category_provenance(
+                        "core", core_name=name
+                    ),
                 }
             )
     if not records:

@@ -18,6 +18,23 @@ assert.deepEqual(getIconGroupOptions(categorizedIcons), [
     { value: "Status", text: "Status" },
     { value: "User", text: "User" },
 ]);
+assert.deepEqual(getIconGroupOptions([
+    { name: "resource", category: "Compute" },
+    { name: "services", category: "Portal Services" },
+    { name: "ui", category: "General UI" },
+    { name: "browse", category: "Browse & Discover" },
+    { name: "assets", category: "Portal Assets" },
+    { name: "commands", category: "Portal Commands" },
+    { name: "other", category: "Accessibility" },
+]), [
+    { value: "General UI", text: "General UI" },
+    { value: "Portal Assets", text: "Portal Assets" },
+    { value: "Portal Commands", text: "Portal Commands" },
+    { value: "Browse & Discover", text: "Browse & Discover" },
+    { value: "Portal Services", text: "Portal Services" },
+    { value: "Accessibility", text: "Accessibility" },
+    { value: "Compute", text: "Compute" },
+]);
 assert.deepEqual(getIconGroupFilterState(categorizedIcons, "User"), {
     options: [
         { value: "Status", text: "Status" },

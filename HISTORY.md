@@ -1,5 +1,11 @@
 # History
 
+## 2026-09-01: Accept Deterministic Semantic Categories
+
+- Fluent and Segoe canonical families now receive one generated category from a shared 16-domain UI taxonomy, decided only by canonical name tokens and explicit precedence. Segoe adds Microsoft Product Marks for approved Microsoft identities with `logo`/`wordmark` or explicit Viva Engage, and Microsoft Product UI only where branded source provenance and an approved Microsoft product identity both hold; branded metaphors remain intact and private provenance remains unpublished.
+- Corrected Azure after an all-1,372-family review: `General UI` is distinct from Portal UI/surface groups such as `Portal Commands` and `Browse & Discover`; typed resources use ARM-provider namespaces; exact reviewed core source names share the same flat domain labels, including `Identity`, `Compute`, `Networking`, `Shared`, and observed `DevOps`; genuine unknown/third-party resources remain `Other Providers`.
+- Categories are deterministic browse metadata only. They do not change public identifiers, variants, source URLs, deep links, source bounds, or the 105 local hold; generated counts remain observations rather than contracts.
+
 ## 2026-09-01: Normalize Google Cloud Resource Families and Styles
 
 - Replaced raw GCP component-name grouping with semantic resource identities: terminal `SectionIcon`/`Icon` suffixes are removed, established product spelling variants are normalized, and authored size/style SVGs share one resource card when their style-and-size source slots do not collide. The semantic projection retains no obsolete generated-ID compatibility aliases.
@@ -91,7 +97,7 @@
 ## 2026-09-01: Clean Metadata and Group Azure Semantically
 
 - Split generated metadata into concise visible `metaphors` and non-displayed `searchTerms`. Source paths, implementation identifiers, hash/template tokens, and description fragments no longer appear as chips, but search still indexes them alongside names, descriptions, aliases, and visible metaphors.
-- Added deterministic Azure categories. Core Portal SVG modules are `General UI`; typed resource assets use ARM-provider-derived `Resource / <domain>` groups; untyped assets, commands, browse/discover artifacts, portal services, unknown providers, and multi-domain shared symbols remain explicit instead of relying on icon-name heuristics.
+- Superseded by the accepted all-family semantic-category review above; the earlier claim that all core Portal modules were `General UI` is not current.
 
 ## 2026-08-31: Harden Azure Sync Source-Lock Handoff
 

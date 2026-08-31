@@ -46,6 +46,17 @@ def write_component(directory: Path, name: str) -> None:
     )
 
 
+def write_fluent_icon(directory: Path, name: str) -> None:
+    icon_dir = directory / name / "SVG"
+    icon_dir.mkdir(parents=True)
+    (icon_dir / f"ic_fluent_{name}_24_regular.svg").write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'
+        '<path d="M0 0h24v24H0z" />'
+        "</svg>",
+        encoding="utf-8",
+    )
+
+
 class Mdl2GenerationTests(unittest.TestCase):
     def test_collection_descriptors_support_an_additional_collection(self) -> None:
         collections = icon_data.assemble_collections(
@@ -236,6 +247,142 @@ class Mdl2GenerationTests(unittest.TestCase):
                 "/packages/react-icons-mdl2-branded/src/components/VivaEngageIcon.tsx",
                 icons_by_name["viva_engage"]["variants"]["color"]["sourceUrl"],
             )
+
+    def test_fluent_categories_use_canonical_name_tokens_and_keep_variants(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            icons_dir = Path(temp_dir) / "fluent"
+            write_fluent_icon(icons_dir, "file_add")
+            write_fluent_icon(icons_dir, "arrow_left")
+            write_fluent_icon(icons_dir, "branch_request_closed")
+            write_fluent_icon(icons_dir, "lock_closed")
+            write_fluent_icon(icons_dir, "closed_caption")
+            write_fluent_icon(icons_dir, "animal_paw_print")
+            write_fluent_icon(icons_dir, "add_to_shopping_list")
+            write_fluent_icon(icons_dir, "arrow_circle")
+            write_fluent_icon(icons_dir, "add_circle")
+            write_fluent_icon(icons_dir, "circle")
+            write_fluent_icon(icons_dir, "unknown_widget")
+
+            icons = icon_data.generate_fluent_icons(
+                icons_dir=icons_dir,
+                upstream_sha="fluent-sha",
+                cdn_base="https://cdn.example.test/fluent",
+            )
+
+        icons_by_name = {icon["name"]: icon for icon in icons}
+        self.assertEqual("Files & Documents", icons_by_name["file_add"]["category"])
+        self.assertEqual("Actions & Navigation", icons_by_name["arrow_left"]["category"])
+        self.assertEqual("General UI", icons_by_name["branch_request_closed"]["category"])
+        self.assertEqual("Security & Privacy", icons_by_name["lock_closed"]["category"])
+        self.assertEqual("Accessibility", icons_by_name["closed_caption"]["category"])
+        self.assertEqual("Nature & Animals", icons_by_name["animal_paw_print"]["category"])
+        self.assertEqual(
+            "Commerce & Finance", icons_by_name["add_to_shopping_list"]["category"]
+        )
+        self.assertEqual(
+            "Actions & Navigation", icons_by_name["arrow_circle"]["category"]
+        )
+        self.assertEqual(
+            "Actions & Navigation", icons_by_name["add_circle"]["category"]
+        )
+        self.assertEqual("Shapes & Symbols", icons_by_name["circle"]["category"])
+        self.assertEqual("General UI", icons_by_name["unknown_widget"]["category"])
+        file_add = icons_by_name["file_add"]
+        self.assertEqual("file_add", file_add["name"])
+        self.assertEqual(["regular"], list(file_add["variants"]))
+        self.assertEqual(24, file_add["variants"]["regular"]["defaultSize"])
+        self.assertIn(
+            "/file_add/SVG/ic_fluent_file_add_24_regular.svg",
+            file_add["variants"]["regular"]["sizes"]["24"],
+        )
+
+    def test_segoe_categories_preserve_merged_source_semantics(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            ordinary_dir = temp_path / "ordinary"
+            branded_dir = temp_path / "branded"
+            ordinary_dir.mkdir()
+            branded_dir.mkdir()
+            for name in (
+                "AccessLogo",
+                "AzureInfo",
+                "AzureInfoSolid",
+                "ClassNotebookLogo",
+                "Mail",
+            ):
+                write_component(ordinary_dir, name)
+            for name in (
+                "AzureInfo",
+                "AzureLogo",
+                "AmazonWebServicesLogo",
+                "WordLogo",
+                "VivaEngage",
+                "GenericBrandedConcept",
+            ):
+                write_component(branded_dir, name)
+
+            icons = icon_data.generate_fabric_icons(
+                components_dir=ordinary_dir,
+                branded_components_dir=branded_dir,
+                upstream_sha="abc123",
+                cdn_base="https://cdn.example.test/fluentui",
+                metadata_by_id={
+                    "generic_branded_concept": {"metaphors": ["raw_transport_id"]}
+                },
+            )
+            assembled = icon_data.assemble_collections(
+                [
+                    icon_data.CollectionDescriptor(
+                        key="segoe",
+                        label="Segoe",
+                        short_label="Segoe",
+                        source="example/segoe",
+                        sources=(),
+                        upstream_sha="abc123",
+                        cdn_base="https://cdn.example.test/fluentui",
+                        build_icons=lambda: icons,
+                    )
+                ]
+            )
+
+        icons_by_name = {
+            icon["name"]: icon
+            for icon in assembled["segoe"]["icons"]
+            if "normalizedTo" not in icon
+        }
+        self.assertEqual(
+            "Microsoft Product Marks", icons_by_name["word_logo"]["category"]
+        )
+        self.assertEqual(
+            "Microsoft Product Marks", icons_by_name["azure_logo"]["category"]
+        )
+        self.assertEqual(
+            "Microsoft Product Marks", icons_by_name["access_logo"]["category"]
+        )
+        self.assertEqual(
+            "Microsoft Product Marks",
+            icons_by_name["class_notebook_logo"]["category"],
+        )
+        self.assertEqual(
+            "Microsoft Product Marks", icons_by_name["viva_engage"]["category"]
+        )
+        self.assertEqual(
+            "Microsoft Product UI", icons_by_name["azure_info"]["category"]
+        )
+        self.assertIn("filled", icons_by_name["azure_info"]["variants"])
+        self.assertEqual(
+            "Communication & Collaboration", icons_by_name["mail"]["category"]
+        )
+        self.assertEqual(
+            "General UI", icons_by_name["generic_branded_concept"]["category"]
+        )
+        self.assertEqual(
+            "General UI", icons_by_name["amazon_web_services_logo"]["category"]
+        )
+        self.assertIn("branded", icons_by_name["generic_branded_concept"]["metaphors"])
+        self.assertIn("raw_transport_id", icons_by_name["generic_branded_concept"]["searchTerms"])
+        self.assertNotIn("_identityNames", icons_by_name["azure_info"])
+        self.assertNotIn("_hasBrandedMember", icons_by_name["azure_info"])
 
     def test_metadata_deduplicates_sources_and_keeps_branded_tag(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

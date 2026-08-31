@@ -1,5 +1,12 @@
 const INCLUDE_BOUNDS_SESSION_KEY = "fluent-icons-include-bounds";
 const PANEL_SIZE_MENU_HIDE_DELAY_MS = 130;
+const ICON_GROUP_PRIORITY = [
+    "General UI",
+    "Portal Assets",
+    "Portal Commands",
+    "Browse & Discover",
+    "Portal Services",
+];
 
 function getCollectionPickerOption(set, key) {
     const shortLabel = typeof set?.shortLabel === "string" ? set.shortLabel.trim() : "";
@@ -21,7 +28,14 @@ function getIconGroupOptions(icons) {
     });
 
     return [...groups]
-        .sort((left, right) => left.localeCompare(right))
+        .sort((left, right) => {
+            const leftPriority = ICON_GROUP_PRIORITY.indexOf(left);
+            const rightPriority = ICON_GROUP_PRIORITY.indexOf(right);
+            const leftRank = leftPriority === -1 ? ICON_GROUP_PRIORITY.length : leftPriority;
+            const rightRank = rightPriority === -1 ? ICON_GROUP_PRIORITY.length : rightPriority;
+
+            return leftRank - rightRank || left.localeCompare(right);
+        })
         .map((value) => ({ value, text: value }));
 }
 

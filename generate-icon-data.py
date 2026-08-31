@@ -47,6 +47,157 @@ SENTENCE_FRAGMENT_PREFIXES = {
     "with",
 }
 
+ACTION_NAVIGATION_TOKENS = frozenset({
+    "add", "arrow", "back", "cancel", "check", "close", "delete", "download",
+    "edit", "forward", "link", "menu", "more", "next", "open", "redo",
+    "refresh", "remove", "save", "search", "settings", "undo", "upload",
+})
+SHAPE_SYMBOL_TOKENS = frozenset({
+    "circle", "diamond", "flag", "heart", "hexagon", "math", "rectangle", "shape",
+    "square", "star", "symbol", "triangle",
+})
+SEGEO_MICROSOFT_PRODUCT_IDENTITY_PATTERNS = (
+    ("aad",), ("access",), ("authenticator",), ("azure",), ("bing",),
+    ("bookings",), ("class", "notebook"), ("cortana",), ("delve",),
+    ("dynamics",), ("dynamics365",), ("edge",), ("excel",), ("exchange",),
+    ("fabric",), ("fluid",), ("kaizala",), ("linked", "in"), ("lync",),
+    ("m365",), ("microsoft", "365"), ("microsoft", "flow"),
+    ("microsoft", "staffhub"), ("microsoft", "translator"), ("mixer",),
+    ("msn",), ("nuget",), ("office",), ("one", "drive"), ("one", "note"),
+    ("onedrive",), ("onenote",), ("outlook",), ("planner",), ("power",),
+    ("project",), ("publisher",), ("school", "data", "sync"), ("sharepoint",),
+    ("skype",), ("staff", "notebook"), ("store",), ("stream",), ("sway",),
+    ("task",), ("teams",), ("to", "do"), ("visio",), ("visual", "studio"),
+    ("vsts",), ("windows",), ("word",), ("xbox",), ("yammer",),
+)
+
+# These rules intentionally consider only canonical icon-name tokens.  They are
+# ordered from narrow semantic concepts to increasingly generic UI concepts.
+COMMON_UI_CATEGORY_RULES: tuple[tuple[str, frozenset[str]], ...] = (
+    (
+        "Accessibility",
+        frozenset({
+            "accessibility", "braille", "caption", "hearing", "vision", "wheelchair",
+        }),
+    ),
+    (
+        "Security & Privacy",
+        frozenset({
+            "auth", "certificate", "fingerprint", "key", "lock", "password",
+            "permission", "privacy", "protected", "security", "shield",
+        }),
+    ),
+    (
+        "Status & Feedback",
+        frozenset({
+            "alert", "away", "bell", "error", "fail", "info", "loading",
+            "notification", "presence", "status", "success", "warning",
+        }),
+    ),
+    (
+        "People & Identity",
+        frozenset({
+            "account", "avatar", "contact", "employee", "guest", "group",
+            "people", "person", "profile", "team", "user",
+        }),
+    ),
+    (
+        "Communication & Collaboration",
+        frozenset({
+            "call", "chat", "comment", "conversation", "email", "inbox",
+            "mail", "meeting", "message", "phone", "reply", "send", "share",
+            "voicemail",
+        }),
+    ),
+    (
+        "Files & Documents",
+        frozenset({
+            "archive", "attachment", "book", "clipboard", "document", "file",
+            "folder", "notebook", "page", "pdf", "scan",
+        }),
+    ),
+    (
+        "Media",
+        frozenset({
+            "audio", "camera", "film", "image", "media", "microphone", "music",
+            "photo", "picture", "play", "record", "sound", "speaker", "video",
+            "volume",
+        }),
+    ),
+    (
+        "Devices & Hardware",
+        frozenset({
+            "battery", "bluetooth", "computer", "desktop", "device", "headset",
+            "keyboard", "laptop", "mobile", "monitor", "mouse", "printer", "screen",
+            "tablet", "usb", "wifi",
+        }),
+    ),
+    (
+        "Data & Developer",
+        frozenset({
+            "analytics", "api", "bug", "chart", "cloud", "code", "database",
+            "developer", "graph", "metrics", "pipeline", "script", "server", "storage",
+            "terminal",
+        }),
+    ),
+    (
+        "Commerce & Finance",
+        frozenset({
+            "bank", "card", "cash", "cart", "commerce", "currency", "finance", "gift",
+            "invoice", "money", "payment", "price", "receipt", "shop", "store", "wallet",
+        }),
+    ),
+    (
+        "Places & Travel",
+        frozenset({
+            "airplane", "bus", "car", "compass", "flight", "globe", "hotel", "location",
+            "map", "parking", "pin", "place", "ship", "train", "travel", "world",
+        }),
+    ),
+    (
+        "Nature & Animals",
+        frozenset({
+            "animal", "cloud", "flower", "leaf", "moon", "paw", "plant", "rain", "snow",
+            "sun", "tree", "weather",
+        }),
+    ),
+    (
+        "Layout & Formatting",
+        frozenset({
+            "align", "border", "bold", "column", "crop", "filter", "font", "format",
+            "grid", "indent", "italic", "layout", "line", "list", "paragraph", "resize",
+            "row", "table", "text", "underline", "zoom",
+        }),
+    ),
+    (
+        "Shapes & Symbols",
+        SHAPE_SYMBOL_TOKENS,
+    ),
+    (
+        "Actions & Navigation",
+        ACTION_NAVIGATION_TOKENS,
+    ),
+)
+SEGEO_PRODUCT_MARK_ALLOWLIST = frozenset({"viva_engage"})
+SEGEO_PRODUCT_UI_TOKEN_PATTERNS = (
+    ("azure",),
+    ("microsoft", "365"),
+    ("office",),
+    ("teams",),
+    ("fabric",),
+    ("power",),
+    ("sharepoint",),
+    ("onedrive",),
+    ("outlook",),
+    ("project",),
+    ("visio",),
+    ("skype",),
+    ("windows",),
+    ("xbox",),
+    ("dynamics",),
+    ("authenticator",),
+)
+
 
 class CollectionDescriptor:
     """Private generator description for one coherent icon collection."""
@@ -541,6 +692,73 @@ def humanize_snake(name: str) -> str:
     return " ".join(part.capitalize() for part in parts)
 
 
+def classify_common_ui_category(canonical_name: str) -> str:
+    """Return one deterministic common-UI category from canonical name tokens."""
+
+    tokens = tuple(token for token in canonical_name.split("_") if token)
+    token_set = frozenset(tokens)
+    if identity_has_token_pattern(canonical_name, ("closed", "caption")):
+        return "Accessibility"
+    if identity_has_token_pattern(canonical_name, ("shopping", "list")):
+        return "Commerce & Finance"
+    if token_set & ACTION_NAVIGATION_TOKENS and token_set & SHAPE_SYMBOL_TOKENS:
+        return "Actions & Navigation"
+    for category, allowed_tokens in COMMON_UI_CATEGORY_RULES:
+        if token_set & allowed_tokens:
+            return category
+    return "General UI"
+
+
+def identity_has_token_pattern(identity: str, pattern: tuple[str, ...]) -> bool:
+    tokens = tuple(token for token in identity.split("_") if token)
+    pattern_length = len(pattern)
+    return any(
+        tokens[index : index + pattern_length] == pattern
+        for index in range(len(tokens) - pattern_length + 1)
+    )
+
+
+def classify_segoe_category(icon: dict) -> str:
+    """Classify an already-merged Segoe family without exposing source provenance."""
+
+    identities = {
+        icon["name"],
+        *(
+            identity
+            for identity in icon.get("aliases", [])
+            if isinstance(identity, str)
+        ),
+        *(
+            identity
+            for identity in icon.get("_identityNames", [])
+            if isinstance(identity, str)
+        ),
+    }
+    has_logo_or_wordmark = any(
+        identity_has_token_pattern(identity, (indicator,))
+        for identity in identities
+        for indicator in ("logo", "wordmark")
+    )
+
+    if (has_logo_or_wordmark and any(
+        identity_has_token_pattern(identity, pattern)
+        for identity in identities
+        for pattern in SEGEO_MICROSOFT_PRODUCT_IDENTITY_PATTERNS
+    )) or (
+        identities & SEGEO_PRODUCT_MARK_ALLOWLIST
+    ):
+        return "Microsoft Product Marks"
+
+    if bool(icon.get("_hasBrandedMember")) and any(
+        identity_has_token_pattern(identity, pattern)
+        for identity in identities
+        for pattern in SEGEO_PRODUCT_UI_TOKEN_PATTERNS
+    ):
+        return "Microsoft Product UI"
+
+    return classify_common_ui_category(icon["name"])
+
+
 def gcp_snake_case(value: str) -> str:
     """Return a stable readable identifier for a validated GCP archive field."""
 
@@ -1020,6 +1238,19 @@ def build_normalized_fabric_families(icons: list[dict]) -> None:
         if merged_aliases:
             canonical_icon["aliases"] = merged_aliases
 
+        canonical_icon["_identityNames"] = sorted(
+            {
+                identity
+                for member_name in family_members
+                for identity in icons_by_name[member_name].get("_identityNames", [])
+                if isinstance(identity, str)
+            }
+        )
+        canonical_icon["_hasBrandedMember"] = any(
+            bool(icons_by_name[member_name].get("_hasBrandedMember"))
+            for member_name in family_members
+        )
+
         for member_name in other_members:
             icon = icons_by_name[member_name]
             icon["normalizedTo"] = canonical_name
@@ -1055,6 +1286,7 @@ def generate_fluent_icons(
                 "displayName": icon_dir.name,
                 "description": description if isinstance(description, str) else "",
                 "metaphors": normalize_metaphors(metadata.get("metaphor")),
+                "category": classify_common_ui_category(slugify(icon_dir.name)),
                 "variants": variants,
             }
         )
@@ -1093,6 +1325,7 @@ def generate_fabric_icons(
     component_sources.append((components_dir, "react-icons-mdl2", []))
 
     for source_dir, package_name, source_tags in component_sources:
+        is_branded_source = package_name == "react-icons-mdl2-branded"
         for component_file in sorted(source_dir.glob("*.tsx")):
             match = FABRIC_ICON_FILE_PATTERN.match(component_file.name)
             if not match:
@@ -1133,6 +1366,7 @@ def generate_fabric_icons(
                     "description": description if isinstance(description, str) else "",
                     "metaphors": normalize_metaphors(metaphors),
                     "sourceTags": source_tags,
+                    "isBrandedSource": is_branded_source,
                 }
             )
 
@@ -1248,6 +1482,12 @@ def generate_fabric_icons(
             "displayName": display_name,
             "description": description,
             "metaphors": deduped_metaphors,
+            "_identityNames": sorted(
+                {member["rawId"] for member in group_members}
+            ),
+            "_hasBrandedMember": any(
+                member["isBrandedSource"] for member in group_members
+            ),
             "variants": variants,
         }
         if aliases:
@@ -1257,6 +1497,13 @@ def generate_fabric_icons(
 
     icons.sort(key=lambda icon: icon["name"])
     build_normalized_fabric_families(icons)
+    for icon in icons:
+        if "normalizedTo" in icon:
+            continue
+        icon["category"] = classify_segoe_category(icon)
+    for icon in icons:
+        icon.pop("_identityNames", None)
+        icon.pop("_hasBrandedMember", None)
     return icons
 
 
