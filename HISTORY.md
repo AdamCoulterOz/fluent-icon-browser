@@ -1,5 +1,11 @@
 # History
 
+## 2026-09-01: Add Deterministic Google Cloud Console Discovery
+
+- Added canonical `gcp` discovery from the public Console `routemapdata` index. The route map deterministically names the public gstatic MicroUI/StandaloneUI module surface, avoiding manual Console traversal and retaining no source JavaScript.
+- The deliberate static-archive exception commits a validated SVG-only `gcp-console-icons/` tree with manifest, source lock, and the supplied `REFERENTIAL-FAIR-USE.md` notice. Pages creates `gcp-console-icons.zip` during deployment; the generated archive is not committed.
+- The archive/entry-digest resolver contract is retained for browser extraction and sanitization. The notice provides requested attribution/no-endorsement language and is not recorded as a licence conclusion.
+
 ## 2026-08-31: Publish AWS Architecture Icons Collection
 
 - Published canonical `aws` from the official AWS Architecture Icons ZIP for technical documentation and architecture diagrams, with 859 current families across 45 generated source categories.

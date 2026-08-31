@@ -427,6 +427,116 @@ async function run() {
         /hexadecimal SHA-256/i
     );
 
+    const sameOriginZipDescriptor = {
+        ...storedZipDescriptor,
+        format: "same-origin-zip-svg-entry",
+        url: "gcp-console-icons.zip",
+    };
+    const sameOriginSecondDescriptor = {
+        ...sameOriginZipDescriptor,
+        url: "./gcp-console-icons.zip",
+        entry: deflatedZipEntry,
+        entrySha256: await sha256Hex(deflatedZipSvg),
+    };
+    let sameOriginZipFetchCount = 0;
+    let sameOriginZipArchiveDigestCount = 0;
+    const sameOriginCrypto = {
+        subtle: {
+            digest: async (algorithm, bytes) => {
+                if (bytes.byteLength === zipBytes.byteLength) {
+                    sameOriginZipArchiveDigestCount += 1;
+                }
+                return crypto.subtle.digest(algorithm, bytes);
+            },
+        },
+    };
+    const sameOriginZipResolver = new RemoteIconSourceResolver({
+        baseUrl: "https://icons.example.test/catalog/index.html",
+        crypto: sameOriginCrypto,
+        sanitize: (svg) => svg,
+        fetch: async (url) => {
+            sameOriginZipFetchCount += 1;
+            assert.equal(url, "https://icons.example.test/catalog/gcp-console-icons.zip");
+            return {
+                ok: true,
+                status: 200,
+                headers: { get: () => "application/zip" },
+                arrayBuffer: async () => zipBytes.buffer.slice(zipBytes.byteOffset, zipBytes.byteOffset + zipBytes.byteLength),
+            };
+        },
+    });
+    const [sameOriginFirst, sameOriginSecond] = await Promise.all([
+        sameOriginZipResolver.resolve(sameOriginZipDescriptor),
+        sameOriginZipResolver.resolve(sameOriginSecondDescriptor),
+    ]);
+    assert.equal(sameOriginFirst, storedZipSvg);
+    assert.equal(sameOriginSecond, deflatedZipSvg);
+    assert.equal(sameOriginZipFetchCount, 1);
+    assert.equal(sameOriginZipArchiveDigestCount, 1);
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, entrySha256: "0".repeat(64) }),
+        /SHA-256 does not match/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, url: "https://other.example.test/gcp-console-icons.zip" }),
+        /current page origin/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, url: "//icons.example.test/gcp-console-icons.zip" }),
+        /protocol-relative/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, url: "data:application/zip;base64,AA==" }),
+        /HTTP\(S\).*current page origin/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, url: "javascript:alert(1)" }),
+        /HTTP\(S\).*current page origin/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, entry: "../unsafe.svg" }),
+        /safe entry path/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, archiveSha256: "not-a-digest" }),
+        /hexadecimal SHA-256/i
+    );
+    const missingDigestDescriptor = { ...sameOriginZipDescriptor };
+    delete missingDigestDescriptor.entrySha256;
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve(missingDigestDescriptor),
+        /invalid remote SVG source descriptor/i
+    );
+    await assert.rejects(
+        () => sameOriginZipResolver.resolve({ ...sameOriginZipDescriptor, url: " " }),
+        /valid archive URL/i
+    );
+
+    let sameOriginRetryFetchCount = 0;
+    const sameOriginRetryResolver = new RemoteIconSourceResolver({
+        baseUrl: "https://icons.example.test/catalog/index.html",
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => {
+            sameOriginRetryFetchCount += 1;
+            if (sameOriginRetryFetchCount === 1) {
+                throw new Error("temporary archive network failure");
+            }
+            return {
+                ok: true,
+                status: 200,
+                headers: { get: () => "application/zip" },
+                arrayBuffer: async () => zipBytes.buffer.slice(zipBytes.byteOffset, zipBytes.byteOffset + zipBytes.byteLength),
+            };
+        },
+    });
+    await assert.rejects(
+        () => sameOriginRetryResolver.resolve(sameOriginZipDescriptor),
+        /temporary archive network failure/i
+    );
+    assert.equal(await sameOriginRetryResolver.resolve(sameOriginZipDescriptor), storedZipSvg);
+    assert.equal(sameOriginRetryFetchCount, 2);
+
     async function rejectsZipMetadata(entry, pattern) {
         const bytes = zipArchive([entry]);
         const resolver = new RemoteIconSourceResolver({

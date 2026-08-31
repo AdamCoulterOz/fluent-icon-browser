@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
@@ -452,6 +453,124 @@ def humanize_snake(name: str) -> str:
     return " ".join(part.capitalize() for part in parts)
 
 
+def gcp_snake_case(value: str) -> str:
+    """Return a stable readable identifier for a validated GCP archive field."""
+
+    return re.sub(
+        r"_+",
+        "_",
+        re.sub(r"[^a-z0-9]+", "_", camel_to_snake(value).lower()),
+    ).strip("_")
+
+
+def humanize_gcp_extension(extension: str) -> str:
+    return humanize_snake(gcp_snake_case(extension))
+
+
+def generate_gcp_console_icons(
+    directory: Path,
+) -> tuple[dict, list[dict], str]:
+    """Emit same-origin ZIP descriptors from a validated GCP source directory."""
+
+    from azure_portal_icons import preserve_source_colors
+    from gcp_console_icons import (
+        LOCK_NAME,
+        build_archive_from_source_tree,
+        validate_source_tree,
+    )
+
+    manifest = validate_source_tree(directory)
+    archive_bytes = build_archive_from_source_tree(directory)
+    try:
+        source_lock = json.loads((directory / LOCK_NAME).read_bytes())
+    except json.JSONDecodeError as exc:
+        raise ValueError("GCP Console source lock is not JSON") from exc
+    if not isinstance(source_lock, dict):
+        raise ValueError("GCP Console source lock is not an object")
+
+    modules = source_lock.get("modules")
+    if not isinstance(modules, list):
+        raise ValueError("GCP Console source lock has no modules")
+    modules_by_id = {
+        module.get("id"): module
+        for module in modules
+        if isinstance(module, dict) and isinstance(module.get("id"), str)
+    }
+    if len(modules_by_id) != len(modules):
+        raise ValueError("GCP Console source lock has duplicate or invalid module ids")
+
+    archive_sha256 = hashlib.sha256(archive_bytes).hexdigest()
+    icons: list[dict] = []
+    seen_family_names: set[str] = set()
+    for entry in manifest["icons"]:
+        module_id = entry["moduleId"]
+        module_record = modules_by_id.get(module_id)
+        if module_record is None or not isinstance(module_record.get("url"), str):
+            raise ValueError("GCP Console source tree icon has no matching locked module URL")
+        extension = entry["extension"]
+        module = entry["module"]
+        entry_name = entry["name"]
+        data_icon_name = entry["dataIconName"]
+        display_name = data_icon_name if data_icon_name is not None else entry_name
+        readable_identity = (
+            gcp_snake_case(data_icon_name) if data_icon_name is not None else "template"
+        ) or "icon"
+        family_name = "_".join(
+            (
+                "gcp",
+                gcp_snake_case(extension),
+                gcp_snake_case(module),
+                readable_identity,
+                gcp_snake_case(entry_name),
+            )
+        )
+        if not family_name or family_name in seen_family_names:
+            raise ValueError("GCP Console source tree has colliding generated family ids")
+        seen_family_names.add(family_name)
+
+        descriptor = {
+            "format": "same-origin-zip-svg-entry",
+            "url": "gcp-console-icons.zip",
+            "entry": entry["path"],
+            "archiveSha256": archive_sha256,
+            "entrySha256": entry["sha256"],
+        }
+        svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
+        style = "color" if preserve_source_colors(svg_text) else "regular"
+        default_size = (
+            parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox"))
+            or 24
+        )
+        variant = {
+            "defaultSize": default_size,
+            "sourceUrl": module_record["url"],
+            "remoteSource": descriptor,
+            "sizes": {str(default_size): {"remoteSource": descriptor}},
+        }
+        if style == "color":
+            variant["preserveSourceColors"] = True
+            variant["sourceCapabilities"] = {"currentColor": False, "boundingBox": False}
+        search_metadata = [display_name, entry_name, extension, module, module_id]
+        metaphors = list(dict.fromkeys(search_metadata))
+        aliases = [display_name]
+        if entry_name != display_name:
+            aliases.append(entry_name)
+        icons.append(
+            {
+                "name": family_name,
+                "displayName": display_name,
+                "description": "",
+                "metaphors": metaphors,
+                "aliases": aliases,
+                "category": humanize_gcp_extension(extension),
+                "variants": {style: variant},
+            }
+        )
+
+    icons.sort(key=lambda icon: icon["name"])
+    return source_lock, icons, archive_sha256
+
+
 def find_semantic_inverse_candidates(icon_name: str, known_names: set[str]) -> list[str]:
     tokens = icon_name.split("_")
     candidates: set[str] = set()
@@ -824,6 +943,7 @@ def generate_icon_data(
     redhat_icons_dir: Optional[Path] = None,
     redhat_source_lock_path: Optional[Path] = None,
     redhat_upstream_sha: str = "",
+    gcp_console_directory: Optional[Path] = None,
 ) -> tuple[int, int]:
     fabric_metadata = load_fabric_metadata(fabric_metadata_path)
 
@@ -1115,6 +1235,33 @@ def generate_icon_data(
                 ),
             )
         )
+    if gcp_console_directory is not None:
+        gcp_source_lock, gcp_icons, gcp_archive_sha256 = generate_gcp_console_icons(
+            gcp_console_directory
+        )
+        descriptors.append(
+            CollectionDescriptor(
+                key="gcp",
+                label="Google Cloud Console Icons",
+                short_label="Google Cloud",
+                source=(
+                    "Static same-origin archive generated from public Google Cloud "
+                    "Console route-map and module sources; contains the archive notice"
+                ),
+                sources=(
+                    source_record(
+                        label="Google Cloud Console Icons",
+                        reference="Google Cloud Console public route-map/module sources",
+                        url="https://console.cloud.google.com/",
+                        revision=gcp_source_lock["contentSha256"],
+                        digest=gcp_archive_sha256,
+                    ),
+                ),
+                upstream_sha=gcp_source_lock["contentSha256"],
+                cdn_base="gcp-console-icons.zip",
+                build_icons=lambda: gcp_icons,
+            )
+        )
     collections = assemble_collections(descriptors)
     fluent_icons = collections["fluent"]["icons"]
     segoe_icons = collections["segoe"]["icons"]
@@ -1124,6 +1271,7 @@ def generate_icon_data(
     salesforce_icons = collections.get("salesforce", {}).get("icons", [])
     aws_icons = collections.get("aws", {}).get("icons", [])
     redhat_icons = collections.get("redhat", {}).get("icons", [])
+    gcp_icons = collections.get("gcp", {}).get("icons", [])
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -1146,6 +1294,7 @@ def generate_icon_data(
         f"+ {len(salesforce_icons)} Salesforce SLDS icons "
         f"+ {len(aws_icons)} AWS Architecture icons "
         f"+ {len(redhat_icons)} Red Hat icons "
+        f"+ {len(gcp_icons)} Google Cloud Console icons "
         f"-> {output_file}"
     )
     return len(fluent_icons), len(segoe_icons)
@@ -1199,6 +1348,11 @@ def parse_args() -> argparse.Namespace:
         "--aws-source-lock",
         default="",
         help="Digest-bound AWS Architecture Icons archive source lock",
+    )
+    parser.add_argument(
+        "--gcp-console-directory",
+        default="",
+        help="Versioned GCP Console SVG source directory for the Pages ZIP payload",
     )
     parser.add_argument(
         "--redhat-icons-dir",
@@ -1347,6 +1501,9 @@ def main() -> None:
         if args.redhat_source_lock
         else None,
         redhat_upstream_sha=args.redhat_upstream_sha.strip(),
+        gcp_console_directory=Path(args.gcp_console_directory)
+        if args.gcp_console_directory
+        else None,
     )
 
 

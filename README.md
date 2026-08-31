@@ -2,7 +2,7 @@
 
 [Open the website](https://adamcoulteroz.github.io/fluent-icon-browser/)
 
-A static GitHub Pages index, deep-link browser, and client-side resolver for searchable, source-attributed technology icon collections. The committed `icon-data.json` lets the site open without a server-side catalogue API or frontend build runtime; the client retrieves each resolved icon from its source owner and renders it inline.
+A static GitHub Pages index, deep-link browser, and client-side resolver for searchable, source-attributed technology icon collections. The committed `icon-data.json` lets the site open without a server-side catalogue API or frontend build runtime; the client retrieves each resolved icon from its source owner and renders it inline, except for the explicit Google Cloud Console static-archive path described below.
 
 ## Published Collections
 
@@ -14,6 +14,8 @@ A static GitHub Pages index, deep-link browser, and client-side resolver for sea
 | `flight` | HashiCorp Flight Icons | Generic concepts from `hashicorp/design-system/packages/flight-icons` |
 | `hashicorp` | HashiCorp Products | Official product marks from the `Products` category in `hashicorp/design-system/packages/flight-icons` |
 | `salesforce` | Salesforce SLDS Icons | Official `@salesforce-ux/icons` npm archive, entry-digest verified at runtime |
+| `aws` | AWS Architecture Icons | Official AWS Architecture Icons ZIP, entry-digest verified at runtime |
+| `gcp` | Google Cloud Console Icons | Public Console route-map and gstatic MicroUI/StandaloneUI modules, packaged into a same-origin Pages archive |
 | `redhat` | Red Hat Icons | `standard`, `ui`, and `microns` from `RedHat-UX/red-hat-icons` |
 
 `fabric` remains a compatibility alias for `segoe`; it is not a separate published collection. See [SOURCES.md](SOURCES.md) for source status, licences, scope exclusions, and candidates that are not approved for indexing.
@@ -31,7 +33,9 @@ A static GitHub Pages index, deep-link browser, and client-side resolver for sea
 
 Each generated collection has a public `sources[]` record containing source label, reference, source URL, pinned revision, and, where applicable, licence name, licence URL, and content digest. The browser exposes the source and licence links from those records.
 
-Published sources have a deterministic official source boundary: a revisioned or stable per-icon URL, or an official archive with an entry descriptor and digest. They must be unauthenticated and CORS-accessible to the client, and their terms must be compatible with automated indexing, deep-linking/hotlinking, runtime retrieval, and user copy/download, with appropriate attribution, trademark, and no-endorsement treatment. Remote SVG URLs are pinned to upstream commits. Flight, HashiCorp Products, and Red Hat synchronization require source locks whose digests bind the approved source files to the selected commit. Salesforce synchronisation locks the registry archive digest plus every approved SVG entry; the browser verifies both before sanitizing an extracted entry. The pipeline may temporarily download official sources to inspect and index them, then discards the payloads and retains generated index/lock metadata only. Azure remains descriptor-only: the browser resolves, verifies, sanitizes, and renders public Azure sources lazily.
+Published sources have a deterministic official source boundary: a revisioned or stable per-icon URL, or an official archive with an entry descriptor and digest. They must be unauthenticated and CORS-accessible to the client when resolved from the source owner, and their terms must be compatible with automated indexing, deep-linking/hotlinking, runtime retrieval, and user copy/download, with appropriate attribution, trademark, and no-endorsement treatment. Remote SVG URLs are pinned to upstream commits. Flight, HashiCorp Products, and Red Hat synchronization require source locks whose digests bind the approved source files to the selected commit. Salesforce synchronisation locks the registry archive digest plus every approved SVG entry; the browser verifies both before sanitizing an extracted entry. The pipeline may temporarily download official sources to inspect and index them, then discards the payloads and retains generated index/lock metadata only. Azure remains descriptor-only: the browser resolves, verifies, sanitizes, and renders public Azure sources lazily.
+
+Google Cloud Console is the narrow static-archive exception. Sync deterministically reads the public Console route map and the public gstatic MicroUI/StandaloneUI modules it names, extracting literal `cm-icon` SVG templates only. It commits the resulting SVG-only `gcp-console-icons/` source tree, source lock, manifest, and `REFERENTIAL-FAIR-USE.md`; it never commits source JavaScript. Pages packages that directory as `gcp-console-icons.zip` during deployment, so the browser can verify and extract a same-origin archive without depending on gstatic CORS. The notice is attribution/no-endorsement treatment, not a licence conclusion.
 
 Current generated state counts are observed build results, not permanent catalogue cardinality guarantees.
 
@@ -45,13 +49,13 @@ Serve the static site locally:
 python serve.py
 ```
 
-The generator accepts the usual Fluent/Segoe inputs plus optional Flight, HashiCorp Products, Salesforce archive, and Red Hat source inputs with their source locks. Generation fails when a requested locked collection does not match its source digest. The sync workflow handles the corresponding upstream acquisition and writes the committed index; do not add upstream SVG payloads merely to make a collection available.
+The generator accepts the usual Fluent/Segoe inputs plus optional Flight, HashiCorp Products, Salesforce archive, Red Hat, and GCP Console source-tree inputs with their source locks. Generation fails when a requested locked collection does not match its source digest. The sync workflow handles the corresponding upstream acquisition and writes the committed index; do not add upstream SVG payloads merely to make a collection available outside the documented GCP Console exception.
 
 `process.py` remains an experiment and is not part of the automated sync path.
 
 ## Automation and Deployment
 
-`.github/workflows/sync-fluent-icons.yml` refreshes the generated index when approved upstream revisions or source locks change, or when manually forced. It uses commit-pinned source URLs, retains the public Azure drift/count gates, and commits generated metadata/index and source-lock records only.
+`.github/workflows/sync-fluent-icons.yml` refreshes the generated index when approved upstream revisions or source locks change, or when manually forced. It uses commit-pinned source URLs, retains the public Azure drift/count gates, and commits generated metadata/index and source-lock records only, apart from the validated GCP Console SVG source tree.
 
 `.github/workflows/deploy-pages.yml` publishes the static files and committed index from `main`; scheduled repair deployment remains part of the lifecycle.
 

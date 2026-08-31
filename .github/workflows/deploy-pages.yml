@@ -45,6 +45,9 @@ jobs:
           mkdir -p _site
           cp index.html keel.css style.css script.js remote-icon-source.js service-worker.js site.webmanifest icon-data.json robots.txt sitemap.xml _site/
           cp -R icons _site/icons
+          python gcp_console_icons.py \
+            --package-source-tree gcp-console-icons \
+            --archive _site/gcp-console-icons.zip
           export DEPLOYMENT_VERSION="$GITHUB_SHA"
           export DEPLOYMENT_SUMMARY="$(git log -1 --pretty=%s)"
           python3 - <<'PY' > _site/version.json

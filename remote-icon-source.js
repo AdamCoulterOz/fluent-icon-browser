@@ -480,7 +480,11 @@
                 (
                     typeof value.selector === "string" ||
                     (
-                        (value.format === "npm-tgz-svg-entry" || value.format === "zip-svg-entry") &&
+                        (
+                            value.format === "npm-tgz-svg-entry" ||
+                            value.format === "zip-svg-entry" ||
+                            value.format === "same-origin-zip-svg-entry"
+                        ) &&
                         typeof value.entry === "string" &&
                         typeof value.archiveSha256 === "string" &&
                         typeof value.entrySha256 === "string"
@@ -769,6 +773,37 @@
         }
     }
 
+    function validateSameOriginZipSvgEntryDescriptor(descriptor, baseUrl) {
+        if (!isSafeArchiveEntryPath(descriptor.entry)) {
+            throw new Error("Same-origin ZIP SVG source requires a safe entry path");
+        }
+        if (!SHA256_HEX.test(descriptor.archiveSha256) || !SHA256_HEX.test(descriptor.entrySha256)) {
+            throw new Error("Same-origin ZIP SVG source requires hexadecimal SHA-256 archive and entry digests");
+        }
+        if (!descriptor.url.trim()) {
+            throw new Error("Same-origin ZIP SVG source requires a valid archive URL");
+        }
+        if (/^\s*\/\//.test(descriptor.url)) {
+            throw new Error("Same-origin ZIP SVG source does not allow protocol-relative archive URLs");
+        }
+        let pageUrl;
+        let archiveUrl;
+        try {
+            pageUrl = new URL(baseUrl);
+            archiveUrl = new URL(descriptor.url, pageUrl);
+        } catch (_error) {
+            throw new Error("Same-origin ZIP SVG source requires a current page URL and a valid archive URL");
+        }
+        if (
+            !/^https?:$/.test(pageUrl.protocol) ||
+            !/^https?:$/.test(archiveUrl.protocol) ||
+            archiveUrl.origin !== pageUrl.origin
+        ) {
+            throw new Error("Same-origin ZIP SVG source requires an HTTP(S) archive URL from the current page origin");
+        }
+        return archiveUrl.href;
+    }
+
     function readZipUint16(bytes, offset, context) {
         if (offset < 0 || offset + 2 > bytes.length) {
             throw new Error(`Malformed ZIP archive: truncated ${context}`);
@@ -838,7 +873,7 @@
         throw new Error("Malformed ZIP archive: end of central directory was not found");
     }
 
-    function parseZipCentralDirectory(bytes, expectedEntry) {
+    function parseZipCentralDirectory(bytes) {
         if (bytes.length > MAX_ZIP_ARCHIVE_BYTES) {
             throw new Error("ZIP archive exceeds the supported size limit");
         }
@@ -868,8 +903,8 @@
         }
 
         let offset = centralDirectoryOffset;
-        let requested = null;
-        const localHeaderOffsets = [];
+        const entriesByName = new Map();
+        const entries = [];
         for (let index = 0; index < entryCount; index += 1) {
             if (readZipUint32(bytes, offset, "central directory header") !== 0x02014b50) {
                 throw new Error("Malformed ZIP archive: invalid central directory header");
@@ -907,38 +942,46 @@
             ) {
                 throw new Error("ZIP archive entry exceeds the supported size limit");
             }
-            if (entry === expectedEntry) {
-                if (requested) {
-                    throw new Error("ZIP archive contains duplicate requested entries");
-                }
-                requested = {
-                    flags,
-                    usesDataDescriptor: Boolean(flags & 0x0008),
-                    compression,
-                    crc32,
-                    compressedSize,
-                    uncompressedSize,
-                    nameBytes,
-                    localHeaderOffset,
-                    centralDirectoryOffset,
-                };
-            }
-            localHeaderOffsets.push(localHeaderOffset);
+            const metadata = {
+                flags,
+                usesDataDescriptor: Boolean(flags & 0x0008),
+                compression,
+                crc32,
+                compressedSize,
+                uncompressedSize,
+                nameBytes,
+                localHeaderOffset,
+                centralDirectoryOffset,
+            };
+            const sameNameEntries = entriesByName.get(entry) || [];
+            sameNameEntries.push(metadata);
+            entriesByName.set(entry, sameNameEntries);
+            entries.push(metadata);
             offset = recordEnd;
         }
         if (offset !== eocdOffset) {
             throw new Error("Malformed ZIP archive: central directory size does not match its entries");
         }
-        if (!requested) {
-            throw new Error(`ZIP archive entry '${expectedEntry}' was not found`);
+        const entriesByOffset = [...entries].sort(
+            (left, right) => left.localHeaderOffset - right.localHeaderOffset
+        );
+        let nextLocalHeaderOffset = centralDirectoryOffset;
+        for (let index = entriesByOffset.length - 1; index >= 0;) {
+            const localHeaderOffset = entriesByOffset[index].localHeaderOffset;
+            let groupStart = index;
+            while (
+                groupStart > 0 &&
+                entriesByOffset[groupStart - 1].localHeaderOffset === localHeaderOffset
+            ) {
+                groupStart -= 1;
+            }
+            for (let groupedIndex = groupStart; groupedIndex <= index; groupedIndex += 1) {
+                entriesByOffset[groupedIndex].nextLocalHeaderOffset = nextLocalHeaderOffset;
+            }
+            nextLocalHeaderOffset = localHeaderOffset;
+            index = groupStart - 1;
         }
-        requested.nextLocalHeaderOffset = localHeaderOffsets
-            .filter((headerOffset) => headerOffset > requested.localHeaderOffset)
-            .reduce(
-                (nextOffset, headerOffset) => Math.min(nextOffset, headerOffset),
-                centralDirectoryOffset
-            );
-        return requested;
+        return entriesByName;
     }
 
     function crc32(bytes) {
@@ -996,11 +1039,19 @@
         return result;
     }
 
-    async function extractZipEntry(zipBytes, expectedEntry) {
+    async function extractZipEntry(zipBytes, expectedEntry, entriesByName) {
         if (!isSafeArchiveEntryPath(expectedEntry)) {
             throw new Error("ZIP SVG source requires a safe entry path");
         }
-        const entry = parseZipCentralDirectory(zipBytes, expectedEntry);
+        const archiveEntriesByName = entriesByName || parseZipCentralDirectory(zipBytes);
+        const entries = archiveEntriesByName.get(expectedEntry);
+        if (!entries) {
+            throw new Error(`ZIP archive entry '${expectedEntry}' was not found`);
+        }
+        if (entries.length !== 1) {
+            throw new Error("ZIP archive contains duplicate requested entries");
+        }
+        const [entry] = entries;
         const headerOffset = entry.localHeaderOffset;
         if (readZipUint32(zipBytes, headerOffset, "local file header") !== 0x04034b50) {
             throw new Error("Malformed ZIP archive: requested entry has no local file header");
@@ -1088,14 +1139,16 @@
             this.crypto = options.crypto || global.crypto;
             this.sanitize = options.sanitize || sanitizeSvg;
             this.canonicalize = options.canonicalize || canonicalizeSvgForDigest;
+            this.baseUrl = options.baseUrl || global.location?.href;
             this.sourceTextByUrl = new Map();
             this.archiveBytesByUrl = new Map();
+            this.verifiedZipArchivesByKey = new Map();
             this.svgByDescriptor = new Map();
         }
 
-        descriptorKey(descriptor) {
+        descriptorKey(descriptor, resolvedArchiveUrl = descriptor.url) {
             return [
-                descriptor.url,
+                resolvedArchiveUrl,
                 descriptor.format,
                 descriptor.selector,
                 descriptor.entry || "",
@@ -1154,6 +1207,30 @@
             return this.archiveBytesByUrl.get(url);
         }
 
+        verifiedZipArchiveKey(url, archiveSha256) {
+            return `${url}\n${archiveSha256}`;
+        }
+
+        async fetchVerifiedZipArchive(url, archiveSha256) {
+            const key = this.verifiedZipArchiveKey(url, archiveSha256);
+            if (!this.verifiedZipArchivesByKey.has(key)) {
+                const verifiedArchive = this.fetchArchiveBytes(url).then(async (bytes) => {
+                    await verifySha256Bytes(bytes, archiveSha256, this.crypto);
+                    return {
+                        bytes,
+                        entriesByName: parseZipCentralDirectory(bytes),
+                    };
+                });
+                this.verifiedZipArchivesByKey.set(key, verifiedArchive);
+                verifiedArchive.catch(() => {
+                    if (this.verifiedZipArchivesByKey.get(key) === verifiedArchive) {
+                        this.verifiedZipArchivesByKey.delete(key);
+                    }
+                });
+            }
+            return this.verifiedZipArchivesByKey.get(key);
+        }
+
         extractSvg(sourceText, descriptor) {
             if (descriptor.format === "portal-amd-svg-module") {
                 return extractAmdSvgModule(sourceText, descriptor.selector);
@@ -1168,10 +1245,13 @@
             if (!isRemoteSourceDescriptor(descriptor)) {
                 throw new Error("Invalid remote SVG source descriptor");
             }
+            let archiveUrl = descriptor.url;
             if (descriptor.format === "zip-svg-entry") {
                 validateZipSvgEntryDescriptor(descriptor);
+            } else if (descriptor.format === "same-origin-zip-svg-entry") {
+                archiveUrl = validateSameOriginZipSvgEntryDescriptor(descriptor, this.baseUrl);
             }
-            const key = this.descriptorKey(descriptor);
+            const key = this.descriptorKey(descriptor, archiveUrl);
             if (!this.svgByDescriptor.has(key)) {
                 const resolution = descriptor.format === "npm-tgz-svg-entry"
                     ? this.fetchArchiveBytes(descriptor.url).then(async (archiveBytes) => {
@@ -1180,10 +1260,13 @@
                         await verifySha256Bytes(entryBytes, descriptor.entrySha256, this.crypto);
                         return this.sanitize(new TextDecoder("utf-8", { fatal: true }).decode(entryBytes));
                     })
-                    : descriptor.format === "zip-svg-entry"
-                        ? this.fetchArchiveBytes(descriptor.url).then(async (archiveBytes) => {
-                            await verifySha256Bytes(archiveBytes, descriptor.archiveSha256, this.crypto);
-                            const entryBytes = await extractZipEntry(archiveBytes, descriptor.entry);
+                    : descriptor.format === "zip-svg-entry" || descriptor.format === "same-origin-zip-svg-entry"
+                        ? this.fetchVerifiedZipArchive(archiveUrl, descriptor.archiveSha256).then(async (archive) => {
+                            const entryBytes = await extractZipEntry(
+                                archive.bytes,
+                                descriptor.entry,
+                                archive.entriesByName
+                            );
                             await verifySha256Bytes(entryBytes, descriptor.entrySha256, this.crypto);
                             return this.sanitize(decodeZipSvgEntry(entryBytes));
                         })
