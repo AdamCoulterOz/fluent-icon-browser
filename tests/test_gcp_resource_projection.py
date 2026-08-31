@@ -66,11 +66,17 @@ class GcpResourceProjectionTests(unittest.TestCase):
             module_url("AppDesignCenterMicroUi"): (
                 b"const cloudNat = '<svg data-icon-name=\"cloudNatIcon\" viewBox=\"0 0 20 20\"><path fill=\"#000\" d=\"M0 0h20v20H0z\"/></svg>';"
                 b"const instanceGroup = '<svg data-icon-name=\"instanceGroupIcon\"><path d=\"M10 10\"/></svg>';"
+                b"const bigtable24 = '<svg data-icon-name=\"bigtableSectionIcon\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\"/></svg>';"
+                b"const bigtable32 = '<svg data-icon-name=\"bigtableSectionIcon\" viewBox=\"0 0 32 32\"><path fill=\"#4285f4\" d=\"M0 0h32v16H0z\"/><path fill=\"#34a853\" d=\"M0 16h32v16H0z\"/></svg>';"
                 b"const close = '" + close_svg + b"';"
                 b"const status = '<svg data-icon-name=\"statusInfoIcon\"><path d=\"M1 1\"/></svg>';"
             ),
             module_url("DbmanageabilityMicroUi"): (
                 b"const sql = '<svg data-icon-name=\"cloudSqlIcon\"><path d=\"M2 2\"/></svg>';"
+                b"const bigtable18 = '<svg data-icon-name=\"bigtableIcon\" viewBox=\"0 0 18 18\"><path d=\"M0 0h18v18H0z\"/></svg>';"
+                b"const dataCanvas = '<svg data-icon-name=\"dataCanvasIcon\" fill=\"none\" viewBox=\"0 0 24 24\"><path stroke=\"currentColor\" d=\"M2 2h20v20H2z\"/></svg>';"
+                b"const project = '<svg data-icon-name=\"projectIcon\"><path d=\"M4 4h16v16H4z\"/></svg>';"
+                b"const managementProject = '<svg data-icon-name=\"managementProjectIcon\"><path d=\"M5 5h14v14H5z\"/></svg>';"
                 b"const filter = '<svg data-icon-name=\"filterIcon\"><path d=\"M3 3\"/></svg>';"
             ),
             module_url("NetworkingMicroUi"): (
@@ -95,20 +101,32 @@ class GcpResourceProjectionTests(unittest.TestCase):
             _, icons, _ = icon_data.generate_gcp_console_icons(directory)
 
         by_name = {icon["name"]: icon for icon in icons}
-        cloud_nat = by_name["gcp_resource_icons_cloud_nat_icon"]
+        cloud_nat = by_name["gcp_resource_icons_cloud_nat"]
         self.assertEqual("Resource Icons", cloud_nat["category"])
-        self.assertEqual(["regular", "color"], list(cloud_nat["variants"]))
+        self.assertEqual(["filled", "color"], list(cloud_nat["variants"]))
         self.assertTrue(cloud_nat["variants"]["color"]["preserveSourceColors"])
         cloud_nat_entries = [
             entry for entry in manifest["icons"] if entry["dataIconName"] == "cloudNatIcon"
         ]
+        self.assertEqual({"cloudNatIcon"}, set(cloud_nat["aliases"]) & {"cloudNatIcon"})
+        self.assertEqual("Resource Icons", by_name["gcp_resource_icons_cloud_sql"]["category"])
+        self.assertEqual("Resource Icons", by_name["gcp_resource_icons_router"]["category"])
+        big_table = by_name["gcp_resource_icons_big_table"]
+        self.assertEqual("Big Table", big_table["displayName"])
+        self.assertEqual(["filled", "color"], list(big_table["variants"]))
+        self.assertEqual(["18", "24"], sorted(big_table["variants"]["filled"]["sizes"]))
+        self.assertEqual(["32"], sorted(big_table["variants"]["color"]["sizes"]))
+        self.assertEqual(24, big_table["variants"]["filled"]["defaultSize"])
+        data_canvas = by_name["gcp_resource_icons_data_canvas"]
+        self.assertEqual("Resource Icons", data_canvas["category"])
+        self.assertEqual(["regular"], list(data_canvas["variants"]))
         self.assertEqual(
-            {icon_data.gcp_family_name(entry) for entry in cloud_nat_entries},
-            set(cloud_nat["aliases"])
-            & {icon_data.gcp_family_name(entry) for entry in cloud_nat_entries},
+            "Resource Icons", by_name["gcp_resource_icons_project"]["category"]
         )
-        self.assertEqual("Resource Icons", by_name["gcp_resource_icons_cloud_sql_icon"]["category"])
-        self.assertEqual("Resource Icons", by_name["gcp_resource_icons_router_icon"]["category"])
+        self.assertEqual(
+            "Resource Icons",
+            by_name["gcp_resource_icons_management_project"]["category"],
+        )
         self.assertFalse(any(icon["displayName"] == "visibleIcon" for icon in icons))
         instance_group_entries = [
             entry
@@ -118,19 +136,11 @@ class GcpResourceProjectionTests(unittest.TestCase):
         instance_group_icons = [
             icon
             for icon in icons
-            if icon["name"].startswith("gcp_resource_icons_instance_group_icon_")
+            if icon["name"].startswith("gcp_resource_icons_instance_group_")
         ]
         self.assertEqual(2, len(instance_group_icons))
-        self.assertTrue(all(list(icon["variants"]) == ["regular"] for icon in instance_group_icons))
-        self.assertEqual(
-            {icon_data.gcp_family_name(entry) for entry in instance_group_entries},
-            {
-                alias
-                for icon in instance_group_icons
-                for alias in icon["aliases"]
-                if alias.startswith("gcp_")
-            },
-        )
+        self.assertTrue(all(list(icon["variants"]) == ["filled"] for icon in instance_group_icons))
+        self.assertEqual(2, len(instance_group_entries))
         self.assertEqual("Common UI", next(icon["category"] for icon in icons if icon["displayName"] == "closeIcon"))
         self.assertEqual(
             {"Resource Icons", "Common UI"},

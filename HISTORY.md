@@ -1,5 +1,11 @@
 # History
 
+## 2026-09-01: Normalize Google Cloud Resource Families and Styles
+
+- Replaced raw GCP component-name grouping with semantic resource identities: terminal `SectionIcon`/`Icon` suffixes are removed, established product spelling variants are normalized, and authored size/style SVGs share one resource card when their style-and-size source slots do not collide. The semantic projection retains no obsolete generated-ID compatibility aliases.
+- Classified GCP source geometry as outlined (`regular`) only for stroke-led SVGs, solid (`filled`) for monochrome filled geometry, and `color` only for intentional authored multicolour paint. The generated browse observation is now 106 `Resource Icons` and 144 `Common UI` cards.
+- Corrected gallery rendering to respect a source SVG root `fill="none"`, so outlined assets such as Data Canvas render identically in the grid and detail panel. Bumped the static CSS/service-worker revision for installed clients.
+
 ## 2026-09-01: Classify Route-Map Google Cloud Resource Artwork
 
 - Replaced misleading route-extension browse groups with 99 reviewed `Resource Icons` families and 171 exact-digest `Common UI` families. The retained 4,363-template route-map source tree, lock, manifest, and Pages archive digest are unchanged; unclassified module-local templates remain source evidence but are not browseable.

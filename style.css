@@ -1002,7 +1002,7 @@ body::-webkit-scrollbar {
     height: 100%;
 }
 
-.icon-card .icon-view:not(.has-color-variant) svg {
+.icon-card .icon-view:not(.has-color-variant) svg:not([fill="none"]) {
     fill: currentColor;
 }
 

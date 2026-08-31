@@ -62,6 +62,7 @@ assert.equal(isThemeColorPaint("#0176d3"), false);
 
 const styleSheet = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
 const browserScript = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+const indexHtml = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 assert.doesNotMatch(styleSheet, /preview-surface-contrast/);
 assert.match(styleSheet, /\.icon-view\.preview-theme-color\s*\{\s*color: #000;\s*\}/);
 assert.match(styleSheet, /\.icon-view\.preview-theme-color img\s*\{\s*filter: brightness\(0\);\s*\}/);
@@ -70,6 +71,11 @@ assert.match(styleSheet, /@media \(prefers-color-scheme: dark\)[\s\S]*?\.icon-vi
 assert.match(styleSheet, /\.icon-view\.has-color-variant\.preview-theme-color img\s*\{\s*filter: brightness\(0\) invert\(1\) !important;\s*\}/);
 assert.doesNotMatch(styleSheet, /preview-theme-color[^}]*background:/);
 assert.doesNotMatch(browserScript.slice(browserScript.indexOf("async function copyToClipboard")), /applyPreviewThemeColor/);
+assert.match(
+    styleSheet,
+    /\.icon-card \.icon-view:not\(\.has-color-variant\) svg:not\(\[fill="none"\]\) \{\s*fill: currentColor;/
+);
+assert.match(indexHtml, /data-style-mode="regular"[^>]+aria-label="Outlined" title="Outlined"/);
 
 assert.deepEqual(
     getCollectionPickerOption({ label: "Full collection name" }, "full"),

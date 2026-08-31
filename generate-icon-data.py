@@ -538,19 +538,54 @@ GCP_RESOURCE_ICON_NAMES_BY_EXTENSION = {
 }
 
 
+GCP_SEMANTIC_NAME_ALIASES = {
+    # The Console uses both product spellings (for example `bigtableIcon`) and
+    # component spellings (for example `bigTableSectionIcon`) for the same
+    # visual identity. Keep the generated IDs human-readable and stable.
+    "bigtable": "big_table",
+    "bigquery": "big_query",
+    "cloudnat": "cloud_nat",
+    "cloudpubsub": "cloud_pubsub",
+    "cloudsql": "cloud_sql",
+}
+
+
+def gcp_semantic_icon_name(data_icon_name: str) -> str:
+    """Return the stable identity behind a Console component-style icon name."""
+
+    stem = re.sub(r"(?:Section)?Icon$", "", data_icon_name)
+    normalized = gcp_snake_case(stem) or "icon"
+    return GCP_SEMANTIC_NAME_ALIASES.get(normalized, normalized)
+
+
+GCP_SHARED_RESOURCE_ICON_NAMES = frozenset(
+    {
+        # Shared Console modules reuse these resource/context icons widely, so
+        # their module placement must not demote them into Common UI.
+        "managementProjectIcon",
+        "projectIcon",
+    }
+)
+GCP_RESOURCE_ICON_NAMES = frozenset(
+    data_icon_name
+    for names in GCP_RESOURCE_ICON_NAMES_BY_EXTENSION.values()
+    for data_icon_name in names
+) | GCP_SHARED_RESOURCE_ICON_NAMES
+GCP_RESOURCE_SEMANTIC_NAMES = frozenset(
+    gcp_semantic_icon_name(data_icon_name) for data_icon_name in GCP_RESOURCE_ICON_NAMES
+)
+
+
 def is_gcp_resource_icon(entry: dict) -> bool:
-    """Identify source-named service and resource artwork in known mixed modules."""
+    """Identify resource artwork independently of the mixed source module."""
 
     data_icon_name = entry["dataIconName"]
     if not isinstance(data_icon_name, str):
         return False
-    if (
-        entry["extension"] == "app_design_center"
-        and data_icon_name.endswith("SectionIcon")
-    ):
-        return True
-    return data_icon_name in GCP_RESOURCE_ICON_NAMES_BY_EXTENSION.get(
-        entry["extension"], frozenset()
+    return (
+        data_icon_name.endswith("SectionIcon")
+        or data_icon_name in GCP_RESOURCE_ICON_NAMES
+        or gcp_semantic_icon_name(data_icon_name) in GCP_RESOURCE_SEMANTIC_NAMES
     )
 
 
@@ -572,8 +607,30 @@ def gcp_family_name(entry: dict) -> str:
     )
 
 
-def gcp_resource_family_name(data_icon_name: str) -> str:
-    return f"gcp_resource_icons_{gcp_snake_case(data_icon_name) or 'icon'}"
+def gcp_svg_variant(svg_text: str) -> str:
+    """Classify source geometry as outline, solid, or intentional multicolour."""
+
+    from azure_portal_icons import preserve_source_colors
+
+    if preserve_source_colors(svg_text):
+        return "color"
+
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise ValueError("GCP Console source tree has invalid SVG text") from exc
+
+    for element in root.iter():
+        if element.tag.rsplit("}", 1)[-1] in {"defs", "clipPath", "mask", "style"}:
+            continue
+        stroke = element.get("stroke")
+        style = element.get("style", "")
+        if stroke and stroke.strip().lower() not in {"", "none", "transparent"}:
+            return "regular"
+        if re.search(r"(?:^|;)\s*stroke\s*:\s*(?!none\b|transparent\b)[^;]+", style, re.I):
+            return "regular"
+
+    return "filled"
 
 
 def gcp_entry_sort_key(entry: dict) -> tuple[str, str, int, str]:
@@ -593,7 +650,6 @@ def generate_gcp_console_icons(
 ) -> tuple[dict, list[dict], str]:
     """Emit same-origin ZIP descriptors from a validated GCP source directory."""
 
-    from azure_portal_icons import preserve_source_colors
     from gcp_console_icons import (
         LOCK_NAME,
         build_archive_from_source_tree,
@@ -633,34 +689,37 @@ def generate_gcp_console_icons(
     other_entries_by_digest: dict[str, list[dict]] = {}
     for entry in renderable_entries:
         if is_gcp_resource_icon(entry):
-            resource_entries_by_name.setdefault(entry["dataIconName"], []).append(entry)
+            resource_entries_by_name.setdefault(
+                gcp_semantic_icon_name(entry["dataIconName"]), []
+            ).append(entry)
         else:
             other_entries_by_digest.setdefault(entry["sha256"], []).append(entry)
 
-    for data_icon_name, entries in sorted(resource_entries_by_name.items()):
-        entries_by_style: dict[str, set[str]] = {}
+    for semantic_name, entries in sorted(resource_entries_by_name.items()):
+        entries_by_style_size: dict[tuple[str, int], set[str]] = {}
         for entry in entries:
             svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
-            style = "color" if preserve_source_colors(svg_text) else "regular"
-            entries_by_style.setdefault(style, set()).add(entry["sha256"])
-        has_same_style_collision = any(
-            len(digests) > 1 for digests in entries_by_style.values()
+            style = gcp_svg_variant(svg_text)
+            size = parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox")) or 24
+            entries_by_style_size.setdefault((style, size), set()).add(entry["sha256"])
+        has_same_style_size_collision = any(
+            len(digests) > 1 for digests in entries_by_style_size.values()
         )
-        if has_same_style_collision:
+        if has_same_style_size_collision:
             entries_by_digest: dict[str, list[dict]] = {}
             for entry in entries:
                 entries_by_digest.setdefault(entry["sha256"], []).append(entry)
             for digest, digest_entries in sorted(entries_by_digest.items()):
                 grouped_entries.append(
                     (
-                        f"{gcp_resource_family_name(data_icon_name)}_{digest}",
+                        f"gcp_resource_icons_{semantic_name}_{digest}",
                         sorted(digest_entries, key=gcp_entry_sort_key),
                     )
                 )
         else:
             grouped_entries.append(
                 (
-                    gcp_resource_family_name(data_icon_name),
+                    f"gcp_resource_icons_{semantic_name}",
                     sorted(entries, key=gcp_entry_sort_key),
                 )
             )
@@ -678,7 +737,11 @@ def generate_gcp_console_icons(
         if module_record is None or not isinstance(module_record.get("url"), str):
             raise ValueError("GCP Console source tree icon has no matching locked module URL")
         data_icon_name = entry["dataIconName"]
-        display_name = data_icon_name if data_icon_name is not None else entry["name"]
+        display_name = (
+            humanize_snake(gcp_semantic_icon_name(data_icon_name))
+            if is_gcp_resource_icon(entry) and data_icon_name is not None
+            else data_icon_name if data_icon_name is not None else entry["name"]
+        )
         readable_identity = (
             gcp_snake_case(data_icon_name) if data_icon_name is not None else "template"
         ) or "icon"
@@ -706,9 +769,7 @@ def generate_gcp_console_icons(
                     "GCP Console source tree icon has no matching locked module URL"
                 )
             svg_text = (directory / candidate["path"]).read_text(encoding="utf-8")
-            style = "color" if preserve_source_colors(svg_text) else "regular"
-            if style in variants:
-                continue
+            style = gcp_svg_variant(svg_text)
             descriptor = {
                 "format": "same-origin-zip-svg-entry",
                 "url": "gcp-console-icons.zip",
@@ -720,16 +781,28 @@ def generate_gcp_console_icons(
                 parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox"))
                 or 24
             )
-            variant = {
-                "defaultSize": default_size,
-                "sourceUrl": candidate_module["url"],
-                "remoteSource": descriptor,
-                "sizes": {str(default_size): {"remoteSource": descriptor}},
-            }
+            variant = variants.setdefault(style, {"sizes": {}})
+            variant["sizes"].setdefault(
+                str(default_size),
+                {"remoteSource": descriptor, "sourceUrl": candidate_module["url"]},
+            )
+        for style, variant in variants.items():
+            sizes = sorted(int(size) for size in variant["sizes"])
+            # Prefer the conventional 24px source when present, without
+            # discarding smaller/larger authored source variants.
+            selected_size = min(sizes, key=lambda size: (abs(size - 24), size))
+            selected_asset = variant["sizes"][str(selected_size)]
+            variant["defaultSize"] = selected_size
+            variant["sourceUrl"] = selected_asset["sourceUrl"]
+            variant["remoteSource"] = selected_asset["remoteSource"]
+            for asset in variant["sizes"].values():
+                asset.pop("sourceUrl", None)
             if style == "color":
                 variant["preserveSourceColors"] = True
-                variant["sourceCapabilities"] = {"currentColor": False, "boundingBox": False}
-            variants[style] = variant
+                variant["sourceCapabilities"] = {
+                    "currentColor": False,
+                    "boundingBox": False,
+                }
         variants = {
             style: variants[style]
             for style in SUPPORTED_VARIANTS
@@ -745,7 +818,6 @@ def generate_gcp_console_icons(
                     candidate["extension"],
                     candidate["module"],
                     candidate["moduleId"],
-                    gcp_family_name(candidate),
                 )
             ]
             aliases = list(dict.fromkeys([display_name, *search_metadata]))

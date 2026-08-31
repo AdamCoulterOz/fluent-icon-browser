@@ -34,7 +34,7 @@ assert.match(
 
 assert.deepEqual(
     currentFrontendAssets,
-    ["keel.css?v=34", "style.css?v=37", "remote-icon-source.js?v=7", "script.js?v=22"]
+    ["keel.css?v=34", "style.css?v=38", "remote-icon-source.js?v=7", "script.js?v=22"]
 );
 
 const appShell = readAppShell();
@@ -42,7 +42,7 @@ assert.deepEqual(appShell, [
     "./",
     "index.html",
     "keel.css?v=34",
-    "style.css?v=37",
+    "style.css?v=38",
     "remote-icon-source.js?v=7",
     "script.js?v=22",
     "icon-data.json",
@@ -57,7 +57,7 @@ assert.deepEqual(
     currentFrontendAssets
 );
 
-assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v18");
+assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v19");
 assert.equal(readConstant("ICON_CACHE_NAME"), "fluent-icons-assets-v8");
 
 console.log("app_shell.test.js: ok");

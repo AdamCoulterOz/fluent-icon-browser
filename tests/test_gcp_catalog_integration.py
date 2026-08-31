@@ -165,7 +165,7 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "does not match its manifest digest"):
                 icon_data.generate_gcp_console_icons(root / "changed-svg")
 
-    def test_groups_cross_module_digest_matches_as_common_ui_with_legacy_aliases(self) -> None:
+    def test_groups_cross_module_digest_matches_as_common_ui_with_source_search_names(self) -> None:
         route_map = {
             "routes/features/home/extensions/alpha": json.dumps(
                 {"moduleUrl": module_url("AlphaMicroUi")}
@@ -207,10 +207,8 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
         self.assertTrue(common["name"].startswith("gcp_common_ui_close_icon_"))
         shared_entries = [entry for entry in manifest["icons"] if entry["dataIconName"] == "closeIcon"]
         self.assertEqual(2, len(shared_entries))
-        self.assertEqual(
-            {icon_data.gcp_family_name(entry) for entry in shared_entries},
-            set(common["aliases"]) & {icon_data.gcp_family_name(entry) for entry in shared_entries},
-        )
+        self.assertIn("closeIcon", common["aliases"])
+        self.assertFalse(any(alias.startswith("gcp_") for alias in common["aliases"]))
         self.assertFalse(any(icon["displayName"] == "sameName" for icon in icons))
 
     def test_excludes_source_authored_blank_templates_but_keeps_source_tree_complete(self) -> None:
