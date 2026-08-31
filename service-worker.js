@@ -1,13 +1,13 @@
-const CACHE_NAME = "fluent-icons-v11";
+const CACHE_NAME = "fluent-icon-browser-v12";
 const ICON_CACHE_NAME = "fluent-icons-assets-v6";
 const ICON_CACHE_CONCURRENCY = 2;
 const APP_SHELL = [
     "./",
     "index.html",
     "keel.css?v=33",
-    "style.css?v=35",
+    "style.css?v=36",
     "remote-icon-source.js?v=4",
-    "script.js?v=19",
+    "script.js?v=20",
     "icon-data.json",
     "icons/fluent-icons.svg?v=7",
     "icons/fluent-icons-192.png?v=7",

@@ -1,5 +1,12 @@
 # History
 
+## 2026-08-31: Theme-Adapt Monochrome Source Previews
+
+- Replaced the Salesforce contrast tile with generic `previewThemeColor` metadata. Light-only Salesforce artwork now previews as black in light mode and white in dark mode, with no preview background; the verified runtime, copy, and download source bytes remain unchanged.
+- Applied the same preview-only contract to pure-black HashiCorp Products `color` variants. Inline SVG previews use theme `currentColor`; owner-hosted SVG image previews remain black in light mode and invert white in dark mode. Multi-colour artwork remains source-coloured.
+- Kept named HashiCorp fill/color aliases searchable and deep-linkable through their canonical product-family links rather than exposing additional canonical icons.
+- Moved the collection selector onto Keel's `keel-select` primitive and advanced revisioned frontend assets with the `fluent-icon-browser-v12` app-shell cache.
+
 ## 2026-08-31: Add Salesforce SLDS Archive Collection
 
 - Added the canonical `salesforce` collection from the official `@salesforce-ux/icons` 10.17.0 registry archive under CC BY-ND 4.0, covering `standard`, `action`, `doctype`, and `custom` artwork with first-party MuleSoft; `utility` remains excluded.

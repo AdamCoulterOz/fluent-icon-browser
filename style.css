@@ -635,34 +635,6 @@ body::-webkit-scrollbar {
     width: clamp(164px, 22vw, 320px);
 }
 
-#iconSetSelect {
-    width: 100%;
-    height: var(--toolbar-control-height);
-    box-sizing: border-box;
-    border: none;
-    border-radius: 999px;
-    padding: 0 34px 0 12px;
-    appearance: auto;
-    background: var(--nav-segment-bg);
-    color: var(--nav-segment-text);
-    font: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-#iconSetSelect:hover {
-    background: var(--nav-segment-hover-bg);
-}
-
-#iconSetSelect:focus-visible {
-    outline: none;
-    box-shadow: var(--ring);
-}
-
 .style-filter {
     width: 134px;
     min-width: 134px;
@@ -1005,9 +977,12 @@ body::-webkit-scrollbar {
     border-radius: 0;
 }
 
-.icon-card .icon-view.preview-surface-contrast {
-    background: #52606d;
-    border-radius: 6px;
+.icon-view.preview-theme-color {
+    color: #000;
+}
+
+.icon-view.preview-theme-color img {
+    filter: brightness(0);
 }
 .icon-card .icon-view svg {
     width: 100%;
@@ -1040,6 +1015,10 @@ body::-webkit-scrollbar {
     .icon-view.has-color-variant svg,
     .icon-view.has-color-variant img {
         filter: none !important;
+    }
+
+    .icon-view.has-color-variant.preview-theme-color img {
+        filter: brightness(0) invert(1) !important;
     }
 
     .icon-card.is-selected .icon-view:not(.has-color-variant) svg {
@@ -1593,15 +1572,13 @@ body::-webkit-scrollbar {
     border-radius: 0;
 }
 
-.variant .icon-view.preview-surface-contrast {
-    background: #52606d;
-    border-radius: 6px;
-}
-
 @media (prefers-color-scheme: dark) {
-    .icon-card .icon-view.preview-surface-contrast,
-    .variant .icon-view.preview-surface-contrast {
-        background: #697887;
+    .icon-view.preview-theme-color {
+        color: #fff;
+    }
+
+    .icon-view.preview-theme-color img {
+        filter: brightness(0) invert(1);
     }
 }
 

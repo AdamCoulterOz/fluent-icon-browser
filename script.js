@@ -11,12 +11,69 @@ function getCollectionPickerOption(set, key) {
     };
 }
 
+function getIconAliases(icon) {
+    return Array.isArray(icon?.aliases) ? icon.aliases : [];
+}
+
+function getIconSearchParts(icon) {
+    const metaphors = Array.isArray(icon?.metaphors) ? icon.metaphors : [];
+    return [
+        icon?.name || "",
+        icon?.displayName || "",
+        icon?.description || "",
+        ...getIconAliases(icon),
+        ...metaphors,
+    ]
+        .filter(Boolean)
+        .map((part) => String(part));
+}
+
+function resolveIconEntry(icons, requestedName) {
+    if (!requestedName || !Array.isArray(icons)) {
+        return null;
+    }
+
+    const exact = icons.find((icon) => icon.name === requestedName);
+    return exact || icons.find((icon) => getIconAliases(icon).includes(requestedName)) || null;
+}
+
+function resolveIconSetEntry(iconSets, requestedName) {
+    if (!iconSets || typeof iconSets !== "object") {
+        return null;
+    }
+
+    const entries = Object.entries(iconSets).map(([key, set]) => [
+        key,
+        Array.isArray(set?.icons) ? set.icons : [],
+    ]);
+    const exact = entries.find(([, icons]) => icons.some((icon) => icon.name === requestedName));
+    const match = exact || entries.find(([, icons]) =>
+        icons.some((icon) => getIconAliases(icon).includes(requestedName))
+    );
+
+    return match ? { key: match[0], icon: resolveIconEntry(match[1], requestedName) } : null;
+}
+
 function sourceAllowsTransform(variantData, capability) {
     return variantData?.sourceCapabilities?.[capability] !== false;
 }
 
-function previewSurfaceClass(variantData) {
-    return variantData?.previewSurface === "contrast" ? "preview-surface-contrast" : "";
+function previewThemeColorClass(variantData) {
+    return variantData?.previewThemeColor === true ? "preview-theme-color" : "";
+}
+
+function isThemeColorPaint(value) {
+    const normalized = String(value || "").trim().toLowerCase();
+    return new Set([
+        "black",
+        "white",
+        "#000",
+        "#000000",
+        "#fff",
+        "#ffffff",
+        "rgb(0, 0, 0)",
+        "rgb(255, 255, 255)",
+    ]).has(normalized);
 }
 
 function shouldDismissIconPanelFromPointerDown({
@@ -1037,8 +1094,8 @@ class IconBrowser {
 
     // Deep link support: ?icon=<name>&set=<key> opens a specific icon (e.g. linked from the
     // PowerSpec Mdl2Icon enum docs). Switches to the set that holds the icon, filters the grid to it,
-    // and opens its panel. Falls back to a plain search when the exact name isn't a distinct card
-    // (some MDL2 variants are folded into a canonical family), so the link still lands usefully.
+    // and opens its panel. Folded aliases resolve to their canonical card; unmatched names fall back
+    // to a plain search so older or external links still land usefully.
     applyDeepLink() {
         let params;
         try {
@@ -1055,13 +1112,7 @@ class IconBrowser {
 
         let targetSetKey = this.resolveSetKey(setParam);
         if (!targetSetKey && iconParam) {
-            for (const [key, set] of Object.entries(this.iconSets)) {
-                const icons = Array.isArray(set.icons) ? set.icons : [];
-                if (icons.some((entry) => entry.name === iconParam)) {
-                    targetSetKey = key;
-                    break;
-                }
-            }
+            targetSetKey = resolveIconSetEntry(this.iconSets, iconParam)?.key || null;
         }
 
         // Preserve the incoming deep-link URL while we resolve it: switchSet/openModal would
@@ -1076,8 +1127,8 @@ class IconBrowser {
                 return;
             }
 
-            const exact = this.icons.find((entry) => entry.name === iconParam);
-            const query = exact ? exact.displayName || iconParam : iconParam;
+            const resolved = resolveIconEntry(this.icons, iconParam);
+            const query = resolved ? resolved.displayName || iconParam : iconParam;
             const searchInput = document.getElementById("searchInput");
             if (searchInput) {
                 searchInput.value = query;
@@ -1085,9 +1136,9 @@ class IconBrowser {
             }
             this.filterIcons(query);
 
-            if (exact) {
-                this.openModal(exact.name);
-                const card = this.cardByName.get(exact.name);
+            if (resolved) {
+                this.openModal(resolved.name);
+                const card = this.cardByName.get(resolved.name);
                 card?.scrollIntoView({ block: "center", behavior: "smooth" });
             }
         } finally {
@@ -1462,17 +1513,7 @@ class IconBrowser {
     prepareSearchIndex() {
         this.iconByName = new Map();
         this.icons.forEach((icon) => {
-            const aliases = Array.isArray(icon.aliases) ? icon.aliases : [];
-            const metaphors = Array.isArray(icon.metaphors) ? icon.metaphors : [];
-            const searchParts = [
-                icon.name || "",
-                icon.displayName || "",
-                icon.description || "",
-                ...aliases,
-                ...metaphors,
-            ]
-                .filter(Boolean)
-                .map((part) => String(part));
+            const searchParts = getIconSearchParts(icon);
 
             const rawText = searchParts.join(" ").toLowerCase();
             icon._searchRaw = rawText;
@@ -1533,13 +1574,13 @@ class IconBrowser {
         const colorClass = this.shouldPreserveSourceColors(previewVariant, variantData)
             ? "has-color-variant"
             : "";
-        const surfaceClass = previewSurfaceClass(variantData);
+        const themeColorClass = previewThemeColorClass(variantData);
 
         const cached = {
             variant: previewVariant,
             asset,
             markup: previewMarkup,
-            colorClass: [colorClass, surfaceClass].filter(Boolean).join(" "),
+            colorClass: [colorClass, themeColorClass].filter(Boolean).join(" "),
         };
         icon._previewCache[styleMode] = cached;
         return cached;
@@ -1563,6 +1604,10 @@ class IconBrowser {
 
         iconView.className = `icon-view ${preview.colorClass}`.trim();
         iconView.innerHTML = preview.markup;
+        this.applyPreviewThemeColor(
+            iconView,
+            this.getVariantData(icon, preview.variant)
+        );
         card.dataset.previewMode = styleMode;
         card.dataset.hasRemotePreview = preview.asset?.remoteSource ? "true" : "false";
         const nextRemotePreviewKey = preview.asset?.remoteSource
@@ -1658,6 +1703,45 @@ class IconBrowser {
         }
 
         return '<div style="color: #ccc;">No preview</div>';
+    }
+
+    applyPreviewThemeColor(iconView, variantData) {
+        if (!variantData?.previewThemeColor) {
+            return;
+        }
+
+        const svg = iconView.querySelector("svg");
+        if (!svg) {
+            return;
+        }
+
+        const paintAttributes = ["fill", "stroke", "stop-color"];
+        [svg, ...svg.querySelectorAll("*")].forEach((element) => {
+            paintAttributes.forEach((attribute) => {
+                const value = element.getAttribute(attribute);
+                if (isThemeColorPaint(value)) {
+                    element.setAttribute(attribute, "currentColor");
+                }
+            });
+
+            const style = element.getAttribute("style");
+            if (!style) {
+                return;
+            }
+
+            const declarations = style.split(";").map((declaration) => {
+                const separator = declaration.indexOf(":");
+                if (separator === -1) {
+                    return declaration;
+                }
+                const property = declaration.slice(0, separator).trim().toLowerCase();
+                const value = declaration.slice(separator + 1).trim();
+                return paintAttributes.includes(property) && isThemeColorPaint(value)
+                    ? `${property}:currentColor`
+                    : declaration;
+            });
+            element.setAttribute("style", declarations.join(";"));
+        });
     }
 
     filterIcons(searchTerm) {
@@ -1882,6 +1966,10 @@ class IconBrowser {
                 return;
             }
             iconView.innerHTML = svg;
+            this.applyPreviewThemeColor(
+                iconView,
+                this.getVariantData(icon, preview.variant)
+            );
             card.dataset.remotePreviewStatus = "complete";
         } catch (error) {
             if (card.dataset.remotePreviewKey !== key) {
@@ -1893,7 +1981,7 @@ class IconBrowser {
         }
     }
 
-    async hydrateDetailRemotePreview(iconDiv, asset, label) {
+    async hydrateDetailRemotePreview(iconDiv, asset, label, variantData) {
         const requestId = String(++this.remotePreviewRequestSequence);
         iconDiv.dataset.remotePreviewRequest = requestId;
         iconDiv.innerHTML = '<div class="remote-preview-status" role="status">Loading preview...</div>';
@@ -1903,6 +1991,7 @@ class IconBrowser {
                 return;
             }
             iconDiv.innerHTML = svg;
+            this.applyPreviewThemeColor(iconDiv, variantData);
         } catch (error) {
             if (iconDiv.dataset.remotePreviewRequest !== requestId) {
                 return;
@@ -1973,9 +2062,9 @@ class IconBrowser {
         const colorClass = this.shouldPreserveSourceColors(variant, variantData)
             ? "has-color-variant"
             : "";
-        const surfaceClass = previewSurfaceClass(variantData);
+        const themeColorClass = previewThemeColorClass(variantData);
 
-        iconDiv.className = `icon-view ${colorClass} ${surfaceClass} icon-large`.trim();
+        iconDiv.className = `icon-view ${colorClass} ${themeColorClass} icon-large`.trim();
 
         const selectedSize = this.panelSelectedSizes[variant];
         const asset = this.resolveVariantAsset(variantData, selectedSize);
@@ -1989,9 +2078,10 @@ class IconBrowser {
         if (asset.svg) {
             iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
             iconDiv.innerHTML = asset.svg;
+            this.applyPreviewThemeColor(iconDiv, variantData);
         } else if (asset.remoteSource) {
             const label = `${this.getIconDisplayName(this.currentIcon)} ${variant}`;
-            void this.hydrateDetailRemotePreview(iconDiv, asset, label);
+            void this.hydrateDetailRemotePreview(iconDiv, asset, label, variantData);
         } else if (asset.url) {
             iconDiv.dataset.remotePreviewRequest = String(++this.remotePreviewRequestSequence);
             const label = `${this.getIconDisplayName(this.currentIcon)} ${variant}`;
@@ -2661,7 +2751,12 @@ if (typeof module !== "undefined" && module.exports) {
         getCollectionPickerOption,
         getIconCacheUrls,
         getInitialIconCacheUrls,
-        previewSurfaceClass,
+        getIconAliases,
+        getIconSearchParts,
+        isThemeColorPaint,
+        previewThemeColorClass,
+        resolveIconEntry,
+        resolveIconSetEntry,
         sourceAllowsTransform,
         shouldDismissIconPanelFromPointerDown,
     };

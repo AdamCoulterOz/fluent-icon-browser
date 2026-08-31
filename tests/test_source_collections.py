@@ -100,8 +100,8 @@ class SourceCollectionTests(unittest.TestCase):
             self.assertEqual("package/dist/salesforce-lightning-design-system-icons/standard/mulesoft.svg", descriptor["entry"])
             self.assertFalse(by_name["standard_mulesoft"]["variants"]["color"]["sourceCapabilities"]["currentColor"])
             self.assertFalse(by_name["standard_mulesoft"]["variants"]["color"]["sourceCapabilities"]["boundingBox"])
-            self.assertEqual("contrast", by_name["standard_mulesoft"]["variants"]["color"]["previewSurface"])
-            self.assertNotIn("previewSurface", by_name["standard_account"]["variants"]["color"])
+            self.assertTrue(by_name["standard_mulesoft"]["variants"]["color"]["previewThemeColor"])
+            self.assertNotIn("previewThemeColor", by_name["standard_account"]["variants"]["color"])
             self.assertNotIn("<svg", json.dumps(icons))
 
     def test_salesforce_contrast_classification_requires_explicit_light_only_paint(self) -> None:

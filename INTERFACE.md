@@ -12,7 +12,7 @@
 - `fabric` is a compatibility alias for `segoe` while no canonical `fabric` set exists. A future key collision requires an explicit compatibility decision.
 - The generated `sets` map supplies each collection's `label`, `shortLabel`, source context, `sources[]` provenance, and icon families. The browser renders collection selection from that map.
 
-The `icon` parameter identifies a visible canonical family. A folded/non-canonical icon name may fall back to a relevant family search. Selecting an icon updates the URL with `replaceState` so the current view remains shareable.
+The `icon` parameter identifies a visible canonical family. A known folded/non-canonical alias resolves and opens its canonical family while preserving the supplied stable URL; unknown names may fall back to relevant search. Selecting a canonical family updates the URL with `replaceState` so the current view remains shareable.
 
 ## Provenance Semantics
 

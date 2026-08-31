@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import xml.etree.ElementTree as ElementTree
 from pathlib import Path
 
 from source_lock import digest_files, read_lock, write_lock
@@ -38,6 +40,59 @@ APPROVED_CATEGORIES = {
 EXCLUDED_CATEGORIES = {"Products", "Services"}
 PRODUCT_CATEGORIES = {"Products"}
 PRODUCT_EXCLUDED_CATEGORIES = APPROVED_CATEGORIES | {"Services"}
+PAINT_ATTRIBUTES = {
+    "color",
+    "fill",
+    "flood-color",
+    "lighting-color",
+    "stop-color",
+    "stroke",
+}
+BLACK_PAINTS = {"#000", "#000000", "#000001", "black"}
+
+
+def is_monochrome_black_svg(svg: bytes) -> bool:
+    """Return whether an SVG uses only black paint (or SVG's default black paint)."""
+    try:
+        root = ElementTree.fromstring(svg)
+    except ElementTree.ParseError:
+        return False
+
+    for element in root.iter():
+        if element.tag.rsplit("}", 1)[-1] == "style" and (element.text or "").strip():
+            return False
+        for attribute, value in element.attrib.items():
+            name = attribute.rsplit("}", 1)[-1]
+            if name in PAINT_ATTRIBUTES and not _is_black_paint(value):
+                return False
+            if name == "style" and not _has_only_black_style_paints(value):
+                return False
+    return True
+
+
+def _has_only_black_style_paints(style: str) -> bool:
+    for declaration in style.split(";"):
+        if not declaration.strip():
+            continue
+        property_name, separator, value = declaration.partition(":")
+        if not separator:
+            return False
+        if property_name.strip().lower() in PAINT_ATTRIBUTES and not _is_black_paint(
+            value
+        ):
+            return False
+    return True
+
+
+def _is_black_paint(value: str) -> bool:
+    normalized = value.strip().lower().removesuffix("!important").strip()
+    if normalized in BLACK_PAINTS or normalized in {"none", "transparent"}:
+        return True
+    return bool(
+        re.fullmatch(
+            r"rgb\(\s*0\s*(?:,|\s)\s*0\s*(?:,|\s)\s*0\s*\)", normalized
+        )
+    )
 
 
 def _catalog(package_dir: Path) -> list[dict]:
@@ -267,6 +322,7 @@ def _generate_icons(
     collection_name: str,
     group_assets=_group_assets,
     variant_styles: tuple[str, ...] = ("regular", "filled"),
+    mark_black_color_variants: bool = False,
 ) -> list[dict]:
     _validate_license(package_dir)
     lock = read_lock(source_lock_path, source, commit)
@@ -337,6 +393,13 @@ def _generate_icons(
                 "previewUrl": sizes[str(default_size)],
                 "sizes": sizes,
             }
+            if mark_black_color_variants and style == "color" and all(
+                is_monochrome_black_svg(
+                    (package_dir / "svg-original" / f"{entry['fileName']}.svg").read_bytes()
+                )
+                for entry in style_entries
+            ):
+                variants[style]["previewThemeColor"] = True
 
         icon = {
             "name": icon_name.replace("-", "_"),
@@ -377,4 +440,5 @@ def generate_product_icons(
         collection_name="HashiCorp Products",
         group_assets=_group_product_assets,
         variant_styles=("regular", "filled", "color"),
+        mark_black_color_variants=True,
     )

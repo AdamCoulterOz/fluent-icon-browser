@@ -164,7 +164,7 @@ def _approved_entries(archive: tarfile.TarFile) -> list[dict]:
             continue
         source_name = Path(parts[-1]).stem
         svg = _read_member(archive, name)
-        preview_surface = "contrast" if requires_contrast_preview(svg) else None
+        preview_theme_color = requires_contrast_preview(svg)
         entries.append(
             {
                 "path": name,
@@ -172,7 +172,7 @@ def _approved_entries(archive: tarfile.TarFile) -> list[dict]:
                 "category": category,
                 "sourceName": source_name,
                 "metaphors": metadata_by_category[category].get(source_name, []),
-                "previewSurface": preview_surface,
+                "previewThemeColor": preview_theme_color,
             }
         )
     entries.sort(key=lambda entry: entry["path"])
@@ -281,8 +281,8 @@ def generate_icons(archive_path: Path, source_lock_path: Path) -> list[dict]:
                         "defaultSize": 120,
                         "preserveSourceColors": True,
                         **(
-                            {"previewSurface": entry["previewSurface"]}
-                            if entry["previewSurface"]
+                            {"previewThemeColor": True}
+                            if entry["previewThemeColor"]
                             else {}
                         ),
                         "sourceCapabilities": {
