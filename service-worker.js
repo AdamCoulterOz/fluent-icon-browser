@@ -1,6 +1,6 @@
 const CACHE_NAME = "fluent-icons-v10";
 const ICON_CACHE_NAME = "fluent-icons-assets-v6";
-const ICON_CACHE_CONCURRENCY = 60;
+const ICON_CACHE_CONCURRENCY = 2;
 const APP_SHELL = [
     "./",
     "index.html",

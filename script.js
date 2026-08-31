@@ -2334,6 +2334,7 @@ class IconBrowser {
 }
 
 const iconCacheVersionKey = "fluent-icons-icon-cache-version-v2";
+const iconCacheWarmLimit = 96;
 
 function getIconCacheUrls(payload) {
     const urls = new Set();
@@ -2358,6 +2359,10 @@ function getIconCacheUrls(payload) {
 
     visit(payload);
     return [...urls];
+}
+
+function getInitialIconCacheUrls(payload) {
+    return getIconCacheUrls(payload).slice(0, iconCacheWarmLimit);
 }
 
 function updateCacheLoader(completed, total, failed = 0) {
@@ -2388,7 +2393,7 @@ async function warmIconCache(payload) {
         return;
     }
 
-    const urls = getIconCacheUrls(payload);
+    const urls = getInitialIconCacheUrls(payload);
     if (urls.length === 0 || !("serviceWorker" in navigator)) {
         return;
     }
@@ -2654,6 +2659,8 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         getCollectionPickerOption,
+        getIconCacheUrls,
+        getInitialIconCacheUrls,
         previewSurfaceClass,
         sourceAllowsTransform,
         shouldDismissIconPanelFromPointerDown,
