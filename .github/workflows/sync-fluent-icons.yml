@@ -126,7 +126,7 @@ jobs:
             --fluent-upstream-sha "${{ steps.upstream.outputs.fluent_sha }}" \
             --fabric-upstream-sha "${{ steps.upstream.outputs.fabric_sha }}" \
             --azure-source-lock .tmp/azure-portal-source.json \
-            --azure-previous-source-lock .upstream-azure-portal.json \
+            --azure-previous-source-lock .tmp/azure-portal-source.json \
             --azure-minimum-count 250 \
             --azure-manifest-minimum-count 100
 

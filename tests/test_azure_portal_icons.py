@@ -96,6 +96,8 @@ class AzurePortalIconsTests(unittest.TestCase):
         svg = '<svg viewBox="0 0 16 16"><path d="M0 0h16v16H0z"/></svg>'
         bundle = "\n".join(
             [
+                'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+                '["module"], function(e) { return { css: ".msportalfx-svg-c01{fill:#fff}" }; });',
                 'define("_generated/MsPortalImpl/Svg/Library/Cloud.svg", ["require", "exports"], function(t, e) { e.data = ' + json.dumps(svg) + '; });',
                 'define("_generated/MsPortalImpl/Svg/Library/CloudFilled.svg", ["require", "exports"], function(t, e) { e.data = ' + json.dumps(svg) + '; });',
                 'define("_generated/MsPortalImpl/Svg/Library/Polychromatic/Learn.svg", ["require", "exports"], function(t, e) { e.data = ' + json.dumps('<svg viewBox="0 0 16 16"><path d="M1 1h14v14H1z"/></svg>') + '; });',
@@ -134,6 +136,112 @@ class AzurePortalIconsTests(unittest.TestCase):
         self.assertIn(
             "color", next(icon for icon in icons if icon["name"] == "learn")["variants"]
         )
+
+    def test_materializes_locked_base_images_palette_classes(self) -> None:
+        css = (
+            ".msportalfx-svg-c01{fill:#fff}.msportalfx-svg-c02{fill:#000}"
+            ".msportalfx-svg-c03{fill:#a0a1a2}.msportalfx-svg-c19{fill:#0072c6}"
+            ".msportalfx-svg-c05{fill:var(--fxs-svg-c05-fill,#3e3e3e)}"
+            ".msportalfx-svg-c07{fill:var(--fxs-svg-c07-fill,#0f0f0f)}"
+            ".msportalfx-svg-c22{fill:var(--fxs-svg-c22-fill,#e81123)}"
+            ".msportalfx-svg-c77{fill:var(--arbitrary,red)}"
+        )
+        avatar_svg = (
+            '<svg><path class="msportalfx-svg-c01"/>'
+            '<path class="msportalfx-svg-c02"/>'
+            '<path class="msportalfx-svg-c03"/></svg>'
+        )
+        bundle = "\n".join(
+            [
+                'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+                '["module"], function(e) { return { css: '
+                + json.dumps(css)
+                + ", moduleId: e.id } });",
+                'define("_generated/MsPortalImpl/Svg/Library/AvatarDefault.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps(avatar_svg)
+                + "; });",
+                'define("_generated/MsPortalImpl/Svg/Library/Chromatic.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps('<svg><path class="msportalfx-svg-c19"/></svg>')
+                + "; });",
+                'define("_generated/MsPortalImpl/Svg/Library/Neutral.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps('<svg><path class="msportalfx-svg-c03"/></svg>')
+                + "; });",
+                'define("_generated/MsPortalImpl/Svg/Library/Fallback.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps(
+                    '<svg><path class="msportalfx-svg-c05"/>'
+                    '<path class="msportalfx-svg-c07"/>'
+                    '<path class="msportalfx-svg-c22"/></svg>'
+                )
+                + "; });",
+                'define("_generated/MsPortalImpl/Svg/Library/Contextual.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps('<svg><path fill="currentColor"/></svg>')
+                + "; });",
+                'define("_generated/MsPortalImpl/Svg/Library/Unknown.svg", '
+                '["require", "exports"], function(t, e) { e.data = '
+                + json.dumps('<svg><path class="msportalfx-svg-c77"/></svg>')
+                + "; });",
+            ]
+        )
+        source = azure.PortalSource(
+            portal_base_url=azure.PORTAL_BASE_URL,
+            page_version="99.1.0.0",
+            bootstrap_config_hash="bootstrap-hash",
+            require_config_hash="require-hash",
+            require_config_url="https://portal.azure.com/Content/PortalRequireConfig/require-hash.js",
+            bundle_urls=("https://portal.azure.com/Content/Dynamic/azure-core.js",),
+            manifest_sources=(),
+        )
+
+        result = azure.build_azure_catalog(source, fetch_text=lambda _url: bundle)
+        variants = {
+            icon["name"]: icon["variants"]["regular"] for icon in result.icons
+        }
+
+        self.assertEqual(
+            {
+                "msportalfx-svg-c01": "#FFFFFF",
+                "msportalfx-svg-c02": "#000000",
+                "msportalfx-svg-c03": "#A0A1A2",
+            },
+            variants["avatar_default"]["remoteSource"]["paintMap"],
+        )
+        self.assertEqual(
+            {"msportalfx-svg-c19": "#0072C6"},
+            variants["chromatic"]["remoteSource"]["paintMap"],
+        )
+        self.assertEqual(
+            {"msportalfx-svg-c03": "#A0A1A2"},
+            variants["neutral"]["remoteSource"]["paintMap"],
+        )
+        # The locked CSS fallback is materialized as an intrinsic literal fill.
+        self.assertEqual(
+            {
+                "msportalfx-svg-c05": "#3E3E3E",
+                "msportalfx-svg-c07": "#0F0F0F",
+                "msportalfx-svg-c22": "#E81123",
+            },
+            variants["fallback"]["remoteSource"]["paintMap"],
+        )
+        self.assertTrue(variants["avatar_default"]["preserveSourceColors"])
+        self.assertTrue(variants["chromatic"]["preserveSourceColors"])
+        self.assertTrue(variants["neutral"]["preserveSourceColors"])
+        self.assertTrue(variants["fallback"]["preserveSourceColors"])
+        self.assertNotIn("paintMap", variants["contextual"]["remoteSource"])
+        self.assertNotIn("preserveSourceColors", variants["contextual"])
+        self.assertNotIn("paintMap", variants["unknown"]["remoteSource"])
+        self.assertNotIn("preserveSourceColors", variants["unknown"])
+
+        nonliteral_css_bundle = (
+            'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+            '["module"], function(e) { return { css: e.value, moduleId: e.id } });'
+        )
+        with self.assertRaisesRegex(azure.AzurePortalSchemaError, "non-literal css"):
+            azure._base_images_palette_from_bundle(nonliteral_css_bundle)
 
     def test_preserves_authored_source_colors_only_when_svg_paints_need_it(self) -> None:
         fixtures = {
@@ -288,6 +396,8 @@ class AzurePortalIconsTests(unittest.TestCase):
 
         def bundle(svg_path: str) -> str:
             return (
+                'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+                '["module"], function(e) { return { css: ".msportalfx-svg-c01{fill:#fff}" }; });\n'
                 'define("_generated/MsPortalImpl/Svg/Library/Cloud.svg", '
                 '["require", "exports"], function(t, e) { e.data = '
                 + json.dumps(

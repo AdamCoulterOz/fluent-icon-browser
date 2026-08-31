@@ -34,7 +34,7 @@ function createFakeSvgElement(localName, attributes = {}) {
     };
 }
 
-function sanitizeWithFakeSvgDom(root) {
+function sanitizeWithFakeSvgDom(root, paintMap = null) {
     const originalXmlSerializer = global.XMLSerializer;
     global.XMLSerializer = class {
         serializeToString() {
@@ -49,7 +49,7 @@ function sanitizeWithFakeSvgDom(root) {
                     querySelector: () => null,
                 };
             },
-        });
+        }, paintMap);
     } finally {
         if (originalXmlSerializer === undefined) {
             delete global.XMLSerializer;
@@ -114,6 +114,44 @@ async function run() {
     assert.equal(unsafePaintPath.getAttribute("fill-opacity"), ".5");
     assert.equal(mixedUrlPath.getAttribute("fill"), undefined);
     assert.equal(mixedUrlPath.getAttribute("stroke"), "url(#azureGradient)");
+
+    const paletteRoot = createFakeSvgElement("svg");
+    const galleryPaintPath = createFakeSvgElement("path", {
+        class: "card-art msportalfx-svg-c19",
+        fill: "currentColor",
+    });
+    const detailPaintPath = createFakeSvgElement("path", {
+        class: "msportalfx-svg-c03 retained-token msportalfx-svg-c77",
+        style: "fill: currentColor",
+    });
+    const contextualPath = createFakeSvgElement("path", {
+        class: "contextual",
+        fill: "currentColor",
+    });
+    const unsafeMapPath = createFakeSvgElement("path", {
+        class: "msportalfx-svg-c77",
+        fill: "currentColor",
+    });
+    paletteRoot.querySelectorAll = () => [
+        galleryPaintPath,
+        detailPaintPath,
+        contextualPath,
+        unsafeMapPath,
+    ];
+    sanitizeWithFakeSvgDom(paletteRoot, {
+        "msportalfx-svg-c03": "#A0A1A2",
+        "msportalfx-svg-c19": "#0072C6",
+        "msportalfx-svg-c77": "url(https://example.test/unsafe)",
+        arbitrary: "#112233",
+    });
+    assert.equal(galleryPaintPath.getAttribute("fill"), "#0072C6");
+    assert.equal(galleryPaintPath.getAttribute("class"), "card-art");
+    assert.equal(detailPaintPath.getAttribute("fill"), "#A0A1A2");
+    assert.equal(detailPaintPath.getAttribute("class"), "retained-token msportalfx-svg-c77");
+    assert.equal(contextualPath.getAttribute("fill"), "currentColor");
+    assert.equal(contextualPath.getAttribute("class"), "contextual");
+    assert.equal(unsafeMapPath.getAttribute("fill"), "currentColor");
+    assert.equal(unsafeMapPath.getAttribute("class"), "msportalfx-svg-c77");
 
     const amdSource = [
         '// define("portal/icons/azure~logo", [], function () { return "<svg/>"; });',
@@ -201,6 +239,28 @@ async function run() {
     await assert.rejects(
         () => resolver.resolve({ ...descriptor, sha256: "0".repeat(64) }),
         /SHA-256 does not match/i
+    );
+
+    const classPaintSvg = '<svg><path class="msportalfx-svg-c19" fill="currentColor"/></svg>';
+    const classPaintSource = `define("portal/icons/class-paint", [], function () { return ${JSON.stringify(classPaintSvg)}; });`;
+    const classPaintResolver = new RemoteIconSourceResolver({
+        crypto,
+        canonicalize: (svg) => svg,
+        sanitize: (svg, _domParser, paintMap) => {
+            assert.deepEqual(paintMap, { "msportalfx-svg-c19": "#0072C6" });
+            return svg.replace('class="msportalfx-svg-c19" fill="currentColor"', 'fill="#0072C6"');
+        },
+        fetch: async () => ({ ok: true, status: 200, text: async () => classPaintSource }),
+    });
+    assert.equal(
+        await classPaintResolver.resolve({
+            url: "https://example.test/class-paint.js",
+            format: "portal-amd-svg-module",
+            selector: "portal/icons/class-paint",
+            sha256: await sha256Hex(classPaintSvg),
+            paintMap: { "msportalfx-svg-c19": "#0072C6" },
+        }),
+        '<svg><path fill="#0072C6"/></svg>'
     );
 
     const alteredSvg = expectedSvg.replace("<path", "<script>ignore()</script><path");

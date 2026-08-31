@@ -18,6 +18,7 @@ from urllib.request import Request, urlopen
 
 PORTAL_BASE_URL = "https://portal.azure.com/"
 LIBRARY_PREFIX = "_generated/MsPortalImpl/Svg/Library/"
+BASE_IMAGES_CSS_MODULE = "_generated/Less/MsPortalImpl/Base/Base.Images.css"
 MANIFEST_GROUPS = (
     "assetTypes",
     "assetTypesBrowse",
@@ -28,9 +29,35 @@ MANIFEST_GROUPS = (
 AMD_DEFINE_PATTERN = re.compile(
     r"define\(\s*(?P<module>\"(?:\\.|[^\"])*\")\s*,\s*\[\s*\"require\"\s*,\s*\"exports\"\s*\]"
 )
+AMD_NAMED_MODULE_PATTERN = re.compile(
+    r'define\(\s*(?P<module>"(?:\\.|[^\"])*")\s*,'
+)
 SVG_ASSIGNMENT_PATTERN = re.compile(
     r"(?:\bdata|\.data)\s*=\s*(?P<svg>\"(?:\\.|[^\"])*\")"
 )
+BASE_IMAGES_RULE_PATTERN = re.compile(
+    r"(?P<selectors>[^{}]+)\{(?P<declarations>[^{}]*)\}"
+)
+BASE_IMAGES_CLASS_PATTERN = re.compile(
+    r"\s*\.(?P<name>msportalfx-svg-c\d{2})\s*"
+)
+BASE_IMAGES_FILL_PATTERN = re.compile(
+    r"(?:^|;)\s*fill\s*:\s*(?P<value>[^;]+?)"
+    r"\s*(?:!important)?\s*(?=;|$)",
+    re.IGNORECASE,
+)
+BASE_IMAGES_VAR_FALLBACK_PATTERN = re.compile(
+    r"var\(\s*--fxs-svg-(?P<class_name>c\d{2})-fill\s*,\s*"
+    r"(?P<value>#[0-9a-f]{3}|#[0-9a-f]{6})\s*\)",
+    re.IGNORECASE,
+)
+BASE_IMAGES_RETURN_CSS_PREFIX_PATTERN = re.compile(
+    r"\breturn\s*\{\s*css\s*:\s*",
+)
+BASE_IMAGES_RETURN_OBJECT_SUFFIX_PATTERN = re.compile(
+    r"\s*(?:,\s*moduleId\s*:\s*[A-Za-z_$][\w$]*\.id)?\s*}\s*;?\s*}\s*\)?\s*;?\s*$"
+)
+HEX_PAINT_PATTERN = re.compile(r"#[0-9a-f]{3}|#[0-9a-f]{6}", re.IGNORECASE)
 CAMEL_WORD_PATTERN = re.compile(r"([A-Z]+)([A-Z][a-z])|([a-z0-9])([A-Z])")
 STYLE_DECLARATION_PATTERN = re.compile(r"(?P<property>[-A-Za-z]+)\s*:\s*(?P<value>[^;]+)")
 RGB_COLOR_PATTERN = re.compile(
@@ -479,13 +506,137 @@ def _module_metadata(module_name: str) -> tuple[str, str, list[str]]:
     return _snake_case(raw_name), style, tags
 
 
-def _source_descriptor(url: str, module_name: str, canonical_svg: str) -> dict:
-    return {
+def _source_descriptor(
+    url: str, module_name: str, canonical_svg: str, palette: Optional[dict[str, str]] = None
+) -> dict:
+    descriptor = {
         "url": url,
         "format": "portal-amd-svg-module",
         "selector": module_name,
         "sha256": hashlib.sha256(canonical_svg.encode("utf-8")).hexdigest(),
     }
+    paint_map = materialize_class_paints(canonical_svg, palette or {})
+    if paint_map:
+        descriptor["paintMap"] = paint_map
+    return descriptor
+
+
+def _normalize_hex_paint(value: str) -> Optional[str]:
+    if not HEX_PAINT_PATTERN.fullmatch(value):
+        return None
+    hex_value = value[1:]
+    if len(hex_value) == 3:
+        hex_value = "".join(component * 2 for component in hex_value)
+    return f"#{hex_value.upper()}"
+
+
+def parse_base_images_palette(css_text: str) -> dict[str, str]:
+    """Extract literal msportalfx-svg-cNN paints from the locked Portal palette."""
+
+    palette: dict[str, str] = {}
+    for rule in BASE_IMAGES_RULE_PATTERN.finditer(css_text):
+        class_names = []
+        for selector in rule.group("selectors").split(","):
+            selector_match = BASE_IMAGES_CLASS_PATTERN.fullmatch(selector)
+            if selector_match:
+                class_names.append(selector_match.group("name"))
+        if not class_names:
+            continue
+        fills = list(BASE_IMAGES_FILL_PATTERN.finditer(rule.group("declarations")))
+        if not fills:
+            continue
+        fill_value = fills[-1].group("value")
+        var_match = BASE_IMAGES_VAR_FALLBACK_PATTERN.fullmatch(fill_value)
+        if var_match:
+            # The locked CSS fallback is a literal authored paint, not a runtime variable.
+            fill_value = var_match.group("value")
+        paint = _normalize_hex_paint(fill_value)
+        if paint is None:
+            continue
+        for class_name in class_names:
+            if var_match and (
+                var_match.group("class_name").lower()
+                != class_name.removeprefix("msportalfx-svg-").lower()
+            ):
+                continue
+            palette[class_name] = paint
+    return palette
+
+
+def _base_images_palette_from_bundle(bundle_text: str) -> dict[str, str]:
+    """Read one static Base.Images return-object CSS module without evaluating it."""
+
+    css_values: list[str] = []
+    for match in AMD_NAMED_MODULE_PATTERN.finditer(bundle_text):
+        if _decode_js_string(match.group("module")) != BASE_IMAGES_CSS_MODULE:
+            continue
+        call_end = _matching_parenthesis(bundle_text, bundle_text.find("(", match.start()))
+        call_text = bundle_text[match.start() : call_end + 1]
+        return_matches = list(BASE_IMAGES_RETURN_CSS_PREFIX_PATTERN.finditer(call_text))
+        if len(return_matches) != 1:
+            raise AzurePortalSchemaError("Base.Images CSS module has no static return-object css")
+        try:
+            css_text, consumed = json.JSONDecoder().raw_decode(
+                call_text[return_matches[0].end() :]
+            )
+        except json.JSONDecodeError as exc:
+            raise AzurePortalSchemaError(
+                "Base.Images CSS module has a non-literal css value"
+            ) from exc
+        if not isinstance(css_text, str) or not BASE_IMAGES_RETURN_OBJECT_SUFFIX_PATTERN.fullmatch(
+            call_text[return_matches[0].end() + consumed :]
+        ):
+            raise AzurePortalSchemaError("Base.Images CSS module has no static return-object css")
+        css_values.append(css_text)
+
+    if not css_values:
+        return {}
+    if len(css_values) != 1:
+        raise AzurePortalSchemaError("Base.Images CSS module appears more than once")
+    palette = parse_base_images_palette(css_values[0])
+    if not palette:
+        raise AzurePortalSchemaError("Base.Images CSS module has no literal palette paints")
+    return palette
+
+
+def materialize_class_paints(svg_text: str, palette: dict[str, str]) -> dict[str, str]:
+    """Return only safe palette entries used by visible SVG class tokens."""
+
+    if not palette:
+        return {}
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise AzurePortalSchemaError("AMD module has invalid SVG text") from exc
+
+    used: set[str] = set()
+
+    def visit(element: ET.Element, hidden: bool) -> None:
+        element_name = _local_name(element.tag)
+        style_text = element.get("style", "")
+        display = _normalize_style_keyword(
+            element.get("display") or _style_property(style_text, "display")
+        )
+        visibility = _normalize_style_keyword(
+            element.get("visibility") or _style_property(style_text, "visibility")
+        )
+        hidden = (
+            hidden
+            or element_name in NON_VISIBLE_ELEMENT_NAMES
+            or display == "none"
+            or visibility == "hidden"
+        )
+        if not hidden:
+            used.update(
+                class_name
+                for class_name in element.get("class", "").split()
+                if class_name in palette
+            )
+        for child in element:
+            visit(child, hidden)
+
+    visit(root, False)
+    return {class_name: paint for class_name, paint in palette.items() if class_name in used}
 
 
 def _json_pointer_token(value: str) -> str:
@@ -558,6 +709,7 @@ def _manifest_record(
     context_name: str,
     entry: dict,
     svg_text: str,
+    palette: Optional[dict[str, str]] = None,
 ) -> dict:
     canonical_svg = canonical_svg_text(svg_text)
     label = _manifest_entry_label(entry)
@@ -599,6 +751,9 @@ def _manifest_record(
         "selector": "/" + "/".join(_json_pointer_token(part) for part in pointer),
         "sha256": hashlib.sha256(canonical_svg.encode("utf-8")).hexdigest(),
     }
+    paint_map = materialize_class_paints(canonical_svg, palette or {})
+    if paint_map:
+        descriptor["paintMap"] = paint_map
     return {
         "name": name,
         "displayName": label,
@@ -606,12 +761,14 @@ def _manifest_record(
         "style": "regular",
         "tags": sorted(tags),
         "descriptor": descriptor,
-        "preserveSourceColors": preserve_source_colors(canonical_svg),
+        "preserveSourceColors": preserve_source_colors(canonical_svg) or bool(paint_map),
     }
 
 
 def _manifest_icon_records(
-    source: ManifestSource, manifest_payload: object
+    source: ManifestSource,
+    manifest_payload: object,
+    palette: Optional[dict[str, str]] = None,
 ) -> list[dict]:
     if not isinstance(manifest_payload, dict) or not isinstance(
         manifest_payload.get("manifest"), dict
@@ -639,6 +796,7 @@ def _manifest_icon_records(
                         context_name,
                         value,
                         icon["data"],
+                        palette,
                     )
                 )
             for key, child in value.items():
@@ -788,19 +946,34 @@ def _collapse_records(records: list[dict]) -> tuple[list[dict], int]:
 def _core_records(
     source: PortalSource,
     fetch_text: Callable[[str], str] = fetch_portal_text,
-) -> tuple[list[dict], list[dict]]:
+) -> tuple[list[dict], list[dict], dict[str, str]]:
     records: list[dict] = []
     source_digests: list[dict] = []
+    bundles: list[tuple[str, str]] = []
     for bundle_url in source.bundle_urls:
         bundle_text = fetch_text(bundle_url)
+        bundles.append((bundle_url, bundle_text))
         source_digests.append(
             {
                 "url": bundle_url,
                 "sha256": hashlib.sha256(bundle_text.encode("utf-8")).hexdigest(),
             }
         )
+    palette: dict[str, str] = {}
+    palette_found = False
+    for _bundle_url, bundle_text in bundles:
+        candidate = _base_images_palette_from_bundle(bundle_text)
+        if candidate:
+            if palette_found:
+                raise AzurePortalSchemaError("Base.Images CSS palette appears in multiple bundles")
+            palette = candidate
+            palette_found = True
+    if not palette_found:
+        raise AzurePortalSchemaError("Portal bundles have no Base.Images CSS palette")
+    for bundle_url, bundle_text in bundles:
         for module_name, canonical_svg in parse_amd_svg_modules(bundle_text):
             name, style, tags = _module_metadata(module_name)
+            descriptor = _source_descriptor(bundle_url, module_name, canonical_svg, palette)
             records.append(
                 {
                     "name": name,
@@ -808,13 +981,14 @@ def _core_records(
                     "description": f"Azure Portal core icon: {_display_name(name)}.",
                     "style": style,
                     "tags": ["azure", "portal", "core", *tags],
-                    "descriptor": _source_descriptor(bundle_url, module_name, canonical_svg),
-                    "preserveSourceColors": preserve_source_colors(canonical_svg),
+                    "descriptor": descriptor,
+                    "preserveSourceColors": preserve_source_colors(canonical_svg)
+                    or bool(descriptor.get("paintMap")),
                 }
             )
     if not records:
         raise AzurePortalSchemaError("Portal bundles contained no named core SVG modules")
-    return records, source_digests
+    return records, source_digests, palette
 
 
 def build_azure_catalog(
@@ -823,7 +997,7 @@ def build_azure_catalog(
 ) -> AzureBuildResult:
     """Build core and extension-manifest entries without retaining SVG source text."""
 
-    core_records, core_source_digests = _core_records(source, fetch_text)
+    core_records, core_source_digests, palette = _core_records(source, fetch_text)
     manifest_records: list[dict] = []
     manifest_source_digests: list[dict] = []
     for manifest_source in source.manifest_sources:
@@ -841,7 +1015,9 @@ def build_azure_catalog(
                 "sha256": canonical_json_digest(manifest_payload),
             }
         )
-        manifest_records.extend(_manifest_icon_records(manifest_source, manifest_payload))
+        manifest_records.extend(
+            _manifest_icon_records(manifest_source, manifest_payload, palette)
+        )
 
     icons, unique_svg_count = _collapse_records(core_records + manifest_records)
     _, core_unique_svg_count = _collapse_records(core_records)

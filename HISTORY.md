@@ -3,8 +3,18 @@
 ## 2026-08-31: Preserve Intrinsic Azure Artwork Colours
 
 - Fixed Azure extension-manifest artwork being flattened into monochrome silhouettes in dark mode when its source variant was labelled `regular`.
-- Added deterministic per-variant paint analysis for chromatic colours, multiple paints, gradients, and patterns while preserving the upstream regular/filled/color taxonomy and descriptor-only index.
+- Added deterministic per-variant paint analysis for chromatic colours, multiple paints, gradients, and patterns, plus locked public Portal Base.Images palette materialization for the source SVG classes that use it; the descriptor-only index and upstream regular/filled/color taxonomy remain unchanged.
 - Applied the generated preservation metadata consistently to gallery and detail previews; copy/download source resolution and stable deep links are unchanged.
+
+## 2026-08-31: Harden Azure Sync Source-Lock Handoff
+
+- Kept the initial Portal probe's drift and count gates against the committed Azure source lock.
+- Made the subsequent full index generation reuse that fresh validated temporary lock, avoiding a second lookup of an old RequireConfig URL during a Portal deployment transition.
+
+## 2026-08-31: Reconcile Legacy Azure Artwork Without Importing It
+
+- Audited all 105 local legacy SVGs as read-only: none exactly matches a canonical generated-source hash; reconciliation found 23 exact-name metadata counterparts, 28 high-confidence renamed counterparts, 43 ambiguous items, and 11 initially absent metadata candidates.
+- Classified the absent candidates against existing Azure, Marketplace, and shell surfaces. The bounded future discovery gaps are Marketplace catalogue image metadata and the embedded-Entra App registrations inner-blade asset mapping; no deterministic public revisioned Entra mapping is yet established, so this did not broaden the default source boundary or import any legacy asset.
 
 ## 2026-08-31: Add Bounded Azure Portal Remote Sources
 

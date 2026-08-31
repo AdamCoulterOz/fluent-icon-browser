@@ -46,6 +46,8 @@
         "visibility",
     ]);
     const LOCAL_FRAGMENT_URL = /^url\s*\(\s*#[-\w:.]+\s*\)$/i;
+    const PAINT_MAP_CLASS = /^msportalfx-svg-c\d{2}$/;
+    const PAINT_MAP_FILL = /^#[0-9a-f]{6}$/i;
 
     function splitStyleDeclarations(styleText) {
         const declarations = [];
@@ -473,7 +475,45 @@
         );
     }
 
-    function sanitizeSvg(svgText, domParser = new DOMParser()) {
+    function normalizePaintMap(value) {
+        if (!value || typeof value !== "object" || Array.isArray(value)) {
+            return [];
+        }
+        return Object.entries(value).filter(
+            ([className, fill]) =>
+                PAINT_MAP_CLASS.test(className) &&
+                typeof fill === "string" &&
+                PAINT_MAP_FILL.test(fill)
+        );
+    }
+
+    function applyPaintMap(root, paintMap) {
+        if (!paintMap.length) {
+            return;
+        }
+        [root, ...root.querySelectorAll("*")].forEach((element) => {
+            const classNames = (element.getAttribute("class") || "").split(/\s+/).filter(Boolean);
+            const matchedClassNames = new Set();
+            paintMap.forEach(([className, fill]) => {
+                if (classNames.includes(className)) {
+                    element.setAttribute("fill", fill);
+                    matchedClassNames.add(className);
+                }
+            });
+            if (matchedClassNames.size) {
+                const remainingClassNames = classNames.filter(
+                    (className) => !matchedClassNames.has(className)
+                );
+                if (remainingClassNames.length) {
+                    element.setAttribute("class", remainingClassNames.join(" "));
+                } else {
+                    element.removeAttribute("class");
+                }
+            }
+        });
+    }
+
+    function sanitizeSvg(svgText, domParser = new DOMParser(), paintMap = null) {
         const document = domParser.parseFromString(svgText, "image/svg+xml");
         const root = document.documentElement;
         if (
@@ -519,6 +559,7 @@
             }
             sanitizeAttributes(element);
         });
+        applyPaintMap(root, normalizePaintMap(paintMap));
         return new XMLSerializer().serializeToString(root);
     }
 
@@ -626,7 +667,13 @@
         }
 
         descriptorKey(descriptor) {
-            return [descriptor.url, descriptor.format, descriptor.selector, descriptor.sha256 || ""].join("\n");
+            return [
+                descriptor.url,
+                descriptor.format,
+                descriptor.selector,
+                descriptor.sha256 || "",
+                JSON.stringify(normalizePaintMap(descriptor.paintMap)),
+            ].join("\n");
         }
 
         async fetchSourceText(url) {
@@ -673,7 +720,7 @@
                     const extractedSvg = this.extractSvg(sourceText, descriptor);
                     const canonicalSvg = this.canonicalize(extractedSvg);
                     await verifySha256(canonicalSvg, descriptor.sha256, this.crypto);
-                    return this.sanitize(extractedSvg);
+                    return this.sanitize(extractedSvg, undefined, descriptor.paintMap);
                 });
                 this.svgByDescriptor.set(key, resolution);
                 resolution.catch(() => {
@@ -693,6 +740,7 @@
         extractJsonPointerSvg,
         isRemoteSourceDescriptor,
         normalizeSafeStyleDeclarations,
+        normalizePaintMap,
         sanitizeSvg,
         canonicalizeSvgForDigest,
         verifySha256,
