@@ -11,6 +11,14 @@ function getCollectionPickerOption(set, key) {
     };
 }
 
+function sourceAllowsTransform(variantData, capability) {
+    return variantData?.sourceCapabilities?.[capability] !== false;
+}
+
+function previewSurfaceClass(variantData) {
+    return variantData?.previewSurface === "contrast" ? "preview-surface-contrast" : "";
+}
+
 function shouldDismissIconPanelFromPointerDown({
     isPanelOpen,
     target,
@@ -1525,12 +1533,13 @@ class IconBrowser {
         const colorClass = this.shouldPreserveSourceColors(previewVariant, variantData)
             ? "has-color-variant"
             : "";
+        const surfaceClass = previewSurfaceClass(variantData);
 
         const cached = {
             variant: previewVariant,
             asset,
             markup: previewMarkup,
-            colorClass,
+            colorClass: [colorClass, surfaceClass].filter(Boolean).join(" "),
         };
         icon._previewCache[styleMode] = cached;
         return cached;
@@ -1935,11 +1944,16 @@ class IconBrowser {
     }
 
     shouldUseCurrentColor(variant) {
-        if (variant === "color") {
+        if (variant === "color" || !this.canTransformActiveVariant("currentColor")) {
             return false;
         }
 
         return Boolean(this.panelCurrentColorEnabled[variant]);
+    }
+
+    canTransformActiveVariant(capability) {
+        const variantData = this.getVariantData(this.currentIcon, this.activePanelVariant);
+        return sourceAllowsTransform(variantData, capability);
     }
 
     updateModalVariantPreview(variant) {
@@ -1959,8 +1973,9 @@ class IconBrowser {
         const colorClass = this.shouldPreserveSourceColors(variant, variantData)
             ? "has-color-variant"
             : "";
+        const surfaceClass = previewSurfaceClass(variantData);
 
-        iconDiv.className = `icon-view ${colorClass} icon-large`;
+        iconDiv.className = `icon-view ${colorClass} ${surfaceClass} icon-large`.trim();
 
         const selectedSize = this.panelSelectedSizes[variant];
         const asset = this.resolveVariantAsset(variantData, selectedSize);
@@ -2141,6 +2156,7 @@ class IconBrowser {
         const sizeMenu = document.getElementById("panelSizeMenu");
         const sizeWrap = document.getElementById("panelSizeWrap");
         const currentColorToggle = document.getElementById("panelCurrentColorToggle");
+        const includeBoundsToggle = document.getElementById("panelIncludeBoundsToggle");
         const copyButton = document.getElementById("panelCopyBtn");
         const downloadButton = document.getElementById("panelDownloadBtn");
         const hasActiveVariant = Boolean(
@@ -2171,6 +2187,10 @@ class IconBrowser {
             currentColorToggle.classList.add("disabled");
             currentColorToggle.classList.remove("active");
             currentColorToggle.setAttribute("aria-pressed", "false");
+            if (includeBoundsToggle) {
+                includeBoundsToggle.disabled = true;
+                includeBoundsToggle.classList.add("disabled");
+            }
             requestAnimationFrame(() => {
                 this.syncPanelActionPlacement();
                 this.syncToolbarScrollIndicators();
@@ -2209,7 +2229,7 @@ class IconBrowser {
         }
         sizeButton.style.display = "inline-flex";
 
-        if (variant === "color") {
+        if (variant === "color" || !this.canTransformActiveVariant("currentColor")) {
             currentColorToggle.disabled = true;
             currentColorToggle.classList.add("disabled");
             currentColorToggle.classList.remove("active");
@@ -2222,6 +2242,17 @@ class IconBrowser {
             currentColorToggle.style.display = "inline-flex";
             currentColorToggle.classList.toggle("active", enabled);
             currentColorToggle.setAttribute("aria-pressed", enabled ? "true" : "false");
+        }
+
+        if (includeBoundsToggle) {
+            const allowsBounds = this.canTransformActiveVariant("boundingBox");
+            includeBoundsToggle.disabled = !allowsBounds;
+            includeBoundsToggle.classList.toggle("disabled", !allowsBounds);
+            includeBoundsToggle.classList.toggle("active", allowsBounds && this.includeBoundsEnabled);
+            includeBoundsToggle.setAttribute(
+                "aria-pressed",
+                allowsBounds && this.includeBoundsEnabled ? "true" : "false"
+            );
         }
 
         requestAnimationFrame(() => {
@@ -2246,8 +2277,9 @@ class IconBrowser {
             return;
         }
 
-        toggle.classList.toggle("active", this.includeBoundsEnabled);
-        toggle.setAttribute("aria-pressed", this.includeBoundsEnabled ? "true" : "false");
+        const enabled = this.canTransformActiveVariant("boundingBox") && this.includeBoundsEnabled;
+        toggle.classList.toggle("active", enabled);
+        toggle.setAttribute("aria-pressed", enabled ? "true" : "false");
     }
 
     getVariantSelection(variant) {
@@ -2557,7 +2589,7 @@ function prepareSvgOutput(originalSvg, variant) {
         ? toCurrentColorSvg(originalSvg)
         : originalSvg;
 
-    return iconBrowser.includeBoundsEnabled
+    return iconBrowser.canTransformActiveVariant("boundingBox") && iconBrowser.includeBoundsEnabled
         ? withTransparentViewBoxBounds(colorAdjustedSvg)
         : colorAdjustedSvg;
 }
@@ -2590,7 +2622,8 @@ async function downloadIcon(variant) {
     try {
         const originalSvg = await iconBrowser.resolveAssetSvg(selection.asset);
         const applyCurrentColor = iconBrowser.shouldUseCurrentColor(variant);
-        const includeBounds = iconBrowser.includeBoundsEnabled;
+        const includeBounds = iconBrowser.canTransformActiveVariant("boundingBox") &&
+            iconBrowser.includeBoundsEnabled;
         const finalSvg = prepareSvgOutput(originalSvg, variant);
 
         const blob = new Blob([finalSvg], { type: "image/svg+xml" });
@@ -2621,6 +2654,8 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         getCollectionPickerOption,
+        previewSurfaceClass,
+        sourceAllowsTransform,
         shouldDismissIconPanelFromPointerDown,
     };
 }

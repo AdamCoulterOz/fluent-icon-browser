@@ -1,5 +1,6 @@
 const assert = require("node:assert/strict");
 const crypto = require("node:crypto").webcrypto;
+const { gzipSync } = require("node:zlib");
 
 const {
     RemoteIconSourceResolver,
@@ -13,6 +14,26 @@ const {
 async function sha256Hex(text) {
     const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
     return Buffer.from(digest).toString("hex");
+}
+
+async function sha256HexBytes(bytes) {
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return Buffer.from(digest).toString("hex");
+}
+
+function tarArchive(entries) {
+    const chunks = [];
+    for (const [name, content] of entries) {
+        const header = Buffer.alloc(512);
+        header.write(name, 0, "utf8");
+        header.write("0000644\0", 100, "ascii");
+        header.write(content.length.toString(8).padStart(11, "0") + "\0", 124, "ascii");
+        header[156] = "0".charCodeAt(0);
+        header.write("ustar\0", 257, "ascii");
+        chunks.push(header, content, Buffer.alloc((512 - (content.length % 512)) % 512));
+    }
+    chunks.push(Buffer.alloc(1024));
+    return Buffer.concat(chunks);
 }
 
 function createFakeSvgElement(localName, attributes = {}) {
@@ -210,6 +231,56 @@ async function run() {
         expectedSvg
     );
     assert.throws(() => decodeJsonPointer("/icons/~2bad"), /invalid escape/i);
+
+    const archiveSvg = '<svg viewBox="0 0 120 120"><path fill="#00a1df"/></svg>';
+    const archiveEntry = "package/dist/salesforce-lightning-design-system-icons/standard/mulesoft.svg";
+    const archiveBytes = gzipSync(tarArchive([[archiveEntry, Buffer.from(archiveSvg)]]));
+    const archiveDescriptor = {
+        url: "https://registry.example.test/icons-10.17.0.tgz",
+        format: "npm-tgz-svg-entry",
+        entry: archiveEntry,
+        archiveSha256: await sha256HexBytes(archiveBytes),
+        entrySha256: await sha256Hex(archiveSvg),
+    };
+    let archiveFetchCount = 0;
+    const archiveResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => {
+            archiveFetchCount += 1;
+            return {
+                ok: true,
+                status: 200,
+                headers: { get: () => "application/octet-stream" },
+                arrayBuffer: async () => archiveBytes.buffer.slice(archiveBytes.byteOffset, archiveBytes.byteOffset + archiveBytes.byteLength),
+            };
+        },
+    });
+    assert.equal(await archiveResolver.resolve(archiveDescriptor), archiveSvg);
+    assert.equal(await archiveResolver.resolve(archiveDescriptor), archiveSvg);
+    assert.equal(archiveFetchCount, 1);
+    await assert.rejects(
+        () => archiveResolver.resolve({ ...archiveDescriptor, entrySha256: "0".repeat(64) }),
+        /SHA-256 does not match/i
+    );
+    await assert.rejects(
+        () => archiveResolver.resolve({ ...archiveDescriptor, entry: "../unsafe.svg" }),
+        /safe entry path/i
+    );
+    const badArchiveResolver = new RemoteIconSourceResolver({
+        crypto,
+        sanitize: (svg) => svg,
+        fetch: async () => ({
+            ok: true,
+            status: 200,
+            headers: { get: () => "application/octet-stream" },
+            arrayBuffer: async () => archiveBytes.buffer.slice(archiveBytes.byteOffset, archiveBytes.byteOffset + archiveBytes.byteLength),
+        }),
+    });
+    await assert.rejects(
+        () => badArchiveResolver.resolve({ ...archiveDescriptor, archiveSha256: "0".repeat(64) }),
+        /SHA-256 does not match/i
+    );
 
     let fetchCount = 0;
     const resolver = new RemoteIconSourceResolver({

@@ -1,0 +1,34 @@
+{
+  "source": "hashicorp/design-system/packages/flight-icons (Products)",
+  "repositoryUrl": "https://github.com/hashicorp/design-system",
+  "packagePath": "packages/flight-icons",
+  "commit": "238aa433d9aaaae71733b93e36b7daef6fe11550",
+  "packageVersion": "5.1.0",
+  "contentSha256": "d84475851bd77c0fe23553d8001b03f43824e989c5546ce682a40e805541874b",
+  "includedCategories": [
+    "Products"
+  ],
+  "excludedCategories": [
+    "Animated",
+    "Arrows",
+    "Business",
+    "Communication",
+    "Data",
+    "Date and time",
+    "Development",
+    "Files",
+    "Interface",
+    "Location",
+    "Media",
+    "Operations",
+    "Security",
+    "Services",
+    "Status",
+    "Support",
+    "Symbols",
+    "User"
+  ],
+  "indexedAssetCount": 144,
+  "indexedFamilyCount": 60,
+  "groupedFillPairCount": 12
+}

@@ -8,12 +8,14 @@
 - Segoe icons from `microsoft/fluentui` (`react-icons-mdl2` and `react-icons-mdl2-branded`)
 - Azure icons from the deterministic default public surface of Microsoft Azure Portal core modules and extension manifests
 - HashiCorp Flight generic-concept icons from `hashicorp/design-system/packages/flight-icons`
+- HashiCorp product icons from the `Products` category of `hashicorp/design-system/packages/flight-icons`
+- Salesforce SLDS `standard`, `action`, `doctype`, and `custom` icons from the official `@salesforce-ux/icons` archive, including first-party MuleSoft artwork
 - Red Hat `standard`, `ui`, and `microns` icons from `RedHat-UX/red-hat-icons`
 
 The UI loads `icon-data.json` at runtime and provides:
 
 - text search (name, description, metaphors)
-- icon-set switching (Fluent/Segoe/Azure/Flight/Red Hat)
+- icon-set switching (Fluent/Segoe/Azure/Flight/HashiCorp/Salesforce/Red Hat)
 - compact 64-pixel sticky frosted header using Meridian's Keel surface treatment, containing title (`Icons`), search, a native data-driven collection picker, and segmented style filter (`regular`, `solid`, `color`)
   - current control order: brand (`logo + Icons`), search, collection picker, style filter
   - search box is constrained to `max-width: 442px` and centered within the available search lane
@@ -100,10 +102,10 @@ The UI loads `icon-data.json` at runtime and provides:
 - `script.js`: browser logic for loading/filtering/rendering icon data and modal actions.
 - `process.py`: legacy/optional icon transform script (kept for reference, not used in CI pipeline).
 - `generate-icon-data.py`: builds `icon-data.json` directly from upstream `assets` plus ordinary/branded MDL2 components and emits commit-pinned source URLs + native sizes.
-- `flight_icons.py`, `redhat_icons.py`: validate the approved source subsets, write/read digest-bound locks, and emit commit-pinned remote SVG references without committing their payloads.
-- `source_lock.py`: source-file/path digest helpers shared by digest-bound collection locks.
+- `flight_icons.py`, `redhat_icons.py`, `salesforce_icons.py`: validate approved source subsets, write/read digest-bound locks, and emit remote SVG references without committing payloads. Salesforce uses a registry archive lock with approved entry digests; Flight's generic concepts and HashiCorp product marks have independent locks.
+- `source_lock.py`: source-file/path and package-archive digest helpers shared by digest-bound collection locks.
 - `azure_portal_icons.py`: discovers the bounded public Azure Portal source, validates count/drift gates, and emits descriptor-only Azure records plus a compact source lock; it never retains SVG payloads.
-- `remote-icon-source.js`: resolves Azure descriptors lazily, verifies and sanitizes the source SVG, and applies any private per-descriptor paint normalization before the SVG is previewed, copied, or downloaded.
+- `remote-icon-source.js`: resolves Azure descriptors lazily and Salesforce package entries after archive/entry SHA-256 verification, then sanitizes the SVG before it is previewed, copied, or downloaded.
 - `generate-fabric-metadata.py`: builds `fabric-mdl2-metadata.json` for ordinary and branded MDL2 icons (`id`, `name`, `description`, `metaphors`).
 - `fabric-mdl2-metadata.json`: committed metadata source for Segoe icon descriptions/metaphors.
 - `generate-fabric-samples.py`: creates visual MDL2 review sheets (10x10 icon grids) for human-in-the-loop metadata QA.
@@ -116,7 +118,7 @@ The UI loads `icon-data.json` at runtime and provides:
 - `.upstream-sha`: last synced Fluent System upstream commit SHA.
 - `.upstream-fabric-sha`: last synced Fluent/Fabric upstream commit SHA.
 - `.upstream-azure-portal.json`: committed Azure Portal page/source version, URLs, counts, and digests used for bounded drift detection.
-- `.upstream-flight-icons.json`, `.upstream-redhat-icons.json`: committed package version, pinned commit, approved subset, and source-content digest locks.
+- `.upstream-flight-icons.json`, `.upstream-hashicorp-products.json`, `.upstream-redhat-icons.json`: committed package version, pinned commit, approved subset, and source-content digest locks.
 
 ## Build + Sync Pipeline
 
@@ -132,7 +134,8 @@ The UI loads `icon-data.json` at runtime and provides:
     - `microsoft/fluentui-system-icons` `main`
     - `microsoft/fluentui` `master` (Segoe MDL2 components)
     - public Azure Portal bootstrap, RequireConfig/dependency tree, and default extension manifests
-    - HashiCorp Flight package sources (generic categories only)
+    - HashiCorp Flight package sources (generic categories plus separately locked official product marks)
+    - Salesforce SLDS official `@salesforce-ux/icons` archive (digest-bound `standard`, `action`, `doctype`, and `custom` entries; `utility` excluded)
     - Red Hat icon sources (`standard`, `ui`, and `microns` only)
   - only rebuilds when an approved upstream revision or source lock changes (or forced)
   - probes Portal drift and count gates against the committed Azure lock, then passes the freshly validated temporary lock to the regeneration pass so a Portal deployment transition cannot make the prior RequireConfig URL a second-pass `404`
@@ -140,11 +143,12 @@ The UI loads `icon-data.json` at runtime and provides:
   - generates combined index from:
     - generated `fabric-mdl2-metadata.json` (committed)
     - upstream Fluent `assets` (raw GitHub SVG URLs pinned to upstream SHA)
-    - upstream ordinary and branded MDL2 component sources for Segoe (parsed inline SVG + source links)
+    - upstream ordinary and branded MDL2 component sources for Segoe (legacy extracted inline render data with source links)
     - temporarily downloaded public Portal JS/JSON parsed without evaluation for Azure remote descriptors
-    - commit-pinned HashiCorp Flight generic-concept SVG references verified against a digest-bound source lock
+    - commit-pinned HashiCorp Flight generic-concept and separate HashiCorp Products SVG references verified against independent digest-bound source locks
+    - official Salesforce registry archive entries verified against archive and per-entry digest locks before browser extraction
     - commit-pinned Red Hat `standard`/`ui`/`microns` SVG references verified against a digest-bound source lock
-  - commits updated index/metadata and source-lock records; no Azure, Flight, or Red Hat SVG payload
+  - commits updated index/metadata and source-lock records; no Azure, Flight, HashiCorp Products, Salesforce, or Red Hat SVG payload
 - `.github/workflows/deploy-pages.yml`
   - runs on pushes to `main`
   - runs after successful `Sync Icon Indexes` completions on `main`
@@ -163,14 +167,15 @@ The UI loads `icon-data.json` at runtime and provides:
 - Fluent icon SVG payloads are loaded from `raw.githubusercontent.com` URLs pinned to upstream SHA instead of being embedded in `icon-data.json`.
 - The service worker may retain opaque cross-origin SVG responses for image previews, but copy/download fetches require readable CORS responses; opaque cache entries are bypassed and replaced for those requests, and background cache warming explicitly requests CORS-readable SVGs.
 - Fluent preview/download URLs intentionally avoid jsDelivr because browser image requests for some pinned SVG assets returned intermittent `403` responses.
-- Segoe icons are sourced from both upstream component packages and stored as inline SVG in `icon-data.json` (with source links), because upstream raw SVG files are not published as a parallel asset folder.
+- Segoe icons are sourced from both upstream component packages and retain legacy extracted inline render data with source links in the generated index. A future migration should preserve existing deep links while replacing that representation with a source-owner runtime resolver; new federated collections do not retain upstream SVG payloads.
 - Branded MDL2 components remain part of the `segoe` icon set rather than a separate UI set; `branded` is a searchable metaphor/tag and the upstream branded-assets license remains applicable.
 - Fabric metadata is maintained in-repo and regenerated by script/workflow; manual overrides are defined in `generate-fabric-metadata.py`.
 - UI can optionally rewrite regular/filled icon `fill` values to `currentColor` when downloading.
 - `?set=<key>&icon=<name>` is a public, stable deep-link contract for external docs and tools that need to link directly to an icon.
-- Published set keys are `fluent`, `segoe`, `azure`, `flight`, and `redhat`; `fabric` remains a compatibility alias to `segoe` only while no direct `fabric` set exists. The current generated snapshot is Fluent 2,975, Segoe 1,787, Azure 1,374, Flight 396, and Red Hat 956 families; these are build observations rather than permanent contracts.
+- Published set keys are `fluent`, `segoe`, `azure`, `flight`, `hashicorp`, `salesforce`, and `redhat`; `fabric` remains a compatibility alias to `segoe` only while no direct `fabric` set exists. Generated counts are observations rather than permanent contracts.
 - Flight package 5.1.0 is MPL-2.0 and includes generic concepts only: `Products` and `Services` are excluded, and matching `-fill` names are grouped as variants. Red Hat package 2.3.1 is CC BY 4.0 and includes only `standard`, `ui`, and `microns`; `social` is excluded. Both use commit-pinned upstream SVG URLs and digest-bound locks; no new SVG payloads are committed.
-- `SOURCES.md` is the concise source-rights registry. It distinguishes published collections from candidates requiring a source-boundary and public-catalogue rights decision; it does not provide legal advice. A local-only licensed-pack architecture is not implemented.
+- Salesforce SLDS package 10.17.0 is CC BY-ND 4.0 and includes source-colour `standard`, `action`, `doctype`, and `custom` artwork, including MuleSoft; `utility` is excluded. Its official registry archive and each selected entry are SHA-256 locked; the client verifies both before extraction/sanitization, and source-transforming output controls are unavailable.
+- `SOURCES.md` is the concise source-eligibility registry. It distinguishes published collections from candidates requiring a deterministic official source boundary (revisioned/stable per-icon URLs or an official archive plus entry descriptor/digest), unauthenticated CORS client access, compatible terms for automated indexing/deep-linking/hotlinking/runtime retrieval/user copy-download, and attribution/trademark/no-endorsement treatment. No rehosting is a separate implementation invariant: sync may temporarily inspect official payloads, then retains only generated index/lock metadata while the client resolves icons from the source owner at runtime. It does not provide legal advice. A local-only licensed-pack architecture is not implemented.
 - Azure variants use `remoteSource` descriptors (`url`, `format`, `selector`, `sha256`). The browser lazily fetches public CORS sources, extracts without eval, verifies and sanitizes the SVG, then uses the resolved inline SVG for preview/copy/download. Generator-side parsing of the locked public Portal Base.Images CSS AMD module adds a private `paintMap` only for palette classes used by a source SVG; after verification/sanitization the browser materializes those fills and removes the matched class tokens. This preserves authored greys and whites alongside chromatic, multi-paint, gradient, and pattern artwork in every preview state without changing the source variant taxonomy. Client/service-worker caching is client-side and is not repository rehosting.
 - Azure discovery is bounded to the deterministic default public surface from portal bootstrap, current RequireConfig/dependency data, and default extension-manifest hashes; schema drift or count collapse fails the sync. The 105 local legacy Documents SVGs remain read-only, unimported, and unpublished: none has a canonical content-hash match in the generated source; reconciliation found 23 exact-name metadata counterparts, 28 high-confidence renamed counterparts, 43 ambiguous items, and 11 initially absent metadata candidates.
 - The missing-11 classification separates existing coverage from coherent future sources: AKS is historical Microsoft.ContainerService/managedClusters artwork; Branding/Application Branding maps to indexed core CustomDomain artwork; Marketplace/Recent/What's new are shell surfaces; Remote Rendering is Microsoft.MixedReality/remoteRenderingAccounts surfaced through Marketplace PNGs; and Dynamics/AppDynamics/Terraform are Marketplace/product artwork. Two bounded discovery gaps remain: Marketplace catalogue image metadata, and Entra App registrations inner-blade symbols such as Manifest. Portal's embedded Entra extension remains relevant despite the separate Entra portal, and known content-addressed Static Content URLs are publicly fetchable; no public revisioned blade-to-asset mapping has been established, so deterministic discovery must not crawl arbitrary Dynamic assets or require login. Future Fabric, Azure DevOps, Power Platform, Entra, Microsoft 365, and Dynamics 365 adapters remain open work only.

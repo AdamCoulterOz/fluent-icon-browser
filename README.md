@@ -2,7 +2,7 @@
 
 [Open the website](https://adamcoulteroz.github.io/fluent-icon-browser/)
 
-A static GitHub Pages browser for searchable, source-attributed technology icon collections. The committed `icon-data.json` lets the site open without a server-side catalogue API or frontend build runtime.
+A static GitHub Pages index, deep-link browser, and client-side resolver for searchable, source-attributed technology icon collections. The committed `icon-data.json` lets the site open without a server-side catalogue API or frontend build runtime; the client retrieves each resolved icon from its source owner and renders it inline.
 
 ## Published Collections
 
@@ -12,6 +12,8 @@ A static GitHub Pages browser for searchable, source-attributed technology icon 
 | `segoe` | Segoe | `react-icons-mdl2` and `react-icons-mdl2-branded` in `microsoft/fluentui` |
 | `azure` | Azure Portal Icons | Deterministic default public Portal core modules and extension manifests |
 | `flight` | HashiCorp Flight Icons | Generic concepts from `hashicorp/design-system/packages/flight-icons` |
+| `hashicorp` | HashiCorp Products | Official product marks from the `Products` category in `hashicorp/design-system/packages/flight-icons` |
+| `salesforce` | Salesforce SLDS Icons | Official `@salesforce-ux/icons` npm archive, entry-digest verified at runtime |
 | `redhat` | Red Hat Icons | `standard`, `ui`, and `microns` from `RedHat-UX/red-hat-icons` |
 
 `fabric` remains a compatibility alias for `segoe`; it is not a separate published collection. See [SOURCES.md](SOURCES.md) for source status, licences, scope exclusions, and candidates that are not approved for indexing.
@@ -29,11 +31,11 @@ A static GitHub Pages browser for searchable, source-attributed technology icon 
 
 Each generated collection has a public `sources[]` record containing source label, reference, source URL, pinned revision, and, where applicable, licence name, licence URL, and content digest. The browser exposes the source and licence links from those records.
 
-Remote SVG URLs are pinned to upstream commits. Flight and Red Hat synchronization also requires a source lock whose digest binds the approved source files to the selected commit. The repository does not commit Flight or Red Hat SVG payloads. Azure remains descriptor-only: the browser resolves, verifies, sanitizes, and renders public Azure sources lazily; Azure SVG payloads are not retained in this repository or the Pages artifact.
+Published sources have a deterministic official source boundary: a revisioned or stable per-icon URL, or an official archive with an entry descriptor and digest. They must be unauthenticated and CORS-accessible to the client, and their terms must be compatible with automated indexing, deep-linking/hotlinking, runtime retrieval, and user copy/download, with appropriate attribution, trademark, and no-endorsement treatment. Remote SVG URLs are pinned to upstream commits. Flight, HashiCorp Products, and Red Hat synchronization require source locks whose digests bind the approved source files to the selected commit. Salesforce synchronisation locks the registry archive digest plus every approved SVG entry; the browser verifies both before sanitizing an extracted entry. The pipeline may temporarily download official sources to inspect and index them, then discards the payloads and retains generated index/lock metadata only. Azure remains descriptor-only: the browser resolves, verifies, sanitizes, and renders public Azure sources lazily.
 
-Current generated state at the documented in-flight snapshot is Fluent 2,975, Segoe 1,787, Azure 1,374, Flight 396, and Red Hat 956 icon families. These are observed build results, not permanent catalogue cardinality guarantees.
+Current generated state counts are observed build results, not permanent catalogue cardinality guarantees.
 
-Flight is package version 5.1.0 under MPL-2.0 and excludes `Products` and `Services`. `-fill` entries are grouped as variants only where a matching generic base concept exists. Red Hat is package version 2.3.1 under CC BY 4.0 and includes only `standard`, `ui`, and `microns`; `social` is excluded.
+Flight is package version 5.1.0 under MPL-2.0 and remains limited to generic concepts, excluding `Products` and `Services`. The separate `hashicorp` set contains only official `Products` marks, including Terraform, Vault, Packer, Nomad, and Consul; `Services` remains excluded. `-fill` entries are grouped as variants only where a matching base concept exists. Salesforce SLDS is package version 10.17.0 under CC BY-ND 4.0 and includes source-colour `standard`, `action`, `doctype`, and `custom` artwork, including the first-party MuleSoft asset; `utility` is excluded. Its no-derivatives source capability disables browser output transforms. Red Hat is package version 2.3.1 under CC BY 4.0 and includes only `standard`, `ui`, and `microns`; `social` is excluded.
 
 ## Local Development
 
@@ -43,7 +45,7 @@ Serve the static site locally:
 python serve.py
 ```
 
-The generator accepts the usual Fluent/Segoe inputs plus optional Flight and Red Hat source directories, pinned commits, and source-lock paths. Generation fails when a requested locked collection does not match its source digest. The sync workflow handles the corresponding upstream acquisition and writes the committed index; do not add upstream SVG payloads merely to make a collection available.
+The generator accepts the usual Fluent/Segoe inputs plus optional Flight, HashiCorp Products, Salesforce archive, and Red Hat source inputs with their source locks. Generation fails when a requested locked collection does not match its source digest. The sync workflow handles the corresponding upstream acquisition and writes the committed index; do not add upstream SVG payloads merely to make a collection available.
 
 `process.py` remains an experiment and is not part of the automated sync path.
 
@@ -57,5 +59,5 @@ The generator accepts the usual Fluent/Segoe inputs plus optional Flight and Red
 
 - The browser is static-first. It does not provide a server-side icon API or package-distribution contract.
 - Azure discovery is limited to the deterministic default public surface. Authenticated or flight-specific Portal surfaces and the 105 legacy local Documents SVGs are excluded.
-- Source availability, diagram-use permission, or a downloadable toolkit does not alone establish permission to mirror assets in a public catalogue. This project records provenance decisions but does not provide legal advice.
+- Source availability, diagram-use permission, or a downloadable toolkit does not alone establish suitability for this index and runtime resolver. Each candidate must satisfy the documented deterministic-source, client-access, terms, attribution, trademark, and no-endorsement checks; not every vendor source is suitable. This project records provenance decisions but does not provide legal advice.
 - A separate local-only architecture for licensed icon packs is not implemented.

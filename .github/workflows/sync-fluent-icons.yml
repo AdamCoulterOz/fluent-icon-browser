@@ -46,6 +46,7 @@ jobs:
           fi
           flight_sha="$(git ls-remote https://github.com/hashicorp/design-system.git refs/heads/main | awk '{print $1}')"
           redhat_sha="$(git ls-remote https://github.com/RedHat-UX/red-hat-icons.git refs/heads/main | awk '{print $1}')"
+          salesforce_version="10.17.0"
 
           if [ -z "$fluent_sha" ] || [ -z "$fabric_sha" ] || [ -z "$flight_sha" ] || [ -z "$redhat_sha" ]; then
             echo "Unable to resolve one or more upstream SHAs." >&2
@@ -56,6 +57,7 @@ jobs:
           echo "fabric_sha=$fabric_sha" >> "$GITHUB_OUTPUT"
           echo "flight_sha=$flight_sha" >> "$GITHUB_OUTPUT"
           echo "redhat_sha=$redhat_sha" >> "$GITHUB_OUTPUT"
+          echo "salesforce_version=$salesforce_version" >> "$GITHUB_OUTPUT"
 
       - name: Probe Azure Portal icon sources
         run: |
@@ -67,6 +69,18 @@ jobs:
             --minimum-count 250 \
             --manifest-minimum-count 100
 
+      - name: Fetch Salesforce SLDS package archive
+        id: salesforce_archive
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          archive_path=".tmp/salesforce-icons.tgz"
+          curl --fail --location --silent --show-error \
+            --output "$archive_path" \
+            "https://registry.npmjs.org/@salesforce-ux/icons/-/icons-${{ steps.upstream.outputs.salesforce_version }}.tgz"
+          archive_sha="$(shasum -a 256 "$archive_path" | awk '{print $1}')"
+          echo "archive_sha=$archive_sha" >> "$GITHUB_OUTPUT"
+
       - name: Decide if rebuild is needed
         id: decision
         run: |
@@ -74,6 +88,9 @@ jobs:
           current_fluent="$(cat .upstream-sha 2>/dev/null || true)"
           current_fabric="$(cat .upstream-fabric-sha 2>/dev/null || true)"
           current_flight="$(jq -r '.commit // empty' .upstream-flight-icons.json 2>/dev/null || true)"
+          current_hashicorp_products="$(jq -r '.commit // empty' .upstream-hashicorp-products.json 2>/dev/null || true)"
+          current_salesforce_version="$(jq -r '.packageVersion // empty' .upstream-salesforce-icons.json 2>/dev/null || true)"
+          current_salesforce_archive="$(jq -r '.archiveSha256 // empty' .upstream-salesforce-icons.json 2>/dev/null || true)"
           current_redhat="$(jq -r '.commit // empty' .upstream-redhat-icons.json 2>/dev/null || true)"
           current_azure_lock=".upstream-azure-portal.json"
           probed_azure_lock=".tmp/azure-portal-source.json"
@@ -81,12 +98,14 @@ jobs:
           upstream_fabric="${{ steps.upstream.outputs.fabric_sha }}"
           upstream_flight="${{ steps.upstream.outputs.flight_sha }}"
           upstream_redhat="${{ steps.upstream.outputs.redhat_sha }}"
+          upstream_salesforce_version="${{ steps.upstream.outputs.salesforce_version }}"
+          upstream_salesforce_archive="${{ steps.salesforce_archive.outputs.archive_sha }}"
           force="${{ github.event.inputs.force_rebuild || 'false' }}"
           changed="false"
 
           if [ "$force" = "true" ]; then
             changed="true"
-          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || [ "$upstream_flight" != "$current_flight" ] || [ "$upstream_redhat" != "$current_redhat" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
+          elif [ "$upstream_fluent" != "$current_fluent" ] || [ "$upstream_fabric" != "$current_fabric" ] || [ "$upstream_flight" != "$current_flight" ] || [ "$upstream_flight" != "$current_hashicorp_products" ] || [ "$upstream_redhat" != "$current_redhat" ] || [ "$upstream_salesforce_version" != "$current_salesforce_version" ] || [ "$upstream_salesforce_archive" != "$current_salesforce_archive" ] || ! cmp -s "$current_azure_lock" "$probed_azure_lock"; then
             changed="true"
           fi
 
@@ -97,6 +116,10 @@ jobs:
           echo "Upstream Fabric SHA: $upstream_fabric"
           echo "Current Flight SHA: ${current_flight:-<none>}"
           echo "Upstream Flight SHA: $upstream_flight"
+          echo "Current HashiCorp Products SHA: ${current_hashicorp_products:-<none>}"
+          echo "Upstream HashiCorp Products SHA: $upstream_flight"
+          echo "Current Salesforce package: ${current_salesforce_version:-<none>} / ${current_salesforce_archive:-<none>}"
+          echo "Upstream Salesforce package: $upstream_salesforce_version / $upstream_salesforce_archive"
           echo "Current Red Hat SHA: ${current_redhat:-<none>}"
           echo "Upstream Red Hat SHA: $upstream_redhat"
           echo "Azure Portal source changed: $(if cmp -s "$current_azure_lock" "$probed_azure_lock"; then echo false; else echo true; fi)"
@@ -150,15 +173,23 @@ jobs:
           from pathlib import Path
           import flight_icons
           import redhat_icons
+          import salesforce_icons
 
           from source_lock import validate_candidate_lock
 
           flight_candidate = Path('.tmp/flight-icons-source.candidate.json')
+          hashicorp_products_candidate = Path('.tmp/hashicorp-products-source.candidate.json')
           redhat_candidate = Path('.tmp/redhat-icons-source.candidate.json')
+          salesforce_candidate = Path('.tmp/salesforce-icons-source.candidate.json')
 
           flight_icons.write_source_lock(
               Path('.tmp/hashicorp-design-system/packages/flight-icons'),
               flight_candidate,
+              '${{ steps.upstream.outputs.flight_sha }}',
+          )
+          flight_icons.write_product_source_lock(
+              Path('.tmp/hashicorp-design-system/packages/flight-icons'),
+              hashicorp_products_candidate,
               '${{ steps.upstream.outputs.flight_sha }}',
           )
           redhat_icons.write_source_lock(
@@ -166,10 +197,28 @@ jobs:
               redhat_candidate,
               '${{ steps.upstream.outputs.redhat_sha }}',
           )
+          salesforce_icons.write_source_lock(
+              Path('.tmp/salesforce-icons.tgz'),
+              salesforce_candidate,
+          )
           validate_candidate_lock(
               flight_candidate,
               Path('.upstream-flight-icons.json'),
               source=flight_icons.SOURCE,
+              count_fields=('indexedAssetCount', 'indexedFamilyCount'),
+              scope_fields=('includedCategories', 'excludedCategories'),
+          )
+          validate_candidate_lock(
+              salesforce_candidate,
+              Path('.upstream-salesforce-icons.json'),
+              source=salesforce_icons.SOURCE,
+              count_fields=('indexedAssetCount', 'indexedFamilyCount'),
+              scope_fields=('includedCategories', 'excludedCategories'),
+          )
+          validate_candidate_lock(
+              hashicorp_products_candidate,
+              Path('.upstream-hashicorp-products.json'),
+              source=flight_icons.PRODUCT_SOURCE,
               count_fields=('indexedAssetCount', 'indexedFamilyCount'),
               scope_fields=('includedCategories', 'excludedCategories'),
           )
@@ -206,11 +255,16 @@ jobs:
             --flight-icons-dir .tmp/hashicorp-design-system/packages/flight-icons \
             --flight-source-lock .tmp/flight-icons-source.candidate.json \
             --flight-upstream-sha "${{ steps.upstream.outputs.flight_sha }}" \
+            --hashicorp-products-source-lock .tmp/hashicorp-products-source.candidate.json \
+            --salesforce-archive .tmp/salesforce-icons.tgz \
+            --salesforce-source-lock .tmp/salesforce-icons-source.candidate.json \
             --redhat-icons-dir .tmp/red-hat-icons \
             --redhat-source-lock .tmp/redhat-icons-source.candidate.json \
             --redhat-upstream-sha "${{ steps.upstream.outputs.redhat_sha }}"
 
           cp .tmp/flight-icons-source.candidate.json .upstream-flight-icons.json
+          cp .tmp/hashicorp-products-source.candidate.json .upstream-hashicorp-products.json
+          cp .tmp/salesforce-icons-source.candidate.json .upstream-salesforce-icons.json
           cp .tmp/redhat-icons-source.candidate.json .upstream-redhat-icons.json
           echo "${{ steps.upstream.outputs.fluent_sha }}" > .upstream-sha
           echo "${{ steps.upstream.outputs.fabric_sha }}" > .upstream-fabric-sha
@@ -222,7 +276,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json .upstream-flight-icons.json .upstream-redhat-icons.json
+          git add icon-data.json fabric-mdl2-metadata.json .upstream-sha .upstream-fabric-sha .upstream-azure-portal.json .upstream-flight-icons.json .upstream-hashicorp-products.json .upstream-salesforce-icons.json .upstream-redhat-icons.json
 
           if git diff --cached --quiet; then
             echo "No icon-data changes after rebuild."
@@ -233,5 +287,6 @@ jobs:
           fabric_short_sha="$(echo '${{ steps.upstream.outputs.fabric_sha }}' | cut -c1-7)"
           flight_short_sha="$(echo '${{ steps.upstream.outputs.flight_sha }}' | cut -c1-7)"
           redhat_short_sha="$(echo '${{ steps.upstream.outputs.redhat_sha }}' | cut -c1-7)"
-          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} flight@${flight_short_sha} redhat@${redhat_short_sha} azure-portal"
+          salesforce_version="${{ steps.upstream.outputs.salesforce_version }}"
+          git commit -m "chore: sync icon indexes fluent@${fluent_short_sha} fabric@${fabric_short_sha} hashicorp@${flight_short_sha} salesforce@${salesforce_version} flight@${flight_short_sha} redhat@${redhat_short_sha} azure-portal"
           git push

@@ -1,11 +1,23 @@
 # History
 
+## 2026-08-31: Add Salesforce SLDS Archive Collection
+
+- Added the canonical `salesforce` collection from the official `@salesforce-ux/icons` 10.17.0 registry archive under CC BY-ND 4.0, covering `standard`, `action`, `doctype`, and `custom` artwork with first-party MuleSoft; `utility` remains excluded.
+- Locked the archive SHA-256 and every selected entry SHA-256. The browser fetches the owner-hosted archive, verifies both values before extraction/sanitization, and retains no upstream SVG payloads in the repository or Pages artifact.
+- Preserved intrinsic source colours and disabled `currentColor` and bounding-box output transforms for this no-derivatives source. Stable links use `?set=salesforce&icon=<category>_<source-name>`.
+
+## 2026-08-31: Add HashiCorp Product Marks
+
+- Added the canonical `hashicorp` collection from the official Flight package's `Products` category, independently locked from the generic `flight` collection.
+- Kept `flight` generic and unchanged: `Products` and `Services` remain excluded there. The new collection includes Terraform, Vault, Packer, Nomad, Consul, and the remaining approved HashiCorp product marks; `Services` remains excluded.
+- Both collections use the same commit-pinned owner-hosted SVG URLs and separate digest-bound locks. No upstream SVG payloads are committed.
+
 ## 2026-08-31: Publish Federated Technology Icon Catalogue Provenance
 
 - Documented the additive `flight` and `redhat` collections alongside Fluent, Segoe, and Azure, with generalized visible `sources[]` attribution/provenance and source/licence links.
 - Recorded commit-pinned, digest-bound Flight 5.1.0 (MPL-2.0; generic concepts only, `Products`/`Services` excluded, matched `-fill` pairs as variants) and Red Hat 2.3.1 (CC BY 4.0; `standard`/`ui`/`microns` only, `social` excluded) source boundaries. No new SVG payloads are committed.
 - Replaced the growing set-tab row with a scalable native collection picker driven by generated `shortLabel` values, kept full source/licence attribution visible below the header, and advanced the PWA app-shell cache so installed clients receive the picker UI.
-- Added the source registry and held cloud/vendor/logo/social/security candidates outside public indexing until their specific public-catalogue rights and reproducible source boundaries are resolved. A local-only licensed-pack architecture remains unimplemented.
+- Added the source registry and held cloud/vendor/logo/social/security candidates outside public indexing until they have a deterministic official source boundary, unauthenticated CORS client access, compatible terms for automated indexing/deep links/runtime retrieval/user copy-download, and appropriate attribution, trademark, and no-endorsement treatment. No rehosting is recorded separately as an implementation invariant; a local-only licensed-pack architecture remains unimplemented.
 
 ## 2026-08-31: Preserve Intrinsic Azure Artwork Colours
 

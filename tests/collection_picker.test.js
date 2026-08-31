@@ -1,6 +1,10 @@
 const assert = require("node:assert/strict");
 
-const { getCollectionPickerOption } = require("../script.js");
+const {
+    getCollectionPickerOption,
+    previewSurfaceClass,
+    sourceAllowsTransform,
+} = require("../script.js");
 
 assert.deepEqual(
     getCollectionPickerOption(
@@ -13,6 +17,27 @@ assert.deepEqual(
     ),
     { text: "Flight", title: "HashiCorp Flight Icons" }
 );
+
+assert.deepEqual(
+    getCollectionPickerOption(
+        { shortLabel: "Salesforce", label: "Salesforce SLDS Icons" },
+        "salesforce"
+    ),
+    { text: "Salesforce", title: "Salesforce SLDS Icons" }
+);
+
+assert.equal(
+    sourceAllowsTransform(
+        { sourceCapabilities: { currentColor: false, boundingBox: false } },
+        "currentColor"
+    ),
+    false
+);
+assert.equal(sourceAllowsTransform({}, "boundingBox"), true);
+
+assert.equal(previewSurfaceClass({ previewSurface: "contrast" }), "preview-surface-contrast");
+assert.equal(previewSurfaceClass({ previewSurface: "default" }), "");
+assert.equal(previewSurfaceClass({}), "");
 
 assert.deepEqual(
     getCollectionPickerOption({ label: "Full collection name" }, "full"),

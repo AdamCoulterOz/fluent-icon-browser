@@ -471,7 +471,15 @@
                 typeof value === "object" &&
                 typeof value.url === "string" &&
                 typeof value.format === "string" &&
-                typeof value.selector === "string"
+                (
+                    typeof value.selector === "string" ||
+                    (
+                        value.format === "npm-tgz-svg-entry" &&
+                        typeof value.entry === "string" &&
+                        typeof value.archiveSha256 === "string" &&
+                        typeof value.entrySha256 === "string"
+                    )
+                )
         );
     }
 
@@ -647,6 +655,90 @@
         }
     }
 
+    async function verifySha256Bytes(bytes, expectedHash, cryptoApi) {
+        if (typeof expectedHash !== "string" || expectedHash.length === 0) {
+            return;
+        }
+        if (!cryptoApi?.subtle) {
+            throw new Error("SHA-256 verification is unavailable in this browser");
+        }
+        const value = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+        const digest = new Uint8Array(await cryptoApi.subtle.digest("SHA-256", value));
+        if (bytesToHex(digest) !== expectedHash.trim().toLowerCase()) {
+            throw new Error("Remote archive SHA-256 does not match its descriptor");
+        }
+    }
+
+    function decodeTarString(bytes, start, length) {
+        const end = bytes.indexOf(0, start);
+        const sliceEnd = end === -1 || end > start + length ? start + length : end;
+        return new TextDecoder("utf-8", { fatal: true }).decode(bytes.slice(start, sliceEnd));
+    }
+
+    function isEmptyTarBlock(bytes, offset) {
+        for (let index = offset; index < offset + 512; index += 1) {
+            if (bytes[index] !== 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function readTarOctal(bytes, start, length) {
+        const value = decodeTarString(bytes, start, length).trim();
+        if (!/^[0-7]*$/.test(value)) {
+            throw new Error("Archive entry has an invalid size field");
+        }
+        return value ? Number.parseInt(value, 8) : 0;
+    }
+
+    function extractTarEntry(tarBytes, expectedEntry) {
+        if (
+            typeof expectedEntry !== "string" ||
+            !expectedEntry ||
+            expectedEntry.startsWith("/") ||
+            expectedEntry.split("/").includes("..")
+        ) {
+            throw new Error("Archive SVG source requires a safe entry path");
+        }
+        for (let offset = 0; offset + 512 <= tarBytes.length;) {
+            if (isEmptyTarBlock(tarBytes, offset)) {
+                break;
+            }
+            const name = decodeTarString(tarBytes, offset, 100);
+            const prefix = decodeTarString(tarBytes, offset + 345, 155);
+            const entry = prefix ? `${prefix}/${name}` : name;
+            const type = String.fromCharCode(tarBytes[offset + 156] || 48);
+            const size = readTarOctal(tarBytes, offset + 124, 12);
+            const contentStart = offset + 512;
+            const contentEnd = contentStart + size;
+            if (
+                !entry ||
+                entry.startsWith("/") ||
+                entry.split("/").includes("..") ||
+                contentEnd > tarBytes.length
+            ) {
+                throw new Error("Archive contains an unsafe or truncated entry");
+            }
+            if (entry === expectedEntry) {
+                if (type !== "0" && type !== "\0") {
+                    throw new Error("Requested archive entry is not a regular file");
+                }
+                return tarBytes.slice(contentStart, contentEnd);
+            }
+            offset = contentStart + Math.ceil(size / 512) * 512;
+        }
+        throw new Error(`Archive entry '${expectedEntry}' was not found`);
+    }
+
+    async function decompressGzip(archiveBytes) {
+        if (typeof DecompressionStream === "undefined") {
+            throw new Error("This browser cannot decompress the required gzip icon archive");
+        }
+        const stream = new Blob([archiveBytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
+    }
+
     function isJavaScriptOrJsonSourceUrl(url) {
         return /\.(?:js|json)(?:[?#]|$)/i.test(url);
     }
@@ -663,6 +755,7 @@
             this.sanitize = options.sanitize || sanitizeSvg;
             this.canonicalize = options.canonicalize || canonicalizeSvgForDigest;
             this.sourceTextByUrl = new Map();
+            this.archiveBytesByUrl = new Map();
             this.svgByDescriptor = new Map();
         }
 
@@ -671,6 +764,9 @@
                 descriptor.url,
                 descriptor.format,
                 descriptor.selector,
+                descriptor.entry || "",
+                descriptor.archiveSha256 || "",
+                descriptor.entrySha256 || "",
                 descriptor.sha256 || "",
                 JSON.stringify(normalizePaintMap(descriptor.paintMap)),
             ].join("\n");
@@ -700,6 +796,30 @@
             return this.sourceTextByUrl.get(url);
         }
 
+        async fetchArchiveBytes(url) {
+            if (!this.fetch) {
+                throw new Error("Remote icon archives cannot be fetched in this browser");
+            }
+            if (!this.archiveBytesByUrl.has(url)) {
+                const request = Promise.resolve(this.fetch(url, { credentials: "omit" })).then(async (response) => {
+                    if (!response?.ok) {
+                        throw new Error(`Failed to fetch remote icon archive (${response?.status || "network error"})`);
+                    }
+                    if (isHtmlResponse(response)) {
+                        throw new Error("Remote icon archive returned HTML instead of a gzip archive");
+                    }
+                    return new Uint8Array(await response.arrayBuffer());
+                });
+                this.archiveBytesByUrl.set(url, request);
+                request.catch(() => {
+                    if (this.archiveBytesByUrl.get(url) === request) {
+                        this.archiveBytesByUrl.delete(url);
+                    }
+                });
+            }
+            return this.archiveBytesByUrl.get(url);
+        }
+
         extractSvg(sourceText, descriptor) {
             if (descriptor.format === "portal-amd-svg-module") {
                 return extractAmdSvgModule(sourceText, descriptor.selector);
@@ -716,12 +836,19 @@
             }
             const key = this.descriptorKey(descriptor);
             if (!this.svgByDescriptor.has(key)) {
-                const resolution = this.fetchSourceText(descriptor.url).then(async (sourceText) => {
-                    const extractedSvg = this.extractSvg(sourceText, descriptor);
-                    const canonicalSvg = this.canonicalize(extractedSvg);
-                    await verifySha256(canonicalSvg, descriptor.sha256, this.crypto);
-                    return this.sanitize(extractedSvg, undefined, descriptor.paintMap);
-                });
+                const resolution = descriptor.format === "npm-tgz-svg-entry"
+                    ? this.fetchArchiveBytes(descriptor.url).then(async (archiveBytes) => {
+                        await verifySha256Bytes(archiveBytes, descriptor.archiveSha256, this.crypto);
+                        const entryBytes = extractTarEntry(await decompressGzip(archiveBytes), descriptor.entry);
+                        await verifySha256Bytes(entryBytes, descriptor.entrySha256, this.crypto);
+                        return this.sanitize(new TextDecoder("utf-8", { fatal: true }).decode(entryBytes));
+                    })
+                    : this.fetchSourceText(descriptor.url).then(async (sourceText) => {
+                        const extractedSvg = this.extractSvg(sourceText, descriptor);
+                        const canonicalSvg = this.canonicalize(extractedSvg);
+                        await verifySha256(canonicalSvg, descriptor.sha256, this.crypto);
+                        return this.sanitize(extractedSvg, undefined, descriptor.paintMap);
+                    });
                 this.svgByDescriptor.set(key, resolution);
                 resolution.catch(() => {
                     if (this.svgByDescriptor.get(key) === resolution) {
@@ -744,6 +871,8 @@
         sanitizeSvg,
         canonicalizeSvgForDigest,
         verifySha256,
+        verifySha256Bytes,
+        extractTarEntry,
     };
     global.RemoteIconSource = exports;
     if (typeof module !== "undefined" && module.exports) {

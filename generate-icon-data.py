@@ -816,6 +816,9 @@ def generate_icon_data(
     flight_icons_dir: Optional[Path] = None,
     flight_source_lock_path: Optional[Path] = None,
     flight_upstream_sha: str = "",
+    hashicorp_products_source_lock_path: Optional[Path] = None,
+    salesforce_archive_path: Optional[Path] = None,
+    salesforce_source_lock_path: Optional[Path] = None,
     redhat_icons_dir: Optional[Path] = None,
     redhat_source_lock_path: Optional[Path] = None,
     redhat_upstream_sha: str = "",
@@ -951,6 +954,96 @@ def generate_icon_data(
                 ),
             )
         )
+    if hashicorp_products_source_lock_path is not None:
+        if flight_icons_dir is None or not flight_upstream_sha:
+            raise ValueError(
+                "HashiCorp Products require the Flight directory and upstream SHA"
+            )
+        from flight_icons import LICENSE as HASHICORP_LICENSE
+        from flight_icons import LICENSE_URL as HASHICORP_LICENSE_URL
+        from flight_icons import PRODUCT_SOURCE as HASHICORP_PRODUCTS_SOURCE
+        from flight_icons import REPOSITORY_URL as HASHICORP_REPOSITORY_URL
+        from flight_icons import generate_product_icons
+        from source_lock import read_lock
+
+        hashicorp_products_lock = read_lock(
+            hashicorp_products_source_lock_path,
+            HASHICORP_PRODUCTS_SOURCE,
+            flight_upstream_sha,
+        )
+        descriptors.append(
+            CollectionDescriptor(
+                key="hashicorp",
+                label="HashiCorp Products",
+                short_label="HashiCorp",
+                source="HashiCorp product icons",
+                sources=(
+                    source_record(
+                        label="HashiCorp Flight Products",
+                        reference=HASHICORP_PRODUCTS_SOURCE,
+                        url=HASHICORP_REPOSITORY_URL,
+                        revision=flight_upstream_sha,
+                        license_name=HASHICORP_LICENSE,
+                        license_url=HASHICORP_LICENSE_URL,
+                        digest=hashicorp_products_lock["contentSha256"],
+                    ),
+                ),
+                upstream_sha=flight_upstream_sha,
+                cdn_base="https://raw.githubusercontent.com/hashicorp/design-system",
+                build_icons=lambda: generate_product_icons(
+                    flight_icons_dir,
+                    flight_upstream_sha,
+                    hashicorp_products_source_lock_path,
+                ),
+            )
+        )
+    if salesforce_archive_path is not None or salesforce_source_lock_path is not None:
+        if salesforce_archive_path is None or salesforce_source_lock_path is None:
+            raise ValueError("Salesforce icons require archive and source lock")
+        from salesforce_icons import LICENSE as SALESFORCE_LICENSE
+        from salesforce_icons import LICENSE_URL as SALESFORCE_LICENSE_URL
+        from salesforce_icons import REGISTRY_URL as SALESFORCE_REGISTRY_URL
+        from salesforce_icons import SOURCE as SALESFORCE_SOURCE
+        from salesforce_icons import archive_url as salesforce_archive_url
+        from salesforce_icons import generate_icons as generate_salesforce_icons
+        from source_lock import read_archive_lock
+
+        salesforce_lock_data = json.loads(
+            salesforce_source_lock_path.read_text(encoding="utf-8")
+        )
+        salesforce_version = salesforce_lock_data.get("packageVersion")
+        if not isinstance(salesforce_version, str) or not salesforce_version:
+            raise ValueError("Salesforce source lock has no package version")
+        salesforce_lock = read_archive_lock(
+            salesforce_source_lock_path,
+            SALESFORCE_SOURCE,
+            salesforce_archive_url(salesforce_version),
+            salesforce_version,
+        )
+        descriptors.append(
+            CollectionDescriptor(
+                key="salesforce",
+                label="Salesforce SLDS Icons",
+                short_label="Salesforce",
+                source="Salesforce Lightning Design System icons",
+                sources=(
+                    source_record(
+                        label="Salesforce SLDS Icons",
+                        reference=SALESFORCE_SOURCE,
+                        url=SALESFORCE_REGISTRY_URL,
+                        revision=salesforce_version,
+                        license_name=SALESFORCE_LICENSE,
+                        license_url=SALESFORCE_LICENSE_URL,
+                        digest=salesforce_lock["archiveSha256"],
+                    ),
+                ),
+                upstream_sha=salesforce_version,
+                cdn_base=SALESFORCE_REGISTRY_URL,
+                build_icons=lambda: generate_salesforce_icons(
+                    salesforce_archive_path, salesforce_source_lock_path
+                ),
+            )
+        )
     if redhat_icons_dir is not None or redhat_source_lock_path is not None:
         if redhat_icons_dir is None or redhat_source_lock_path is None or not redhat_upstream_sha:
             raise ValueError("Red Hat icons require directory, source lock, and upstream SHA")
@@ -991,6 +1084,8 @@ def generate_icon_data(
     segoe_icons = collections["segoe"]["icons"]
     azure_icons = collections.get("azure", {}).get("icons", [])
     flight_icons = collections.get("flight", {}).get("icons", [])
+    hashicorp_products = collections.get("hashicorp", {}).get("icons", [])
+    salesforce_icons = collections.get("salesforce", {}).get("icons", [])
     redhat_icons = collections.get("redhat", {}).get("icons", [])
 
     payload = {
@@ -1010,6 +1105,8 @@ def generate_icon_data(
         f"{len(fluent_icons)} fluent icons + {len(segoe_icons)} Segoe icons "
         f"+ {len(azure_icons)} Azure Portal icons "
         f"+ {len(flight_icons)} HashiCorp Flight icons "
+        f"+ {len(hashicorp_products)} HashiCorp product icons "
+        f"+ {len(salesforce_icons)} Salesforce SLDS icons "
         f"+ {len(redhat_icons)} Red Hat icons "
         f"-> {output_file}"
     )
@@ -1039,6 +1136,21 @@ def parse_args() -> argparse.Namespace:
         "--flight-upstream-sha",
         default="",
         help="HashiCorp design-system commit SHA",
+    )
+    parser.add_argument(
+        "--hashicorp-products-source-lock",
+        default="",
+        help="Digest-bound HashiCorp product-icons source lock",
+    )
+    parser.add_argument(
+        "--salesforce-archive",
+        default="",
+        help="Official @salesforce-ux/icons package archive",
+    )
+    parser.add_argument(
+        "--salesforce-source-lock",
+        default="",
+        help="Digest-bound Salesforce package archive source lock",
     )
     parser.add_argument(
         "--redhat-icons-dir",
@@ -1169,6 +1281,15 @@ def main() -> None:
         if args.flight_source_lock
         else None,
         flight_upstream_sha=args.flight_upstream_sha.strip(),
+        hashicorp_products_source_lock_path=Path(args.hashicorp_products_source_lock)
+        if args.hashicorp_products_source_lock
+        else None,
+        salesforce_archive_path=Path(args.salesforce_archive)
+        if args.salesforce_archive
+        else None,
+        salesforce_source_lock_path=Path(args.salesforce_source_lock)
+        if args.salesforce_source_lock
+        else None,
         redhat_icons_dir=Path(args.redhat_icons_dir) if args.redhat_icons_dir else None,
         redhat_source_lock_path=Path(args.redhat_source_lock)
         if args.redhat_source_lock

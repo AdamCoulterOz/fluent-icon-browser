@@ -9,6 +9,7 @@ from source_lock import digest_files, read_lock, write_lock
 
 
 SOURCE = "hashicorp/design-system/packages/flight-icons"
+PRODUCT_SOURCE = "hashicorp/design-system/packages/flight-icons (Products)"
 REPOSITORY_URL = "https://github.com/hashicorp/design-system"
 LICENSE = "MPL-2.0"
 LICENSE_URL = "https://www.mozilla.org/MPL/2.0/"
@@ -35,6 +36,8 @@ APPROVED_CATEGORIES = {
     "User",
 }
 EXCLUDED_CATEGORIES = {"Products", "Services"}
+PRODUCT_CATEGORIES = {"Products"}
+PRODUCT_EXCLUDED_CATEGORIES = APPROVED_CATEGORIES | {"Services"}
 
 
 def _catalog(package_dir: Path) -> list[dict]:
@@ -45,7 +48,12 @@ def _catalog(package_dir: Path) -> list[dict]:
     return [asset for asset in assets if isinstance(asset, dict)]
 
 
-def _included_assets(package_dir: Path) -> list[dict]:
+def _included_assets(
+    package_dir: Path,
+    included_categories: set[str] = APPROVED_CATEGORIES,
+    excluded_categories: set[str] = EXCLUDED_CATEGORIES,
+    collection_name: str = "Flight",
+) -> list[dict]:
     assets = _catalog(package_dir)
     categories = set()
     for asset in assets:
@@ -54,26 +62,33 @@ def _included_assets(package_dir: Path) -> list[dict]:
             raise ValueError("Flight catalog asset has no valid category")
         categories.add(category)
 
-    unknown_categories = categories - APPROVED_CATEGORIES - EXCLUDED_CATEGORIES
+    unknown_categories = categories - included_categories - excluded_categories
     if unknown_categories:
         names = ", ".join(sorted(unknown_categories))
-        raise ValueError(f"Flight catalog has unknown categories: {names}")
+        raise ValueError(f"{collection_name} catalog has unknown categories: {names}")
 
     included = []
     for asset in assets:
-        if asset["category"] not in APPROVED_CATEGORIES:
+        if asset["category"] not in included_categories:
             continue
         if not isinstance(asset.get("fileName"), str) or not isinstance(
             asset.get("iconName"), str
         ):
-            raise ValueError("Flight approved asset has invalid source identity")
+            raise ValueError(f"{collection_name} approved asset has invalid source identity")
         included.append(asset)
     return included
 
 
-def _source_paths(package_dir: Path) -> list[Path]:
+def _source_paths(
+    package_dir: Path,
+    included_categories: set[str] = APPROVED_CATEGORIES,
+    excluded_categories: set[str] = EXCLUDED_CATEGORIES,
+    collection_name: str = "Flight",
+) -> list[Path]:
     paths = [Path("catalog.json"), Path("package.json"), LICENSE_FILE]
-    for asset in _included_assets(package_dir):
+    for asset in _included_assets(
+        package_dir, included_categories, excluded_categories, collection_name
+    ):
         paths.append(Path("svg-original") / f"{asset['fileName']}.svg")
     return paths
 
@@ -116,23 +131,39 @@ def _group_assets(assets: list[dict]) -> dict[str, dict]:
     return grouped
 
 
-def write_source_lock(package_dir: Path, output_path: Path, commit: str) -> dict:
+def _write_source_lock(
+    package_dir: Path,
+    output_path: Path,
+    commit: str,
+    *,
+    source: str,
+    included_categories: set[str],
+    excluded_categories: set[str],
+    collection_name: str,
+) -> dict:
     _validate_license(package_dir)
     package = json.loads((package_dir / "package.json").read_text(encoding="utf-8"))
     version = package.get("version") if isinstance(package, dict) else None
     if not isinstance(version, str) or not version:
         raise ValueError("Flight package has no version")
-    assets = _included_assets(package_dir)
+    assets = _included_assets(
+        package_dir, included_categories, excluded_categories, collection_name
+    )
     families = _group_assets(assets)
     payload = {
-        "source": SOURCE,
+        "source": source,
         "repositoryUrl": REPOSITORY_URL,
         "packagePath": PACKAGE_PATH.as_posix(),
         "commit": commit,
         "packageVersion": version,
-        "contentSha256": digest_files(package_dir, _source_paths(package_dir)),
-        "includedCategories": sorted(APPROVED_CATEGORIES),
-        "excludedCategories": sorted(EXCLUDED_CATEGORIES),
+        "contentSha256": digest_files(
+            package_dir,
+            _source_paths(
+                package_dir, included_categories, excluded_categories, collection_name
+            ),
+        ),
+        "includedCategories": sorted(included_categories),
+        "excludedCategories": sorted(excluded_categories),
         "indexedAssetCount": len(assets),
         "indexedFamilyCount": len(families),
         "groupedFillPairCount": sum(
@@ -144,6 +175,30 @@ def write_source_lock(package_dir: Path, output_path: Path, commit: str) -> dict
     return payload
 
 
+def write_source_lock(package_dir: Path, output_path: Path, commit: str) -> dict:
+    return _write_source_lock(
+        package_dir,
+        output_path,
+        commit,
+        source=SOURCE,
+        included_categories=APPROVED_CATEGORIES,
+        excluded_categories=EXCLUDED_CATEGORIES,
+        collection_name="Flight",
+    )
+
+
+def write_product_source_lock(package_dir: Path, output_path: Path, commit: str) -> dict:
+    return _write_source_lock(
+        package_dir,
+        output_path,
+        commit,
+        source=PRODUCT_SOURCE,
+        included_categories=PRODUCT_CATEGORIES,
+        excluded_categories=PRODUCT_EXCLUDED_CATEGORIES,
+        collection_name="HashiCorp Products",
+    )
+
+
 def _raw_url(commit: str, relative_path: Path) -> str:
     return (
         "https://raw.githubusercontent.com/hashicorp/design-system/"
@@ -151,14 +206,32 @@ def _raw_url(commit: str, relative_path: Path) -> str:
     )
 
 
-def generate_icons(package_dir: Path, commit: str, source_lock_path: Path) -> list[dict]:
+def _generate_icons(
+    package_dir: Path,
+    commit: str,
+    source_lock_path: Path,
+    *,
+    source: str,
+    included_categories: set[str],
+    excluded_categories: set[str],
+    collection_name: str,
+) -> list[dict]:
     _validate_license(package_dir)
-    lock = read_lock(source_lock_path, SOURCE, commit)
-    actual_digest = digest_files(package_dir, _source_paths(package_dir))
+    lock = read_lock(source_lock_path, source, commit)
+    actual_digest = digest_files(
+        package_dir,
+        _source_paths(
+            package_dir, included_categories, excluded_categories, collection_name
+        ),
+    )
     if actual_digest != lock["contentSha256"]:
-        raise ValueError("Flight source content does not match its source lock")
+        raise ValueError(f"{collection_name} source content does not match its source lock")
 
-    grouped = _group_assets(_included_assets(package_dir))
+    grouped = _group_assets(
+        _included_assets(
+            package_dir, included_categories, excluded_categories, collection_name
+        )
+    )
 
     icons: list[dict] = []
     for icon_name in sorted(grouped):
@@ -222,3 +295,29 @@ def generate_icons(package_dir: Path, commit: str, source_lock_path: Path) -> li
             icon["aliases"] = sorted(set(aliases))
         icons.append(icon)
     return icons
+
+
+def generate_icons(package_dir: Path, commit: str, source_lock_path: Path) -> list[dict]:
+    return _generate_icons(
+        package_dir,
+        commit,
+        source_lock_path,
+        source=SOURCE,
+        included_categories=APPROVED_CATEGORIES,
+        excluded_categories=EXCLUDED_CATEGORIES,
+        collection_name="Flight",
+    )
+
+
+def generate_product_icons(
+    package_dir: Path, commit: str, source_lock_path: Path
+) -> list[dict]:
+    return _generate_icons(
+        package_dir,
+        commit,
+        source_lock_path,
+        source=PRODUCT_SOURCE,
+        included_categories=PRODUCT_CATEGORIES,
+        excluded_categories=PRODUCT_EXCLUDED_CATEGORIES,
+        collection_name="HashiCorp Products",
+    )

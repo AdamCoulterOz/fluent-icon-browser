@@ -45,6 +45,28 @@ def read_lock(path: Path, source: str, commit: str) -> dict:
     return payload
 
 
+def read_archive_lock(path: Path, source: str, archive_url: str, package_version: str) -> dict:
+    """Read a digest-bound package archive lock without treating it as a Git source."""
+
+    payload = _read_lock_payload(path)
+    if payload.get("source") != source:
+        raise ValueError(f"Source lock {path} is not for {source}")
+    if payload.get("archiveUrl") != archive_url:
+        raise ValueError(f"Source lock {path} does not match archive URL {archive_url}")
+    if payload.get("packageVersion") != package_version:
+        raise ValueError(
+            f"Source lock {path} does not match package version {package_version}"
+        )
+    for field in ("archiveSha256", "contentSha256"):
+        digest = payload.get(field)
+        if not isinstance(digest, str) or len(digest) != 64:
+            raise ValueError(f"Source lock {path} has no valid {field}")
+    entries = payload.get("entries")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"Source lock {path} has no indexed archive entries")
+    return payload
+
+
 def validate_candidate_lock(
     candidate_path: Path,
     previous_path: Path,
