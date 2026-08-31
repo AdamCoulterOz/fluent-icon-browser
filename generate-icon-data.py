@@ -467,6 +467,93 @@ def humanize_gcp_extension(extension: str) -> str:
     return humanize_snake(gcp_snake_case(extension))
 
 
+GCP_RESOURCE_ICON_NAMES_BY_EXTENSION = {
+    "app_design_center": frozenset(
+        {
+            "standardClusterIcon",
+            "cloudNatIcon",
+            "deviceTemplateIcon",
+            "firebaseIcon",
+            "firewallIcon",
+            "instanceGroupIcon",
+            "instanceTemplateIcon",
+            "privateServiceConnectIcon",
+            "secretManagerIcon",
+            "serviceAccountsIcon",
+            "vpcIcon",
+        }
+    ),
+    "dbmanageability": frozenset(
+        {
+            "dataCanvasIcon",
+            "dataPreparationIcon",
+            "tablePartitionedIcon",
+            "tableShardedIcon",
+            "tableViewIcon",
+            "folderDataIcon",
+            "teamDriveIcon",
+            "datasetsIcon",
+            "flumeWorkerIcon",
+            "tableIcon",
+            "folderIcon",
+            "computeEngineIcon",
+            "domainIcon",
+            "alloydbIcon",
+            "bigqueryIcon",
+            "bigtableIcon",
+            "cloudSqlIcon",
+            "databasesIcon",
+            "firestoreIcon",
+            "memorystoreIcon",
+            "oracleIcon",
+            "spannerIcon",
+        }
+    ),
+    "networking": frozenset(
+        {
+            "interconnectIcon",
+            "routerIcon",
+            "apisIcon",
+            "cloudNatIcon",
+            "connectIcon",
+            "endpointsIcon",
+            "instanceIcon",
+            "instanceGroupIcon",
+            "istioWorkloadIcon",
+            "k8sClusterIcon",
+            "k8sNamespaceIcon",
+            "k8sNodeIcon",
+            "k8sNodePoolIcon",
+            "k8sPodIcon",
+            "loadBalancerIcon",
+            "netvizGcpRegionIcon",
+            "netvizGcpRegionnetIcon",
+            "netvizGcpSubnetIcon",
+            "netvizPublicIcon",
+            "networkPeeringIcon",
+            "replicaFailoverIcon",
+            "servicesIcon",
+        }
+    ),
+}
+
+
+def is_gcp_resource_icon(entry: dict) -> bool:
+    """Identify source-named service and resource artwork in known mixed modules."""
+
+    data_icon_name = entry["dataIconName"]
+    if not isinstance(data_icon_name, str):
+        return False
+    if (
+        entry["extension"] == "app_design_center"
+        and data_icon_name.endswith("SectionIcon")
+    ):
+        return True
+    return data_icon_name in GCP_RESOURCE_ICON_NAMES_BY_EXTENSION.get(
+        entry["extension"], frozenset()
+    )
+
+
 def gcp_family_name(entry: dict) -> str:
     """Return the legacy per-module GCP family id for alias compatibility."""
 
@@ -483,6 +570,10 @@ def gcp_family_name(entry: dict) -> str:
             gcp_snake_case(entry["name"]),
         )
     )
+
+
+def gcp_resource_family_name(data_icon_name: str) -> str:
+    return f"gcp_resource_icons_{gcp_snake_case(data_icon_name) or 'icon'}"
 
 
 def gcp_entry_sort_key(entry: dict) -> tuple[str, str, int, str]:
@@ -531,20 +622,56 @@ def generate_gcp_console_icons(
         raise ValueError("GCP Console source lock has duplicate or invalid module ids")
 
     archive_sha256 = hashlib.sha256(archive_bytes).hexdigest()
-    entries_by_digest: dict[str, list[dict]] = {}
+    renderable_entries: list[dict] = []
     for entry in manifest["icons"]:
-        entries_by_digest.setdefault(entry["sha256"], []).append(entry)
+        svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
+        if svg_has_renderable_content(svg_text):
+            renderable_entries.append(entry)
 
-    icons: list[dict] = []
-    seen_family_names: set[str] = set()
+    resource_entries_by_name: dict[str, list[dict]] = {}
     grouped_entries: list[tuple[str, list[dict]]] = []
-    for digest, digest_entries in sorted(entries_by_digest.items()):
+    other_entries_by_digest: dict[str, list[dict]] = {}
+    for entry in renderable_entries:
+        if is_gcp_resource_icon(entry):
+            resource_entries_by_name.setdefault(entry["dataIconName"], []).append(entry)
+        else:
+            other_entries_by_digest.setdefault(entry["sha256"], []).append(entry)
+
+    for data_icon_name, entries in sorted(resource_entries_by_name.items()):
+        entries_by_style: dict[str, set[str]] = {}
+        for entry in entries:
+            svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
+            style = "color" if preserve_source_colors(svg_text) else "regular"
+            entries_by_style.setdefault(style, set()).add(entry["sha256"])
+        has_same_style_collision = any(
+            len(digests) > 1 for digests in entries_by_style.values()
+        )
+        if has_same_style_collision:
+            entries_by_digest: dict[str, list[dict]] = {}
+            for entry in entries:
+                entries_by_digest.setdefault(entry["sha256"], []).append(entry)
+            for digest, digest_entries in sorted(entries_by_digest.items()):
+                grouped_entries.append(
+                    (
+                        f"{gcp_resource_family_name(data_icon_name)}_{digest}",
+                        sorted(digest_entries, key=gcp_entry_sort_key),
+                    )
+                )
+        else:
+            grouped_entries.append(
+                (
+                    gcp_resource_family_name(data_icon_name),
+                    sorted(entries, key=gcp_entry_sort_key),
+                )
+            )
+
+    for digest, digest_entries in sorted(other_entries_by_digest.items()):
         entries = sorted(digest_entries, key=gcp_entry_sort_key)
         if len({entry["moduleId"] for entry in entries}) > 1:
             grouped_entries.append((digest, entries))
-        else:
-            grouped_entries.extend((digest, [entry]) for entry in entries)
-    for digest, entries in grouped_entries:
+    icons: list[dict] = []
+    seen_family_names: set[str] = set()
+    for group_id, entries in grouped_entries:
         entry = entries[0]
         module_id = entry["moduleId"]
         module_record = modules_by_id.get(module_id)
@@ -555,9 +682,15 @@ def generate_gcp_console_icons(
         readable_identity = (
             gcp_snake_case(data_icon_name) if data_icon_name is not None else "template"
         ) or "icon"
-        is_common_ui = len({candidate["moduleId"] for candidate in entries}) > 1
+        is_resource_icon = is_gcp_resource_icon(entry)
+        is_common_ui = (
+            not is_resource_icon
+            and len({candidate["moduleId"] for candidate in entries}) > 1
+        )
         family_name = (
-            f"gcp_common_ui_{readable_identity}_{digest}"
+            group_id
+            if is_resource_icon
+            else f"gcp_common_ui_{readable_identity}_{group_id}"
             if is_common_ui
             else gcp_family_name(entry)
         )
@@ -565,31 +698,44 @@ def generate_gcp_console_icons(
             raise ValueError("GCP Console source tree has colliding generated family ids")
         seen_family_names.add(family_name)
 
-        descriptor = {
-            "format": "same-origin-zip-svg-entry",
-            "url": "gcp-console-icons.zip",
-            "entry": entry["path"],
-            "archiveSha256": archive_sha256,
-            "entrySha256": entry["sha256"],
+        variants: dict[str, dict] = {}
+        for candidate in entries:
+            candidate_module = modules_by_id.get(candidate["moduleId"])
+            if candidate_module is None or not isinstance(candidate_module.get("url"), str):
+                raise ValueError(
+                    "GCP Console source tree icon has no matching locked module URL"
+                )
+            svg_text = (directory / candidate["path"]).read_text(encoding="utf-8")
+            style = "color" if preserve_source_colors(svg_text) else "regular"
+            if style in variants:
+                continue
+            descriptor = {
+                "format": "same-origin-zip-svg-entry",
+                "url": "gcp-console-icons.zip",
+                "entry": candidate["path"],
+                "archiveSha256": archive_sha256,
+                "entrySha256": candidate["sha256"],
+            }
+            default_size = (
+                parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox"))
+                or 24
+            )
+            variant = {
+                "defaultSize": default_size,
+                "sourceUrl": candidate_module["url"],
+                "remoteSource": descriptor,
+                "sizes": {str(default_size): {"remoteSource": descriptor}},
+            }
+            if style == "color":
+                variant["preserveSourceColors"] = True
+                variant["sourceCapabilities"] = {"currentColor": False, "boundingBox": False}
+            variants[style] = variant
+        variants = {
+            style: variants[style]
+            for style in SUPPORTED_VARIANTS
+            if style in variants
         }
-        svg_text = (directory / entry["path"]).read_text(encoding="utf-8")
-        if not svg_has_renderable_content(svg_text):
-            continue
-        style = "color" if preserve_source_colors(svg_text) else "regular"
-        default_size = (
-            parse_viewbox_size(ET.fromstring(svg_text).attrib.get("viewBox"))
-            or 24
-        )
-        variant = {
-            "defaultSize": default_size,
-            "sourceUrl": module_record["url"],
-            "remoteSource": descriptor,
-            "sizes": {str(default_size): {"remoteSource": descriptor}},
-        }
-        if style == "color":
-            variant["preserveSourceColors"] = True
-            variant["sourceCapabilities"] = {"currentColor": False, "boundingBox": False}
-        if is_common_ui:
+        if is_common_ui or is_resource_icon:
             search_metadata = [
                 value
                 for candidate in entries
@@ -622,8 +768,14 @@ def generate_gcp_console_icons(
                 "description": "",
                 "metaphors": metaphors,
                 "aliases": aliases,
-                "category": "Common UI" if is_common_ui else humanize_gcp_extension(entry["extension"]),
-                "variants": {style: variant},
+                "category": (
+                    "Resource Icons"
+                    if is_resource_icon
+                    else "Common UI"
+                    if is_common_ui
+                    else humanize_gcp_extension(entry["extension"])
+                ),
+                "variants": variants,
             }
         )
 

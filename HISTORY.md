@@ -1,5 +1,11 @@
 # History
 
+## 2026-09-01: Classify Route-Map Google Cloud Resource Artwork
+
+- Replaced misleading route-extension browse groups with 99 reviewed `Resource Icons` families and 171 exact-digest `Common UI` families. The retained 4,363-template route-map source tree, lock, manifest, and Pages archive digest are unchanged; unclassified module-local templates remain source evidence but are not browseable.
+- Resource families merge regular/color source forms only when each style has one source digest. Same-style collisions remain separate deterministic families, and every displaced generated family remains a deep-link alias.
+- Live Console DOM/network inspection found a separate public 248-icon core resource library in versioned `OneCloudBarMicroUi`/`CloudConsoleWeb` chunks, including `databasesSectionIcon` and `kmsSectionIcon`. `routemapdata` does not advertise those modules, while unauthenticated Console bootstrap routes redirect to sign-in. Asset readability after a versioned URL is known does not provide a scheduled, unauthenticated way to discover the next core URL; the core library remains outside the current deterministic source contract pending an authorised stable discovery boundary.
+
 ## 2026-09-01: Consolidate Shared Google Cloud Console UI Templates
 
 - Folded GCP catalogue entries into a `Common UI` group only when their retained SVG SHA-256 is shared across more than one source module. The SVG source tree, manifest, source lock, and Pages ZIP contract remain complete and unchanged; module-local duplicate names are not folded.

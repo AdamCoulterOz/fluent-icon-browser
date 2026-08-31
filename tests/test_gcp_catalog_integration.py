@@ -1,5 +1,4 @@
 import importlib.util
-import hashlib
 import json
 import tempfile
 import unittest
@@ -135,89 +134,8 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             set(icons),
             {icon["name"] for icon in second["sets"]["gcp"]["icons"]},
         )
-        self.assertEqual(7, len(icons))
-
-        def icon_for_entry(entry: dict) -> dict:
-            return next(
-                icon
-                for icon in icons.values()
-                if next(iter(icon["variants"].values()))["remoteSource"]["entry"]
-                == entry["path"]
-            )
-
-        database_entry = next(
-            entry for entry in manifest["icons"] if entry["dataIconName"] == "database"
-        )
-        unsafe_entry = next(
-            entry
-            for entry in manifest["icons"]
-            if entry["dataIconName"] == "../../outside"
-        )
-        duplicate_entries = [
-            entry for entry in manifest["icons"] if entry["dataIconName"] == "duplicate"
-        ]
-        null_entries = [
-            entry for entry in manifest["icons"] if entry["dataIconName"] is None
-        ]
-        color_entry = next(
-            entry
-            for entry in manifest["icons"]
-            if entry["dataIconName"] == "cloud-service"
-        )
-
-        regular = icon_for_entry(database_entry)
-        unsafe = icon_for_entry(unsafe_entry)
-        duplicates = [icon_for_entry(entry) for entry in duplicate_entries]
-        nulls = [icon_for_entry(entry) for entry in null_entries]
-        color = icon_for_entry(color_entry)
-        self.assertEqual("Databases Home", regular["category"])
-        self.assertEqual("Storage Home", color["category"])
-        self.assertEqual(["regular"], list(regular["variants"]))
-        self.assertEqual(["color"], list(color["variants"]))
-        self.assertTrue(color["variants"]["color"]["preserveSourceColors"])
-        self.assertEqual("database", regular["displayName"])
-        self.assertEqual(["database", database_entry["name"]], regular["aliases"])
-        self.assertIn("database", regular["metaphors"])
-        self.assertIn(database_entry["name"], regular["metaphors"])
-        self.assertEqual("../../outside", unsafe["displayName"])
-        self.assertIn("../../outside", unsafe["metaphors"])
-        self.assertIn(icon_data.gcp_snake_case(unsafe_entry["name"]), unsafe["name"])
-        self.assertEqual(2, len({icon["name"] for icon in duplicates}))
-        self.assertTrue(all(icon["displayName"] == "duplicate" for icon in duplicates))
-        self.assertTrue(
-            all(
-                entry["name"] in icon["metaphors"]
-                for entry, icon in zip(duplicate_entries, duplicates)
-            )
-        )
-        self.assertEqual(2, len({icon["name"] for icon in nulls}))
-        self.assertEqual(
-            [entry["name"] for entry in null_entries],
-            [icon["displayName"] for icon in nulls],
-        )
-        self.assertTrue(all("template" in icon["name"] for icon in nulls))
-
-        descriptor = color["variants"]["color"]["remoteSource"]
-        self.assertEqual(
-            {
-                "format": "same-origin-zip-svg-entry",
-                "url": "gcp-console-icons.zip",
-                "entry": color_entry["path"],
-                "archiveSha256": descriptor["archiveSha256"],
-                "entrySha256": descriptor["entrySha256"],
-            },
-            descriptor,
-        )
-        self.assertEqual(hashlib.sha256(archive).hexdigest(), descriptor["archiveSha256"])
-        self.assertEqual(
-            descriptor,
-            color["variants"]["color"]["sizes"]["24"]["remoteSource"],
-        )
-        self.assertEqual(
-            module_url("StorageHomeStandaloneUi"),
-            color["variants"]["color"]["sourceUrl"],
-        )
-        self.assertEqual(["cloud-service", color_entry["name"]], color["aliases"])
+        self.assertEqual({}, icons)
+        self.assertEqual(7, manifest["iconCount"])
 
     def test_rejects_malformed_directory_metadata_and_svg(self) -> None:
         archive = build_archive()
@@ -283,7 +201,7 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             payload = self.generate_payload(root, archive)
 
         icons = payload["sets"]["gcp"]["icons"]
-        self.assertEqual(3, len(icons))
+        self.assertEqual(1, len(icons))
         common = next(icon for icon in icons if icon["category"] == "Common UI")
         self.assertEqual("closeIcon", common["displayName"])
         self.assertTrue(common["name"].startswith("gcp_common_ui_close_icon_"))
@@ -293,10 +211,7 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             {icon_data.gcp_family_name(entry) for entry in shared_entries},
             set(common["aliases"]) & {icon_data.gcp_family_name(entry) for entry in shared_entries},
         )
-        self.assertEqual(
-            2,
-            len([icon for icon in icons if icon["displayName"] == "sameName"]),
-        )
+        self.assertFalse(any(icon["displayName"] == "sameName" for icon in icons))
 
     def test_excludes_source_authored_blank_templates_but_keeps_source_tree_complete(self) -> None:
         route_map = {
@@ -322,7 +237,7 @@ class GcpCatalogIntegrationTests(unittest.TestCase):
             generated = self.generate_payload(root, archive)
 
         icons = generated["sets"]["gcp"]["icons"]
-        self.assertEqual(["visible"], [icon["displayName"] for icon in icons])
+        self.assertEqual([], icons)
 
 
 if __name__ == "__main__":
