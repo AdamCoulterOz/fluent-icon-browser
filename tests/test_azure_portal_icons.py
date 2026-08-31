@@ -263,6 +263,72 @@ class AzurePortalIconsTests(unittest.TestCase):
             "color", next(icon for icon in icons if icon["name"] == "learn")["variants"]
         )
 
+    def test_admits_only_renderable_vector_svg_content_for_core_and_manifests(self) -> None:
+        valid_svg = (
+            '<svg viewBox="0 0 16 16"><defs><symbol id="mark">'
+            '<path d="M0 0h16v16H0z"/></symbol></defs><use href="#mark"/></svg>'
+        )
+        fixtures = {
+            "ValidLocalUse": valid_svg,
+            "Empty": '<svg viewBox="0 0 16 16"/>',
+            "Hidden": '<svg viewBox="0 0 16 16"><g display="none"><path d="M0 0h16v16H0z"/></g></svg>',
+            "Image": '<svg viewBox="0 0 16 16"><image href="data:image/png;base64,AA=="/></svg>',
+            "ImageUse": (
+                '<svg viewBox="0 0 16 16"><defs><image id="raster" '
+                'href="data:image/png;base64,AA=="/></defs><use href="#raster"/></svg>'
+            ),
+        }
+        bundle_modules = [
+            'define("_generated/Less/MsPortalImpl/Base/Base.Images.css", '
+            '["module"], function(e) { return { css: ".msportalfx-svg-c01{fill:#fff}" }; });'
+        ]
+        for name, svg in fixtures.items():
+            bundle_modules.append(
+                'define("_generated/MsPortalImpl/Svg/Library/'
+                + name
+                + '.svg", ["require", "exports"], function(t, e) { e.data = '
+                + json.dumps(svg)
+                + "; });"
+            )
+        source = azure.PortalSource(
+            portal_base_url=azure.PORTAL_BASE_URL,
+            page_version="99.1.0.0",
+            bootstrap_config_hash="bootstrap-hash",
+            require_config_hash="require-hash",
+            require_config_url="https://portal.azure.com/Content/PortalRequireConfig/require-hash.js",
+            bundle_urls=("https://portal.azure.com/Content/Dynamic/azure-core.js",),
+            manifest_sources=(),
+        )
+
+        core_result = azure.build_azure_catalog(
+            source, fetch_text=lambda _url: "\n".join(bundle_modules)
+        )
+
+        self.assertEqual(["valid_local_use"], [icon["name"] for icon in core_result.icons])
+
+        manifest_source = azure.ManifestSource(
+            category="assetTypes",
+            url="https://portal.azure.com/Content/ExtensionManifest/test.json",
+        )
+        manifest_payload = {
+            "manifest": {
+                "DemoExtension": {
+                    "assetTypes": [
+                        {"name": name, "icon": {"data": svg}}
+                        for name, svg in fixtures.items()
+                    ]
+                }
+            }
+        }
+
+        manifest_records = azure._manifest_icon_records(manifest_source, manifest_payload)
+
+        self.assertEqual(1, len(manifest_records))
+        self.assertEqual(
+            "/manifest/DemoExtension/assetTypes/0/icon/data",
+            manifest_records[0]["descriptor"]["selector"],
+        )
+
     def test_materializes_locked_base_images_palette_classes(self) -> None:
         css = (
             ".msportalfx-svg-c01{fill:#fff}.msportalfx-svg-c02{fill:#000}"

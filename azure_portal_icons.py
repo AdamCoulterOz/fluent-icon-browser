@@ -85,6 +85,29 @@ NON_VISIBLE_ELEMENT_NAMES = {
     "style",
     "use",
 }
+VECTOR_ELEMENT_NAMES = {
+    "circle",
+    "ellipse",
+    "line",
+    "path",
+    "polygon",
+    "polyline",
+    "rect",
+    "text",
+    "tspan",
+}
+DEFINITION_ELEMENT_NAMES = {
+    "clipPath",
+    "defs",
+    "filter",
+    "linearGradient",
+    "marker",
+    "mask",
+    "pattern",
+    "radialGradient",
+    "symbol",
+}
+REJECTED_SVG_ELEMENT_NAMES = {"foreignobject", "image"}
 
 
 class AzurePortalSchemaError(RuntimeError):
@@ -396,6 +419,78 @@ def _normalize_style_keyword(value: Optional[str]) -> str:
     return re.sub(r"\s*!important\s*$", "", value or "", flags=re.IGNORECASE).strip().lower()
 
 
+def has_vector_svg_content(svg_text: str) -> bool:
+    """Return whether an SVG has renderable vector artwork safe for indexing."""
+
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise AzurePortalSchemaError("AMD module has invalid SVG text") from exc
+    if _local_name(root.tag) != "svg":
+        raise AzurePortalSchemaError("AMD module payload is not an SVG root")
+
+    elements_by_id = {
+        element_id: element
+        for element in root.iter()
+        if (element_id := element.get("id"))
+    }
+    if any(
+        _local_name(element.tag).lower() in REJECTED_SVG_ELEMENT_NAMES
+        for element in root.iter()
+    ):
+        return False
+
+    def is_hidden(element: ET.Element) -> bool:
+        style_text = element.get("style", "")
+        return (
+            _normalize_style_keyword(
+                element.get("display") or _style_property(style_text, "display")
+            )
+            == "none"
+            or _normalize_style_keyword(
+                element.get("visibility") or _style_property(style_text, "visibility")
+            )
+            == "hidden"
+        )
+
+    def renders_vector(
+        element: ET.Element,
+        resolving_reference: bool,
+        visited_ids: set[str],
+    ) -> bool:
+        if is_hidden(element):
+            return False
+        element_name = _local_name(element.tag).lower()
+        if element_name == "use":
+            href = next(
+                (
+                    value.strip()
+                    for name, value in element.attrib.items()
+                    if _local_name(name) == "href" and value.strip().startswith("#")
+                ),
+                None,
+            )
+            if href is None:
+                return False
+            target_id = href[1:]
+            if not target_id or target_id in visited_ids:
+                return False
+            target = elements_by_id.get(target_id)
+            return target is not None and renders_vector(
+                target, True, visited_ids | {target_id}
+            )
+        if element_name in DEFINITION_ELEMENT_NAMES and not resolving_reference:
+            return False
+        if element_name in VECTOR_ELEMENT_NAMES:
+            return True
+        return any(
+            renders_vector(child, resolving_reference, visited_ids)
+            for child in element
+        )
+
+    return renders_vector(root, False, set())
+
+
 def _is_chromatic_paint(value: str) -> bool:
     paint = value.strip().lower()
     if paint in {"none", "currentcolor", "inherit", "initial", "unset", "context-fill", "context-stroke"}:
@@ -486,7 +581,9 @@ def parse_amd_svg_modules(bundle_text: str) -> list[tuple[str, str]]:
         svg_match = SVG_ASSIGNMENT_PATTERN.search(call_text)
         if not svg_match:
             raise AzurePortalSchemaError(f"SVG AMD module has no data payload: {module_name}")
-        modules.append((module_name, canonical_svg_text(_decode_js_string(svg_match.group("svg")))))
+        svg_text = _decode_js_string(svg_match.group("svg"))
+        if has_vector_svg_content(svg_text):
+            modules.append((module_name, canonical_svg_text(svg_text)))
     return modules
 
 
@@ -797,17 +894,18 @@ def _manifest_icon_records(
         if isinstance(value, dict):
             icon = value.get("icon")
             if isinstance(icon, dict) and isinstance(icon.get("data"), str):
-                records.append(
-                    _manifest_record(
-                        source,
-                        pointer + ["icon", "data"],
-                        extension_name,
-                        context_name,
-                        value,
-                        icon["data"],
-                        palette,
+                if has_vector_svg_content(icon["data"]):
+                    records.append(
+                        _manifest_record(
+                            source,
+                            pointer + ["icon", "data"],
+                            extension_name,
+                            context_name,
+                            value,
+                            icon["data"],
+                            palette,
+                        )
                     )
-                )
             for key, child in value.items():
                 if key == "icon":
                     continue

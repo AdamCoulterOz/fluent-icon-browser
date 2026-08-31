@@ -83,6 +83,11 @@
 - Added deterministic per-variant paint analysis for chromatic colours, multiple paints, gradients, and patterns, plus locked public Portal Base.Images palette materialization for the source SVG classes that use it; the descriptor-only index and upstream regular/filled/color taxonomy remain unchanged.
 - Applied the generated preservation metadata consistently to gallery and detail previews; copy/download source resolution and stable deep links are unchanged.
 
+## 2026-09-01: Exclude Raster-Wrapped Azure Descriptors
+
+- Tightened the Azure Portal source boundary to publish only SVGs containing renderable vector artwork. SVG wrappers with raster `<image>` or `foreignObject` content are excluded, including a local `<use>` that targets an embedded image; valid local `<use>` references to vector SVG definitions remain eligible.
+- The live source rebuild removed the two affected extension-manifest families, Cloud HSM Overview and Orbital Geo Catalogs Overview. The generated observation is now 1,372 Azure families from 342 core and 1,030 extension-manifest families, with 1,398 unique SVG descriptors; the 156 colour-capable family count is unchanged.
+
 ## 2026-08-31: Harden Azure Sync Source-Lock Handoff
 
 - Kept the initial Portal probe's drift and count gates against the committed Azure source lock.
