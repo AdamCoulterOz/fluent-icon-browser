@@ -127,6 +127,7 @@ The UI loads `icon-data.json` at runtime and provides:
     - public Azure Portal bootstrap, RequireConfig/dependency tree, and default extension manifests
   - only rebuilds when an upstream SHA or Azure source lock changes (or forced)
   - probes Portal drift and count gates against the committed Azure lock, then passes the freshly validated temporary lock to the regeneration pass so a Portal deployment transition cannot make the prior RequireConfig URL a second-pass `404`
+  - when a newly advertised RequireConfig returns `403`/`404` during a Portal deployment transition, rebuilds from the complete strictly validated prior Portal snapshot rather than mixing source generations; all locked assets are still fetched, parsed, and count-gated
   - generates combined index from:
     - generated `fabric-mdl2-metadata.json` (committed)
     - upstream Fluent `assets` (raw GitHub SVG URLs pinned to upstream SHA)

@@ -8,7 +8,9 @@ from urllib.error import HTTPError
 import azure_portal_icons as azure
 
 
-def portal_bootstrap(config_hash: str = "bootstrap-hash") -> str:
+def portal_bootstrap(
+    config_hash: str = "bootstrap-hash", page_version: str = "99.1.0.0"
+) -> str:
     manifest_hashes = {
         category: [[f"{category}-hash", "alternate-hash"]]
         for category in azure.MANIFEST_GROUPS
@@ -20,7 +22,7 @@ def portal_bootstrap(config_hash: str = "bootstrap-hash") -> str:
                 "portalServerConfig": {
                     "portalQuery": {
                         "configHash": config_hash,
-                        "pageVersion": "99.1.0.0",
+                        "pageVersion": page_version,
                     },
                     "environment": {"extensionsManifestHash": manifest_hashes},
                 }
@@ -48,6 +50,34 @@ def require_config() -> str:
         )
         + ");"
     )
+
+
+def previous_source_lock_payload(
+    page_version: str = "98.9.0.0", suffix: str = "previous"
+) -> dict:
+    return {
+        "portalBaseUrl": azure.PORTAL_BASE_URL,
+        "pageVersion": page_version,
+        "bootstrapConfigHash": f"{suffix}-bootstrap",
+        "requireConfigHash": f"{suffix}-require",
+        "requireConfigUrl": (
+            "https://portal.azure.com/Content/PortalRequireConfig/"
+            f"{suffix}-require.js"
+        ),
+        "amdBundleUrls": [
+            f"https://portal.azure.com/Content/Dynamic/{suffix}-bundle.js"
+        ],
+        "extensionManifestSources": [
+            {
+                "category": category,
+                "url": (
+                    "https://portal.azure.com/Content/ExtensionManifest/"
+                    f"{suffix}-{category}.json"
+                ),
+            }
+            for category in azure.MANIFEST_GROUPS
+        ],
+    }
 
 
 class AzurePortalIconsTests(unittest.TestCase):
@@ -91,6 +121,102 @@ class AzurePortalIconsTests(unittest.TestCase):
 
         self.assertEqual("locked-hash", source.require_config_hash)
         self.assertEqual(fallback_url, source.require_config_url)
+
+    def test_uses_full_previous_snapshot_for_cross_version_require_config_404(self) -> None:
+        payload = previous_source_lock_payload()
+        with tempfile.TemporaryDirectory() as directory:
+            lock_path = Path(directory) / "azure-lock.json"
+            lock_path.write_text(json.dumps(payload), encoding="utf-8")
+            previous_source = azure.previous_portal_source(lock_path)
+
+        def fetch_text(url: str) -> str:
+            if url == azure.PORTAL_BASE_URL:
+                return portal_bootstrap(
+                    config_hash="current-bootstrap", page_version="99.1.0.0"
+                )
+            raise HTTPError(url, 404, "not found", hdrs=None, fp=None)
+
+        source = azure.discover_portal_source(
+            fetch_text=fetch_text, fallback_source=previous_source
+        )
+
+        self.assertEqual(previous_source, source)
+        self.assertEqual("98.9.0.0", source.page_version)
+        self.assertTrue(all("previous-" in url for url in source.bundle_urls))
+        self.assertTrue(
+            all("previous-" in manifest.url for manifest in source.manifest_sources)
+        )
+
+    def test_rejects_malformed_previous_source_snapshot(self) -> None:
+        malformed_payloads = []
+        invalid_require_config_url = previous_source_lock_payload()
+        invalid_require_config_url["requireConfigUrl"] = (
+            "https://portal.azure.com@invalid.example/Content/PortalRequireConfig/"
+            "previous-require.js"
+        )
+        malformed_payloads.append(invalid_require_config_url)
+
+        duplicate_bundle_urls = previous_source_lock_payload()
+        duplicate_bundle_urls["amdBundleUrls"] *= 2
+        malformed_payloads.append(duplicate_bundle_urls)
+
+        incomplete_manifest_categories = previous_source_lock_payload()
+        incomplete_manifest_categories["extensionManifestSources"] = (
+            incomplete_manifest_categories["extensionManifestSources"][:-1]
+        )
+        malformed_payloads.append(incomplete_manifest_categories)
+
+        invalid_page_version = previous_source_lock_payload()
+        invalid_page_version["pageVersion"] = "not-a-version"
+        malformed_payloads.append(invalid_page_version)
+
+        with tempfile.TemporaryDirectory() as directory:
+            lock_path = Path(directory) / "azure-lock.json"
+            for payload in malformed_payloads:
+                lock_path.write_text(json.dumps(payload), encoding="utf-8")
+                with self.subTest(payload=payload):
+                    with self.assertRaises(azure.AzurePortalSchemaError):
+                        azure.previous_portal_source(lock_path)
+
+    def test_does_not_hide_non_transition_require_config_errors(self) -> None:
+        fallback = azure.PortalSource(
+            portal_base_url=azure.PORTAL_BASE_URL,
+            page_version="98.9.0.0",
+            bootstrap_config_hash="previous-bootstrap",
+            require_config_hash="previous-require",
+            require_config_url=(
+                "https://portal.azure.com/Content/PortalRequireConfig/"
+                "previous-require.js"
+            ),
+            bundle_urls=(
+                "https://portal.azure.com/Content/Dynamic/previous-bundle.js",
+            ),
+            manifest_sources=tuple(
+                azure.ManifestSource(
+                    category=category,
+                    url=(
+                        "https://portal.azure.com/Content/ExtensionManifest/"
+                        f"previous-{category}.json"
+                    ),
+                )
+                for category in azure.MANIFEST_GROUPS
+            ),
+        )
+
+        def fetch_500(url: str) -> str:
+            if url == azure.PORTAL_BASE_URL:
+                return portal_bootstrap()
+            raise HTTPError(url, 500, "server error", hdrs=None, fp=None)
+
+        def fetch_404(url: str) -> str:
+            if url == azure.PORTAL_BASE_URL:
+                return portal_bootstrap()
+            raise HTTPError(url, 404, "not found", hdrs=None, fp=None)
+
+        with self.assertRaises(HTTPError):
+            azure.discover_portal_source(fetch_text=fetch_500, fallback_source=fallback)
+        with self.assertRaises(HTTPError):
+            azure.discover_portal_source(fetch_text=fetch_404)
 
     def test_builds_descriptor_only_entries_and_deduplicates_svg(self) -> None:
         svg = '<svg viewBox="0 0 16 16"><path d="M0 0h16v16H0z"/></svg>'

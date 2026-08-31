@@ -240,6 +240,7 @@ def discover_portal_source(
     fetch_text: Callable[[str], str] = fetch_portal_text,
     portal_base_url: str = PORTAL_BASE_URL,
     fallback_require_config_url: Optional[str] = None,
+    fallback_source: Optional[PortalSource] = None,
 ) -> PortalSource:
     """Discover immutable core bundles and default extension manifests from Portal."""
 
@@ -266,14 +267,22 @@ def discover_portal_source(
     try:
         require_config_text = fetch_text(require_config_url)
     except HTTPError as exc:
-        should_fallback = exc.code in {403, 404} and fallback_require_config_url is not None
+        should_fallback = exc.code in {403, 404}
         exc.close()
         if not should_fallback:
+            raise
+        if fallback_source is not None:
+            return _validated_portal_source(fallback_source)
+        if fallback_require_config_url is None:
             raise
         parsed_fallback = urlparse(fallback_require_config_url)
         if (
             parsed_fallback.scheme != "https"
             or parsed_fallback.netloc != "portal.azure.com"
+            or parsed_fallback.username is not None
+            or parsed_fallback.password is not None
+            or parsed_fallback.query
+            or parsed_fallback.fragment
             or not re.fullmatch(
                 r"/Content/PortalRequireConfig/[A-Za-z0-9_-]+\.js",
                 parsed_fallback.path,
@@ -1089,18 +1098,97 @@ def previous_count(path: Optional[Path], field: str = "indexedCount") -> Optiona
     return value
 
 
-def previous_require_config_url(path: Optional[Path], page_version: str) -> Optional[str]:
+def _validated_portal_source(source: PortalSource) -> PortalSource:
+    if not isinstance(source.portal_base_url, str) or source.portal_base_url != PORTAL_BASE_URL:
+        raise AzurePortalSchemaError("Previous source lock has an invalid Portal base URL")
+    if not isinstance(source.page_version, str) or not re.fullmatch(
+        r"\d+(?:\.\d+)+", source.page_version
+    ):
+        raise AzurePortalSchemaError("Previous source lock has an invalid page version")
+    if not isinstance(source.bootstrap_config_hash, str) or not re.fullmatch(
+        r"[A-Za-z0-9_-]+", source.bootstrap_config_hash
+    ):
+        raise AzurePortalSchemaError("Previous source lock has an invalid bootstrap config hash")
+    if not isinstance(source.require_config_hash, str) or not re.fullmatch(
+        r"[A-Za-z0-9_-]+", source.require_config_hash
+    ):
+        raise AzurePortalSchemaError("Previous source lock has an invalid RequireConfig hash")
+
+    def valid_url(url: str, path_pattern: str) -> bool:
+        if not isinstance(url, str):
+            return False
+        parsed = urlparse(url)
+        return (
+            parsed.scheme == "https"
+            and parsed.netloc == "portal.azure.com"
+            and parsed.username is None
+            and parsed.password is None
+            and not parsed.query
+            and not parsed.fragment
+            and re.fullmatch(path_pattern, parsed.path) is not None
+        )
+
+    require_config_pattern = r"/Content/PortalRequireConfig/(?P<hash>[A-Za-z0-9_-]+)\.js"
+    if not valid_url(source.require_config_url, require_config_pattern):
+        raise AzurePortalSchemaError("Previous source lock has an invalid RequireConfig URL")
+    require_config_match = re.fullmatch(
+        require_config_pattern, urlparse(source.require_config_url).path
+    )
+    if require_config_match is None or require_config_match["hash"] != source.require_config_hash:
+        raise AzurePortalSchemaError("Previous source lock RequireConfig URL/hash mismatch")
+
+    if not isinstance(source.bundle_urls, tuple) or not source.bundle_urls:
+        raise AzurePortalSchemaError("Previous source lock has invalid AMD bundle URLs")
+    for bundle_url in source.bundle_urls:
+        if not isinstance(bundle_url, str) or not valid_url(
+            bundle_url, r"/Content/Dynamic/[A-Za-z0-9_-]+\.js"
+        ):
+            raise AzurePortalSchemaError("Previous source lock has an invalid AMD bundle URL")
+    if len(source.bundle_urls) != len(set(source.bundle_urls)):
+        raise AzurePortalSchemaError("Previous source lock has invalid AMD bundle URLs")
+
+    expected_categories = list(MANIFEST_GROUPS)
+    if not isinstance(source.manifest_sources, tuple) or not all(
+        isinstance(manifest_source, ManifestSource)
+        for manifest_source in source.manifest_sources
+    ):
+        raise AzurePortalSchemaError("Previous source lock has invalid extension manifest categories")
+    actual_categories = [manifest_source.category for manifest_source in source.manifest_sources]
+    if actual_categories != expected_categories:
+        raise AzurePortalSchemaError("Previous source lock has invalid extension manifest categories")
+    for manifest_source in source.manifest_sources:
+        if not isinstance(manifest_source.url, str) or not valid_url(
+            manifest_source.url, r"/Content/ExtensionManifest/[A-Za-z0-9_-]+\.json"
+        ):
+            raise AzurePortalSchemaError("Previous source lock has an invalid extension manifest URL")
+    return source
+
+
+def previous_portal_source(path: Optional[Path]) -> Optional[PortalSource]:
+    """Load a complete, validated prior Portal source snapshot for a 403/404 handoff."""
+
     if path is None or not path.exists():
         return None
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
-        locked_page_version = payload["pageVersion"]
-        require_config_url = payload["requireConfigUrl"]
+        manifest_sources_payload = payload["extensionManifestSources"]
+        if not isinstance(manifest_sources_payload, list):
+            raise TypeError("extensionManifestSources is not a list")
+        source = PortalSource(
+            portal_base_url=payload["portalBaseUrl"],
+            page_version=payload["pageVersion"],
+            bootstrap_config_hash=payload["bootstrapConfigHash"],
+            require_config_hash=payload["requireConfigHash"],
+            require_config_url=payload["requireConfigUrl"],
+            bundle_urls=tuple(payload["amdBundleUrls"]),
+            manifest_sources=tuple(
+                ManifestSource(category=item["category"], url=item["url"])
+                for item in manifest_sources_payload
+            ),
+        )
     except (OSError, ValueError, KeyError, TypeError) as exc:
         raise AzurePortalSchemaError(f"Invalid previous Azure source lock: {path}") from exc
-    if locked_page_version != page_version:
-        return None
-    return require_config_url if isinstance(require_config_url, str) else None
+    return _validated_portal_source(source)
 
 
 def enforce_count_gate(
@@ -1126,16 +1214,9 @@ def generate_azure_icons(
     manifest_minimum_count: int = 100,
     fetch_text: Callable[[str], str] = fetch_portal_text,
 ) -> list[dict]:
-    bootstrap = extract_json_call(fetch_text(PORTAL_BASE_URL), "MsPortalImpl.redirect")
-    try:
-        page_version = bootstrap["portalServerConfig"]["portalQuery"]["pageVersion"]
-    except (KeyError, TypeError) as exc:
-        raise AzurePortalSchemaError("Portal bootstrap has no page version") from exc
     source = discover_portal_source(
         fetch_text=fetch_text,
-        fallback_require_config_url=previous_require_config_url(
-            previous_source_lock_path, page_version
-        ),
+        fallback_source=previous_portal_source(previous_source_lock_path),
     )
     result = build_azure_catalog(source, fetch_text=fetch_text)
     enforce_count_gate(

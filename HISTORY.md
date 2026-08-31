@@ -10,6 +10,7 @@
 
 - Kept the initial Portal probe's drift and count gates against the committed Azure source lock.
 - Made the subsequent full index generation reuse that fresh validated temporary lock, avoiding a second lookup of an old RequireConfig URL during a Portal deployment transition.
+- When Portal advertises a RequireConfig that disappears with `403`/`404` before the initial probe can fetch it, fall back to the complete strictly validated prior source snapshot; never combine a prior RequireConfig with new bootstrap manifests, and continue to fetch, parse, and count-gate every locked asset.
 
 ## 2026-08-31: Reconcile Legacy Azure Artwork Without Importing It
 
