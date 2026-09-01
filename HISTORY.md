@@ -1,5 +1,9 @@
 # History
 
+## 2026-09-01: Make Large Gallery Rendering Demand-Driven
+
+- The 2,975-card one-task/full-mask population caused multi-second to tens-of-seconds interaction stalls. Replaced it with demand-driven, cancellable rendering; static, deep-link, catalogue, and source behavior are unchanged.
+
 ## 2026-09-01: Accept Deterministic Semantic Categories
 
 - Fluent and Segoe canonical families now receive one generated category from a shared 16-domain UI taxonomy, decided only by canonical name tokens and explicit precedence. Segoe adds Microsoft Product Marks for approved Microsoft identities with `logo`/`wordmark` or explicit Viva Engage, and Microsoft Product UI only where branded source provenance and an approved Microsoft product identity both hold; branded metaphors remain intact and private provenance remains unpublished.

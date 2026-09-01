@@ -93,9 +93,10 @@ The UI loads `icon-data.json` at runtime and provides:
 - enriched Segoe search metadata (`description` + `metaphors`) for 1,985 unique MDL2 component names across the ordinary and branded packages
 - every component supplied by `react-icons-mdl2-branded` contributes the searchable `branded` metaphor to its generated family
 - performance improvements for large result sets:
-  - icon metadata is loaded up front and the gallery mounts all cards once per set; subsequent search/style changes are applied as single-pass class/preview updates (no visible chunk-by-chunk transition)
+  - icon metadata remains loaded up front; the browser renders only the current visible results after search, group, and style filtering, mounts a bounded first batch, and appends additional ordered batches through a viewport-end continuation sentinel as the user nears them
+  - stale rendering work is cancelled when the set, search, group, style, or theme changes; cache warming is deferred until idle with a short timeout fallback
+  - counts still describe all matching families, while deep links resolve and open without waiting for full catalogue materialization
   - search input is debounced and icons are pre-indexed per set for faster filtering
-  - style mode toggles (`regular`/`solid`/`color`, plus unselected/no-filter state) update existing rendered cards in-place without rebuilding the grid
 
 ## Key Files
 

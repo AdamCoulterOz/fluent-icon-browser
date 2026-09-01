@@ -1,5 +1,10 @@
 const INCLUDE_BOUNDS_SESSION_KEY = "fluent-icons-include-bounds";
 const PANEL_SIZE_MENU_HIDE_DELAY_MS = 130;
+const ICON_RENDER_FIRST_BATCH_SIZE = 48;
+const ICON_RENDER_FOLLOW_UP_BATCH_SIZE = 96;
+const ICON_RENDER_CONTINUATION_MARGIN_PX = 480;
+const ICON_CACHE_WARM_DELAY_MS = 250;
+const ICON_CACHE_WARM_IDLE_TIMEOUT_MS = 1500;
 const ICON_GROUP_PRIORITY = [
     "General UI",
     "Portal Assets",
@@ -90,6 +95,15 @@ function resolveIconEntry(icons, requestedName) {
 
     const exact = icons.find((icon) => icon.name === requestedName);
     return exact || icons.find((icon) => getIconAliases(icon).includes(requestedName)) || null;
+}
+
+function getDeepLinkFilterState(icons, requestedName) {
+    const resolved = resolveIconEntry(icons, requestedName);
+    return {
+        resolved,
+        query: resolved ? resolved.displayName || requestedName : requestedName,
+        exactIcons: resolved ? [resolved] : null,
+    };
 }
 
 function resolveIconSetEntry(iconSets, requestedName) {
@@ -190,6 +204,37 @@ function shouldDismissIconPanelFromPointerDown({
     );
 }
 
+function getProgressiveRenderBatch(icons, offset, batchSize) {
+    const start = Math.max(0, Number(offset) || 0);
+    const size = Math.max(1, Number(batchSize) || 1);
+    return (Array.isArray(icons) ? icons : []).slice(start, start + size);
+}
+
+function isActiveRenderGeneration(activeGeneration, generation) {
+    return activeGeneration === generation;
+}
+
+function isWithinRenderContinuationThreshold(bounds, viewportHeight) {
+    return Boolean(
+        bounds &&
+        Number.isFinite(bounds.top) &&
+        Number.isFinite(bounds.bottom) &&
+        bounds.bottom >= -ICON_RENDER_CONTINUATION_MARGIN_PX &&
+        bounds.top <= viewportHeight + ICON_RENDER_CONTINUATION_MARGIN_PX
+    );
+}
+
+function scheduleDeferredIconCacheWarming(callback, {
+    requestIdleCallback = globalThis.requestIdleCallback,
+    setTimeoutFn = globalThis.setTimeout,
+} = {}) {
+    if (typeof requestIdleCallback === "function") {
+        return requestIdleCallback(callback, { timeout: ICON_CACHE_WARM_IDLE_TIMEOUT_MS });
+    }
+
+    return setTimeoutFn(callback, ICON_CACHE_WARM_DELAY_MS);
+}
+
 function readIncludeBoundsPreference() {
     try {
         return sessionStorage.getItem(INCLUDE_BOUNDS_SESSION_KEY) === "true";
@@ -232,8 +277,13 @@ class IconBrowser {
         this.includeBoundsEnabled = readIncludeBoundsPreference();
         this.iconByName = new Map();
         this.cardByName = new Map();
-        this.renderedAllCards = false;
-        this.lastAppliedStyleMode = null;
+        this.visibleIcons = [];
+        this.renderGeneration = 0;
+        this.renderContinuation = null;
+        this.renderContinuationObserver = null;
+        this.renderContinuationFrame = null;
+        this.renderContinuationFrameUsesAnimationFrame = false;
+        this.renderContinuationFallbackHandler = null;
         this.searchDebounceTimer = null;
         this.searchDebounceMs = 120;
         this.panelSwipeGesture = null;
@@ -244,6 +294,7 @@ class IconBrowser {
             : null;
         this.remotePreviewObserver = null;
         this.remotePreviewFallbackScheduled = false;
+        this.remotePreviewFallbackCards = new Set();
         this.remotePreviewRequestSequence = 0;
         this.init();
     }
@@ -268,7 +319,6 @@ class IconBrowser {
             this.icons.forEach((icon) => {
                 delete icon._previewCache;
             });
-            this.lastAppliedStyleMode = null;
             this.renderIcons();
             if (this.currentIcon && this.activePanelVariant) {
                 this.updateModalVariantPreview(this.activePanelVariant);
@@ -381,7 +431,7 @@ class IconBrowser {
             const normalized = this.normalizePayload(payload);
             this.iconSets = normalized.sets;
             this.setAliases = normalized.setAliases;
-            void warmIconCache(payload);
+            scheduleIconCacheWarming(payload);
 
             const availableSetKeys = Object.keys(this.iconSets);
             const preferredSet = normalized.defaultSet;
@@ -440,7 +490,8 @@ class IconBrowser {
                     this.setStyleMode(mode || "");
                 }
                 if (this.styleMode !== previousMode) {
-                    this.applyStyleModeToRenderedCards();
+                    this.updateVisibleIcons();
+                    this.renderIcons();
                     this.updateStats();
                 }
             });
@@ -1200,11 +1251,10 @@ class IconBrowser {
         this.groupFilter = "";
         this.prepareSearchIndex();
         this.filteredIcons = [...this.icons];
+        this.updateVisibleIcons();
         this.selectedIconName = null;
         this.activePanelVariant = null;
         this.cardByName = new Map();
-        this.renderedAllCards = false;
-        this.lastAppliedStyleMode = null;
         this.syncSetPicker();
         this.syncGroupPicker();
         this.syncStyleModeControlsForSet();
@@ -1249,14 +1299,14 @@ class IconBrowser {
                 return;
             }
 
-            const resolved = resolveIconEntry(this.icons, iconParam);
-            const query = resolved ? resolved.displayName || iconParam : iconParam;
+            const deepLinkFilter = getDeepLinkFilterState(this.icons, iconParam);
+            const { resolved, query } = deepLinkFilter;
             const searchInput = document.getElementById("searchInput");
             if (searchInput) {
                 searchInput.value = query;
                 this.updateSearchClearButton();
             }
-            this.filterIcons(query);
+            this.filterIcons(query, deepLinkFilter.exactIcons);
 
             if (resolved) {
                 this.openModal(resolved.name);
@@ -1734,96 +1784,6 @@ class IconBrowser {
         return cached;
     }
 
-    applyStyleToCard(card, icon, styleMode, isVisible, shouldRefreshPreview) {
-        card.classList.toggle("is-hidden", !isVisible);
-        if (!isVisible) {
-            return;
-        }
-
-        if (!shouldRefreshPreview && card.dataset.previewMode === styleMode) {
-            return;
-        }
-
-        const preview = this.getCachedPreviewForMode(icon, styleMode);
-        const iconView = card.querySelector(".icon-view");
-        if (!iconView) {
-            return;
-        }
-
-        iconView.className = `icon-view ${preview.colorClass}`.trim();
-        iconView.innerHTML = preview.markup;
-        this.applyPreviewThemeColor(
-            iconView,
-            this.getVariantData(icon, preview.variant)
-        );
-        card.dataset.previewMode = styleMode;
-        card.dataset.hasRemotePreview = preview.asset?.remoteSource ? "true" : "false";
-        const nextRemotePreviewKey = preview.asset?.remoteSource
-            ? this.remoteAssetKey(preview.asset)
-            : "";
-        if (nextRemotePreviewKey || card.dataset.remotePreviewKey !== nextRemotePreviewKey) {
-            delete card.dataset.remotePreviewStatus;
-            delete card.dataset.remotePreviewKey;
-        }
-    }
-
-    toggleNoResultsMessage(isVisible) {
-        const grid = document.getElementById("iconGrid");
-        if (!grid) {
-            return;
-        }
-
-        const noResults = grid.querySelector(".no-results");
-        if (!noResults) {
-            return;
-        }
-
-        noResults.style.display = isVisible ? "block" : "none";
-    }
-
-    applyStyleModeToRenderedCards() {
-        if (!this.renderedAllCards || this.cardByName.size === 0) {
-            return;
-        }
-
-        const styleMode = this.getActiveStyleMode();
-        const searchMatches = new Set(this.filteredIcons.map((icon) => icon.name));
-        const shouldRefreshVisiblePreviews = this.lastAppliedStyleMode !== styleMode;
-        let visibleCount = 0;
-        let selectedIconStillVisible = !this.selectedIconName;
-
-        for (const icon of this.icons) {
-            const card = this.cardByName.get(icon.name);
-            if (!card) {
-                continue;
-            }
-
-            const matchesSearch = searchMatches.has(icon.name);
-            const matchesStyle = this.matchesStyleModeForIcon(icon, styleMode);
-            const isVisible = matchesSearch && matchesStyle;
-            const needsPreviewRefresh =
-                (shouldRefreshVisiblePreviews && isVisible) ||
-                (isVisible && card.dataset.previewMode !== styleMode);
-
-            this.applyStyleToCard(card, icon, styleMode, isVisible, needsPreviewRefresh);
-            if (isVisible) {
-                visibleCount += 1;
-            }
-
-            if (this.selectedIconName && icon.name === this.selectedIconName && isVisible) {
-                selectedIconStillVisible = true;
-            }
-        }
-
-        if (!selectedIconStillVisible) {
-            this.closeIconPanel();
-        }
-
-        this.lastAppliedStyleMode = styleMode;
-        this.toggleNoResultsMessage(visibleCount === 0);
-        this.syncRemotePreviewObservation();
-    }
-
     renderPreviewMarkup(icon, variant, variantData, resolvedAsset = null) {
         const asset = resolvedAsset || this.resolveVariantAsset(variantData, this.getDefaultSize(variantData));
         if (!asset) {
@@ -1892,23 +1852,33 @@ class IconBrowser {
         });
     }
 
-    filterIcons(searchTerm) {
+    filterIcons(searchTerm, exactIcons = null) {
         const searchRaw = String(searchTerm || "").toLowerCase().trim();
         const search = this.normalizeSearchText(searchRaw);
         const searchTerms = search.split(" ").filter(Boolean);
 
-        this.filteredIcons = this.icons.filter((icon) => {
-            const rawIndex = icon._searchRaw || "";
-            const normalizedIndex = icon._searchNormalized || "";
-            const searchMatch =
-                searchTerms.length === 0 ||
-                searchTerms.every((term) => rawIndex.includes(term) || normalizedIndex.includes(term));
+        this.filteredIcons = Array.isArray(exactIcons)
+            ? [...exactIcons]
+            : this.icons.filter((icon) => {
+                const rawIndex = icon._searchRaw || "";
+                const normalizedIndex = icon._searchNormalized || "";
+                const searchMatch =
+                    searchTerms.length === 0 ||
+                    searchTerms.every((term) => rawIndex.includes(term) || normalizedIndex.includes(term));
 
-            return searchMatch && matchesIconGroup(icon, this.groupFilter);
-        });
+                return searchMatch && matchesIconGroup(icon, this.groupFilter);
+            });
 
+        this.updateVisibleIcons();
         this.renderIcons();
         this.updateStats();
+    }
+
+    updateVisibleIcons() {
+        this.visibleIcons = this.filteredIcons.filter((icon) =>
+            this.matchesStyleModeForIcon(icon, this.getActiveStyleMode())
+        );
+        return this.visibleIcons;
     }
 
     updateSearchClearButton() {
@@ -1930,36 +1900,161 @@ class IconBrowser {
             return;
         }
 
-        if (!this.renderedAllCards) {
-            if (this.icons.length === 0) {
-                grid.innerHTML = '<div class="no-results">No icons available for this icon set.</div>';
-                this.cardByName = new Map();
-                this.renderedAllCards = true;
-                this.lastAppliedStyleMode = this.getActiveStyleMode();
-                return;
-            }
+        this.cancelRenderContinuation();
+        const generation = ++this.renderGeneration;
+        const visibleIcons = this.visibleIcons;
+        this.cardByName = new Map();
+        this.remotePreviewObserver?.disconnect();
+        this.remotePreviewFallbackCards?.clear();
+        grid.replaceChildren();
 
-            const allCardsMarkup = this.icons.map((icon) => this.renderIconCard(icon)).join("");
-            grid.innerHTML = `${allCardsMarkup}<div class="no-results" style="display:none;">No icons found matching your criteria.</div>`;
+        const noResults = document.createElement("div");
+        noResults.className = "no-results";
+        noResults.textContent = this.icons.length === 0
+            ? "No icons available for this icon set."
+            : "No icons found matching your criteria.";
+        noResults.style.display = visibleIcons.length === 0 ? "block" : "none";
+        grid.appendChild(noResults);
 
-            this.cardByName = new Map();
-            grid.querySelectorAll(".icon-card").forEach((card) => {
-                const iconName = card.dataset.iconName;
-                if (iconName) {
-                    this.cardByName.set(iconName, card);
-                }
-            });
-
-            if (this.selectedIconName) {
-                this.setSelectedIcon(this.selectedIconName);
-            }
-
-            this.renderedAllCards = true;
-            this.lastAppliedStyleMode = null;
+        if (this.selectedIconName && !visibleIcons.some((icon) => icon.name === this.selectedIconName)) {
+            this.closeIconPanel();
         }
 
-        this.applyStyleModeToRenderedCards();
-        this.syncRemotePreviewObservation();
+        const nextOffset = this.appendIconCardBatch(
+            grid,
+            noResults,
+            visibleIcons,
+            0,
+            ICON_RENDER_FIRST_BATCH_SIZE
+        );
+        if (nextOffset < visibleIcons.length) {
+            this.startRenderContinuation(generation, grid, noResults, visibleIcons, nextOffset);
+        }
+    }
+
+    appendIconCardBatch(grid, noResults, icons, offset, batchSize) {
+        const batch = getProgressiveRenderBatch(icons, offset, batchSize);
+        if (batch.length === 0) {
+            return offset;
+        }
+
+        const template = document.createElement("template");
+        template.innerHTML = batch.map((icon) => this.renderIconCard(icon)).join("");
+        const cards = [...template.content.querySelectorAll(".icon-card")];
+        grid.insertBefore(template.content, noResults);
+        cards.forEach((card) => {
+            const iconName = card.dataset.iconName;
+            if (!iconName) {
+                return;
+            }
+            this.cardByName.set(iconName, card);
+            if (iconName === this.selectedIconName) {
+                card.classList.add("is-selected");
+            }
+            this.observeRemotePreviewCard(card);
+        });
+        return offset + batch.length;
+    }
+
+    startRenderContinuation(generation, grid, noResults, icons, offset) {
+        const sentinel = document.createElement("div");
+        sentinel.setAttribute("aria-hidden", "true");
+        sentinel.style.cssText = "width:1px;height:1px;pointer-events:none;";
+        grid.appendChild(sentinel);
+
+        this.renderContinuation = { generation, grid, noResults, icons, offset, sentinel };
+        if ("IntersectionObserver" in window) {
+            this.renderContinuationObserver = new IntersectionObserver(
+                (entries) => {
+                    if (entries.some((entry) => entry.target === sentinel && entry.isIntersecting)) {
+                        this.scheduleRenderContinuationCheck();
+                    }
+                },
+                { rootMargin: `${ICON_RENDER_CONTINUATION_MARGIN_PX}px 0px` }
+            );
+            this.renderContinuationObserver.observe(sentinel);
+        } else {
+            this.renderContinuationFallbackHandler = () => this.scheduleRenderContinuationCheck();
+            window.addEventListener("scroll", this.renderContinuationFallbackHandler, { passive: true });
+            window.addEventListener("resize", this.renderContinuationFallbackHandler);
+        }
+
+        this.scheduleRenderContinuationCheck();
+    }
+
+    cancelRenderContinuation() {
+        this.renderContinuationObserver?.disconnect();
+        this.renderContinuationObserver = null;
+        if (this.renderContinuationFrame !== null) {
+            if (this.renderContinuationFrameUsesAnimationFrame) {
+                globalThis.cancelAnimationFrame?.(this.renderContinuationFrame);
+            } else {
+                globalThis.clearTimeout(this.renderContinuationFrame);
+            }
+        }
+        this.renderContinuationFrame = null;
+        this.renderContinuationFrameUsesAnimationFrame = false;
+        if (this.renderContinuationFallbackHandler) {
+            window.removeEventListener("scroll", this.renderContinuationFallbackHandler);
+            window.removeEventListener("resize", this.renderContinuationFallbackHandler);
+            this.renderContinuationFallbackHandler = null;
+        }
+        this.renderContinuation?.sentinel.remove();
+        this.renderContinuation = null;
+    }
+
+    scheduleRenderContinuationCheck() {
+        if (!this.renderContinuation || this.renderContinuationFrame !== null) {
+            return;
+        }
+
+        const continuation = this.renderContinuation;
+        const check = () => {
+            if (this.renderContinuation !== continuation) {
+                return;
+            }
+            this.renderContinuationFrame = null;
+            this.renderContinuationFrameUsesAnimationFrame = false;
+            this.renderNextIconCardBatch();
+        };
+        if (typeof globalThis.requestAnimationFrame === "function") {
+            this.renderContinuationFrameUsesAnimationFrame = true;
+            this.renderContinuationFrame = globalThis.requestAnimationFrame(check);
+        } else {
+            this.renderContinuationFrame = globalThis.setTimeout(check, 0);
+        }
+    }
+
+    renderNextIconCardBatch() {
+        const continuation = this.renderContinuation;
+        if (
+            !continuation ||
+            !isActiveRenderGeneration(this.renderGeneration, continuation.generation) ||
+            !continuation.sentinel.isConnected
+        ) {
+            return;
+        }
+
+        if (!isWithinRenderContinuationThreshold(
+            continuation.sentinel.getBoundingClientRect(),
+            window.innerHeight
+        )) {
+            return;
+        }
+
+        continuation.offset = this.appendIconCardBatch(
+            continuation.grid,
+            continuation.noResults,
+            continuation.icons,
+            continuation.offset,
+            ICON_RENDER_FOLLOW_UP_BATCH_SIZE
+        );
+        if (continuation.offset >= continuation.icons.length) {
+            this.cancelRenderContinuation();
+            return;
+        }
+
+        this.scheduleRenderContinuationCheck();
     }
 
     renderIconCard(icon) {
@@ -2014,53 +2109,64 @@ class IconBrowser {
         window.addEventListener("resize", scheduleFallback);
     }
 
-    syncRemotePreviewObservation() {
+    observeRemotePreviewCard(card) {
         if (!this.remoteIconSourceResolver) {
             return;
         }
 
-        const cards = [...this.cardByName.values()].filter(
-            (card) =>
-                card.dataset.hasRemotePreview === "true" &&
-                !card.classList.contains("is-hidden") &&
-                card.dataset.remotePreviewStatus !== "complete" &&
-                card.dataset.remotePreviewStatus !== "failed"
-        );
-        if (this.remotePreviewObserver) {
-            this.remotePreviewObserver.disconnect();
-            cards.forEach((card) => this.remotePreviewObserver.observe(card));
+        if (
+            card.dataset.hasRemotePreview !== "true" ||
+            card.dataset.remotePreviewStatus === "complete" ||
+            card.dataset.remotePreviewStatus === "failed"
+        ) {
             return;
         }
-        this.scheduleRemotePreviewFallback(cards);
+        if (this.remotePreviewObserver) {
+            this.remotePreviewObserver.observe(card);
+            return;
+        }
+        this.scheduleRemotePreviewFallback([card]);
     }
 
-    scheduleRemotePreviewFallback(cards = null) {
+    scheduleRemotePreviewFallback(cards = []) {
+        cards.forEach((card) => this.remotePreviewFallbackCards.add(card));
         if (this.remotePreviewFallbackScheduled) {
             return;
         }
         this.remotePreviewFallbackScheduled = true;
         requestAnimationFrame(() => {
             this.remotePreviewFallbackScheduled = false;
-            const candidates = cards || [...this.cardByName.values()].filter(
-                (card) =>
-                    card.dataset.hasRemotePreview === "true" &&
-                    !card.classList.contains("is-hidden") &&
-                    card.dataset.remotePreviewStatus !== "complete" &&
-                    card.dataset.remotePreviewStatus !== "failed"
-            );
             const viewportBottom = window.innerHeight + 480;
-            candidates
-                .filter((card) => {
-                    const bounds = card.getBoundingClientRect();
-                    return bounds.bottom >= -480 && bounds.top <= viewportBottom;
-                })
-                .slice(0, 24)
-                .forEach((card) => {
-                    const icon = this.iconByName.get(card.dataset.iconName);
-                    if (icon) {
-                        void this.hydrateCardRemotePreview(card, icon);
-                    }
-                });
+            const candidates = [];
+            this.remotePreviewFallbackCards.forEach((card) => {
+                const status = card.dataset.remotePreviewStatus;
+                if (
+                    card.dataset.hasRemotePreview !== "true" ||
+                    !card.isConnected ||
+                    status === "loading" ||
+                    status === "complete" ||
+                    status === "failed"
+                ) {
+                    this.remotePreviewFallbackCards.delete(card);
+                    return;
+                }
+
+                const bounds = card.getBoundingClientRect();
+                if (
+                    candidates.length < 24 &&
+                    bounds.bottom >= -480 &&
+                    bounds.top <= viewportBottom
+                ) {
+                    candidates.push(card);
+                }
+            });
+            candidates.forEach((card) => {
+                this.remotePreviewFallbackCards.delete(card);
+                const icon = this.iconByName.get(card.dataset.iconName);
+                if (icon) {
+                    void this.hydrateCardRemotePreview(card, icon);
+                }
+            });
         });
     }
 
@@ -2090,7 +2196,7 @@ class IconBrowser {
     async hydrateCardRemotePreview(card, icon) {
         const preview = this.getCachedPreviewForMode(icon, card.dataset.previewMode || "");
         const asset = preview.asset;
-        if (!asset?.remoteSource || card.classList.contains("is-hidden")) {
+        if (!asset?.remoteSource || !card.isConnected) {
             return;
         }
 
@@ -2110,7 +2216,7 @@ class IconBrowser {
         card.dataset.remotePreviewStatus = "loading";
         try {
             const svg = await this.resolveAssetSvg(asset);
-            if (card.dataset.remotePreviewKey !== key || card.classList.contains("is-hidden")) {
+            if (card.dataset.remotePreviewKey !== key || !card.isConnected) {
                 return;
             }
             iconView.innerHTML = svg;
@@ -2564,11 +2670,12 @@ class IconBrowser {
 
     showError(message) {
         const grid = document.getElementById("iconGrid");
+        this.cancelRenderContinuation();
         grid.innerHTML = `<div class="no-results">${message}</div>`;
         this.closeIconPanel();
         this.cardByName = new Map();
-        this.renderedAllCards = false;
-        this.lastAppliedStyleMode = null;
+        this.visibleIcons = [];
+        this.renderGeneration += 1;
     }
 }
 
@@ -2659,6 +2766,12 @@ async function warmIconCache(payload) {
     };
 
     registration.active.postMessage({ type: "cache-icons", urls }, [channel.port2]);
+}
+
+function scheduleIconCacheWarming(payload) {
+    return scheduleDeferredIconCacheWarming(() => {
+        void warmIconCache(payload);
+    });
 }
 
 const svgFetchCache = new Map();
@@ -2898,8 +3011,12 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         getCollectionPickerOption,
+        getDeepLinkFilterState,
+        ICON_RENDER_FIRST_BATCH_SIZE,
+        ICON_RENDER_FOLLOW_UP_BATCH_SIZE,
         getIconGroupFilterState,
         getIconGroupOptions,
+        getProgressiveRenderBatch,
         getIconCacheUrls,
         getInitialIconCacheUrls,
         getIconAliases,
@@ -2911,6 +3028,9 @@ if (typeof module !== "undefined" && module.exports) {
         hasColorPreservingVariant,
         previewThemeColorClass,
         resolveThemeSource,
+        isActiveRenderGeneration,
+        isWithinRenderContinuationThreshold,
+        scheduleDeferredIconCacheWarming,
         getPreviewVariantForStyleMode,
         resolveIconEntry,
         resolveIconSetEntry,

@@ -1,6 +1,7 @@
 const assert = require("node:assert/strict");
 
 const {
+    getDeepLinkFilterState,
     getIconMetaphors,
     getIconSearchParts,
     getIconSearchTerms,
@@ -27,6 +28,33 @@ assert.equal(
     "a direct icon name should take precedence over an alias"
 );
 assert.equal(resolveIconEntry([vault], "missing_icon"), null);
+
+const broadMatches = Array.from({ length: 973 }, (_, index) => ({
+    name: `microsoft_service_${index}`,
+    displayName: `Microsoft Service ${index}`,
+}));
+const lateTarget = {
+    name: "microsoft",
+    displayName: "Microsoft",
+    aliases: ["microsoft_alias"],
+};
+broadMatches.splice(971, 0, lateTarget);
+
+assert.deepEqual(getDeepLinkFilterState(broadMatches, "microsoft"), {
+    resolved: lateTarget,
+    query: "Microsoft",
+    exactIcons: [lateTarget],
+}, "a resolved deep link should mount only its canonical family");
+assert.deepEqual(getDeepLinkFilterState(broadMatches, "microsoft_alias"), {
+    resolved: lateTarget,
+    query: "Microsoft",
+    exactIcons: [lateTarget],
+}, "a resolved alias should mount its canonical family");
+assert.deepEqual(getDeepLinkFilterState(broadMatches, "unknown_icon"), {
+    resolved: null,
+    query: "unknown_icon",
+    exactIcons: null,
+}, "an unknown deep link should retain plain-search fallback behavior");
 assert.ok(
     getIconSearchParts(vault).includes("vault_secrets_square_color"),
     "a folded alias should remain searchable through the canonical icon"
