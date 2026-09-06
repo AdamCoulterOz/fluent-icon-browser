@@ -1,6 +1,6 @@
 {
   "format": "gcp-console-svg-archive-v1",
-  "iconCount": 4363,
+  "iconCount": 4343,
   "icons": [
     {
       "dataIconName": null,
@@ -1773,124 +1773,144 @@
       "templateIndex": 19
     },
     {
-      "dataIconName": "homeIcon",
+      "dataIconName": "keepPinIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-20",
-      "path": "icons/ai-chat/template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-20.svg",
-      "sha256": "407e3a0aa430e7af2fa39f4096e77f45266e5c1c3ed432520c11570c7b17ca15",
+      "name": "template-40de7d971ef4e4f6b4a60619146d1b99547908742632cdadb74e3af07048e626-20",
+      "path": "icons/ai-chat/template-40de7d971ef4e4f6b4a60619146d1b99547908742632cdadb74e3af07048e626-20.svg",
+      "sha256": "4325fc3d7568ac957f2acee2a432b859391bf54fd4ab5c8ea972617a75166b41",
       "templateIndex": 20
+    },
+    {
+      "dataIconName": "keepPinOutlineIcon",
+      "extension": "ai_chat",
+      "module": "AichatMicroUi",
+      "moduleId": "ai-chat",
+      "name": "template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-21",
+      "path": "icons/ai-chat/template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-21.svg",
+      "sha256": "8c758564338b38e3ca79a479bc345a4be326c10823b4d687c020483af2f4f223",
+      "templateIndex": 21
     },
     {
       "dataIconName": "astrophotographyModeIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-21",
-      "path": "icons/ai-chat/template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-21.svg",
-      "sha256": "2401fc9b6b071505856b1019d58831f2f325756e8aa384d0b85af81a33c8add6",
-      "templateIndex": 21
+      "name": "template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-22",
+      "path": "icons/ai-chat/template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-22.svg",
+      "sha256": "222ff0d87e339605efbb4ea5de9469775cbc4c68550a78154f3180d95e14bd4c",
+      "templateIndex": 22
     },
     {
       "dataIconName": "chatIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-22",
-      "path": "icons/ai-chat/template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-22.svg",
-      "sha256": "35910634657930340bb1ab94f69bfb54d42a39e4d3dc6646c384a6ea9285a420",
-      "templateIndex": 22
+      "name": "template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-23",
+      "path": "icons/ai-chat/template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-23.svg",
+      "sha256": "505365c3d876bcdf0cdbdffd7843bca943de6b0889bd101cabedbc139b807ce9",
+      "templateIndex": 23
     },
     {
       "dataIconName": "checkCircleOutlineIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-23",
-      "path": "icons/ai-chat/template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-23.svg",
-      "sha256": "6e8bb39e2f1ba4924a9e98d4c15eeb1c4321899d0c7b5e8c10ffaf44ee43454f",
-      "templateIndex": 23
+      "name": "template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-24",
+      "path": "icons/ai-chat/template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-24.svg",
+      "sha256": "176002a7cd2d9c3020ef36d72d8e4610b89b1ac53f08b1be0728e18b45750096",
+      "templateIndex": 24
     },
     {
       "dataIconName": "dashboardIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-24",
-      "path": "icons/ai-chat/template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-24.svg",
-      "sha256": "501f2a8fcc6c2c2c83ff6a2bd765c04b2da6405be203bd3ad981dbc578285ea7",
-      "templateIndex": 24
+      "name": "template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-25",
+      "path": "icons/ai-chat/template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-25.svg",
+      "sha256": "b8217d03fc7eafaf124d8a4444a956c29262dc201faf228bfd3f118c5308da10",
+      "templateIndex": 25
+    },
+    {
+      "dataIconName": "homeIcon",
+      "extension": "ai_chat",
+      "module": "AichatMicroUi",
+      "moduleId": "ai-chat",
+      "name": "template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-26",
+      "path": "icons/ai-chat/template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-26.svg",
+      "sha256": "731e251e1c0ce23ba704526f835643e3e571af8861becf3f7a1f1e939af18d95",
+      "templateIndex": 26
     },
     {
       "dataIconName": "homeStorageIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-25",
-      "path": "icons/ai-chat/template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-25.svg",
-      "sha256": "a3e29103dbb833642021661ee959bbc69fa96bbfeb7e34d33f49e90b7ed10f3a",
-      "templateIndex": 25
+      "name": "template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-27",
+      "path": "icons/ai-chat/template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-27.svg",
+      "sha256": "be4cb8ac3a1c75c8f502cd1b13e3c34335b2160ceed488ca6d6fa5eb715f90c8",
+      "templateIndex": 27
     },
     {
       "dataIconName": "notificationDoNotDisturbIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-26",
-      "path": "icons/ai-chat/template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-26.svg",
-      "sha256": "3b5f9af6499772f80a4cd468f6cfeabbedffcdf1d1ef43e6cb4e4ce7f86e4fc4",
-      "templateIndex": 26
+      "name": "template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-28",
+      "path": "icons/ai-chat/template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-28.svg",
+      "sha256": "be112a6442eed668233a7845989cfba0f98ed18aa96ae60bcbdd6e831e63bc40",
+      "templateIndex": 28
     },
     {
       "dataIconName": "settingsIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-27",
-      "path": "icons/ai-chat/template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-27.svg",
-      "sha256": "ff14ca7082d57a4da92067d47f943dca08260eab7b9c8a47d4bcaf754a709349",
-      "templateIndex": 27
+      "name": "template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-29",
+      "path": "icons/ai-chat/template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-29.svg",
+      "sha256": "d9d1a1d52c8cab185f9b96290eef5e7387cc2bb4fb344a9e23b6ebf9b8e253ab",
+      "templateIndex": 29
     },
     {
       "dataIconName": "supportAgentIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-28",
-      "path": "icons/ai-chat/template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-28.svg",
-      "sha256": "5c413085aa8200731d7b57f39323b24f72ff16b3d3f89881557a14cc3ce13036",
-      "templateIndex": 28
+      "name": "template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-30",
+      "path": "icons/ai-chat/template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-30.svg",
+      "sha256": "1fe1c4e4b0ff0999c5aea360309ce5fe10b04bebe4b47b6d1eaf5b10a30873cd",
+      "templateIndex": 30
     },
     {
       "dataIconName": "mycloudSectionIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-29",
-      "path": "icons/ai-chat/template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-29.svg",
+      "name": "template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-31",
+      "path": "icons/ai-chat/template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-31.svg",
       "sha256": "a9ac1961c083231d440cf13e8917f83d9ab7a6990cab48a49874d721d0ed9a32",
-      "templateIndex": 29
+      "templateIndex": 31
     },
     {
       "dataIconName": "interestsIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-30",
-      "path": "icons/ai-chat/template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-30.svg",
+      "name": "template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-32",
+      "path": "icons/ai-chat/template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-32.svg",
       "sha256": "c1f21ad6c9aec1e395b0660e9041a3d6c45595f31437d45cb63b1d3a31ceb1ef",
-      "templateIndex": 30
+      "templateIndex": 32
     },
     {
       "dataIconName": "robot2Icon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-31",
-      "path": "icons/ai-chat/template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-31.svg",
-      "sha256": "7f61d82da4b4af0b69bd8750f43a2488ee2644bd054b887fb7b324f28dd1b2eb",
-      "templateIndex": 31
+      "name": "template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-33",
+      "path": "icons/ai-chat/template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-33.svg",
+      "sha256": "136059f53623a7b9b1fe83e257d429be4e49ea049fefe1214d703351cc5f181f",
+      "templateIndex": 33
     },
     {
       "dataIconName": null,
@@ -7791,16 +7811,6 @@
       "path": "icons/autocloud/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11.svg",
       "sha256": "da922a3173a586bf922a81e502cae1b78d4fe3e8ca6134da34ea7ba66071af94",
       "templateIndex": 11
-    },
-    {
-      "dataIconName": "lanIcon",
-      "extension": "autocloud",
-      "module": "AutocloudMicroUi",
-      "moduleId": "autocloud",
-      "name": "template-39e16ae823a72f0353ac1e805d21c332d59dc1054c124c96deb16368a6afb8db-12",
-      "path": "icons/autocloud/template-39e16ae823a72f0353ac1e805d21c332d59dc1054c124c96deb16368a6afb8db-12.svg",
-      "sha256": "95493acbbaffeb437f075efd0eb9afb3f99418855afd6cfbde137fe7dfb265a8",
-      "templateIndex": 12
     },
     {
       "dataIconName": null,
@@ -21804,436 +21814,6 @@
     },
     {
       "dataIconName": null,
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-0",
-      "path": "icons/document-warehouse/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-0.svg",
-      "sha256": "b12e0d83ce2357d80b89c57694814d0a3abdaf8c40724f2049af8b7f01b7812b",
-      "templateIndex": 0
-    },
-    {
-      "dataIconName": null,
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-1",
-      "path": "icons/document-warehouse/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-1.svg",
-      "sha256": "b12e0d83ce2357d80b89c57694814d0a3abdaf8c40724f2049af8b7f01b7812b",
-      "templateIndex": 1
-    },
-    {
-      "dataIconName": "severityAlternateIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-2",
-      "path": "icons/document-warehouse/template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-2.svg",
-      "sha256": "25d7547a997c159d755391d380d15d97624726bc98a7d7bd2c4e403cecc8bf3a",
-      "templateIndex": 2
-    },
-    {
-      "dataIconName": "statusErrorIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-3",
-      "path": "icons/document-warehouse/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-3.svg",
-      "sha256": "6f497ddef409f8214d646615d5d94c8836479c4175adc0a726adecf1b61070c4",
-      "templateIndex": 3
-    },
-    {
-      "dataIconName": "statusInfoIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-4",
-      "path": "icons/document-warehouse/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-4.svg",
-      "sha256": "a4b40a76d0b5e17213fa809e8b739717aa8ac4eeb07284d556f9f311c52c0a9c",
-      "templateIndex": 4
-    },
-    {
-      "dataIconName": "statusRecommendationBlueIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-5",
-      "path": "icons/document-warehouse/template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-5.svg",
-      "sha256": "ab0287988770534529107378a6eba24a15f059e22b4d68d7c528b6a09532b422",
-      "templateIndex": 5
-    },
-    {
-      "dataIconName": "statusSuccessIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-6",
-      "path": "icons/document-warehouse/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-6.svg",
-      "sha256": "0f1ceae840880721fe11f725cfcc8941ee456ea5ce1dc2fc441640816b505e7d",
-      "templateIndex": 6
-    },
-    {
-      "dataIconName": "statusWarningIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-7",
-      "path": "icons/document-warehouse/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-7.svg",
-      "sha256": "d744c3b0aed2016edacaa5c1b93cac04193bb5e48e45012e13095562b44ea161",
-      "templateIndex": 7
-    },
-    {
-      "dataIconName": "externalLinkIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-8",
-      "path": "icons/document-warehouse/template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-8.svg",
-      "sha256": "4270166ad0fa933d964178aeffee9db89b133ceffa4044cbb2053492263575a4",
-      "templateIndex": 8
-    },
-    {
-      "dataIconName": "closeIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-9",
-      "path": "icons/document-warehouse/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-9.svg",
-      "sha256": "193143e888fa0aaf0f993ec2be316f8f02ee3b489c7068db0e3a97d2682b2d29",
-      "templateIndex": 9
-    },
-    {
-      "dataIconName": "unfoldIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-10",
-      "path": "icons/document-warehouse/template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-10.svg",
-      "sha256": "746ea8a8ed03372231765871868e2b4a939fdab81e3d19b6529b3049b00127d7",
-      "templateIndex": 10
-    },
-    {
-      "dataIconName": "unfoldedIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11",
-      "path": "icons/document-warehouse/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11.svg",
-      "sha256": "da922a3173a586bf922a81e502cae1b78d4fe3e8ca6134da34ea7ba66071af94",
-      "templateIndex": 11
-    },
-    {
-      "dataIconName": "arrowBackIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-12",
-      "path": "icons/document-warehouse/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-12.svg",
-      "sha256": "49c20790adda2726391a8fa1cfd58c350933cfdf5157144a4b3ece4f153e5445",
-      "templateIndex": 12
-    },
-    {
-      "dataIconName": "closeIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13",
-      "path": "icons/document-warehouse/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13.svg",
-      "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
-      "templateIndex": 13
-    },
-    {
-      "dataIconName": "filterIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-14",
-      "path": "icons/document-warehouse/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-14.svg",
-      "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
-      "templateIndex": 14
-    },
-    {
-      "dataIconName": "helpIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-15",
-      "path": "icons/document-warehouse/template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-15.svg",
-      "sha256": "91bd9f83cc87994434d2066dc0aeb1a5dda9f3ff853ec5afbdfa40c88c69f747",
-      "templateIndex": 15
-    },
-    {
-      "dataIconName": "helpOutlineIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16",
-      "path": "icons/document-warehouse/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16.svg",
-      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 16
-    },
-    {
-      "dataIconName": "cancelIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-17",
-      "path": "icons/document-warehouse/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-17.svg",
-      "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 17
-    },
-    {
-      "dataIconName": "arrowForwardIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-18",
-      "path": "icons/document-warehouse/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-18.svg",
-      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 18
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-19",
-      "path": "icons/document-warehouse/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-19.svg",
-      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": "columnsIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-20",
-      "path": "icons/document-warehouse/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-20.svg",
-      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 20
-    },
-    {
-      "dataIconName": "firstPageIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-21",
-      "path": "icons/document-warehouse/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-21.svg",
-      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 21
-    },
-    {
-      "dataIconName": "lastPageIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-22",
-      "path": "icons/document-warehouse/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-22.svg",
-      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 22
-    },
-    {
-      "dataIconName": "nextIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-23",
-      "path": "icons/document-warehouse/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-23.svg",
-      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 23
-    },
-    {
-      "dataIconName": "previousIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-24",
-      "path": "icons/document-warehouse/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-24.svg",
-      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 24
-    },
-    {
-      "dataIconName": "createIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-25",
-      "path": "icons/document-warehouse/template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-25.svg",
-      "sha256": "1a0045c313da5d337e9c38065f446111a1aceafe94bf2e313e246423970f262f",
-      "templateIndex": 25
-    },
-    {
-      "dataIconName": "deleteIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-26",
-      "path": "icons/document-warehouse/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-26.svg",
-      "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
-      "templateIndex": 26
-    },
-    {
-      "dataIconName": "editIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-27",
-      "path": "icons/document-warehouse/template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-27.svg",
-      "sha256": "2d7c92295ebd1c0ebf6ffed78af49b90d6047cdbcf01597fd671d88d669e0757",
-      "templateIndex": 27
-    },
-    {
-      "dataIconName": "saveIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-a8cdc120ef2e0c76c2ef97e213970f24fbf8d1af7705fba87f43c992102279dd-28",
-      "path": "icons/document-warehouse/template-a8cdc120ef2e0c76c2ef97e213970f24fbf8d1af7705fba87f43c992102279dd-28.svg",
-      "sha256": "539806f9fde1e5fe5d47b03268da29466bebbe887e8acea4989b0b49dc7faa7b",
-      "templateIndex": 28
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-29",
-      "path": "icons/document-warehouse/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-29.svg",
-      "sha256": "8e5e0aff3674b3be633131f9cef12d773fb4e97c2afe1993d0d99746a1aab663",
-      "templateIndex": 29
-    },
-    {
-      "dataIconName": "documentationIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-e393f6fb521c8697ee43418c7f481852bb658732fd3934aa4d1743f9dc0d7257-30",
-      "path": "icons/document-warehouse/template-e393f6fb521c8697ee43418c7f481852bb658732fd3934aa4d1743f9dc0d7257-30.svg",
-      "sha256": "06b9bf9a0a892f3c344eb0a94c18395546e22c51467fe807b42ac30c0f3197fa",
-      "templateIndex": 30
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-31",
-      "path": "icons/document-warehouse/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-31.svg",
-      "sha256": "43de74f04296a07d5a47e648ecf1e79952a2d9b844f7dd65ae6155efd095869c",
-      "templateIndex": 31
-    },
-    {
-      "dataIconName": "downIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-32",
-      "path": "icons/document-warehouse/template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-32.svg",
-      "sha256": "b09eae95cfe66c77a1e3a09a24d83fda9edeab78e99f27fb0004a115be28c67a",
-      "templateIndex": 32
-    },
-    {
-      "dataIconName": "upIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-33",
-      "path": "icons/document-warehouse/template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-33.svg",
-      "sha256": "a74ee3c3131c693a1dbe325d874fe336be75df3b2f1f5393d7deceb5348c5eba",
-      "templateIndex": 33
-    },
-    {
-      "dataIconName": "addIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-34",
-      "path": "icons/document-warehouse/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-34.svg",
-      "sha256": "fb965561e7f5ea62bf8927213c7fb3c212ad195b28c567c0ea3f4046931203da",
-      "templateIndex": 34
-    },
-    {
-      "dataIconName": "doneIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-35",
-      "path": "icons/document-warehouse/template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-35.svg",
-      "sha256": "d9c444b800a54bb82cf2e0611bcd0bce4b89db1386dfebd03702d20f55c59595",
-      "templateIndex": 35
-    },
-    {
-      "dataIconName": "statusInactiveIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-36",
-      "path": "icons/document-warehouse/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-36.svg",
-      "sha256": "b12fc75eb25786ed1ab881b8a16c75082f788f6ea7e5d14c023f8fcf3a44ef40",
-      "templateIndex": 36
-    },
-    {
-      "dataIconName": "infoIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-37",
-      "path": "icons/document-warehouse/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-37.svg",
-      "sha256": "707a74999347abdd603578c515ac0fab0fc67447fc3ffbad84885764f9d6b0f8",
-      "templateIndex": 37
-    },
-    {
-      "dataIconName": "statusErrorIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-38",
-      "path": "icons/document-warehouse/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-38.svg",
-      "sha256": "2b686f1a7d49581fd8622cedfffbf48b24db31e4db612fe0ab8a778279831151",
-      "templateIndex": 38
-    },
-    {
-      "dataIconName": "arrowDownwardIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-39",
-      "path": "icons/document-warehouse/template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-39.svg",
-      "sha256": "cbe46757c298df34557c7ff5f1393644612c1ec03dd31a14c1eba31a245ec988",
-      "templateIndex": 39
-    },
-    {
-      "dataIconName": "arrowUpwardIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-40",
-      "path": "icons/document-warehouse/template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-40.svg",
-      "sha256": "7258ebfaab7b077373b09fe4ef76f3e55922192802fabe2ef46863fe9140fa48",
-      "templateIndex": 40
-    },
-    {
-      "dataIconName": "refreshIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-41",
-      "path": "icons/document-warehouse/template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-41.svg",
-      "sha256": "2d950404805e0f3aa0e3927ad9b97e4a4f26c4590360d15d6c4c45d117b31e03",
-      "templateIndex": 41
-    },
-    {
-      "dataIconName": "moreIcon",
-      "extension": "document_warehouse",
-      "module": "DocumentWarehouseMicroUi",
-      "moduleId": "document-warehouse",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-42",
-      "path": "icons/document-warehouse/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-42.svg",
-      "sha256": "9d79ba778ea3a6d918ea58ced12a2d67f3966a8f5d06cb97422d50f3454bacf5",
-      "templateIndex": 42
-    },
-    {
-      "dataIconName": null,
       "extension": "dspm",
       "module": "DspmMicroUi",
       "moduleId": "dspm",
@@ -22511,6 +22091,106 @@
       "path": "icons/duet-ai-admin/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11.svg",
       "sha256": "da922a3173a586bf922a81e502cae1b78d4fe3e8ca6134da34ea7ba66071af94",
       "templateIndex": 11
+    },
+    {
+      "dataIconName": "helpOutlineIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-12",
+      "path": "icons/duet-ai-admin/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-12.svg",
+      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
+      "templateIndex": 12
+    },
+    {
+      "dataIconName": "assistantIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-56d1113ab0d06c9a032522da3cd5176e587a23efbcda974bde9ffdc596a4e9f4-13",
+      "path": "icons/duet-ai-admin/template-56d1113ab0d06c9a032522da3cd5176e587a23efbcda974bde9ffdc596a4e9f4-13.svg",
+      "sha256": "c386a5a4ecc4800a4529a9f0ba75a055938d848abe2fd52786aa6b82470a6ebd",
+      "templateIndex": 13
+    },
+    {
+      "dataIconName": "astrophotographyModeIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-14",
+      "path": "icons/duet-ai-admin/template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-14.svg",
+      "sha256": "222ff0d87e339605efbb4ea5de9469775cbc4c68550a78154f3180d95e14bd4c",
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "folderCopyIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-15",
+      "path": "icons/duet-ai-admin/template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-15.svg",
+      "sha256": "d77c73fef04394ef18ba9746f9945f1c29e4968a5f2264c261197c3f9106a7ff",
+      "templateIndex": 15
+    },
+    {
+      "dataIconName": "infoSparkIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-aee3b6aae5b281e0c9ebcfcf6b15df5b61688cd946c11e272b7f675bc4c798a9-16",
+      "path": "icons/duet-ai-admin/template-aee3b6aae5b281e0c9ebcfcf6b15df5b61688cd946c11e272b7f675bc4c798a9-16.svg",
+      "sha256": "df4b88b4fb95bc5c6838ef99cd22394e6a41a160e2e78907784e9fb95ef4451e",
+      "templateIndex": 16
+    },
+    {
+      "dataIconName": "lightbulbIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-3b3e48d9c19736483e6026e857a9cc4c7625c032587bdde302d47136cd64e00a-17",
+      "path": "icons/duet-ai-admin/template-3b3e48d9c19736483e6026e857a9cc4c7625c032587bdde302d47136cd64e00a-17.svg",
+      "sha256": "ac5b46637e40bcbd13effec9be9560361d4f1fa1877f508c23c21749a7f518af",
+      "templateIndex": 17
+    },
+    {
+      "dataIconName": "notesIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-15729bec21ebe04eb9fabfdea5811f855a53be5fe533a6dfa8ea4a8951c96efc-18",
+      "path": "icons/duet-ai-admin/template-15729bec21ebe04eb9fabfdea5811f855a53be5fe533a6dfa8ea4a8951c96efc-18.svg",
+      "sha256": "333874cb3b4e5240fe41e3140a48b96e87b807136275a70b30d2cbc4f69a4dcb",
+      "templateIndex": 18
+    },
+    {
+      "dataIconName": "shapeLineIcon",
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-19904e0c5f1a649f5ad42e0a65dd899f2faf614ad6de63728be31f126a008753-19",
+      "path": "icons/duet-ai-admin/template-19904e0c5f1a649f5ad42e0a65dd899f2faf614ad6de63728be31f126a008753-19.svg",
+      "sha256": "9bad2042526b18946a3f1dbb4b4c91900e411d210dee944aa30e0345cb97ad3a",
+      "templateIndex": 19
+    },
+    {
+      "dataIconName": null,
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-20",
+      "path": "icons/duet-ai-admin/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-20.svg",
+      "sha256": "ef0c6e0411be0c703c026c8c08e1edfe3ec8a77730203ff13a8b3f2158b448ff",
+      "templateIndex": 20
+    },
+    {
+      "dataIconName": null,
+      "extension": "duet_ai_admin",
+      "module": "DuetAiAdminMicroUi",
+      "moduleId": "duet-ai-admin",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-21",
+      "path": "icons/duet-ai-admin/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-21.svg",
+      "sha256": "c5ead276bace9bd55afc82013829faebaedf1853437e2c8c4704f13eec4b56da",
+      "templateIndex": 21
     },
     {
       "dataIconName": null,
@@ -28063,6 +27743,116 @@
       "templateIndex": 11
     },
     {
+      "dataIconName": "addCommentIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-731055171e0c786c6491caab63e7fd2a83982598d1e4e325d350dbba398cfccb-12",
+      "path": "icons/knowledge-agent/template-731055171e0c786c6491caab63e7fd2a83982598d1e4e325d350dbba398cfccb-12.svg",
+      "sha256": "15c7e76cde40402061f0aa8170cf6cdcdd7a9d1c15da1ffefee2385de9d6d4ec",
+      "templateIndex": 12
+    },
+    {
+      "dataIconName": "deleteIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-13",
+      "path": "icons/knowledge-agent/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-13.svg",
+      "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
+      "templateIndex": 13
+    },
+    {
+      "dataIconName": "searchIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-14",
+      "path": "icons/knowledge-agent/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-14.svg",
+      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "panelLeftCloseIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-15",
+      "path": "icons/knowledge-agent/template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-15.svg",
+      "sha256": "0d93af171765adba65f06ebae40f103fb3f68b79794db6dd0aeeff09efd22ed3",
+      "templateIndex": 15
+    },
+    {
+      "dataIconName": "panelLeftOpenIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-16",
+      "path": "icons/knowledge-agent/template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-16.svg",
+      "sha256": "7daa18caa8b2759185425b8ccaee6e6e95fdeedd46c6ad672067f35b204444d6",
+      "templateIndex": 16
+    },
+    {
+      "dataIconName": "bigquerySectionIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-17",
+      "path": "icons/knowledge-agent/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-17.svg",
+      "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
+      "templateIndex": 17
+    },
+    {
+      "dataIconName": "cloudpubsubSectionIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-18",
+      "path": "icons/knowledge-agent/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-18.svg",
+      "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
+      "templateIndex": 18
+    },
+    {
+      "dataIconName": "dataplexSectionIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-19",
+      "path": "icons/knowledge-agent/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-19.svg",
+      "sha256": "2b40ee945a1c0486d4802958ec3d2315dfa02afb82b8d5a1e908896411180d88",
+      "templateIndex": 19
+    },
+    {
+      "dataIconName": "securitySectionIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20",
+      "path": "icons/knowledge-agent/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20.svg",
+      "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
+      "templateIndex": 20
+    },
+    {
+      "dataIconName": "conversionPathIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-21",
+      "path": "icons/knowledge-agent/template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-21.svg",
+      "sha256": "1a3fe25be001405cd068fbad80907ad2fad3830b5b5ec5580cd5fc14674e008f",
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "exploreIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-22",
+      "path": "icons/knowledge-agent/template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-22.svg",
+      "sha256": "0c63f1b5ab2c3220bc18343c97fadaa584394a5cadbc8ac8dacd23b8b5e65ade",
+      "templateIndex": 22
+    },
+    {
       "dataIconName": null,
       "extension": "knowledge_graph",
       "module": "KnowledgeGraphMicroUi",
@@ -32231,6 +32021,16 @@
       "path": "icons/meridian-studio/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-38.svg",
       "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
       "templateIndex": 38
+    },
+    {
+      "dataIconName": "personIcon",
+      "extension": "meridian_studio",
+      "module": "MeridianStudioMicroUi",
+      "moduleId": "meridian-studio",
+      "name": "template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-39",
+      "path": "icons/meridian-studio/template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-39.svg",
+      "sha256": "f8ca5a318aaa318c22b2d141f869222808746bbc88e2eae514ba1cd8377cc4e4",
+      "templateIndex": 39
     },
     {
       "dataIconName": null,
@@ -43640,6 +43440,6 @@
   "source": "Google Cloud Console",
   "sourceLock": {
     "path": "source-lock.json",
-    "sha256": "b61f5a356ceaf90ee1b4cdf9ef7b71f7cbebc6608dc91c8dfcdd522b8f40f420"
+    "sha256": "2f780454670342e262703fc4ca26ce4fda984042bffbdd0579d0a70a83bca1da"
   }
 }
