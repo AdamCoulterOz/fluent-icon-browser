@@ -1,6 +1,6 @@
 {
   "format": "gcp-console-svg-archive-v1",
-  "iconCount": 4343,
+  "iconCount": 4369,
   "icons": [
     {
       "dataIconName": null,
@@ -1753,164 +1753,154 @@
       "templateIndex": 17
     },
     {
+      "dataIconName": "keepPinOutlineIcon",
+      "extension": "ai_chat",
+      "module": "AichatMicroUi",
+      "moduleId": "ai-chat",
+      "name": "template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-18",
+      "path": "icons/ai-chat/template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-18.svg",
+      "sha256": "8c758564338b38e3ca79a479bc345a4be326c10823b4d687c020483af2f4f223",
+      "templateIndex": 18
+    },
+    {
       "dataIconName": "shieldSparkIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-b64e65dba78f53712ac165edba035621da6767807ac629359cd81cd70c1a1aa0-18",
-      "path": "icons/ai-chat/template-b64e65dba78f53712ac165edba035621da6767807ac629359cd81cd70c1a1aa0-18.svg",
+      "name": "template-b64e65dba78f53712ac165edba035621da6767807ac629359cd81cd70c1a1aa0-19",
+      "path": "icons/ai-chat/template-b64e65dba78f53712ac165edba035621da6767807ac629359cd81cd70c1a1aa0-19.svg",
       "sha256": "eaaba72420f5b63e756e3b69d51486ef8f209e8cdaffaebb59b93ab16ff97a77",
-      "templateIndex": 18
+      "templateIndex": 19
     },
     {
       "dataIconName": "addIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-19",
-      "path": "icons/ai-chat/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-19.svg",
+      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-20",
+      "path": "icons/ai-chat/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-20.svg",
       "sha256": "fd4b53647e0102c1abb09a90a6ed6e52028bf1638a598cfa5fc7f9f49ea54221",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": "keepPinIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-40de7d971ef4e4f6b4a60619146d1b99547908742632cdadb74e3af07048e626-20",
-      "path": "icons/ai-chat/template-40de7d971ef4e4f6b4a60619146d1b99547908742632cdadb74e3af07048e626-20.svg",
-      "sha256": "4325fc3d7568ac957f2acee2a432b859391bf54fd4ab5c8ea972617a75166b41",
       "templateIndex": 20
-    },
-    {
-      "dataIconName": "keepPinOutlineIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-21",
-      "path": "icons/ai-chat/template-0b81eb50ec9adb842e41dc64f5b2dab44f54a1f52b38014dcaafa1d8dbc096c2-21.svg",
-      "sha256": "8c758564338b38e3ca79a479bc345a4be326c10823b4d687c020483af2f4f223",
-      "templateIndex": 21
     },
     {
       "dataIconName": "astrophotographyModeIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-22",
-      "path": "icons/ai-chat/template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-22.svg",
+      "name": "template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-21",
+      "path": "icons/ai-chat/template-80f7b44fb30e9fda0d83b620a6dd45e5963e44f89e3c55c73b5d7b2a36f296e3-21.svg",
       "sha256": "222ff0d87e339605efbb4ea5de9469775cbc4c68550a78154f3180d95e14bd4c",
-      "templateIndex": 22
+      "templateIndex": 21
     },
     {
       "dataIconName": "chatIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-23",
-      "path": "icons/ai-chat/template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-23.svg",
+      "name": "template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-22",
+      "path": "icons/ai-chat/template-f1d2b86cb3fcd1d09bd4823f29911b57d2b7073cf310e09a070db639f3369f64-22.svg",
       "sha256": "505365c3d876bcdf0cdbdffd7843bca943de6b0889bd101cabedbc139b807ce9",
-      "templateIndex": 23
+      "templateIndex": 22
     },
     {
       "dataIconName": "checkCircleOutlineIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-24",
-      "path": "icons/ai-chat/template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-24.svg",
+      "name": "template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-23",
+      "path": "icons/ai-chat/template-be192cfea59538ddd44894dbf43673bd4d375d74e2daf226117ce8e0aac83540-23.svg",
       "sha256": "176002a7cd2d9c3020ef36d72d8e4610b89b1ac53f08b1be0728e18b45750096",
-      "templateIndex": 24
+      "templateIndex": 23
     },
     {
       "dataIconName": "dashboardIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-25",
-      "path": "icons/ai-chat/template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-25.svg",
+      "name": "template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-24",
+      "path": "icons/ai-chat/template-ec69430fd96f9fad87401505995b311a52494bc9765995f519f8c5e0d2751542-24.svg",
       "sha256": "b8217d03fc7eafaf124d8a4444a956c29262dc201faf228bfd3f118c5308da10",
-      "templateIndex": 25
+      "templateIndex": 24
     },
     {
       "dataIconName": "homeIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-26",
-      "path": "icons/ai-chat/template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-26.svg",
+      "name": "template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-25",
+      "path": "icons/ai-chat/template-852760d6557bf1b22b455778ac699d3db498590e13de066d0fb80832da96121f-25.svg",
       "sha256": "731e251e1c0ce23ba704526f835643e3e571af8861becf3f7a1f1e939af18d95",
-      "templateIndex": 26
+      "templateIndex": 25
     },
     {
       "dataIconName": "homeStorageIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-27",
-      "path": "icons/ai-chat/template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-27.svg",
+      "name": "template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-26",
+      "path": "icons/ai-chat/template-5f2bf1187cca7a5073635359a10606d4b8edebfa28a3ac219ce81fc9e10cd914-26.svg",
       "sha256": "be4cb8ac3a1c75c8f502cd1b13e3c34335b2160ceed488ca6d6fa5eb715f90c8",
-      "templateIndex": 27
+      "templateIndex": 26
     },
     {
       "dataIconName": "notificationDoNotDisturbIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-28",
-      "path": "icons/ai-chat/template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-28.svg",
+      "name": "template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-27",
+      "path": "icons/ai-chat/template-a001e6d90379b29aacdebac8fe710de8de43ab8348cb997553cfe6212405d178-27.svg",
       "sha256": "be112a6442eed668233a7845989cfba0f98ed18aa96ae60bcbdd6e831e63bc40",
-      "templateIndex": 28
+      "templateIndex": 27
     },
     {
       "dataIconName": "settingsIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-29",
-      "path": "icons/ai-chat/template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-29.svg",
+      "name": "template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-28",
+      "path": "icons/ai-chat/template-17739aefbd36f45d276ceda6ae4968b3fd06d70aa2af280ba6c8decd56b92ca9-28.svg",
       "sha256": "d9d1a1d52c8cab185f9b96290eef5e7387cc2bb4fb344a9e23b6ebf9b8e253ab",
-      "templateIndex": 29
+      "templateIndex": 28
     },
     {
       "dataIconName": "supportAgentIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-30",
-      "path": "icons/ai-chat/template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-30.svg",
+      "name": "template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-29",
+      "path": "icons/ai-chat/template-c740fee11a5e4bfbdb889368aac45233317cee8f21ed454507b8f06c9ab09568-29.svg",
       "sha256": "1fe1c4e4b0ff0999c5aea360309ce5fe10b04bebe4b47b6d1eaf5b10a30873cd",
-      "templateIndex": 30
+      "templateIndex": 29
     },
     {
       "dataIconName": "mycloudSectionIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-31",
-      "path": "icons/ai-chat/template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-31.svg",
+      "name": "template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-30",
+      "path": "icons/ai-chat/template-1435143ad7d5df93edca21599881bcf98c9bc444abff120f2df44baeaf1d6eb9-30.svg",
       "sha256": "a9ac1961c083231d440cf13e8917f83d9ab7a6990cab48a49874d721d0ed9a32",
-      "templateIndex": 31
+      "templateIndex": 30
     },
     {
       "dataIconName": "interestsIcon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-32",
-      "path": "icons/ai-chat/template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-32.svg",
+      "name": "template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-31",
+      "path": "icons/ai-chat/template-7417d2c02de0dbe1e9cdbfb90b46447c924163d932333388f1abfe2742e49940-31.svg",
       "sha256": "c1f21ad6c9aec1e395b0660e9041a3d6c45595f31437d45cb63b1d3a31ceb1ef",
-      "templateIndex": 32
+      "templateIndex": 31
     },
     {
       "dataIconName": "robot2Icon",
       "extension": "ai_chat",
       "module": "AichatMicroUi",
       "moduleId": "ai-chat",
-      "name": "template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-33",
-      "path": "icons/ai-chat/template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-33.svg",
+      "name": "template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-32",
+      "path": "icons/ai-chat/template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-32.svg",
       "sha256": "136059f53623a7b9b1fe83e257d429be4e49ea049fefe1214d703351cc5f181f",
-      "templateIndex": 33
+      "templateIndex": 32
     },
     {
       "dataIconName": null,
@@ -2153,794 +2143,804 @@
       "templateIndex": 11
     },
     {
-      "dataIconName": "gitlabIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-2a4a81948d36e75081e238d7bd11f9b2bd7c576fa015f5db132181eb84247075-12",
-      "path": "icons/ai-platform/template-2a4a81948d36e75081e238d7bd11f9b2bd7c576fa015f5db132181eb84247075-12.svg",
-      "sha256": "d97fa268cdec0c20703f3ec9303a19ec36e8c47eb28c3b9aeef4de765e69b362",
-      "templateIndex": 12
-    },
-    {
-      "dataIconName": "closeIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13",
-      "path": "icons/ai-platform/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13.svg",
-      "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
-      "templateIndex": 13
-    },
-    {
-      "dataIconName": "bigquerySectionIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-14",
-      "path": "icons/ai-platform/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-14.svg",
-      "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
-      "templateIndex": 14
-    },
-    {
-      "dataIconName": "cloudpubsubSectionIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-15",
-      "path": "icons/ai-platform/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-15.svg",
-      "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
-      "templateIndex": 15
-    },
-    {
-      "dataIconName": "securitySectionIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-16",
-      "path": "icons/ai-platform/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-16.svg",
-      "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
-      "templateIndex": 16
-    },
-    {
-      "dataIconName": "filterIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-17",
-      "path": "icons/ai-platform/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-17.svg",
-      "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
-      "templateIndex": 17
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-18",
-      "path": "icons/ai-platform/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-18.svg",
-      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
-      "templateIndex": 18
-    },
-    {
-      "dataIconName": "deleteIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-19",
-      "path": "icons/ai-platform/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-19.svg",
-      "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": "downIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-20",
-      "path": "icons/ai-platform/template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-20.svg",
-      "sha256": "b09eae95cfe66c77a1e3a09a24d83fda9edeab78e99f27fb0004a115be28c67a",
-      "templateIndex": 20
-    },
-    {
-      "dataIconName": "upIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-21",
-      "path": "icons/ai-platform/template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-21.svg",
-      "sha256": "a74ee3c3131c693a1dbe325d874fe336be75df3b2f1f5393d7deceb5348c5eba",
-      "templateIndex": 21
-    },
-    {
-      "dataIconName": "addIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-22",
-      "path": "icons/ai-platform/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-22.svg",
-      "sha256": "fb965561e7f5ea62bf8927213c7fb3c212ad195b28c567c0ea3f4046931203da",
-      "templateIndex": 22
-    },
-    {
-      "dataIconName": "statusRecommendationIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-114a6b4c2385fe17f85013a9c6efd9752bf4ada1f3ea8c5f5379df6bad70ed2d-23",
-      "path": "icons/ai-platform/template-114a6b4c2385fe17f85013a9c6efd9752bf4ada1f3ea8c5f5379df6bad70ed2d-23.svg",
-      "sha256": "2b183f310d0a53b1a42df76c1bccd4c4401da8cfb9db340d95eb55cf179763cd",
-      "templateIndex": 23
-    },
-    {
-      "dataIconName": "helpOutlineIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-24",
-      "path": "icons/ai-platform/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-24.svg",
-      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 24
-    },
-    {
-      "dataIconName": "carbonIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-32f40a24bd7b25cde83bca374a8f44e4ffc103760649d53d2a0ae68e3b80c908-25",
-      "path": "icons/ai-platform/template-32f40a24bd7b25cde83bca374a8f44e4ffc103760649d53d2a0ae68e3b80c908-25.svg",
-      "sha256": "a8e22f14e09c03b2a8cd46f70e6e56b597b6bdb963bdd034cedc1d48165f8565",
-      "templateIndex": 25
-    },
-    {
-      "dataIconName": "dataCanvasIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-caad8e669f9171511655106217077306c5f76b4de1980e602972605f4cc1dbd9-26",
-      "path": "icons/ai-platform/template-caad8e669f9171511655106217077306c5f76b4de1980e602972605f4cc1dbd9-26.svg",
-      "sha256": "21b27ae34d0019039482cbfc242dc5dda10ebbd0a5681d0a8440e34755ae8ecb",
-      "templateIndex": 26
-    },
-    {
-      "dataIconName": "dataPreparationIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-17cc9cc2bdd12e95042aa57a64e61a71539b5172076002ea01c54deee0cb5363-27",
-      "path": "icons/ai-platform/template-17cc9cc2bdd12e95042aa57a64e61a71539b5172076002ea01c54deee0cb5363-27.svg",
-      "sha256": "0da18879794e8ceb54e0f1ecca6cb2e05d3dd5b6108e6847aee0d00a572548e3",
-      "templateIndex": 27
-    },
-    {
-      "dataIconName": "tablePartitionedIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-6e2d4fab46dae34442497cc81d7c5fed9f163769b8f9faefc3eec5bd5b9417fc-28",
-      "path": "icons/ai-platform/template-6e2d4fab46dae34442497cc81d7c5fed9f163769b8f9faefc3eec5bd5b9417fc-28.svg",
-      "sha256": "a12afa377327adf3e0bb2133325069026e59119c154698d128de97dcfc1c693f",
-      "templateIndex": 28
-    },
-    {
-      "dataIconName": "tableShardedIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-8e7afab23cc50c324c5d8be62ec60a1f1bd1ef4836e2986744b4548f1ba1e097-29",
-      "path": "icons/ai-platform/template-8e7afab23cc50c324c5d8be62ec60a1f1bd1ef4836e2986744b4548f1ba1e097-29.svg",
-      "sha256": "77269062033a9331b9b1e68bb118f158affdcf0dd00e312dd2c74882dad38388",
-      "templateIndex": 29
-    },
-    {
-      "dataIconName": "tableViewIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a99c7a5ab651b3f20b247282f4552d28b9ad9f035d322a8cbd73b2f434029f61-30",
-      "path": "icons/ai-platform/template-a99c7a5ab651b3f20b247282f4552d28b9ad9f035d322a8cbd73b2f434029f61-30.svg",
-      "sha256": "fb5bf5f318fc17fefae2089fe3170595dd715cb9c4de29a9f9cb2c142e886f1e",
-      "templateIndex": 30
-    },
-    {
-      "dataIconName": "articleOutlineIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-9484f115eac4ab3b7b3bb9094c492b183861e966614020bc73d5fbefd9245fa7-31",
-      "path": "icons/ai-platform/template-9484f115eac4ab3b7b3bb9094c492b183861e966614020bc73d5fbefd9245fa7-31.svg",
-      "sha256": "14c37dd7432b2db9606d55e73e8a586e525156f405a185ef996f18710c46f357",
-      "templateIndex": 31
-    },
-    {
-      "dataIconName": "draftIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-d9fa5eab3ac19049be0a5ceac6522f0f2a918f9b7c9843eaee40639023e56f69-32",
-      "path": "icons/ai-platform/template-d9fa5eab3ac19049be0a5ceac6522f0f2a918f9b7c9843eaee40639023e56f69-32.svg",
-      "sha256": "39dc451b68bda9811bb38ceddf552e2c3fcffd0be46373d875715ec02cf9611c",
-      "templateIndex": 32
-    },
-    {
-      "dataIconName": "folderCopyIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-33",
-      "path": "icons/ai-platform/template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-33.svg",
-      "sha256": "d77c73fef04394ef18ba9746f9945f1c29e4968a5f2264c261197c3f9106a7ff",
-      "templateIndex": 33
-    },
-    {
-      "dataIconName": "folderDataIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-bdf06a82c14063227bfddf75dde5a6c26f26e797adbd8999b5eff7c39cdbebd7-34",
-      "path": "icons/ai-platform/template-bdf06a82c14063227bfddf75dde5a6c26f26e797adbd8999b5eff7c39cdbebd7-34.svg",
-      "sha256": "cabf0e2ae91e5f0680ddb437f020c6c3d73fca372cedca90b07947fde424cfbc",
-      "templateIndex": 34
-    },
-    {
-      "dataIconName": "teamDriveIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-4c09db65eeb9bdb12f6a3bbae1236261be10d371bc00dd990c4a91d0763454e1-35",
-      "path": "icons/ai-platform/template-4c09db65eeb9bdb12f6a3bbae1236261be10d371bc00dd990c4a91d0763454e1-35.svg",
-      "sha256": "bf643639051598533702d5992bcc8783a97248482648bdf786610a4af6de4140",
-      "templateIndex": 35
-    },
-    {
-      "dataIconName": "chatSparkIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-97b7910bbd119b5f9ce6f578544ba500f73f59ba01a9607382238c89dcb4e0eb-36",
-      "path": "icons/ai-platform/template-97b7910bbd119b5f9ce6f578544ba500f73f59ba01a9607382238c89dcb4e0eb-36.svg",
-      "sha256": "164becba617ec84532d3f7ffbffc1428175027ba101fd72a298404a48195f23f",
-      "templateIndex": 36
-    },
-    {
-      "dataIconName": "datasetsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-6009a8f1aba072bd46438c25e273f1ec04dcdae9593d4c8e90d3d93c2a5f7d0a-37",
-      "path": "icons/ai-platform/template-6009a8f1aba072bd46438c25e273f1ec04dcdae9593d4c8e90d3d93c2a5f7d0a-37.svg",
-      "sha256": "58ea7af4145819165fd5f8764efd10bce63d05b502a91e92573b38dca6a5dcd8",
-      "templateIndex": 37
-    },
-    {
-      "dataIconName": "flumeWorkerIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-fdc2bcbec06eb580b7a1f87388b4280499dd44c5e7db575b69ab430bce69175a-38",
-      "path": "icons/ai-platform/template-fdc2bcbec06eb580b7a1f87388b4280499dd44c5e7db575b69ab430bce69175a-38.svg",
-      "sha256": "c75ff578bba8ec75ecb139f0603645d3718253202042161980539fdd92c0d0a5",
-      "templateIndex": 38
-    },
-    {
-      "dataIconName": "outlineIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-39",
-      "path": "icons/ai-platform/template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-39.svg",
-      "sha256": "6d3bdc43a3b64c81d9e315973da118cd34de7455787f018aa23e776a492c7fa2",
-      "templateIndex": 39
-    },
-    {
-      "dataIconName": "tableIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-40",
-      "path": "icons/ai-platform/template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-40.svg",
-      "sha256": "a3183b43d3c8406c51838df4da6338d7875ce0c0e2582e4879319ef9c730603e",
-      "templateIndex": 40
-    },
-    {
-      "dataIconName": "wavesIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-41",
-      "path": "icons/ai-platform/template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-41.svg",
-      "sha256": "168a61f91fb5117e3d2663a3d608f8bbd0181b5e8b038df5f4b96783532261dd",
-      "templateIndex": 41
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-42",
-      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-42.svg",
-      "sha256": "416e546df3acf6188e19f3472139705b34e8b5c8940ea6b958ed04a33c41347d",
-      "templateIndex": 42
-    },
-    {
-      "dataIconName": "bigquerySectionIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-43",
-      "path": "icons/ai-platform/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-43.svg",
-      "sha256": "b0fd35d15c2c637b3a22bb416b8d7848e98a17490da47394683d5dee0a6855d1",
-      "templateIndex": 43
-    },
-    {
-      "dataIconName": "personIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-44",
-      "path": "icons/ai-platform/template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-44.svg",
-      "sha256": "f8ca5a318aaa318c22b2d141f869222808746bbc88e2eae514ba1cd8377cc4e4",
-      "templateIndex": 44
-    },
-    {
-      "dataIconName": "arrowDownwardIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-45",
-      "path": "icons/ai-platform/template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-45.svg",
-      "sha256": "cbe46757c298df34557c7ff5f1393644612c1ec03dd31a14c1eba31a245ec988",
-      "templateIndex": 45
-    },
-    {
-      "dataIconName": "arrowUpwardIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-46",
-      "path": "icons/ai-platform/template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-46.svg",
-      "sha256": "7258ebfaab7b077373b09fe4ef76f3e55922192802fabe2ef46863fe9140fa48",
-      "templateIndex": 46
-    },
-    {
-      "dataIconName": "defaultSectionIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-152afa622492d3567f71a42eecedc8c7b870682575eee090d37bc98573683cea-47",
-      "path": "icons/ai-platform/template-152afa622492d3567f71a42eecedc8c7b870682575eee090d37bc98573683cea-47.svg",
-      "sha256": "4e374fc3aa7ecb61b8ffa3d251dee84b468ff2f57badd16158644c2c09d6cac9",
-      "templateIndex": 47
-    },
-    {
-      "dataIconName": "cloudProductsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-48",
-      "path": "icons/ai-platform/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-48.svg",
-      "sha256": "4966e90785b2d589a33c342c9326dea0825ae05446dbc75e4b8de4a977ab8aaa",
-      "templateIndex": 48
-    },
-    {
-      "dataIconName": "domainIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-49",
-      "path": "icons/ai-platform/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-49.svg",
-      "sha256": "b8a4f91da4b0a7bc5c3fd1dc10392ce4ca3b5528759a110afb9d5a4c6d775ede",
-      "templateIndex": 49
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-50",
-      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-50.svg",
-      "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
-      "templateIndex": 50
-    },
-    {
-      "dataIconName": "projectIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-51",
-      "path": "icons/ai-platform/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-51.svg",
-      "sha256": "638254e0334ce4e00862ba009e97575d77bd6b093b8ecc2476953ab613536229",
-      "templateIndex": 51
-    },
-    {
-      "dataIconName": "serviceAccountsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-52",
-      "path": "icons/ai-platform/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-52.svg",
-      "sha256": "9682f330c36bc6273cfc93aaa1540cce16d33a3e81bc0a3468912d7eed6c8777",
-      "templateIndex": 52
-    },
-    {
-      "dataIconName": "cloudProductsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-53",
-      "path": "icons/ai-platform/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-53.svg",
-      "sha256": "05584801946598f387ce62784e64735a553416ea9820043a400b7f8390706913",
-      "templateIndex": 53
-    },
-    {
-      "dataIconName": "domainIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-54",
-      "path": "icons/ai-platform/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-54.svg",
-      "sha256": "4d857fda56e73093bb289f9bb383d8d86c253cafa8f5395c79112c66998c6c5b",
-      "templateIndex": 54
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-55",
-      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-55.svg",
-      "sha256": "82e0cdcbda97cacf547ad51b20ca882351a80484e3112322d4f1ca18f51f9497",
-      "templateIndex": 55
-    },
-    {
-      "dataIconName": "projectIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-56",
-      "path": "icons/ai-platform/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-56.svg",
-      "sha256": "62317f3063eb1bcb31e7107a4d1dd6a321a238144f78000cae0ec529f2a2450a",
-      "templateIndex": 56
-    },
-    {
-      "dataIconName": "serviceAccountsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-57",
-      "path": "icons/ai-platform/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-57.svg",
-      "sha256": "b618c524aa98b7b6fb8a444fa6aa4cc343cf048efcd99ef26e683384d45a68d2",
-      "templateIndex": 57
-    },
-    {
-      "dataIconName": "bucketIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-58",
-      "path": "icons/ai-platform/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-58.svg",
-      "sha256": "7f0beb2262a1f79da5dfd44839ae8a401bff39d4401d381856839c77322eba47",
-      "templateIndex": 58
-    },
-    {
-      "dataIconName": "bucketIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-59",
-      "path": "icons/ai-platform/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-59.svg",
-      "sha256": "1f8c427bc0db7f7dc66bf0321f049f81a4392cb9cce3a8f30b3ee3398aa15643",
-      "templateIndex": 59
-    },
-    {
-      "dataIconName": "cancelIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-60",
-      "path": "icons/ai-platform/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-60.svg",
-      "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 60
-    },
-    {
-      "dataIconName": "arrowForwardIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-61",
-      "path": "icons/ai-platform/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-61.svg",
-      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 61
-    },
-    {
-      "dataIconName": "columnsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-62",
-      "path": "icons/ai-platform/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-62.svg",
-      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 62
-    },
-    {
-      "dataIconName": "firstPageIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-63",
-      "path": "icons/ai-platform/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-63.svg",
-      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 63
-    },
-    {
-      "dataIconName": "lastPageIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-64",
-      "path": "icons/ai-platform/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-64.svg",
-      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 64
-    },
-    {
-      "dataIconName": "nextIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-65",
-      "path": "icons/ai-platform/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-65.svg",
-      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 65
-    },
-    {
-      "dataIconName": "previousIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-66",
-      "path": "icons/ai-platform/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-66.svg",
-      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 66
-    },
-    {
-      "dataIconName": "appEnabledFolderIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-67",
-      "path": "icons/ai-platform/template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-67.svg",
-      "sha256": "f68609389b16f6f404e1238020a2fef2a3ebaad60ceb4c9ea9bbd907f6682f69",
-      "templateIndex": 67
-    },
-    {
-      "dataIconName": "managementProjectIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-68",
-      "path": "icons/ai-platform/template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-68.svg",
-      "sha256": "82fade06e11960207b01bf01226b718d83b47421f1320fe816cf42a0feb3e626",
-      "templateIndex": 68
-    },
-    {
-      "dataIconName": "doneIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-69",
-      "path": "icons/ai-platform/template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-69.svg",
-      "sha256": "d9c444b800a54bb82cf2e0611bcd0bce4b89db1386dfebd03702d20f55c59595",
-      "templateIndex": 69
-    },
-    {
-      "dataIconName": "manageProjectsIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-70",
-      "path": "icons/ai-platform/template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-70.svg",
-      "sha256": "a150caf94d7f50d134f1a39d77bb6fb80417ce027f69f5f3e5a4876ee493bae6",
-      "templateIndex": 70
-    },
-    {
-      "dataIconName": "arrowBackIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-71",
-      "path": "icons/ai-platform/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-71.svg",
-      "sha256": "9bc17a3c3ca1d98f0680e2e7f6f2b1890bc05dfe3e5c0c2a3282de8d45e1a219",
-      "templateIndex": 71
-    },
-    {
-      "dataIconName": "searchIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-72",
-      "path": "icons/ai-platform/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-72.svg",
-      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
-      "templateIndex": 72
-    },
-    {
-      "dataIconName": "moreIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-73",
-      "path": "icons/ai-platform/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-73.svg",
-      "sha256": "25d8fa8de7b8d450a6c2ecbc1401686161ffabf2f337ada8022ed799228b32da",
-      "templateIndex": 73
-    },
-    {
-      "dataIconName": "createIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-74",
-      "path": "icons/ai-platform/template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-74.svg",
-      "sha256": "1a0045c313da5d337e9c38065f446111a1aceafe94bf2e313e246423970f262f",
-      "templateIndex": 74
-    },
-    {
-      "dataIconName": "editIcon",
-      "extension": "ai_platform",
-      "module": "AiPlatformMicroUi",
-      "moduleId": "ai-platform",
-      "name": "template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-75",
-      "path": "icons/ai-platform/template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-75.svg",
-      "sha256": "2d7c92295ebd1c0ebf6ffed78af49b90d6047cdbcf01597fd671d88d669e0757",
-      "templateIndex": 75
-    },
-    {
       "dataIconName": "buildIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-56296b21065533e2618beff4095887af80281647a065eb86ad7501dfd33736e4-76",
-      "path": "icons/ai-platform/template-56296b21065533e2618beff4095887af80281647a065eb86ad7501dfd33736e4-76.svg",
+      "name": "template-56296b21065533e2618beff4095887af80281647a065eb86ad7501dfd33736e4-12",
+      "path": "icons/ai-platform/template-56296b21065533e2618beff4095887af80281647a065eb86ad7501dfd33736e4-12.svg",
       "sha256": "9040d9fd31aca5d9057ce91820d874f8b6ac52417fce8cd3bff4897d41567cba",
-      "templateIndex": 76
+      "templateIndex": 12
     },
     {
       "dataIconName": "agentMode18pxIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-d9da2ce26c0323a05f9afeb124247bf737894fedac36281773840260c517f186-77",
-      "path": "icons/ai-platform/template-d9da2ce26c0323a05f9afeb124247bf737894fedac36281773840260c517f186-77.svg",
+      "name": "template-d9da2ce26c0323a05f9afeb124247bf737894fedac36281773840260c517f186-13",
+      "path": "icons/ai-platform/template-d9da2ce26c0323a05f9afeb124247bf737894fedac36281773840260c517f186-13.svg",
       "sha256": "819035098e8ae5da6269887ea4ad12f3280888ff079c7899b85f8183193fde30",
-      "templateIndex": 77
+      "templateIndex": 13
     },
     {
       "dataIconName": "chatBubbleOutlineIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-3e280071443f48df81851560567e156176589fff40d1bdb5e128c8a278765781-78",
-      "path": "icons/ai-platform/template-3e280071443f48df81851560567e156176589fff40d1bdb5e128c8a278765781-78.svg",
+      "name": "template-3e280071443f48df81851560567e156176589fff40d1bdb5e128c8a278765781-14",
+      "path": "icons/ai-platform/template-3e280071443f48df81851560567e156176589fff40d1bdb5e128c8a278765781-14.svg",
       "sha256": "14b08b8ea3883007fae27c9f7b35ae6edc3ef7dd5ed69957f4280b88eb2e24f6",
-      "templateIndex": 78
+      "templateIndex": 14
     },
     {
-      "dataIconName": "aptIcon",
+      "dataIconName": "statusRecommendationIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-5b7b19f58425e94db28512c1a5c79df23c44b3779cf1777c821a5d71fd2f9716-79",
-      "path": "icons/ai-platform/template-5b7b19f58425e94db28512c1a5c79df23c44b3779cf1777c821a5d71fd2f9716-79.svg",
-      "sha256": "c762d954a7728ee5f96637643ea9b8704162fa88f665065c9e5d84e4066db480",
-      "templateIndex": 79
+      "name": "template-114a6b4c2385fe17f85013a9c6efd9752bf4ada1f3ea8c5f5379df6bad70ed2d-15",
+      "path": "icons/ai-platform/template-114a6b4c2385fe17f85013a9c6efd9752bf4ada1f3ea8c5f5379df6bad70ed2d-15.svg",
+      "sha256": "2b183f310d0a53b1a42df76c1bccd4c4401da8cfb9db340d95eb55cf179763cd",
+      "templateIndex": 15
     },
     {
-      "dataIconName": "condaIcon",
+      "dataIconName": "helpOutlineIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-ef0dd8661597c31ec11f82b510aca75bb679396d40df6933fedae91d4696f99a-80",
-      "path": "icons/ai-platform/template-ef0dd8661597c31ec11f82b510aca75bb679396d40df6933fedae91d4696f99a-80.svg",
-      "sha256": "ddebffc90bc1ac0a430d6d290f256586b895b05329bef90393368ccecf6f6193",
-      "templateIndex": 80
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16",
+      "path": "icons/ai-platform/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16.svg",
+      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
+      "templateIndex": 16
     },
     {
-      "dataIconName": "dockerIcon",
+      "dataIconName": "carbonIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-f76feaf1364c8361c21b9705502c0a0771ba57ca7ac1076fc3b0236e9a36e1ef-81",
-      "path": "icons/ai-platform/template-f76feaf1364c8361c21b9705502c0a0771ba57ca7ac1076fc3b0236e9a36e1ef-81.svg",
-      "sha256": "762938a631cf3901813cda18703c9ed82bd2554d9d5c302a99f352e432c1fc40",
-      "templateIndex": 81
+      "name": "template-32f40a24bd7b25cde83bca374a8f44e4ffc103760649d53d2a0ae68e3b80c908-17",
+      "path": "icons/ai-platform/template-32f40a24bd7b25cde83bca374a8f44e4ffc103760649d53d2a0ae68e3b80c908-17.svg",
+      "sha256": "a8e22f14e09c03b2a8cd46f70e6e56b597b6bdb963bdd034cedc1d48165f8565",
+      "templateIndex": 17
     },
     {
-      "dataIconName": "fileIcon",
+      "dataIconName": "closeIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-be3a10e83e1e265ef3bb7483ecff67474f7bdd76bea7ba0a5fd859ecd33624c5-82",
-      "path": "icons/ai-platform/template-be3a10e83e1e265ef3bb7483ecff67474f7bdd76bea7ba0a5fd859ecd33624c5-82.svg",
-      "sha256": "28650ed2ebc3b71935681fd5d92e6652d84574b15337fcf4e6911cd297b8e4c5",
-      "templateIndex": 82
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-18",
+      "path": "icons/ai-platform/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-18.svg",
+      "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
+      "templateIndex": 18
+    },
+    {
+      "dataIconName": "filterIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-19",
+      "path": "icons/ai-platform/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-19.svg",
+      "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
+      "templateIndex": 19
+    },
+    {
+      "dataIconName": "arrowDropDownIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-20",
+      "path": "icons/ai-platform/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-20.svg",
+      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
+      "templateIndex": 20
+    },
+    {
+      "dataIconName": "dataCanvasIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-caad8e669f9171511655106217077306c5f76b4de1980e602972605f4cc1dbd9-21",
+      "path": "icons/ai-platform/template-caad8e669f9171511655106217077306c5f76b4de1980e602972605f4cc1dbd9-21.svg",
+      "sha256": "21b27ae34d0019039482cbfc242dc5dda10ebbd0a5681d0a8440e34755ae8ecb",
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "dataPreparationIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-17cc9cc2bdd12e95042aa57a64e61a71539b5172076002ea01c54deee0cb5363-22",
+      "path": "icons/ai-platform/template-17cc9cc2bdd12e95042aa57a64e61a71539b5172076002ea01c54deee0cb5363-22.svg",
+      "sha256": "0da18879794e8ceb54e0f1ecca6cb2e05d3dd5b6108e6847aee0d00a572548e3",
+      "templateIndex": 22
+    },
+    {
+      "dataIconName": "tablePartitionedIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-6e2d4fab46dae34442497cc81d7c5fed9f163769b8f9faefc3eec5bd5b9417fc-23",
+      "path": "icons/ai-platform/template-6e2d4fab46dae34442497cc81d7c5fed9f163769b8f9faefc3eec5bd5b9417fc-23.svg",
+      "sha256": "a12afa377327adf3e0bb2133325069026e59119c154698d128de97dcfc1c693f",
+      "templateIndex": 23
+    },
+    {
+      "dataIconName": "tableShardedIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-8e7afab23cc50c324c5d8be62ec60a1f1bd1ef4836e2986744b4548f1ba1e097-24",
+      "path": "icons/ai-platform/template-8e7afab23cc50c324c5d8be62ec60a1f1bd1ef4836e2986744b4548f1ba1e097-24.svg",
+      "sha256": "77269062033a9331b9b1e68bb118f158affdcf0dd00e312dd2c74882dad38388",
+      "templateIndex": 24
+    },
+    {
+      "dataIconName": "tableViewIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a99c7a5ab651b3f20b247282f4552d28b9ad9f035d322a8cbd73b2f434029f61-25",
+      "path": "icons/ai-platform/template-a99c7a5ab651b3f20b247282f4552d28b9ad9f035d322a8cbd73b2f434029f61-25.svg",
+      "sha256": "fb5bf5f318fc17fefae2089fe3170595dd715cb9c4de29a9f9cb2c142e886f1e",
+      "templateIndex": 25
+    },
+    {
+      "dataIconName": "articleOutlineIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-9484f115eac4ab3b7b3bb9094c492b183861e966614020bc73d5fbefd9245fa7-26",
+      "path": "icons/ai-platform/template-9484f115eac4ab3b7b3bb9094c492b183861e966614020bc73d5fbefd9245fa7-26.svg",
+      "sha256": "14c37dd7432b2db9606d55e73e8a586e525156f405a185ef996f18710c46f357",
+      "templateIndex": 26
+    },
+    {
+      "dataIconName": "draftIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-d9fa5eab3ac19049be0a5ceac6522f0f2a918f9b7c9843eaee40639023e56f69-27",
+      "path": "icons/ai-platform/template-d9fa5eab3ac19049be0a5ceac6522f0f2a918f9b7c9843eaee40639023e56f69-27.svg",
+      "sha256": "39dc451b68bda9811bb38ceddf552e2c3fcffd0be46373d875715ec02cf9611c",
+      "templateIndex": 27
+    },
+    {
+      "dataIconName": "folderCopyIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-28",
+      "path": "icons/ai-platform/template-b24b09589d0c62fc7040a8f526624c9e9b1bf70f390cc677a488032d40e8ef47-28.svg",
+      "sha256": "d77c73fef04394ef18ba9746f9945f1c29e4968a5f2264c261197c3f9106a7ff",
+      "templateIndex": 28
+    },
+    {
+      "dataIconName": "folderDataIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-bdf06a82c14063227bfddf75dde5a6c26f26e797adbd8999b5eff7c39cdbebd7-29",
+      "path": "icons/ai-platform/template-bdf06a82c14063227bfddf75dde5a6c26f26e797adbd8999b5eff7c39cdbebd7-29.svg",
+      "sha256": "cabf0e2ae91e5f0680ddb437f020c6c3d73fca372cedca90b07947fde424cfbc",
+      "templateIndex": 29
+    },
+    {
+      "dataIconName": "teamDriveIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-4c09db65eeb9bdb12f6a3bbae1236261be10d371bc00dd990c4a91d0763454e1-30",
+      "path": "icons/ai-platform/template-4c09db65eeb9bdb12f6a3bbae1236261be10d371bc00dd990c4a91d0763454e1-30.svg",
+      "sha256": "bf643639051598533702d5992bcc8783a97248482648bdf786610a4af6de4140",
+      "templateIndex": 30
+    },
+    {
+      "dataIconName": "chatSparkIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-97b7910bbd119b5f9ce6f578544ba500f73f59ba01a9607382238c89dcb4e0eb-31",
+      "path": "icons/ai-platform/template-97b7910bbd119b5f9ce6f578544ba500f73f59ba01a9607382238c89dcb4e0eb-31.svg",
+      "sha256": "164becba617ec84532d3f7ffbffc1428175027ba101fd72a298404a48195f23f",
+      "templateIndex": 31
+    },
+    {
+      "dataIconName": "datasetsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-6009a8f1aba072bd46438c25e273f1ec04dcdae9593d4c8e90d3d93c2a5f7d0a-32",
+      "path": "icons/ai-platform/template-6009a8f1aba072bd46438c25e273f1ec04dcdae9593d4c8e90d3d93c2a5f7d0a-32.svg",
+      "sha256": "58ea7af4145819165fd5f8764efd10bce63d05b502a91e92573b38dca6a5dcd8",
+      "templateIndex": 32
+    },
+    {
+      "dataIconName": "flumeWorkerIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-fdc2bcbec06eb580b7a1f87388b4280499dd44c5e7db575b69ab430bce69175a-33",
+      "path": "icons/ai-platform/template-fdc2bcbec06eb580b7a1f87388b4280499dd44c5e7db575b69ab430bce69175a-33.svg",
+      "sha256": "c75ff578bba8ec75ecb139f0603645d3718253202042161980539fdd92c0d0a5",
+      "templateIndex": 33
+    },
+    {
+      "dataIconName": "hubIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-5421380838461627ffec28c3bc0fddc87ae17125ff1061149fcb911f5b48fece-34",
+      "path": "icons/ai-platform/template-5421380838461627ffec28c3bc0fddc87ae17125ff1061149fcb911f5b48fece-34.svg",
+      "sha256": "616dd6a8449211976fcca408a8d65751a4fa95b5eef16dd401ec2278f945dca3",
+      "templateIndex": 34
+    },
+    {
+      "dataIconName": "outlineIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-35",
+      "path": "icons/ai-platform/template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-35.svg",
+      "sha256": "6d3bdc43a3b64c81d9e315973da118cd34de7455787f018aa23e776a492c7fa2",
+      "templateIndex": 35
+    },
+    {
+      "dataIconName": "tableIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-36",
+      "path": "icons/ai-platform/template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-36.svg",
+      "sha256": "a3183b43d3c8406c51838df4da6338d7875ce0c0e2582e4879319ef9c730603e",
+      "templateIndex": 36
+    },
+    {
+      "dataIconName": "wavesIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-37",
+      "path": "icons/ai-platform/template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-37.svg",
+      "sha256": "168a61f91fb5117e3d2663a3d608f8bbd0181b5e8b038df5f4b96783532261dd",
+      "templateIndex": 37
     },
     {
       "dataIconName": "folderIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-83",
-      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-83.svg",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-38",
+      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-38.svg",
+      "sha256": "416e546df3acf6188e19f3472139705b34e8b5c8940ea6b958ed04a33c41347d",
+      "templateIndex": 38
+    },
+    {
+      "dataIconName": "bigquerySectionIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-39",
+      "path": "icons/ai-platform/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-39.svg",
+      "sha256": "b0fd35d15c2c637b3a22bb416b8d7848e98a17490da47394683d5dee0a6855d1",
+      "templateIndex": 39
+    },
+    {
+      "dataIconName": "bigquerySectionIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-40",
+      "path": "icons/ai-platform/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-40.svg",
+      "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
+      "templateIndex": 40
+    },
+    {
+      "dataIconName": "cloudpubsubSectionIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-41",
+      "path": "icons/ai-platform/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-41.svg",
+      "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
+      "templateIndex": 41
+    },
+    {
+      "dataIconName": "securitySectionIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-42",
+      "path": "icons/ai-platform/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-42.svg",
+      "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
+      "templateIndex": 42
+    },
+    {
+      "dataIconName": "personIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-43",
+      "path": "icons/ai-platform/template-58c90c6e09f1128cf1f3e4515d92491d7ef5b087e30e6e3649d17d3fcc2a0909-43.svg",
+      "sha256": "f8ca5a318aaa318c22b2d141f869222808746bbc88e2eae514ba1cd8377cc4e4",
+      "templateIndex": 43
+    },
+    {
+      "dataIconName": "gitlabIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-2a4a81948d36e75081e238d7bd11f9b2bd7c576fa015f5db132181eb84247075-44",
+      "path": "icons/ai-platform/template-2a4a81948d36e75081e238d7bd11f9b2bd7c576fa015f5db132181eb84247075-44.svg",
+      "sha256": "d97fa268cdec0c20703f3ec9303a19ec36e8c47eb28c3b9aeef4de765e69b362",
+      "templateIndex": 44
+    },
+    {
+      "dataIconName": "deleteIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-45",
+      "path": "icons/ai-platform/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-45.svg",
+      "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
+      "templateIndex": 45
+    },
+    {
+      "dataIconName": "downIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-46",
+      "path": "icons/ai-platform/template-304b3124cf7b0216622f9f043dab271c779203aff2762dfc9870cb7b81debe21-46.svg",
+      "sha256": "b09eae95cfe66c77a1e3a09a24d83fda9edeab78e99f27fb0004a115be28c67a",
+      "templateIndex": 46
+    },
+    {
+      "dataIconName": "upIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-47",
+      "path": "icons/ai-platform/template-428988c4ed8e1fa2c4717efefeda8c09a7e2c6c90611d0e59f121208fadf6153-47.svg",
+      "sha256": "a74ee3c3131c693a1dbe325d874fe336be75df3b2f1f5393d7deceb5348c5eba",
+      "templateIndex": 47
+    },
+    {
+      "dataIconName": "addIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-48",
+      "path": "icons/ai-platform/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-48.svg",
+      "sha256": "fb965561e7f5ea62bf8927213c7fb3c212ad195b28c567c0ea3f4046931203da",
+      "templateIndex": 48
+    },
+    {
+      "dataIconName": "arrowDownwardIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-49",
+      "path": "icons/ai-platform/template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-49.svg",
+      "sha256": "cbe46757c298df34557c7ff5f1393644612c1ec03dd31a14c1eba31a245ec988",
+      "templateIndex": 49
+    },
+    {
+      "dataIconName": "arrowUpwardIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-50",
+      "path": "icons/ai-platform/template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-50.svg",
+      "sha256": "7258ebfaab7b077373b09fe4ef76f3e55922192802fabe2ef46863fe9140fa48",
+      "templateIndex": 50
+    },
+    {
+      "dataIconName": "defaultSectionIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-152afa622492d3567f71a42eecedc8c7b870682575eee090d37bc98573683cea-51",
+      "path": "icons/ai-platform/template-152afa622492d3567f71a42eecedc8c7b870682575eee090d37bc98573683cea-51.svg",
+      "sha256": "4e374fc3aa7ecb61b8ffa3d251dee84b468ff2f57badd16158644c2c09d6cac9",
+      "templateIndex": 51
+    },
+    {
+      "dataIconName": "cloudProductsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-52",
+      "path": "icons/ai-platform/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-52.svg",
+      "sha256": "4966e90785b2d589a33c342c9326dea0825ae05446dbc75e4b8de4a977ab8aaa",
+      "templateIndex": 52
+    },
+    {
+      "dataIconName": "domainIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-53",
+      "path": "icons/ai-platform/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-53.svg",
+      "sha256": "b8a4f91da4b0a7bc5c3fd1dc10392ce4ca3b5528759a110afb9d5a4c6d775ede",
+      "templateIndex": 53
+    },
+    {
+      "dataIconName": "folderIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-54",
+      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-54.svg",
       "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
+      "templateIndex": 54
+    },
+    {
+      "dataIconName": "projectIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-55",
+      "path": "icons/ai-platform/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-55.svg",
+      "sha256": "638254e0334ce4e00862ba009e97575d77bd6b093b8ecc2476953ab613536229",
+      "templateIndex": 55
+    },
+    {
+      "dataIconName": "serviceAccountsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-56",
+      "path": "icons/ai-platform/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-56.svg",
+      "sha256": "9682f330c36bc6273cfc93aaa1540cce16d33a3e81bc0a3468912d7eed6c8777",
+      "templateIndex": 56
+    },
+    {
+      "dataIconName": "cloudProductsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-57",
+      "path": "icons/ai-platform/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-57.svg",
+      "sha256": "05584801946598f387ce62784e64735a553416ea9820043a400b7f8390706913",
+      "templateIndex": 57
+    },
+    {
+      "dataIconName": "domainIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-58",
+      "path": "icons/ai-platform/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-58.svg",
+      "sha256": "4d857fda56e73093bb289f9bb383d8d86c253cafa8f5395c79112c66998c6c5b",
+      "templateIndex": 58
+    },
+    {
+      "dataIconName": "folderIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-59",
+      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-59.svg",
+      "sha256": "82e0cdcbda97cacf547ad51b20ca882351a80484e3112322d4f1ca18f51f9497",
+      "templateIndex": 59
+    },
+    {
+      "dataIconName": "projectIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-60",
+      "path": "icons/ai-platform/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-60.svg",
+      "sha256": "62317f3063eb1bcb31e7107a4d1dd6a321a238144f78000cae0ec529f2a2450a",
+      "templateIndex": 60
+    },
+    {
+      "dataIconName": "serviceAccountsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-61",
+      "path": "icons/ai-platform/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-61.svg",
+      "sha256": "b618c524aa98b7b6fb8a444fa6aa4cc343cf048efcd99ef26e683384d45a68d2",
+      "templateIndex": 61
+    },
+    {
+      "dataIconName": "bucketIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-62",
+      "path": "icons/ai-platform/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-62.svg",
+      "sha256": "7f0beb2262a1f79da5dfd44839ae8a401bff39d4401d381856839c77322eba47",
+      "templateIndex": 62
+    },
+    {
+      "dataIconName": "bucketIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-63",
+      "path": "icons/ai-platform/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-63.svg",
+      "sha256": "1f8c427bc0db7f7dc66bf0321f049f81a4392cb9cce3a8f30b3ee3398aa15643",
+      "templateIndex": 63
+    },
+    {
+      "dataIconName": "cancelIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-64",
+      "path": "icons/ai-platform/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-64.svg",
+      "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
+      "templateIndex": 64
+    },
+    {
+      "dataIconName": "arrowForwardIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-65",
+      "path": "icons/ai-platform/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-65.svg",
+      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
+      "templateIndex": 65
+    },
+    {
+      "dataIconName": "columnsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-66",
+      "path": "icons/ai-platform/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-66.svg",
+      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
+      "templateIndex": 66
+    },
+    {
+      "dataIconName": "firstPageIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-67",
+      "path": "icons/ai-platform/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-67.svg",
+      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
+      "templateIndex": 67
+    },
+    {
+      "dataIconName": "lastPageIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-68",
+      "path": "icons/ai-platform/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-68.svg",
+      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
+      "templateIndex": 68
+    },
+    {
+      "dataIconName": "nextIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-69",
+      "path": "icons/ai-platform/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-69.svg",
+      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
+      "templateIndex": 69
+    },
+    {
+      "dataIconName": "previousIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-70",
+      "path": "icons/ai-platform/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-70.svg",
+      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
+      "templateIndex": 70
+    },
+    {
+      "dataIconName": "appEnabledFolderIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-71",
+      "path": "icons/ai-platform/template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-71.svg",
+      "sha256": "f68609389b16f6f404e1238020a2fef2a3ebaad60ceb4c9ea9bbd907f6682f69",
+      "templateIndex": 71
+    },
+    {
+      "dataIconName": "managementProjectIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-72",
+      "path": "icons/ai-platform/template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-72.svg",
+      "sha256": "82fade06e11960207b01bf01226b718d83b47421f1320fe816cf42a0feb3e626",
+      "templateIndex": 72
+    },
+    {
+      "dataIconName": "doneIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-73",
+      "path": "icons/ai-platform/template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-73.svg",
+      "sha256": "d9c444b800a54bb82cf2e0611bcd0bce4b89db1386dfebd03702d20f55c59595",
+      "templateIndex": 73
+    },
+    {
+      "dataIconName": "manageProjectsIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-74",
+      "path": "icons/ai-platform/template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-74.svg",
+      "sha256": "a150caf94d7f50d134f1a39d77bb6fb80417ce027f69f5f3e5a4876ee493bae6",
+      "templateIndex": 74
+    },
+    {
+      "dataIconName": "arrowBackIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-75",
+      "path": "icons/ai-platform/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-75.svg",
+      "sha256": "9bc17a3c3ca1d98f0680e2e7f6f2b1890bc05dfe3e5c0c2a3282de8d45e1a219",
+      "templateIndex": 75
+    },
+    {
+      "dataIconName": "searchIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-76",
+      "path": "icons/ai-platform/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-76.svg",
+      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
+      "templateIndex": 76
+    },
+    {
+      "dataIconName": "moreIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-77",
+      "path": "icons/ai-platform/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-77.svg",
+      "sha256": "25d8fa8de7b8d450a6c2ecbc1401686161ffabf2f337ada8022ed799228b32da",
+      "templateIndex": 77
+    },
+    {
+      "dataIconName": "createIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-78",
+      "path": "icons/ai-platform/template-e69a885aafd7a69b0a0a32ea1651573e13d4262a189c441829f7320bcd80e771-78.svg",
+      "sha256": "1a0045c313da5d337e9c38065f446111a1aceafe94bf2e313e246423970f262f",
+      "templateIndex": 78
+    },
+    {
+      "dataIconName": "editIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-79",
+      "path": "icons/ai-platform/template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-79.svg",
+      "sha256": "2d7c92295ebd1c0ebf6ffed78af49b90d6047cdbcf01597fd671d88d669e0757",
+      "templateIndex": 79
+    },
+    {
+      "dataIconName": "aptIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-5b7b19f58425e94db28512c1a5c79df23c44b3779cf1777c821a5d71fd2f9716-80",
+      "path": "icons/ai-platform/template-5b7b19f58425e94db28512c1a5c79df23c44b3779cf1777c821a5d71fd2f9716-80.svg",
+      "sha256": "c762d954a7728ee5f96637643ea9b8704162fa88f665065c9e5d84e4066db480",
+      "templateIndex": 80
+    },
+    {
+      "dataIconName": "condaIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-ef0dd8661597c31ec11f82b510aca75bb679396d40df6933fedae91d4696f99a-81",
+      "path": "icons/ai-platform/template-ef0dd8661597c31ec11f82b510aca75bb679396d40df6933fedae91d4696f99a-81.svg",
+      "sha256": "ddebffc90bc1ac0a430d6d290f256586b895b05329bef90393368ccecf6f6193",
+      "templateIndex": 81
+    },
+    {
+      "dataIconName": "dockerIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-f76feaf1364c8361c21b9705502c0a0771ba57ca7ac1076fc3b0236e9a36e1ef-82",
+      "path": "icons/ai-platform/template-f76feaf1364c8361c21b9705502c0a0771ba57ca7ac1076fc3b0236e9a36e1ef-82.svg",
+      "sha256": "762938a631cf3901813cda18703c9ed82bd2554d9d5c302a99f352e432c1fc40",
+      "templateIndex": 82
+    },
+    {
+      "dataIconName": "fileIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-be3a10e83e1e265ef3bb7483ecff67474f7bdd76bea7ba0a5fd859ecd33624c5-83",
+      "path": "icons/ai-platform/template-be3a10e83e1e265ef3bb7483ecff67474f7bdd76bea7ba0a5fd859ecd33624c5-83.svg",
+      "sha256": "28650ed2ebc3b71935681fd5d92e6652d84574b15337fcf4e6911cd297b8e4c5",
       "templateIndex": 83
+    },
+    {
+      "dataIconName": "folderIcon",
+      "extension": "ai_platform",
+      "module": "AiPlatformMicroUi",
+      "moduleId": "ai-platform",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-84",
+      "path": "icons/ai-platform/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-84.svg",
+      "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
+      "templateIndex": 84
     },
     {
       "dataIconName": "goIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-c774e0610b115ccbd0c09ee0724bf2f9ca1f670d86475ef8f75941a4eb9b809a-84",
-      "path": "icons/ai-platform/template-c774e0610b115ccbd0c09ee0724bf2f9ca1f670d86475ef8f75941a4eb9b809a-84.svg",
+      "name": "template-c774e0610b115ccbd0c09ee0724bf2f9ca1f670d86475ef8f75941a4eb9b809a-85",
+      "path": "icons/ai-platform/template-c774e0610b115ccbd0c09ee0724bf2f9ca1f670d86475ef8f75941a4eb9b809a-85.svg",
       "sha256": "d8a14fd54ffe41617335815e3e7c6ca6a22cb867c8030ba23a97d74155ce4163",
-      "templateIndex": 84
+      "templateIndex": 85
     },
     {
       "dataIconName": "kfpIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-9673cd7259992873bbd6b5082a2cf8644458a83fd7e03331acb10859596806d4-85",
-      "path": "icons/ai-platform/template-9673cd7259992873bbd6b5082a2cf8644458a83fd7e03331acb10859596806d4-85.svg",
+      "name": "template-9673cd7259992873bbd6b5082a2cf8644458a83fd7e03331acb10859596806d4-86",
+      "path": "icons/ai-platform/template-9673cd7259992873bbd6b5082a2cf8644458a83fd7e03331acb10859596806d4-86.svg",
       "sha256": "f0b839c3953c1ab184cfe90745cda9be1286db6cdc16a863d6821f50c378c1a6",
-      "templateIndex": 85
+      "templateIndex": 86
     },
     {
       "dataIconName": "mavenIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-de293a949eb0bc09e69cfd93e18165a53a1d6539796caedf4a685d857bbe745e-86",
-      "path": "icons/ai-platform/template-de293a949eb0bc09e69cfd93e18165a53a1d6539796caedf4a685d857bbe745e-86.svg",
+      "name": "template-de293a949eb0bc09e69cfd93e18165a53a1d6539796caedf4a685d857bbe745e-87",
+      "path": "icons/ai-platform/template-de293a949eb0bc09e69cfd93e18165a53a1d6539796caedf4a685d857bbe745e-87.svg",
       "sha256": "b3300790dc259ad1a0886f0d869b7055cdffe94787812e0ae38c5648f359a5b4",
-      "templateIndex": 86
+      "templateIndex": 87
     },
     {
       "dataIconName": "npmIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-9ba6765a77c59e3bbc804902305b4a4f55b2621f36610d51338c5e0977cdc952-87",
-      "path": "icons/ai-platform/template-9ba6765a77c59e3bbc804902305b4a4f55b2621f36610d51338c5e0977cdc952-87.svg",
+      "name": "template-9ba6765a77c59e3bbc804902305b4a4f55b2621f36610d51338c5e0977cdc952-88",
+      "path": "icons/ai-platform/template-9ba6765a77c59e3bbc804902305b4a4f55b2621f36610d51338c5e0977cdc952-88.svg",
       "sha256": "7f8adbf919142429cb84b265148f99877a89d78b2fae4b8b6d401c521640a871",
-      "templateIndex": 87
+      "templateIndex": 88
     },
     {
       "dataIconName": "pypiIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-2697a08f497221095e0cbf5a57909038266ab8da05af7d96fa036933e2a6706a-88",
-      "path": "icons/ai-platform/template-2697a08f497221095e0cbf5a57909038266ab8da05af7d96fa036933e2a6706a-88.svg",
+      "name": "template-2697a08f497221095e0cbf5a57909038266ab8da05af7d96fa036933e2a6706a-89",
+      "path": "icons/ai-platform/template-2697a08f497221095e0cbf5a57909038266ab8da05af7d96fa036933e2a6706a-89.svg",
       "sha256": "9a635a8bccda69bffff176cf6a1f560a73732bd8d05695579b79a153c177d9a1",
-      "templateIndex": 88
+      "templateIndex": 89
     },
     {
       "dataIconName": "rubyIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-2e6ad7d6e0cd117b61c80be943f1c168037153ca330090d88e5573e3f8d340f2-89",
-      "path": "icons/ai-platform/template-2e6ad7d6e0cd117b61c80be943f1c168037153ca330090d88e5573e3f8d340f2-89.svg",
+      "name": "template-2e6ad7d6e0cd117b61c80be943f1c168037153ca330090d88e5573e3f8d340f2-90",
+      "path": "icons/ai-platform/template-2e6ad7d6e0cd117b61c80be943f1c168037153ca330090d88e5573e3f8d340f2-90.svg",
       "sha256": "a60109a2742eaa47398095d6eb425f7c473c9ea4506bf48eeea6d3ffcf788a3c",
-      "templateIndex": 89
+      "templateIndex": 90
     },
     {
       "dataIconName": "yumIcon",
       "extension": "ai_platform",
       "module": "AiPlatformMicroUi",
       "moduleId": "ai-platform",
-      "name": "template-b6f92e9f4333a8986a6d4b4644fad2942d95808925403f3e30ea8cc1fa4c0f26-90",
-      "path": "icons/ai-platform/template-b6f92e9f4333a8986a6d4b4644fad2942d95808925403f3e30ea8cc1fa4c0f26-90.svg",
+      "name": "template-b6f92e9f4333a8986a6d4b4644fad2942d95808925403f3e30ea8cc1fa4c0f26-91",
+      "path": "icons/ai-platform/template-b6f92e9f4333a8986a6d4b4644fad2942d95808925403f3e30ea8cc1fa4c0f26-91.svg",
       "sha256": "a1268a9d248e7f4b51d6b9aa58afbed37df5c2d7e0da138905a6c5fe950c7674",
-      "templateIndex": 90
+      "templateIndex": 91
     },
     {
       "dataIconName": null,
@@ -20153,164 +20153,284 @@
       "templateIndex": 20
     },
     {
+      "dataIconName": "statusInactiveIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-21",
+      "path": "icons/datastore/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-21.svg",
+      "sha256": "b12fc75eb25786ed1ab881b8a16c75082f788f6ea7e5d14c023f8fcf3a44ef40",
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "statusPausedIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-22",
+      "path": "icons/datastore/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-22.svg",
+      "sha256": "8f26d31c77ca6c6773698fda6aff8593e988c49046ac71ab3039f523cf01e821",
+      "templateIndex": 22
+    },
+    {
+      "dataIconName": "statusRunningIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-23",
+      "path": "icons/datastore/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-23.svg",
+      "sha256": "f6b14e1dc936a9a199d7faaceb98623ac5cd92f967181e90163c1196aabdae51",
+      "templateIndex": 23
+    },
+    {
+      "dataIconName": "statusStoppedIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-24",
+      "path": "icons/datastore/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-24.svg",
+      "sha256": "6b8aa9a34f20b452d8c86974dd4bd903419238bbf1a625052b1b66513a6f64dc",
+      "templateIndex": 24
+    },
+    {
+      "dataIconName": "statusErrorIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-25",
+      "path": "icons/datastore/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-25.svg",
+      "sha256": "2b686f1a7d49581fd8622cedfffbf48b24db31e4db612fe0ab8a778279831151",
+      "templateIndex": 25
+    },
+    {
+      "dataIconName": "statusInactiveIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-26",
+      "path": "icons/datastore/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-26.svg",
+      "sha256": "9a8dd2637dd9e6bc144ead50dce04a7c9fc42cfc606a5979939d46edf0888e48",
+      "templateIndex": 26
+    },
+    {
+      "dataIconName": "statusInfoIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-27",
+      "path": "icons/datastore/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-27.svg",
+      "sha256": "673778a62f3bec9c1f99113dd325f56f8a3e04df08c7eee952dda3ce2a66cff3",
+      "templateIndex": 27
+    },
+    {
+      "dataIconName": "statusPausedIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-28",
+      "path": "icons/datastore/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-28.svg",
+      "sha256": "0ae6942f7edb6656b5a99e106e2028155d7c08f42d7e4ad2a0d28dda7248106b",
+      "templateIndex": 28
+    },
+    {
+      "dataIconName": "statusRunningIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-29",
+      "path": "icons/datastore/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-29.svg",
+      "sha256": "dbd8fbf7a138dd652ab3393fb88f89c30d5f1202d60d81f419d7050243ccdbce",
+      "templateIndex": 29
+    },
+    {
+      "dataIconName": "statusStoppedIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-30",
+      "path": "icons/datastore/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-30.svg",
+      "sha256": "a7ff9b6543692cdb3b37424c9c6b0d1f890e3ae311232fac17cb9dc04f1e1389",
+      "templateIndex": 30
+    },
+    {
+      "dataIconName": "statusSuccessIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-31",
+      "path": "icons/datastore/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-31.svg",
+      "sha256": "fd9b2e8c7fe8e194d1a8ac1f0be20462bfbd7320e74814805ab0d15bf0977a88",
+      "templateIndex": 31
+    },
+    {
+      "dataIconName": "statusWarningIcon",
+      "extension": "datastore",
+      "module": "DatastoreMicroUi",
+      "moduleId": "datastore",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-32",
+      "path": "icons/datastore/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-32.svg",
+      "sha256": "011f4a571b675eaf3e6256a40f37bfb52152499ab8b04ae349008d4ce525ee9f",
+      "templateIndex": 32
+    },
+    {
       "dataIconName": "arrowForwardIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-21",
-      "path": "icons/datastore/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-21.svg",
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-33",
+      "path": "icons/datastore/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-33.svg",
       "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 21
+      "templateIndex": 33
     },
     {
       "dataIconName": "columnsIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-22",
-      "path": "icons/datastore/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-22.svg",
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-34",
+      "path": "icons/datastore/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-34.svg",
       "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 22
+      "templateIndex": 34
     },
     {
       "dataIconName": "firstPageIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-23",
-      "path": "icons/datastore/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-23.svg",
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-35",
+      "path": "icons/datastore/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-35.svg",
       "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 23
+      "templateIndex": 35
     },
     {
       "dataIconName": "lastPageIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-24",
-      "path": "icons/datastore/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-24.svg",
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-36",
+      "path": "icons/datastore/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-36.svg",
       "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 24
+      "templateIndex": 36
     },
     {
       "dataIconName": "nextIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-25",
-      "path": "icons/datastore/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-25.svg",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-37",
+      "path": "icons/datastore/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-37.svg",
       "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 25
+      "templateIndex": 37
     },
     {
       "dataIconName": "previousIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-26",
-      "path": "icons/datastore/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-26.svg",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-38",
+      "path": "icons/datastore/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-38.svg",
       "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 26
+      "templateIndex": 38
     },
     {
       "dataIconName": "homeAltIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-27",
-      "path": "icons/datastore/template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-27.svg",
+      "name": "template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-39",
+      "path": "icons/datastore/template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-39.svg",
       "sha256": "fe8ebdbbd2c8c8649038287394fffab0b9c5dcfbe5b3981c2372a377fad2bdab",
-      "templateIndex": 27
+      "templateIndex": 39
     },
     {
       "dataIconName": "codeBlackIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-28",
-      "path": "icons/datastore/template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-28.svg",
+      "name": "template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-40",
+      "path": "icons/datastore/template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-40.svg",
       "sha256": "f031e453ebd945eda0c4d51328f37bfb5e8b15d3e234f9ab65320a9a3edf72ab",
-      "templateIndex": 28
+      "templateIndex": 40
     },
     {
       "dataIconName": "gleafIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-29",
-      "path": "icons/datastore/template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-29.svg",
+      "name": "template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-41",
+      "path": "icons/datastore/template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-41.svg",
       "sha256": "be5463d94c7695ee5158508fe0a45f49c8e6d17f8faa72fe92c29207b3ea8864",
-      "templateIndex": 29
+      "templateIndex": 41
     },
     {
       "dataIconName": "infoIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-30",
-      "path": "icons/datastore/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-30.svg",
+      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-42",
+      "path": "icons/datastore/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-42.svg",
       "sha256": "5c2f6a5077eef25c59e24de016b537c638bc6bdc2fc583610fdb5465e2a201ec",
-      "templateIndex": 30
+      "templateIndex": 42
     },
     {
       "dataIconName": "libraryBooksIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-31",
-      "path": "icons/datastore/template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-31.svg",
+      "name": "template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-43",
+      "path": "icons/datastore/template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-43.svg",
       "sha256": "a6a8ae9a306f105fde7c0be790e8c6ba15eb464e0044a84c7d3cdabef2494c36",
-      "templateIndex": 31
+      "templateIndex": 43
     },
     {
       "dataIconName": "moreIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-32",
-      "path": "icons/datastore/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-32.svg",
+      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44",
+      "path": "icons/datastore/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44.svg",
       "sha256": "019a60afd6d64a662e03b267c9fea461ad04eb15e8c2a443c8cb02293127ccb5",
-      "templateIndex": 32
+      "templateIndex": 44
     },
     {
       "dataIconName": "bigquerySectionIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-33",
-      "path": "icons/datastore/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-33.svg",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-45",
+      "path": "icons/datastore/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-45.svg",
       "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
-      "templateIndex": 33
+      "templateIndex": 45
     },
     {
       "dataIconName": "cloudpubsubSectionIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-34",
-      "path": "icons/datastore/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-34.svg",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-46",
+      "path": "icons/datastore/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-46.svg",
       "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
-      "templateIndex": 34
+      "templateIndex": 46
     },
     {
       "dataIconName": "dataplexSectionIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-35",
-      "path": "icons/datastore/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-35.svg",
+      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-47",
+      "path": "icons/datastore/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-47.svg",
       "sha256": "2b40ee945a1c0486d4802958ec3d2315dfa02afb82b8d5a1e908896411180d88",
-      "templateIndex": 35
+      "templateIndex": 47
     },
     {
       "dataIconName": "securitySectionIcon",
       "extension": "datastore",
       "module": "DatastoreMicroUi",
       "moduleId": "datastore",
-      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36",
-      "path": "icons/datastore/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36.svg",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-48",
+      "path": "icons/datastore/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-48.svg",
       "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
-      "templateIndex": 36
+      "templateIndex": 48
     },
     {
       "dataIconName": null,
@@ -20773,174 +20893,184 @@
       "templateIndex": 33
     },
     {
+      "dataIconName": "hubIcon",
+      "extension": "dbmanageability",
+      "module": "DbmanageabilityMicroUi",
+      "moduleId": "dbmanageability",
+      "name": "template-5421380838461627ffec28c3bc0fddc87ae17125ff1061149fcb911f5b48fece-34",
+      "path": "icons/dbmanageability/template-5421380838461627ffec28c3bc0fddc87ae17125ff1061149fcb911f5b48fece-34.svg",
+      "sha256": "616dd6a8449211976fcca408a8d65751a4fa95b5eef16dd401ec2278f945dca3",
+      "templateIndex": 34
+    },
+    {
       "dataIconName": "outlineIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-34",
-      "path": "icons/dbmanageability/template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-34.svg",
+      "name": "template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-35",
+      "path": "icons/dbmanageability/template-9da602817c7a1158991a24218df6fd66a86c49670feea920224ad8fdfa4b5811-35.svg",
       "sha256": "6d3bdc43a3b64c81d9e315973da118cd34de7455787f018aa23e776a492c7fa2",
-      "templateIndex": 34
+      "templateIndex": 35
     },
     {
       "dataIconName": "tableIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-35",
-      "path": "icons/dbmanageability/template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-35.svg",
+      "name": "template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-36",
+      "path": "icons/dbmanageability/template-c5b90a8b7d0c9ed6801a4693b1a82b0ec23870cfbb9fff4208184b180c6cfe66-36.svg",
       "sha256": "a3183b43d3c8406c51838df4da6338d7875ce0c0e2582e4879319ef9c730603e",
-      "templateIndex": 35
+      "templateIndex": 36
     },
     {
       "dataIconName": "wavesIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-36",
-      "path": "icons/dbmanageability/template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-36.svg",
+      "name": "template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-37",
+      "path": "icons/dbmanageability/template-7b88dc2bb15e0a3fed56428920bf83915099a41852bd4c92944d6c5eb046a366-37.svg",
       "sha256": "168a61f91fb5117e3d2663a3d608f8bbd0181b5e8b038df5f4b96783532261dd",
-      "templateIndex": 36
+      "templateIndex": 37
     },
     {
       "dataIconName": "folderIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-37",
-      "path": "icons/dbmanageability/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-37.svg",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-38",
+      "path": "icons/dbmanageability/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-38.svg",
       "sha256": "416e546df3acf6188e19f3472139705b34e8b5c8940ea6b958ed04a33c41347d",
-      "templateIndex": 37
+      "templateIndex": 38
     },
     {
       "dataIconName": "bigquerySectionIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-38",
-      "path": "icons/dbmanageability/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-38.svg",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-39",
+      "path": "icons/dbmanageability/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-39.svg",
       "sha256": "b0fd35d15c2c637b3a22bb416b8d7848e98a17490da47394683d5dee0a6855d1",
-      "templateIndex": 38
+      "templateIndex": 39
     },
     {
       "dataIconName": "cancelIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-39",
-      "path": "icons/dbmanageability/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-39.svg",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-40",
+      "path": "icons/dbmanageability/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-40.svg",
       "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 39
+      "templateIndex": 40
     },
     {
       "dataIconName": "computeEngineIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-6fadfb02ad09ac5d683bda58088fa874c85d74523028022108b0fabd4d277f41-40",
-      "path": "icons/dbmanageability/template-6fadfb02ad09ac5d683bda58088fa874c85d74523028022108b0fabd4d277f41-40.svg",
+      "name": "template-6fadfb02ad09ac5d683bda58088fa874c85d74523028022108b0fabd4d277f41-41",
+      "path": "icons/dbmanageability/template-6fadfb02ad09ac5d683bda58088fa874c85d74523028022108b0fabd4d277f41-41.svg",
       "sha256": "bdfb8f1e0e22c26173ad1e565a2d1a0ebf67f8ecf7e429c1623650e00c3b586b",
-      "templateIndex": 40
+      "templateIndex": 41
     },
     {
       "dataIconName": "domainIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-41",
-      "path": "icons/dbmanageability/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-41.svg",
+      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-42",
+      "path": "icons/dbmanageability/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-42.svg",
       "sha256": "67d6b9b57a6337cb9548488d228e428e3ffb629619ac12709b7df6b89e4e3811",
-      "templateIndex": 41
+      "templateIndex": 42
     },
     {
       "dataIconName": "alloydbIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-e9a752f2f95f734d214755fe463b18cd2556f6e1e48f4bdceb6994ba1dec9db4-42",
-      "path": "icons/dbmanageability/template-e9a752f2f95f734d214755fe463b18cd2556f6e1e48f4bdceb6994ba1dec9db4-42.svg",
+      "name": "template-e9a752f2f95f734d214755fe463b18cd2556f6e1e48f4bdceb6994ba1dec9db4-43",
+      "path": "icons/dbmanageability/template-e9a752f2f95f734d214755fe463b18cd2556f6e1e48f4bdceb6994ba1dec9db4-43.svg",
       "sha256": "8d80da0f935cbc438ef5209f1c205d47c8ed7c19cc5dbafaa43b488a85b883db",
-      "templateIndex": 42
+      "templateIndex": 43
     },
     {
       "dataIconName": "bigqueryIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-1f9f7dbae6445ea48b15be905701e8d84e8fbcec116aea8c021c6027e937eca4-43",
-      "path": "icons/dbmanageability/template-1f9f7dbae6445ea48b15be905701e8d84e8fbcec116aea8c021c6027e937eca4-43.svg",
+      "name": "template-1f9f7dbae6445ea48b15be905701e8d84e8fbcec116aea8c021c6027e937eca4-44",
+      "path": "icons/dbmanageability/template-1f9f7dbae6445ea48b15be905701e8d84e8fbcec116aea8c021c6027e937eca4-44.svg",
       "sha256": "5c27a2763f7a44b5e4820fbebe86e71245522bec92b95571eccba3ee0fee3948",
-      "templateIndex": 43
+      "templateIndex": 44
     },
     {
       "dataIconName": "bigtableIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-acbba17f062ff2dc2d8e33c132ee19fd28be83d15f1acd51c5e369d37b26c448-44",
-      "path": "icons/dbmanageability/template-acbba17f062ff2dc2d8e33c132ee19fd28be83d15f1acd51c5e369d37b26c448-44.svg",
+      "name": "template-acbba17f062ff2dc2d8e33c132ee19fd28be83d15f1acd51c5e369d37b26c448-45",
+      "path": "icons/dbmanageability/template-acbba17f062ff2dc2d8e33c132ee19fd28be83d15f1acd51c5e369d37b26c448-45.svg",
       "sha256": "c8291b8c62f84c99c50dd5fedc26e171f490e87f150ac191fa463770e7e25c86",
-      "templateIndex": 44
+      "templateIndex": 45
     },
     {
       "dataIconName": "cloudSqlIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-0a46d714081c1c40f679815a3fc4590253f12589ceaa07730bcf57dfca30d7a8-45",
-      "path": "icons/dbmanageability/template-0a46d714081c1c40f679815a3fc4590253f12589ceaa07730bcf57dfca30d7a8-45.svg",
+      "name": "template-0a46d714081c1c40f679815a3fc4590253f12589ceaa07730bcf57dfca30d7a8-46",
+      "path": "icons/dbmanageability/template-0a46d714081c1c40f679815a3fc4590253f12589ceaa07730bcf57dfca30d7a8-46.svg",
       "sha256": "ca041755ad89470d7772e22b032ff81bfe0990510807b4dc5f6f2328a688dba2",
-      "templateIndex": 45
+      "templateIndex": 46
     },
     {
       "dataIconName": "databasesIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-e900db98191ae7aa5f06a23e3d8dab48ac034c6e8a001e46ffc7eed06073c626-46",
-      "path": "icons/dbmanageability/template-e900db98191ae7aa5f06a23e3d8dab48ac034c6e8a001e46ffc7eed06073c626-46.svg",
+      "name": "template-e900db98191ae7aa5f06a23e3d8dab48ac034c6e8a001e46ffc7eed06073c626-47",
+      "path": "icons/dbmanageability/template-e900db98191ae7aa5f06a23e3d8dab48ac034c6e8a001e46ffc7eed06073c626-47.svg",
       "sha256": "4cca8320e6940f0be791e04573c9a34d10fb4827e2ffef77766fe21cbca5f3c6",
-      "templateIndex": 46
+      "templateIndex": 47
     },
     {
       "dataIconName": "firestoreIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-df20abbb31b0878fa5b04cd00f74a35115ace51ca761ed5a4df70e0ccbd7f1fc-47",
-      "path": "icons/dbmanageability/template-df20abbb31b0878fa5b04cd00f74a35115ace51ca761ed5a4df70e0ccbd7f1fc-47.svg",
+      "name": "template-df20abbb31b0878fa5b04cd00f74a35115ace51ca761ed5a4df70e0ccbd7f1fc-48",
+      "path": "icons/dbmanageability/template-df20abbb31b0878fa5b04cd00f74a35115ace51ca761ed5a4df70e0ccbd7f1fc-48.svg",
       "sha256": "c53626212cfe9aa9354b6de177be925f53e3645712d5b3541b7193836523ed32",
-      "templateIndex": 47
+      "templateIndex": 48
     },
     {
       "dataIconName": "memorystoreIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-a01c87c5d297ad2e0f927f7027bdf6aa65286da637b780bcbdf52ebfbe14c4cf-48",
-      "path": "icons/dbmanageability/template-a01c87c5d297ad2e0f927f7027bdf6aa65286da637b780bcbdf52ebfbe14c4cf-48.svg",
+      "name": "template-a01c87c5d297ad2e0f927f7027bdf6aa65286da637b780bcbdf52ebfbe14c4cf-49",
+      "path": "icons/dbmanageability/template-a01c87c5d297ad2e0f927f7027bdf6aa65286da637b780bcbdf52ebfbe14c4cf-49.svg",
       "sha256": "b525446d44d55ef6489cafe8dd19865ed906e1b5e1f9d108fb72f669b94536f8",
-      "templateIndex": 48
+      "templateIndex": 49
     },
     {
       "dataIconName": "oracleIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-4d40fb99c97b751521bd764aadd8758e97c4f9d191f0943db387b338d03a9240-49",
-      "path": "icons/dbmanageability/template-4d40fb99c97b751521bd764aadd8758e97c4f9d191f0943db387b338d03a9240-49.svg",
+      "name": "template-4d40fb99c97b751521bd764aadd8758e97c4f9d191f0943db387b338d03a9240-50",
+      "path": "icons/dbmanageability/template-4d40fb99c97b751521bd764aadd8758e97c4f9d191f0943db387b338d03a9240-50.svg",
       "sha256": "079c1b5a31b7a3a2497eb6b4640a8586e9107722ea1edc444c7264702e71a12f",
-      "templateIndex": 49
+      "templateIndex": 50
     },
     {
       "dataIconName": "spannerIcon",
       "extension": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
       "moduleId": "dbmanageability",
-      "name": "template-45eb2d0364bb9c4ad56946cf066ed8e540d75425476752c42380f8f0aa5d8f40-50",
-      "path": "icons/dbmanageability/template-45eb2d0364bb9c4ad56946cf066ed8e540d75425476752c42380f8f0aa5d8f40-50.svg",
+      "name": "template-45eb2d0364bb9c4ad56946cf066ed8e540d75425476752c42380f8f0aa5d8f40-51",
+      "path": "icons/dbmanageability/template-45eb2d0364bb9c4ad56946cf066ed8e540d75425476752c42380f8f0aa5d8f40-51.svg",
       "sha256": "58e74dd44b4e7dde83140914bfca6af4b79237468cb3ffaa73fd759dd903231a",
-      "templateIndex": 50
+      "templateIndex": 51
     },
     {
       "dataIconName": null,
@@ -23963,164 +24093,284 @@
       "templateIndex": 20
     },
     {
+      "dataIconName": "statusInactiveIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-21",
+      "path": "icons/firestore/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-21.svg",
+      "sha256": "b12fc75eb25786ed1ab881b8a16c75082f788f6ea7e5d14c023f8fcf3a44ef40",
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "statusPausedIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-22",
+      "path": "icons/firestore/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-22.svg",
+      "sha256": "8f26d31c77ca6c6773698fda6aff8593e988c49046ac71ab3039f523cf01e821",
+      "templateIndex": 22
+    },
+    {
+      "dataIconName": "statusRunningIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-23",
+      "path": "icons/firestore/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-23.svg",
+      "sha256": "f6b14e1dc936a9a199d7faaceb98623ac5cd92f967181e90163c1196aabdae51",
+      "templateIndex": 23
+    },
+    {
+      "dataIconName": "statusStoppedIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-24",
+      "path": "icons/firestore/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-24.svg",
+      "sha256": "6b8aa9a34f20b452d8c86974dd4bd903419238bbf1a625052b1b66513a6f64dc",
+      "templateIndex": 24
+    },
+    {
+      "dataIconName": "statusErrorIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-25",
+      "path": "icons/firestore/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-25.svg",
+      "sha256": "2b686f1a7d49581fd8622cedfffbf48b24db31e4db612fe0ab8a778279831151",
+      "templateIndex": 25
+    },
+    {
+      "dataIconName": "statusInactiveIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-26",
+      "path": "icons/firestore/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-26.svg",
+      "sha256": "9a8dd2637dd9e6bc144ead50dce04a7c9fc42cfc606a5979939d46edf0888e48",
+      "templateIndex": 26
+    },
+    {
+      "dataIconName": "statusInfoIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-27",
+      "path": "icons/firestore/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-27.svg",
+      "sha256": "673778a62f3bec9c1f99113dd325f56f8a3e04df08c7eee952dda3ce2a66cff3",
+      "templateIndex": 27
+    },
+    {
+      "dataIconName": "statusPausedIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-28",
+      "path": "icons/firestore/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-28.svg",
+      "sha256": "0ae6942f7edb6656b5a99e106e2028155d7c08f42d7e4ad2a0d28dda7248106b",
+      "templateIndex": 28
+    },
+    {
+      "dataIconName": "statusRunningIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-29",
+      "path": "icons/firestore/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-29.svg",
+      "sha256": "dbd8fbf7a138dd652ab3393fb88f89c30d5f1202d60d81f419d7050243ccdbce",
+      "templateIndex": 29
+    },
+    {
+      "dataIconName": "statusStoppedIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-30",
+      "path": "icons/firestore/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-30.svg",
+      "sha256": "a7ff9b6543692cdb3b37424c9c6b0d1f890e3ae311232fac17cb9dc04f1e1389",
+      "templateIndex": 30
+    },
+    {
+      "dataIconName": "statusSuccessIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-31",
+      "path": "icons/firestore/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-31.svg",
+      "sha256": "fd9b2e8c7fe8e194d1a8ac1f0be20462bfbd7320e74814805ab0d15bf0977a88",
+      "templateIndex": 31
+    },
+    {
+      "dataIconName": "statusWarningIcon",
+      "extension": "firestore",
+      "module": "FirestoreMicroUi",
+      "moduleId": "firestore",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-32",
+      "path": "icons/firestore/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-32.svg",
+      "sha256": "011f4a571b675eaf3e6256a40f37bfb52152499ab8b04ae349008d4ce525ee9f",
+      "templateIndex": 32
+    },
+    {
       "dataIconName": "arrowForwardIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-21",
-      "path": "icons/firestore/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-21.svg",
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-33",
+      "path": "icons/firestore/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-33.svg",
       "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 21
+      "templateIndex": 33
     },
     {
       "dataIconName": "columnsIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-22",
-      "path": "icons/firestore/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-22.svg",
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-34",
+      "path": "icons/firestore/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-34.svg",
       "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 22
+      "templateIndex": 34
     },
     {
       "dataIconName": "firstPageIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-23",
-      "path": "icons/firestore/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-23.svg",
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-35",
+      "path": "icons/firestore/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-35.svg",
       "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 23
+      "templateIndex": 35
     },
     {
       "dataIconName": "lastPageIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-24",
-      "path": "icons/firestore/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-24.svg",
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-36",
+      "path": "icons/firestore/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-36.svg",
       "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 24
+      "templateIndex": 36
     },
     {
       "dataIconName": "nextIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-25",
-      "path": "icons/firestore/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-25.svg",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-37",
+      "path": "icons/firestore/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-37.svg",
       "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 25
+      "templateIndex": 37
     },
     {
       "dataIconName": "previousIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-26",
-      "path": "icons/firestore/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-26.svg",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-38",
+      "path": "icons/firestore/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-38.svg",
       "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 26
+      "templateIndex": 38
     },
     {
       "dataIconName": "homeAltIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-27",
-      "path": "icons/firestore/template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-27.svg",
+      "name": "template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-39",
+      "path": "icons/firestore/template-9c6347eed3aa3233acf0cf345c575b6b43c062761dbe4b43a8eb386ee038dca8-39.svg",
       "sha256": "fe8ebdbbd2c8c8649038287394fffab0b9c5dcfbe5b3981c2372a377fad2bdab",
-      "templateIndex": 27
+      "templateIndex": 39
     },
     {
       "dataIconName": "codeBlackIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-28",
-      "path": "icons/firestore/template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-28.svg",
+      "name": "template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-40",
+      "path": "icons/firestore/template-ef39bebad5dac462a8bbb1504fff36cffc11c335d067b66a8d9e3411a98af44a-40.svg",
       "sha256": "f031e453ebd945eda0c4d51328f37bfb5e8b15d3e234f9ab65320a9a3edf72ab",
-      "templateIndex": 28
+      "templateIndex": 40
     },
     {
       "dataIconName": "gleafIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-29",
-      "path": "icons/firestore/template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-29.svg",
+      "name": "template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-41",
+      "path": "icons/firestore/template-5cc151fa1772717bc704eb9234db4e9e3b200237dd3eccb18e2d24ccaeb0a887-41.svg",
       "sha256": "be5463d94c7695ee5158508fe0a45f49c8e6d17f8faa72fe92c29207b3ea8864",
-      "templateIndex": 29
+      "templateIndex": 41
     },
     {
       "dataIconName": "infoIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-30",
-      "path": "icons/firestore/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-30.svg",
+      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-42",
+      "path": "icons/firestore/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-42.svg",
       "sha256": "5c2f6a5077eef25c59e24de016b537c638bc6bdc2fc583610fdb5465e2a201ec",
-      "templateIndex": 30
+      "templateIndex": 42
     },
     {
       "dataIconName": "libraryBooksIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-31",
-      "path": "icons/firestore/template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-31.svg",
+      "name": "template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-43",
+      "path": "icons/firestore/template-bdebc788437be2811d76b2fb45ac1b0cf15378b17510aba6835949d944f5551c-43.svg",
       "sha256": "a6a8ae9a306f105fde7c0be790e8c6ba15eb464e0044a84c7d3cdabef2494c36",
-      "templateIndex": 31
+      "templateIndex": 43
     },
     {
       "dataIconName": "moreIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-32",
-      "path": "icons/firestore/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-32.svg",
+      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44",
+      "path": "icons/firestore/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44.svg",
       "sha256": "019a60afd6d64a662e03b267c9fea461ad04eb15e8c2a443c8cb02293127ccb5",
-      "templateIndex": 32
+      "templateIndex": 44
     },
     {
       "dataIconName": "bigquerySectionIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-33",
-      "path": "icons/firestore/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-33.svg",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-45",
+      "path": "icons/firestore/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-45.svg",
       "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
-      "templateIndex": 33
+      "templateIndex": 45
     },
     {
       "dataIconName": "cloudpubsubSectionIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-34",
-      "path": "icons/firestore/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-34.svg",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-46",
+      "path": "icons/firestore/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-46.svg",
       "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
-      "templateIndex": 34
+      "templateIndex": 46
     },
     {
       "dataIconName": "dataplexSectionIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-35",
-      "path": "icons/firestore/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-35.svg",
+      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-47",
+      "path": "icons/firestore/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-47.svg",
       "sha256": "2b40ee945a1c0486d4802958ec3d2315dfa02afb82b8d5a1e908896411180d88",
-      "templateIndex": 35
+      "templateIndex": 47
     },
     {
       "dataIconName": "securitySectionIcon",
       "extension": "firestore",
       "module": "FirestoreMicroUi",
       "moduleId": "firestore",
-      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36",
-      "path": "icons/firestore/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36.svg",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-48",
+      "path": "icons/firestore/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-48.svg",
       "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
-      "templateIndex": 36
+      "templateIndex": 48
     },
     {
       "dataIconName": null,
@@ -25243,164 +25493,154 @@
       "templateIndex": 12
     },
     {
-      "dataIconName": "helpIcon",
-      "extension": "haikili",
-      "module": "HaikiliMicroUi",
-      "moduleId": "haikili",
-      "name": "template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-13",
-      "path": "icons/haikili/template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-13.svg",
-      "sha256": "91bd9f83cc87994434d2066dc0aeb1a5dda9f3ff853ec5afbdfa40c88c69f747",
-      "templateIndex": 13
-    },
-    {
       "dataIconName": "helpOutlineIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-14",
-      "path": "icons/haikili/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-14.svg",
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-13",
+      "path": "icons/haikili/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-13.svg",
       "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 14
+      "templateIndex": 13
     },
     {
       "dataIconName": "cancelIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-15",
-      "path": "icons/haikili/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-15.svg",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-14",
+      "path": "icons/haikili/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-14.svg",
       "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 15
+      "templateIndex": 14
     },
     {
       "dataIconName": "closeIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-16",
-      "path": "icons/haikili/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-16.svg",
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-15",
+      "path": "icons/haikili/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-15.svg",
       "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
-      "templateIndex": 16
+      "templateIndex": 15
     },
     {
       "dataIconName": "filterIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-17",
-      "path": "icons/haikili/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-17.svg",
+      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-16",
+      "path": "icons/haikili/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-16.svg",
       "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
-      "templateIndex": 17
+      "templateIndex": 16
     },
     {
       "dataIconName": "arrowBackIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-18",
-      "path": "icons/haikili/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-18.svg",
+      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-17",
+      "path": "icons/haikili/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-17.svg",
       "sha256": "49c20790adda2726391a8fa1cfd58c350933cfdf5157144a4b3ece4f153e5445",
-      "templateIndex": 18
+      "templateIndex": 17
     },
     {
       "dataIconName": "folderIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-19",
-      "path": "icons/haikili/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-19.svg",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-18",
+      "path": "icons/haikili/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-18.svg",
       "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
-      "templateIndex": 19
+      "templateIndex": 18
     },
     {
       "dataIconName": "groupIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-20",
-      "path": "icons/haikili/template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-20.svg",
+      "name": "template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-19",
+      "path": "icons/haikili/template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-19.svg",
       "sha256": "111f570fb71f61735138a6b52fdb8d15c3d60d465d6421b41c8fe94ab98c3bbb",
-      "templateIndex": 20
+      "templateIndex": 19
     },
     {
       "dataIconName": "projectIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-21",
-      "path": "icons/haikili/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-21.svg",
+      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-20",
+      "path": "icons/haikili/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-20.svg",
       "sha256": "638254e0334ce4e00862ba009e97575d77bd6b093b8ecc2476953ab613536229",
-      "templateIndex": 21
+      "templateIndex": 20
     },
     {
       "dataIconName": "domainIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-22",
-      "path": "icons/haikili/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-22.svg",
+      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-21",
+      "path": "icons/haikili/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-21.svg",
       "sha256": "67d6b9b57a6337cb9548488d228e428e3ffb629619ac12709b7df6b89e4e3811",
-      "templateIndex": 22
+      "templateIndex": 21
     },
     {
       "dataIconName": "resourcesIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-23",
-      "path": "icons/haikili/template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-23.svg",
+      "name": "template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-22",
+      "path": "icons/haikili/template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-22.svg",
       "sha256": "8f3c960a40aac24a5de098095b8d24456e3392870b6abbe6456738bcf9fa4e03",
-      "templateIndex": 23
+      "templateIndex": 22
     },
     {
       "dataIconName": "awsIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-24",
-      "path": "icons/haikili/template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-24.svg",
+      "name": "template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-23",
+      "path": "icons/haikili/template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-23.svg",
       "sha256": "af6adaeccff43e23007d48e238e641c1e78d7fed5d33e330ea63b7e93b3ff069",
-      "templateIndex": 24
+      "templateIndex": 23
     },
     {
       "dataIconName": "awsAccountIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-25",
-      "path": "icons/haikili/template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-25.svg",
+      "name": "template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-24",
+      "path": "icons/haikili/template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-24.svg",
       "sha256": "3701db72baeeb5d90c2dd6a60024bf5edc80a2114261107513b214608f77f1f7",
-      "templateIndex": 25
+      "templateIndex": 24
     },
     {
       "dataIconName": "azureManagementGroupIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-26",
-      "path": "icons/haikili/template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-26.svg",
+      "name": "template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-25",
+      "path": "icons/haikili/template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-25.svg",
       "sha256": "31b265e1914632dc6234811222704d49696d0043051c56e62659990e0372d33c",
-      "templateIndex": 26
+      "templateIndex": 25
     },
     {
       "dataIconName": "azureResourceGroupIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-27",
-      "path": "icons/haikili/template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-27.svg",
+      "name": "template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-26",
+      "path": "icons/haikili/template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-26.svg",
       "sha256": "a1d73a8a33eda3a40f0fbc2793723c71e6d92a607c197a19cf90b681fbf1e6c2",
-      "templateIndex": 27
+      "templateIndex": 26
     },
     {
       "dataIconName": "azureSubscriptionIcon",
       "extension": "haikili",
       "module": "HaikiliMicroUi",
       "moduleId": "haikili",
-      "name": "template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-28",
-      "path": "icons/haikili/template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-28.svg",
+      "name": "template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-27",
+      "path": "icons/haikili/template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-27.svg",
       "sha256": "71ea557e9da97634160f86fc7a054e97a65dc8486759c839d8551d500d553b61",
-      "templateIndex": 28
+      "templateIndex": 27
     },
     {
       "dataIconName": null,
@@ -27743,114 +27983,144 @@
       "templateIndex": 11
     },
     {
-      "dataIconName": "addCommentIcon",
+      "dataIconName": null,
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-731055171e0c786c6491caab63e7fd2a83982598d1e4e325d350dbba398cfccb-12",
-      "path": "icons/knowledge-agent/template-731055171e0c786c6491caab63e7fd2a83982598d1e4e325d350dbba398cfccb-12.svg",
-      "sha256": "15c7e76cde40402061f0aa8170cf6cdcdd7a9d1c15da1ffefee2385de9d6d4ec",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-12",
+      "path": "icons/knowledge-agent/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-12.svg",
+      "sha256": "3fc20085362eb5e2bfedbcd8c08a623ed17b7fd7023cab48b13e0ecefc984709",
       "templateIndex": 12
+    },
+    {
+      "dataIconName": null,
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-13",
+      "path": "icons/knowledge-agent/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-13.svg",
+      "sha256": "825a978506ea309e84b640843f0ca31492857b0f2d2b927b9f5c3347d73b1481",
+      "templateIndex": 13
+    },
+    {
+      "dataIconName": null,
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-14",
+      "path": "icons/knowledge-agent/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-14.svg",
+      "sha256": "1baa2a419aa1768f24a766f8b56ee2ad77090d1ff0ac28611fb2a38e0d238e25",
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "chatAddOnIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-51bbfe3ed7a3bfd70f7a603dc6fb66531bee7f64518f171fa1fb032394408b8e-15",
+      "path": "icons/knowledge-agent/template-51bbfe3ed7a3bfd70f7a603dc6fb66531bee7f64518f171fa1fb032394408b8e-15.svg",
+      "sha256": "1d45ae45cc7c20586ab8ee65c4eee5ac56e440200f9a2698bdeabe13189dd949",
+      "templateIndex": 15
     },
     {
       "dataIconName": "deleteIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-13",
-      "path": "icons/knowledge-agent/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-13.svg",
+      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-16",
+      "path": "icons/knowledge-agent/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-16.svg",
       "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
-      "templateIndex": 13
-    },
-    {
-      "dataIconName": "searchIcon",
-      "extension": "knowledge_agent",
-      "module": "KnowledgeAgentMicroUi",
-      "moduleId": "knowledge-agent",
-      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-14",
-      "path": "icons/knowledge-agent/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-14.svg",
-      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
-      "templateIndex": 14
+      "templateIndex": 16
     },
     {
       "dataIconName": "panelLeftCloseIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-15",
-      "path": "icons/knowledge-agent/template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-15.svg",
-      "sha256": "0d93af171765adba65f06ebae40f103fb3f68b79794db6dd0aeeff09efd22ed3",
-      "templateIndex": 15
+      "name": "template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-17",
+      "path": "icons/knowledge-agent/template-a81c46798a118d7ed991e6a253795253277e58e3ac975a3c00d2223b435a655b-17.svg",
+      "sha256": "9f03b024fd383977dcf6d18fb4875987eaa993b197175c094bf0453560954027",
+      "templateIndex": 17
     },
     {
       "dataIconName": "panelLeftOpenIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-16",
-      "path": "icons/knowledge-agent/template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-16.svg",
-      "sha256": "7daa18caa8b2759185425b8ccaee6e6e95fdeedd46c6ad672067f35b204444d6",
-      "templateIndex": 16
+      "name": "template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-18",
+      "path": "icons/knowledge-agent/template-8a53e9017c4e7b3271603f36c4bf22d86dcac44865bd9370884831edb2cbf13c-18.svg",
+      "sha256": "c87a1da3232cecce9c8b6306854ce83de2abd0e2b4a41fb04322e967b576c766",
+      "templateIndex": 18
+    },
+    {
+      "dataIconName": "searchIcon",
+      "extension": "knowledge_agent",
+      "module": "KnowledgeAgentMicroUi",
+      "moduleId": "knowledge-agent",
+      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-19",
+      "path": "icons/knowledge-agent/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-19.svg",
+      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
+      "templateIndex": 19
     },
     {
       "dataIconName": "bigquerySectionIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-17",
-      "path": "icons/knowledge-agent/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-17.svg",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-20",
+      "path": "icons/knowledge-agent/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-20.svg",
       "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
-      "templateIndex": 17
+      "templateIndex": 20
     },
     {
       "dataIconName": "cloudpubsubSectionIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-18",
-      "path": "icons/knowledge-agent/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-18.svg",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-21",
+      "path": "icons/knowledge-agent/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-21.svg",
       "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
-      "templateIndex": 18
+      "templateIndex": 21
     },
     {
       "dataIconName": "dataplexSectionIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-19",
-      "path": "icons/knowledge-agent/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-19.svg",
+      "name": "template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-22",
+      "path": "icons/knowledge-agent/template-4c5e2aae15f798c6686baeb2d674afadc3f532929bdef7270d68378dc6b6330e-22.svg",
       "sha256": "2b40ee945a1c0486d4802958ec3d2315dfa02afb82b8d5a1e908896411180d88",
-      "templateIndex": 19
+      "templateIndex": 22
     },
     {
       "dataIconName": "securitySectionIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20",
-      "path": "icons/knowledge-agent/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20.svg",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-23",
+      "path": "icons/knowledge-agent/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-23.svg",
       "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
-      "templateIndex": 20
+      "templateIndex": 23
     },
     {
       "dataIconName": "conversionPathIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-21",
-      "path": "icons/knowledge-agent/template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-21.svg",
+      "name": "template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-24",
+      "path": "icons/knowledge-agent/template-76066157566b6460e81cb8f8edc8a4ab36fe10550470798554ddceb5c3276507-24.svg",
       "sha256": "1a3fe25be001405cd068fbad80907ad2fad3830b5b5ec5580cd5fc14674e008f",
-      "templateIndex": 21
+      "templateIndex": 24
     },
     {
       "dataIconName": "exploreIcon",
       "extension": "knowledge_agent",
       "module": "KnowledgeAgentMicroUi",
       "moduleId": "knowledge-agent",
-      "name": "template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-22",
-      "path": "icons/knowledge-agent/template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-22.svg",
+      "name": "template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-25",
+      "path": "icons/knowledge-agent/template-bdbd998ebcdaa6d8444ada2f9fa576de8acc883a7912b884ae5f43e14766fa47-25.svg",
       "sha256": "0c63f1b5ab2c3220bc18343c97fadaa584394a5cadbc8ac8dacd23b8b5e65ade",
-      "templateIndex": 22
+      "templateIndex": 25
     },
     {
       "dataIconName": null,
@@ -28363,33 +28633,33 @@
       "templateIndex": 14
     },
     {
-      "dataIconName": "helpIcon",
-      "extension": "kubernetes_ui_identity",
-      "module": "KubernetesUiIdentityMicroUi",
-      "moduleId": "kubernetes-ui-identity",
-      "name": "template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-15",
-      "path": "icons/kubernetes-ui-identity/template-6319635756a09f97ebebae3d524439b5d8ea4c31bc26aee57fd0343de086d189-15.svg",
-      "sha256": "91bd9f83cc87994434d2066dc0aeb1a5dda9f3ff853ec5afbdfa40c88c69f747",
-      "templateIndex": 15
-    },
-    {
       "dataIconName": "helpOutlineIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16",
-      "path": "icons/kubernetes-ui-identity/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-16.svg",
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-15",
+      "path": "icons/kubernetes-ui-identity/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-15.svg",
       "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 16
+      "templateIndex": 15
     },
     {
       "dataIconName": "cancelIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-17",
-      "path": "icons/kubernetes-ui-identity/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-17.svg",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-16",
+      "path": "icons/kubernetes-ui-identity/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-16.svg",
       "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
+      "templateIndex": 16
+    },
+    {
+      "dataIconName": null,
+      "extension": "kubernetes_ui_identity",
+      "module": "KubernetesUiIdentityMicroUi",
+      "moduleId": "kubernetes-ui-identity",
+      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-17",
+      "path": "icons/kubernetes-ui-identity/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-17.svg",
+      "sha256": "f5b839752e82c4bc5503631fb03e92bd9bdf2ef39f4e97e6459c5fb785e76fb0",
       "templateIndex": 17
     },
     {
@@ -28399,7 +28669,7 @@
       "moduleId": "kubernetes-ui-identity",
       "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-18",
       "path": "icons/kubernetes-ui-identity/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-18.svg",
-      "sha256": "f5b839752e82c4bc5503631fb03e92bd9bdf2ef39f4e97e6459c5fb785e76fb0",
+      "sha256": "bfb78bfdd31728bbb3afe488336a4da6748dd6ac6ec5a0578ca9fa256d7c9af5",
       "templateIndex": 18
     },
     {
@@ -28409,318 +28679,308 @@
       "moduleId": "kubernetes-ui-identity",
       "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-19",
       "path": "icons/kubernetes-ui-identity/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-19.svg",
-      "sha256": "bfb78bfdd31728bbb3afe488336a4da6748dd6ac6ec5a0578ca9fa256d7c9af5",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": null,
-      "extension": "kubernetes_ui_identity",
-      "module": "KubernetesUiIdentityMicroUi",
-      "moduleId": "kubernetes-ui-identity",
-      "name": "template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-20",
-      "path": "icons/kubernetes-ui-identity/template-6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d-20.svg",
       "sha256": "78fe62ca89fe8dc8b4dd44110f56fd6011f2aa3f385f564974d29d18449492cb",
-      "templateIndex": 20
+      "templateIndex": 19
     },
     {
       "dataIconName": "refreshIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-21",
-      "path": "icons/kubernetes-ui-identity/template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-21.svg",
+      "name": "template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-20",
+      "path": "icons/kubernetes-ui-identity/template-b69cd4d656dfe2e0d06326a2891bbba072b659d64e6968a9f8b171d522f96edd-20.svg",
       "sha256": "2d950404805e0f3aa0e3927ad9b97e4a4f26c4590360d15d6c4c45d117b31e03",
-      "templateIndex": 21
+      "templateIndex": 20
     },
     {
       "dataIconName": "arrowDropDownIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-22",
-      "path": "icons/kubernetes-ui-identity/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-22.svg",
+      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-21",
+      "path": "icons/kubernetes-ui-identity/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-21.svg",
       "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
-      "templateIndex": 22
+      "templateIndex": 21
     },
     {
       "dataIconName": "statusInactiveIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-23",
-      "path": "icons/kubernetes-ui-identity/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-23.svg",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-22",
+      "path": "icons/kubernetes-ui-identity/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-22.svg",
       "sha256": "b12fc75eb25786ed1ab881b8a16c75082f788f6ea7e5d14c023f8fcf3a44ef40",
-      "templateIndex": 23
+      "templateIndex": 22
     },
     {
       "dataIconName": "statusPausedIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-24",
-      "path": "icons/kubernetes-ui-identity/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-24.svg",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-23",
+      "path": "icons/kubernetes-ui-identity/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-23.svg",
       "sha256": "8f26d31c77ca6c6773698fda6aff8593e988c49046ac71ab3039f523cf01e821",
-      "templateIndex": 24
+      "templateIndex": 23
     },
     {
       "dataIconName": "statusRunningIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-25",
-      "path": "icons/kubernetes-ui-identity/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-25.svg",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-24",
+      "path": "icons/kubernetes-ui-identity/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-24.svg",
       "sha256": "f6b14e1dc936a9a199d7faaceb98623ac5cd92f967181e90163c1196aabdae51",
-      "templateIndex": 25
+      "templateIndex": 24
     },
     {
       "dataIconName": "statusStoppedIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-26",
-      "path": "icons/kubernetes-ui-identity/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-26.svg",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-25",
+      "path": "icons/kubernetes-ui-identity/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-25.svg",
       "sha256": "6b8aa9a34f20b452d8c86974dd4bd903419238bbf1a625052b1b66513a6f64dc",
-      "templateIndex": 26
+      "templateIndex": 25
     },
     {
       "dataIconName": "statusErrorIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-27",
-      "path": "icons/kubernetes-ui-identity/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-27.svg",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-26",
+      "path": "icons/kubernetes-ui-identity/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-26.svg",
       "sha256": "2b686f1a7d49581fd8622cedfffbf48b24db31e4db612fe0ab8a778279831151",
-      "templateIndex": 27
+      "templateIndex": 26
     },
     {
       "dataIconName": "statusInactiveIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-28",
-      "path": "icons/kubernetes-ui-identity/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-28.svg",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-27",
+      "path": "icons/kubernetes-ui-identity/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-27.svg",
       "sha256": "9a8dd2637dd9e6bc144ead50dce04a7c9fc42cfc606a5979939d46edf0888e48",
-      "templateIndex": 28
+      "templateIndex": 27
     },
     {
       "dataIconName": "statusInfoIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-29",
-      "path": "icons/kubernetes-ui-identity/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-29.svg",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-28",
+      "path": "icons/kubernetes-ui-identity/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-28.svg",
       "sha256": "673778a62f3bec9c1f99113dd325f56f8a3e04df08c7eee952dda3ce2a66cff3",
-      "templateIndex": 29
+      "templateIndex": 28
     },
     {
       "dataIconName": "statusPausedIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-30",
-      "path": "icons/kubernetes-ui-identity/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-30.svg",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-29",
+      "path": "icons/kubernetes-ui-identity/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-29.svg",
       "sha256": "0ae6942f7edb6656b5a99e106e2028155d7c08f42d7e4ad2a0d28dda7248106b",
-      "templateIndex": 30
+      "templateIndex": 29
     },
     {
       "dataIconName": "statusRunningIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-31",
-      "path": "icons/kubernetes-ui-identity/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-31.svg",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-30",
+      "path": "icons/kubernetes-ui-identity/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-30.svg",
       "sha256": "dbd8fbf7a138dd652ab3393fb88f89c30d5f1202d60d81f419d7050243ccdbce",
-      "templateIndex": 31
+      "templateIndex": 30
     },
     {
       "dataIconName": "statusStoppedIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-32",
-      "path": "icons/kubernetes-ui-identity/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-32.svg",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-31",
+      "path": "icons/kubernetes-ui-identity/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-31.svg",
       "sha256": "a7ff9b6543692cdb3b37424c9c6b0d1f890e3ae311232fac17cb9dc04f1e1389",
-      "templateIndex": 32
+      "templateIndex": 31
     },
     {
       "dataIconName": "statusSuccessIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-33",
-      "path": "icons/kubernetes-ui-identity/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-33.svg",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-32",
+      "path": "icons/kubernetes-ui-identity/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-32.svg",
       "sha256": "fd9b2e8c7fe8e194d1a8ac1f0be20462bfbd7320e74814805ab0d15bf0977a88",
-      "templateIndex": 33
+      "templateIndex": 32
     },
     {
       "dataIconName": "statusWarningIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-34",
-      "path": "icons/kubernetes-ui-identity/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-34.svg",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-33",
+      "path": "icons/kubernetes-ui-identity/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-33.svg",
       "sha256": "011f4a571b675eaf3e6256a40f37bfb52152499ab8b04ae349008d4ce525ee9f",
-      "templateIndex": 34
+      "templateIndex": 33
     },
     {
       "dataIconName": "arrowForwardIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-35",
-      "path": "icons/kubernetes-ui-identity/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-35.svg",
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-34",
+      "path": "icons/kubernetes-ui-identity/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-34.svg",
       "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 35
+      "templateIndex": 34
     },
     {
       "dataIconName": "columnsIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-36",
-      "path": "icons/kubernetes-ui-identity/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-36.svg",
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-35",
+      "path": "icons/kubernetes-ui-identity/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-35.svg",
       "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 36
+      "templateIndex": 35
     },
     {
       "dataIconName": "firstPageIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-37",
-      "path": "icons/kubernetes-ui-identity/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-37.svg",
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-36",
+      "path": "icons/kubernetes-ui-identity/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-36.svg",
       "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 37
+      "templateIndex": 36
     },
     {
       "dataIconName": "lastPageIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-38",
-      "path": "icons/kubernetes-ui-identity/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-38.svg",
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-37",
+      "path": "icons/kubernetes-ui-identity/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-37.svg",
       "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 38
+      "templateIndex": 37
     },
     {
       "dataIconName": "nextIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-39",
-      "path": "icons/kubernetes-ui-identity/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-39.svg",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-38",
+      "path": "icons/kubernetes-ui-identity/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-38.svg",
       "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 39
+      "templateIndex": 38
     },
     {
       "dataIconName": "previousIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-40",
-      "path": "icons/kubernetes-ui-identity/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-40.svg",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-39",
+      "path": "icons/kubernetes-ui-identity/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-39.svg",
       "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 40
+      "templateIndex": 39
     },
     {
       "dataIconName": "disabledIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-7260495baddf1ed8a26274df48f2739fb4322f1821a70610b1efab590a4faac4-41",
-      "path": "icons/kubernetes-ui-identity/template-7260495baddf1ed8a26274df48f2739fb4322f1821a70610b1efab590a4faac4-41.svg",
+      "name": "template-7260495baddf1ed8a26274df48f2739fb4322f1821a70610b1efab590a4faac4-40",
+      "path": "icons/kubernetes-ui-identity/template-7260495baddf1ed8a26274df48f2739fb4322f1821a70610b1efab590a4faac4-40.svg",
       "sha256": "2319be7688d4042bcbb5c856a2d01a6a898f1bfe14711c333e4c5649126eb3b3",
-      "templateIndex": 41
+      "templateIndex": 40
     },
     {
       "dataIconName": "errorOutlineIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-5c08f644f798d7574fa44d42ebb2bcd31bdc570dc2e806f634fe9ae122a7017d-42",
-      "path": "icons/kubernetes-ui-identity/template-5c08f644f798d7574fa44d42ebb2bcd31bdc570dc2e806f634fe9ae122a7017d-42.svg",
+      "name": "template-5c08f644f798d7574fa44d42ebb2bcd31bdc570dc2e806f634fe9ae122a7017d-41",
+      "path": "icons/kubernetes-ui-identity/template-5c08f644f798d7574fa44d42ebb2bcd31bdc570dc2e806f634fe9ae122a7017d-41.svg",
       "sha256": "a1488a7e5dbd0ad0b2ddd8ec90923ef069f3a32dd3b9c420763ae3faf4c79e96",
-      "templateIndex": 42
+      "templateIndex": 41
     },
     {
       "dataIconName": "removeCircleOutlineIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-767b6dca49a26bf25dd20bf1b19ac0d16785f8053e9cd9b7d27bbae0fc596a32-43",
-      "path": "icons/kubernetes-ui-identity/template-767b6dca49a26bf25dd20bf1b19ac0d16785f8053e9cd9b7d27bbae0fc596a32-43.svg",
+      "name": "template-767b6dca49a26bf25dd20bf1b19ac0d16785f8053e9cd9b7d27bbae0fc596a32-42",
+      "path": "icons/kubernetes-ui-identity/template-767b6dca49a26bf25dd20bf1b19ac0d16785f8053e9cd9b7d27bbae0fc596a32-42.svg",
       "sha256": "4d6e03a1d507bec191b6b97b14c32698880eb44148892d706923ba4e9525f19b",
-      "templateIndex": 43
+      "templateIndex": 42
     },
     {
       "dataIconName": "checkSmallIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-6fb504440faa21584925cbdbb92ed401d4f56f94fdb9f2850268a0d5e3f01d98-44",
-      "path": "icons/kubernetes-ui-identity/template-6fb504440faa21584925cbdbb92ed401d4f56f94fdb9f2850268a0d5e3f01d98-44.svg",
+      "name": "template-6fb504440faa21584925cbdbb92ed401d4f56f94fdb9f2850268a0d5e3f01d98-43",
+      "path": "icons/kubernetes-ui-identity/template-6fb504440faa21584925cbdbb92ed401d4f56f94fdb9f2850268a0d5e3f01d98-43.svg",
       "sha256": "e63dce3eea64e6680c4599ea62b10322b4e64f38a8927bf7add6ae79073b7cb0",
-      "templateIndex": 44
+      "templateIndex": 43
     },
     {
       "dataIconName": "moreIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-45",
-      "path": "icons/kubernetes-ui-identity/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-45.svg",
+      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44",
+      "path": "icons/kubernetes-ui-identity/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-44.svg",
       "sha256": "25d8fa8de7b8d450a6c2ecbc1401686161ffabf2f337ada8022ed799228b32da",
-      "templateIndex": 45
+      "templateIndex": 44
     },
     {
       "dataIconName": "fleetsIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-82a41e6a631d41fdcd9186b885b1bc332652c4c79fe8ee4ddf40bcd9d89aa74d-46",
-      "path": "icons/kubernetes-ui-identity/template-82a41e6a631d41fdcd9186b885b1bc332652c4c79fe8ee4ddf40bcd9d89aa74d-46.svg",
+      "name": "template-82a41e6a631d41fdcd9186b885b1bc332652c4c79fe8ee4ddf40bcd9d89aa74d-45",
+      "path": "icons/kubernetes-ui-identity/template-82a41e6a631d41fdcd9186b885b1bc332652c4c79fe8ee4ddf40bcd9d89aa74d-45.svg",
       "sha256": "7e5df0945c9f9ccca25f84b0a545fd41a1fee887b67e57e7a701a775b2551d20",
-      "templateIndex": 46
+      "templateIndex": 45
     },
     {
       "dataIconName": "azureadIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-93ef90fa0fc3a688658636ad1c396045c1b94ea5e085c1e77bf9d1402e079571-47",
-      "path": "icons/kubernetes-ui-identity/template-93ef90fa0fc3a688658636ad1c396045c1b94ea5e085c1e77bf9d1402e079571-47.svg",
+      "name": "template-93ef90fa0fc3a688658636ad1c396045c1b94ea5e085c1e77bf9d1402e079571-46",
+      "path": "icons/kubernetes-ui-identity/template-93ef90fa0fc3a688658636ad1c396045c1b94ea5e085c1e77bf9d1402e079571-46.svg",
       "sha256": "236dae509e8f27db767fef78b42c8a85dd6df8c9f5edfeaedccb9135d4d7b62a",
-      "templateIndex": 47
+      "templateIndex": 46
     },
     {
       "dataIconName": "googleIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-9403e30d8996fc6334116648c2413ec720dae06a1f502ecdcc4d2e0299703a58-48",
-      "path": "icons/kubernetes-ui-identity/template-9403e30d8996fc6334116648c2413ec720dae06a1f502ecdcc4d2e0299703a58-48.svg",
+      "name": "template-9403e30d8996fc6334116648c2413ec720dae06a1f502ecdcc4d2e0299703a58-47",
+      "path": "icons/kubernetes-ui-identity/template-9403e30d8996fc6334116648c2413ec720dae06a1f502ecdcc4d2e0299703a58-47.svg",
       "sha256": "d506026d2f6bc2e9ea41f810aebc7ec0b6113503fd817e51d1d23ab082cadda2",
-      "templateIndex": 48
+      "templateIndex": 47
     },
     {
       "dataIconName": "ldapIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-c97363cfdd73633d7dd19ce1b652b07e2ff415f313db9b5d386dbafba0366f7f-49",
-      "path": "icons/kubernetes-ui-identity/template-c97363cfdd73633d7dd19ce1b652b07e2ff415f313db9b5d386dbafba0366f7f-49.svg",
+      "name": "template-c97363cfdd73633d7dd19ce1b652b07e2ff415f313db9b5d386dbafba0366f7f-48",
+      "path": "icons/kubernetes-ui-identity/template-c97363cfdd73633d7dd19ce1b652b07e2ff415f313db9b5d386dbafba0366f7f-48.svg",
       "sha256": "3c8407cda1a02d83aa9a648eeb3c7873737769a302522c3ee16d05cc884f06af",
-      "templateIndex": 49
+      "templateIndex": 48
     },
     {
       "dataIconName": "oidcIcon",
       "extension": "kubernetes_ui_identity",
       "module": "KubernetesUiIdentityMicroUi",
       "moduleId": "kubernetes-ui-identity",
-      "name": "template-2cac091188af678aeeaf3324ca1ebc55c40547d2549b88f6dfd2259b581bf365-50",
-      "path": "icons/kubernetes-ui-identity/template-2cac091188af678aeeaf3324ca1ebc55c40547d2549b88f6dfd2259b581bf365-50.svg",
+      "name": "template-2cac091188af678aeeaf3324ca1ebc55c40547d2549b88f6dfd2259b581bf365-49",
+      "path": "icons/kubernetes-ui-identity/template-2cac091188af678aeeaf3324ca1ebc55c40547d2549b88f6dfd2259b581bf365-49.svg",
       "sha256": "3ea14f1d0c79267d41330fc17b52f1b566cbb92566ab9616c6d635ddbca1f654",
-      "templateIndex": 50
+      "templateIndex": 49
     },
     {
       "dataIconName": null,
@@ -38063,193 +38323,193 @@
       "templateIndex": 17
     },
     {
-      "dataIconName": "helpOutlineIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-18",
-      "path": "icons/search/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-18.svg",
-      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 18
-    },
-    {
-      "dataIconName": "closeIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-19",
-      "path": "icons/search/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-19.svg",
-      "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": "filterIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-20",
-      "path": "icons/search/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-20.svg",
-      "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
-      "templateIndex": 20
-    },
-    {
-      "dataIconName": "cancelIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-21",
-      "path": "icons/search/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-21.svg",
-      "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 21
-    },
-    {
-      "dataIconName": "arrowForwardIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-22",
-      "path": "icons/search/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-22.svg",
-      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 22
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-23",
-      "path": "icons/search/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-23.svg",
-      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
-      "templateIndex": 23
-    },
-    {
-      "dataIconName": "columnsIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-24",
-      "path": "icons/search/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-24.svg",
-      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 24
-    },
-    {
-      "dataIconName": "firstPageIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-25",
-      "path": "icons/search/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-25.svg",
-      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 25
-    },
-    {
-      "dataIconName": "lastPageIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-26",
-      "path": "icons/search/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-26.svg",
-      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 26
-    },
-    {
-      "dataIconName": "nextIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-27",
-      "path": "icons/search/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-27.svg",
-      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 27
-    },
-    {
-      "dataIconName": "previousIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-28",
-      "path": "icons/search/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-28.svg",
-      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 28
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-29",
-      "path": "icons/search/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-29.svg",
-      "sha256": "8e5e0aff3674b3be633131f9cef12d773fb4e97c2afe1993d0d99746a1aab663",
-      "templateIndex": 29
-    },
-    {
-      "dataIconName": "copyIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-30",
-      "path": "icons/search/template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-30.svg",
-      "sha256": "765ba7f10084ac197674544a4d688b84e96b05fc1c7a2b86e7133c100c2cd11c",
-      "templateIndex": 30
-    },
-    {
-      "dataIconName": "linkIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-31",
-      "path": "icons/search/template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-31.svg",
-      "sha256": "b5af826517da504bb8c5eb630edb54d4b780ebd735b6160bf98b8bdfa471ff10",
-      "templateIndex": 31
-    },
-    {
-      "dataIconName": "copyIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-32",
-      "path": "icons/search/template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-32.svg",
-      "sha256": "64a16ef49dd96f5b280cacdeca3938490098e732e85c9acc7e1357ed7f6dd30e",
-      "templateIndex": 32
-    },
-    {
-      "dataIconName": "linkIcon",
-      "extension": "search",
-      "module": "SearchMicroUi",
-      "moduleId": "search",
-      "name": "template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-33",
-      "path": "icons/search/template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-33.svg",
-      "sha256": "93f1afa58c7a64496da67a0564c75a6b9cf8da58fc4efb541ad3252f83320f82",
-      "templateIndex": 33
-    },
-    {
       "dataIconName": "bigquerySectionIcon",
       "extension": "search",
       "module": "SearchMicroUi",
       "moduleId": "search",
-      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-34",
-      "path": "icons/search/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-34.svg",
+      "name": "template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-18",
+      "path": "icons/search/template-a9c72146597c00ca08ef240a3d2a1a123574f03a88e8531af5095b79aa86fa57-18.svg",
       "sha256": "9c7137f229ae17fbea52215ba4304d27f5236447c3976535a9462bb697980e4d",
-      "templateIndex": 34
+      "templateIndex": 18
     },
     {
       "dataIconName": "cloudpubsubSectionIcon",
       "extension": "search",
       "module": "SearchMicroUi",
       "moduleId": "search",
-      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-35",
-      "path": "icons/search/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-35.svg",
+      "name": "template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-19",
+      "path": "icons/search/template-6da3627baa9862852e94107cf9678abf8e51a79b30dbbd3ccd48e1b29b065197-19.svg",
       "sha256": "b592c8cd8228a841c1af746710d7ed4ea97d09dadb7b147e3cf6576d862fd119",
-      "templateIndex": 35
+      "templateIndex": 19
     },
     {
       "dataIconName": "securitySectionIcon",
       "extension": "search",
       "module": "SearchMicroUi",
       "moduleId": "search",
-      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36",
-      "path": "icons/search/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-36.svg",
+      "name": "template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20",
+      "path": "icons/search/template-bfbac8873d99e5cb4e4a46856b0521126f5161cb3b43b00a1dea8333e12718d2-20.svg",
       "sha256": "1761e21dc13b03baf3470e1ea1dddc27da5502f35f8e74d6095afc5c2a53c3c0",
+      "templateIndex": 20
+    },
+    {
+      "dataIconName": "helpOutlineIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-21",
+      "path": "icons/search/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-21.svg",
+      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "closeIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-22",
+      "path": "icons/search/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-22.svg",
+      "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
+      "templateIndex": 22
+    },
+    {
+      "dataIconName": "filterIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-23",
+      "path": "icons/search/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-23.svg",
+      "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
+      "templateIndex": 23
+    },
+    {
+      "dataIconName": "cancelIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-24",
+      "path": "icons/search/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-24.svg",
+      "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
+      "templateIndex": 24
+    },
+    {
+      "dataIconName": "arrowForwardIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-25",
+      "path": "icons/search/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-25.svg",
+      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
+      "templateIndex": 25
+    },
+    {
+      "dataIconName": "arrowDropDownIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-26",
+      "path": "icons/search/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-26.svg",
+      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
+      "templateIndex": 26
+    },
+    {
+      "dataIconName": "columnsIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-27",
+      "path": "icons/search/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-27.svg",
+      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
+      "templateIndex": 27
+    },
+    {
+      "dataIconName": "firstPageIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-28",
+      "path": "icons/search/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-28.svg",
+      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
+      "templateIndex": 28
+    },
+    {
+      "dataIconName": "lastPageIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-29",
+      "path": "icons/search/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-29.svg",
+      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
+      "templateIndex": 29
+    },
+    {
+      "dataIconName": "nextIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-30",
+      "path": "icons/search/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-30.svg",
+      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
+      "templateIndex": 30
+    },
+    {
+      "dataIconName": "previousIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-31",
+      "path": "icons/search/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-31.svg",
+      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
+      "templateIndex": 31
+    },
+    {
+      "dataIconName": "arrowDropDownIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-32",
+      "path": "icons/search/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-32.svg",
+      "sha256": "8e5e0aff3674b3be633131f9cef12d773fb4e97c2afe1993d0d99746a1aab663",
+      "templateIndex": 32
+    },
+    {
+      "dataIconName": "copyIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-33",
+      "path": "icons/search/template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-33.svg",
+      "sha256": "765ba7f10084ac197674544a4d688b84e96b05fc1c7a2b86e7133c100c2cd11c",
+      "templateIndex": 33
+    },
+    {
+      "dataIconName": "linkIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-34",
+      "path": "icons/search/template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-34.svg",
+      "sha256": "b5af826517da504bb8c5eb630edb54d4b780ebd735b6160bf98b8bdfa471ff10",
+      "templateIndex": 34
+    },
+    {
+      "dataIconName": "copyIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-35",
+      "path": "icons/search/template-4d0b11e2be59c2525b2f6745cb912e0a36e7b7dbec6292d1e7e2c828ed2e0972-35.svg",
+      "sha256": "64a16ef49dd96f5b280cacdeca3938490098e732e85c9acc7e1357ed7f6dd30e",
+      "templateIndex": 35
+    },
+    {
+      "dataIconName": "linkIcon",
+      "extension": "search",
+      "module": "SearchMicroUi",
+      "moduleId": "search",
+      "name": "template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-36",
+      "path": "icons/search/template-59bbdc219731ebacec422433b6a6c9cdeec4f76ae036e91542da5240f0fc09fa-36.svg",
+      "sha256": "93f1afa58c7a64496da67a0564c75a6b9cf8da58fc4efb541ad3252f83320f82",
       "templateIndex": 36
     },
     {
@@ -43440,6 +43700,6 @@
   "source": "Google Cloud Console",
   "sourceLock": {
     "path": "source-lock.json",
-    "sha256": "2f780454670342e262703fc4ca26ce4fda984042bffbdd0579d0a70a83bca1da"
+    "sha256": "20901f2b05fc4c3123c3154631c0e25a34f5679c9ee22d420672e7cc6102cc32"
   }
 }
