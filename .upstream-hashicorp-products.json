@@ -2,9 +2,9 @@
   "source": "hashicorp/design-system/packages/flight-icons (Products)",
   "repositoryUrl": "https://github.com/hashicorp/design-system",
   "packagePath": "packages/flight-icons",
-  "commit": "3f5785b9534b77385597f349fb6bca453403e76c",
+  "commit": "5e9396024ecc2b7425f60b4ce5f39da83438a2a2",
   "packageVersion": "5.1.0",
-  "contentSha256": "bac2f800e7284eae37b736866b7a6d626199efe505ae3d024a896baee527637e",
+  "contentSha256": "42359e862c340a8132cfd9ea40be064df44ae72209a213b72773995d7a9b4b65",
   "includedCategories": [
     "Products"
   ],

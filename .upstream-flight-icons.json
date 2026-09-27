@@ -2,9 +2,9 @@
   "source": "hashicorp/design-system/packages/flight-icons",
   "repositoryUrl": "https://github.com/hashicorp/design-system",
   "packagePath": "packages/flight-icons",
-  "commit": "3f5785b9534b77385597f349fb6bca453403e76c",
+  "commit": "5e9396024ecc2b7425f60b4ce5f39da83438a2a2",
   "packageVersion": "5.1.0",
-  "contentSha256": "0694ddb70b837feb2af51b9388087499274c6c36474ff0fb71bd403d7b79afdd",
+  "contentSha256": "3bd00c6e14fcdf9f4dcbd6e101243f567cc2cf7a33dd2a2cdf82eece59e5290b",
   "includedCategories": [
     "Animated",
     "Arrows",
@@ -28,7 +28,7 @@
     "Products",
     "Services"
   ],
-  "indexedAssetCount": 862,
-  "indexedFamilyCount": 396,
+  "indexedAssetCount": 864,
+  "indexedFamilyCount": 397,
   "groupedFillPairCount": 35
 }

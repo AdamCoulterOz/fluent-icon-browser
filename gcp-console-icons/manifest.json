@@ -1,6 +1,6 @@
 {
   "format": "gcp-console-svg-archive-v1",
-  "iconCount": 4373,
+  "iconCount": 4358,
   "icons": [
     {
       "dataIconName": null,
@@ -32333,6 +32333,16 @@
       "templateIndex": 40
     },
     {
+      "dataIconName": "articleSparkIcon",
+      "extension": "meridian_studio",
+      "module": "MeridianStudioMicroUi",
+      "moduleId": "meridian-studio",
+      "name": "template-792c5e1fadc34ce7ccced2c20a8018efe3a24aad967798090a33d5300ad07273-41",
+      "path": "icons/meridian-studio/template-792c5e1fadc34ce7ccced2c20a8018efe3a24aad967798090a33d5300ad07273-41.svg",
+      "sha256": "0ae61b25f68c3416e9b6b858a5653ee787b8714257a90d674431578db6638954",
+      "templateIndex": 41
+    },
+    {
       "dataIconName": null,
       "extension": "metropolis",
       "module": "MetropolisMicroUi",
@@ -42533,604 +42543,444 @@
       "templateIndex": 12
     },
     {
-      "dataIconName": "helpOutlineIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-13",
-      "path": "icons/vpc-service-controls/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-13.svg",
-      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
-      "templateIndex": 13
-    },
-    {
-      "dataIconName": "cloudProductsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-14",
-      "path": "icons/vpc-service-controls/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-14.svg",
-      "sha256": "4966e90785b2d589a33c342c9326dea0825ae05446dbc75e4b8de4a977ab8aaa",
-      "templateIndex": 14
-    },
-    {
-      "dataIconName": "domainIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-15",
-      "path": "icons/vpc-service-controls/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-15.svg",
-      "sha256": "b8a4f91da4b0a7bc5c3fd1dc10392ce4ca3b5528759a110afb9d5a4c6d775ede",
-      "templateIndex": 15
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-16",
-      "path": "icons/vpc-service-controls/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-16.svg",
-      "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
-      "templateIndex": 16
-    },
-    {
-      "dataIconName": "projectIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-17",
-      "path": "icons/vpc-service-controls/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-17.svg",
-      "sha256": "638254e0334ce4e00862ba009e97575d77bd6b093b8ecc2476953ab613536229",
-      "templateIndex": 17
-    },
-    {
-      "dataIconName": "serviceAccountsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-18",
-      "path": "icons/vpc-service-controls/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-18.svg",
-      "sha256": "9682f330c36bc6273cfc93aaa1540cce16d33a3e81bc0a3468912d7eed6c8777",
-      "templateIndex": 18
-    },
-    {
-      "dataIconName": "cloudProductsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-19",
-      "path": "icons/vpc-service-controls/template-37b6f52851e8a475ccdbde5001f6e47df8d39619dd6c84fa98b11e0cb9701fee-19.svg",
-      "sha256": "05584801946598f387ce62784e64735a553416ea9820043a400b7f8390706913",
-      "templateIndex": 19
-    },
-    {
-      "dataIconName": "domainIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-20",
-      "path": "icons/vpc-service-controls/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-20.svg",
-      "sha256": "4d857fda56e73093bb289f9bb383d8d86c253cafa8f5395c79112c66998c6c5b",
-      "templateIndex": 20
-    },
-    {
-      "dataIconName": "folderIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-21",
-      "path": "icons/vpc-service-controls/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-21.svg",
-      "sha256": "82e0cdcbda97cacf547ad51b20ca882351a80484e3112322d4f1ca18f51f9497",
-      "templateIndex": 21
-    },
-    {
-      "dataIconName": "projectIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-22",
-      "path": "icons/vpc-service-controls/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-22.svg",
-      "sha256": "62317f3063eb1bcb31e7107a4d1dd6a321a238144f78000cae0ec529f2a2450a",
-      "templateIndex": 22
-    },
-    {
-      "dataIconName": "serviceAccountsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-23",
-      "path": "icons/vpc-service-controls/template-4c0a63ed841ad1f85fb027b202298d4f57f4732331ebcdfec287598bdebddc33-23.svg",
-      "sha256": "b618c524aa98b7b6fb8a444fa6aa4cc343cf048efcd99ef26e683384d45a68d2",
-      "templateIndex": 23
-    },
-    {
-      "dataIconName": "bucketIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-24",
-      "path": "icons/vpc-service-controls/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-24.svg",
-      "sha256": "7f0beb2262a1f79da5dfd44839ae8a401bff39d4401d381856839c77322eba47",
-      "templateIndex": 24
-    },
-    {
-      "dataIconName": "bucketIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-25",
-      "path": "icons/vpc-service-controls/template-76b98a41d51ff57c5d1ba3210dfdbc59176c941fc18f25bbe8ce3b6d43d5b8e8-25.svg",
-      "sha256": "1f8c427bc0db7f7dc66bf0321f049f81a4392cb9cce3a8f30b3ee3398aa15643",
-      "templateIndex": 25
-    },
-    {
       "dataIconName": "closeIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-26",
-      "path": "icons/vpc-service-controls/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-26.svg",
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13",
+      "path": "icons/vpc-service-controls/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-13.svg",
       "sha256": "5f2824a8b4cb290926e504d0b3d8de184a251e21cd92d2d2e49c75cfa37d43e8",
-      "templateIndex": 26
+      "templateIndex": 13
     },
     {
       "dataIconName": "filterIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-27",
-      "path": "icons/vpc-service-controls/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-27.svg",
+      "name": "template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-14",
+      "path": "icons/vpc-service-controls/template-ce4db03abaacc88a0fae0407f1f0691f2e24fe087f464c54891941ec92224385-14.svg",
       "sha256": "424eb8c8106516df52c3d010b5d032eea84960bb6817e67b114a22a74f387bd7",
-      "templateIndex": 27
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "helpOutlineIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-15",
+      "path": "icons/vpc-service-controls/template-52b3656a9edf29a1d743cdcd92b8908a85173cf100c9f4d00128cf75e768d681-15.svg",
+      "sha256": "97ea00bc5e3fec4fc49425044160e8152bc247d53fa7b2dd48e2799514b049cc",
+      "templateIndex": 15
     },
     {
       "dataIconName": "cancelIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-28",
-      "path": "icons/vpc-service-controls/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-28.svg",
+      "name": "template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-16",
+      "path": "icons/vpc-service-controls/template-3ab01da1ae6769d0861cd2089afcb6fa6debd7320e7353eb044806b8b1f688b9-16.svg",
       "sha256": "8ae2fb61a483e976a0b06994b82297b64d2dd6232062127694270bf75cfeab30",
-      "templateIndex": 28
-    },
-    {
-      "dataIconName": "arrowForwardIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-29",
-      "path": "icons/vpc-service-controls/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-29.svg",
-      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
-      "templateIndex": 29
-    },
-    {
-      "dataIconName": "arrowDropDownIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-30",
-      "path": "icons/vpc-service-controls/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-30.svg",
-      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
-      "templateIndex": 30
-    },
-    {
-      "dataIconName": "columnsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-31",
-      "path": "icons/vpc-service-controls/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-31.svg",
-      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
-      "templateIndex": 31
-    },
-    {
-      "dataIconName": "firstPageIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-32",
-      "path": "icons/vpc-service-controls/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-32.svg",
-      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
-      "templateIndex": 32
-    },
-    {
-      "dataIconName": "lastPageIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-33",
-      "path": "icons/vpc-service-controls/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-33.svg",
-      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
-      "templateIndex": 33
-    },
-    {
-      "dataIconName": "nextIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-34",
-      "path": "icons/vpc-service-controls/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-34.svg",
-      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
-      "templateIndex": 34
-    },
-    {
-      "dataIconName": "previousIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-35",
-      "path": "icons/vpc-service-controls/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-35.svg",
-      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
-      "templateIndex": 35
-    },
-    {
-      "dataIconName": "appEnabledFolderIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-36",
-      "path": "icons/vpc-service-controls/template-d637b64eb57ae2872af4535105d96007ffce5f24643284cb798feffe324c2504-36.svg",
-      "sha256": "f68609389b16f6f404e1238020a2fef2a3ebaad60ceb4c9ea9bbd907f6682f69",
-      "templateIndex": 36
-    },
-    {
-      "dataIconName": "managementProjectIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-37",
-      "path": "icons/vpc-service-controls/template-cf9891849a2bf5db1a56daef55b0461512e58d892ab1ad953f4c1f1c19085f91-37.svg",
-      "sha256": "82fade06e11960207b01bf01226b718d83b47421f1320fe816cf42a0feb3e626",
-      "templateIndex": 37
-    },
-    {
-      "dataIconName": "doneIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-38",
-      "path": "icons/vpc-service-controls/template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-38.svg",
-      "sha256": "d9c444b800a54bb82cf2e0611bcd0bce4b89db1386dfebd03702d20f55c59595",
-      "templateIndex": 38
-    },
-    {
-      "dataIconName": "manageProjectsIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-39",
-      "path": "icons/vpc-service-controls/template-2a8e47fdc32987f37f5c52e9ce151e5b8d967d4d9313cb5e895bb23f32185f06-39.svg",
-      "sha256": "a150caf94d7f50d134f1a39d77bb6fb80417ce027f69f5f3e5a4876ee493bae6",
-      "templateIndex": 39
-    },
-    {
-      "dataIconName": "arrowBackIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-40",
-      "path": "icons/vpc-service-controls/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-40.svg",
-      "sha256": "9bc17a3c3ca1d98f0680e2e7f6f2b1890bc05dfe3e5c0c2a3282de8d45e1a219",
-      "templateIndex": 40
-    },
-    {
-      "dataIconName": "searchIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-41",
-      "path": "icons/vpc-service-controls/template-aaa333281d963c59ceb4ba68ca6d04e8b9f46488054685a2d735cff08769f50e-41.svg",
-      "sha256": "b22a02e0f7b22bbb8eb2e0b9588f91f22113d76feaac425afeb9fcbac39f997b",
-      "templateIndex": 41
-    },
-    {
-      "dataIconName": "moreIcon",
-      "extension": "vpc_service_controls",
-      "module": "SecuritySecurityZoneMicroUi",
-      "moduleId": "vpc-service-controls",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-42",
-      "path": "icons/vpc-service-controls/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-42.svg",
-      "sha256": "25d8fa8de7b8d450a6c2ecbc1401686161ffabf2f337ada8022ed799228b32da",
-      "templateIndex": 42
+      "templateIndex": 16
     },
     {
       "dataIconName": "arrowDownwardIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-43",
-      "path": "icons/vpc-service-controls/template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-43.svg",
+      "name": "template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-17",
+      "path": "icons/vpc-service-controls/template-74f3e1681447d7fff05ed7eede28de3016ae677f03305608f739a52778c9e8b7-17.svg",
       "sha256": "cbe46757c298df34557c7ff5f1393644612c1ec03dd31a14c1eba31a245ec988",
-      "templateIndex": 43
+      "templateIndex": 17
     },
     {
       "dataIconName": "arrowUpwardIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-44",
-      "path": "icons/vpc-service-controls/template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-44.svg",
+      "name": "template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-18",
+      "path": "icons/vpc-service-controls/template-3f604b9270c214e48801318d9a879cd50a0b0b6dd94b41b07b8591b0ceda12d5-18.svg",
       "sha256": "7258ebfaab7b077373b09fe4ef76f3e55922192802fabe2ef46863fe9140fa48",
-      "templateIndex": 44
+      "templateIndex": 18
     },
     {
       "dataIconName": "deleteIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-45",
-      "path": "icons/vpc-service-controls/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-45.svg",
+      "name": "template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-19",
+      "path": "icons/vpc-service-controls/template-05636f24ef27ccb2c061bde2f93e20c0140f0efa06b65505e68dec04ad56e66c-19.svg",
       "sha256": "035cfb8f37132dcec4b4eae0e54205e1cc49b3916be90c0032813faa986dd6bd",
-      "templateIndex": 45
+      "templateIndex": 19
     },
     {
       "dataIconName": "addIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-46",
-      "path": "icons/vpc-service-controls/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-46.svg",
+      "name": "template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-20",
+      "path": "icons/vpc-service-controls/template-006141e673f2ee4020bb10496d53cf1cf5ed26ee8ac4af3e733fdef1e2a12195-20.svg",
       "sha256": "fb965561e7f5ea62bf8927213c7fb3c212ad195b28c567c0ea3f4046931203da",
-      "templateIndex": 46
+      "templateIndex": 20
     },
     {
       "dataIconName": "arrowBackIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-47",
-      "path": "icons/vpc-service-controls/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-47.svg",
+      "name": "template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-21",
+      "path": "icons/vpc-service-controls/template-3ceda404a34624106dde6d7b1b2e27a88b006164999440dc64bbe22348be50de-21.svg",
       "sha256": "49c20790adda2726391a8fa1cfd58c350933cfdf5157144a4b3ece4f153e5445",
-      "templateIndex": 47
+      "templateIndex": 21
+    },
+    {
+      "dataIconName": "arrowDropDownIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-22",
+      "path": "icons/vpc-service-controls/template-99d2b95f7bb19215e10c1ce671f96d95d10721ecb26c7fab4dcf42c8a7a8e468-22.svg",
+      "sha256": "cb5968856786c3c01140141f40aae0f3566c80781a19316326ca7b94604a12e7",
+      "templateIndex": 22
     },
     {
       "dataIconName": "statusInactiveIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-48",
-      "path": "icons/vpc-service-controls/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-48.svg",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-23",
+      "path": "icons/vpc-service-controls/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-23.svg",
       "sha256": "b12fc75eb25786ed1ab881b8a16c75082f788f6ea7e5d14c023f8fcf3a44ef40",
-      "templateIndex": 48
+      "templateIndex": 23
     },
     {
       "dataIconName": "statusPausedIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-49",
-      "path": "icons/vpc-service-controls/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-49.svg",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-24",
+      "path": "icons/vpc-service-controls/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-24.svg",
       "sha256": "8f26d31c77ca6c6773698fda6aff8593e988c49046ac71ab3039f523cf01e821",
-      "templateIndex": 49
+      "templateIndex": 24
     },
     {
       "dataIconName": "statusRunningIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-50",
-      "path": "icons/vpc-service-controls/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-50.svg",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-25",
+      "path": "icons/vpc-service-controls/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-25.svg",
       "sha256": "f6b14e1dc936a9a199d7faaceb98623ac5cd92f967181e90163c1196aabdae51",
-      "templateIndex": 50
+      "templateIndex": 25
     },
     {
       "dataIconName": "statusStoppedIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-51",
-      "path": "icons/vpc-service-controls/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-51.svg",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-26",
+      "path": "icons/vpc-service-controls/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-26.svg",
       "sha256": "6b8aa9a34f20b452d8c86974dd4bd903419238bbf1a625052b1b66513a6f64dc",
-      "templateIndex": 51
+      "templateIndex": 26
     },
     {
       "dataIconName": "statusErrorIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-52",
-      "path": "icons/vpc-service-controls/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-52.svg",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-27",
+      "path": "icons/vpc-service-controls/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-27.svg",
       "sha256": "2b686f1a7d49581fd8622cedfffbf48b24db31e4db612fe0ab8a778279831151",
-      "templateIndex": 52
+      "templateIndex": 27
     },
     {
       "dataIconName": "statusInactiveIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-53",
-      "path": "icons/vpc-service-controls/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-53.svg",
+      "name": "template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-28",
+      "path": "icons/vpc-service-controls/template-1c3faa6e7df0c427841b1008cc6c6d497bcbe74c87fd5e2735bd15e33bc0e689-28.svg",
       "sha256": "9a8dd2637dd9e6bc144ead50dce04a7c9fc42cfc606a5979939d46edf0888e48",
-      "templateIndex": 53
+      "templateIndex": 28
     },
     {
       "dataIconName": "statusInfoIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-54",
-      "path": "icons/vpc-service-controls/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-54.svg",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-29",
+      "path": "icons/vpc-service-controls/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-29.svg",
       "sha256": "673778a62f3bec9c1f99113dd325f56f8a3e04df08c7eee952dda3ce2a66cff3",
-      "templateIndex": 54
+      "templateIndex": 29
     },
     {
       "dataIconName": "statusPausedIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-55",
-      "path": "icons/vpc-service-controls/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-55.svg",
+      "name": "template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-30",
+      "path": "icons/vpc-service-controls/template-c4ef6f7a092daf52ad4f947e472ab95c6d87d289df4d1150f9c0238f14bcf267-30.svg",
       "sha256": "0ae6942f7edb6656b5a99e106e2028155d7c08f42d7e4ad2a0d28dda7248106b",
-      "templateIndex": 55
+      "templateIndex": 30
     },
     {
       "dataIconName": "statusRunningIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-56",
-      "path": "icons/vpc-service-controls/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-56.svg",
+      "name": "template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-31",
+      "path": "icons/vpc-service-controls/template-5b8849d6c8039cc6af917b9bba8ca423373f9ebf7f4298e83fc8809df2d0f49c-31.svg",
       "sha256": "dbd8fbf7a138dd652ab3393fb88f89c30d5f1202d60d81f419d7050243ccdbce",
-      "templateIndex": 56
+      "templateIndex": 31
     },
     {
       "dataIconName": "statusStoppedIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-57",
-      "path": "icons/vpc-service-controls/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-57.svg",
+      "name": "template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-32",
+      "path": "icons/vpc-service-controls/template-87e4b2ecd15ab683db0c1f48cfa41f3a907463dfef645972d363beeabfc8cca2-32.svg",
       "sha256": "a7ff9b6543692cdb3b37424c9c6b0d1f890e3ae311232fac17cb9dc04f1e1389",
-      "templateIndex": 57
+      "templateIndex": 32
     },
     {
       "dataIconName": "statusSuccessIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-58",
-      "path": "icons/vpc-service-controls/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-58.svg",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-33",
+      "path": "icons/vpc-service-controls/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-33.svg",
       "sha256": "fd9b2e8c7fe8e194d1a8ac1f0be20462bfbd7320e74814805ab0d15bf0977a88",
-      "templateIndex": 58
+      "templateIndex": 33
     },
     {
       "dataIconName": "statusWarningIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-59",
-      "path": "icons/vpc-service-controls/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-59.svg",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-34",
+      "path": "icons/vpc-service-controls/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-34.svg",
       "sha256": "011f4a571b675eaf3e6256a40f37bfb52152499ab8b04ae349008d4ce525ee9f",
-      "templateIndex": 59
+      "templateIndex": 34
+    },
+    {
+      "dataIconName": "doneIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-35",
+      "path": "icons/vpc-service-controls/template-7d4cd58ec6a386b0409beab69e2d2a59d1debd2e2481b90c92c12ae3f4aaebae-35.svg",
+      "sha256": "d9c444b800a54bb82cf2e0611bcd0bce4b89db1386dfebd03702d20f55c59595",
+      "templateIndex": 35
     },
     {
       "dataIconName": "infoIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-60",
-      "path": "icons/vpc-service-controls/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-60.svg",
+      "name": "template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-36",
+      "path": "icons/vpc-service-controls/template-a7c3c672b0d40ab2294331051558fb172c48dacdb737233c078562eedf4e192c-36.svg",
       "sha256": "707a74999347abdd603578c515ac0fab0fc67447fc3ffbad84885764f9d6b0f8",
-      "templateIndex": 60
+      "templateIndex": 36
     },
     {
-      "dataIconName": "groupIcon",
+      "dataIconName": "arrowForwardIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-61",
-      "path": "icons/vpc-service-controls/template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-61.svg",
-      "sha256": "111f570fb71f61735138a6b52fdb8d15c3d60d465d6421b41c8fe94ab98c3bbb",
-      "templateIndex": 61
+      "name": "template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-37",
+      "path": "icons/vpc-service-controls/template-c1e302541d87785a664dd7363881a1cfbb43ac0d5c087f8bf6012fbd8c388fd7-37.svg",
+      "sha256": "d212cd5b5ffd99c5aa98b6819ae107861da26070e43b5ea2b2a16245807e9597",
+      "templateIndex": 37
     },
     {
-      "dataIconName": "domainIcon",
+      "dataIconName": "columnsIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-62",
-      "path": "icons/vpc-service-controls/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-62.svg",
-      "sha256": "67d6b9b57a6337cb9548488d228e428e3ffb629619ac12709b7df6b89e4e3811",
-      "templateIndex": 62
+      "name": "template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-38",
+      "path": "icons/vpc-service-controls/template-54f6c6b4ac5783c06d8a408a6899fa8fe0a1baf0f46467635931834b033414db-38.svg",
+      "sha256": "5f626dea5771d7a32e5dcba31ca5688168e4ebb7bde92789200c1d79499c96e9",
+      "templateIndex": 38
     },
     {
-      "dataIconName": "editIcon",
+      "dataIconName": "firstPageIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-63",
-      "path": "icons/vpc-service-controls/template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-63.svg",
-      "sha256": "2d7c92295ebd1c0ebf6ffed78af49b90d6047cdbcf01597fd671d88d669e0757",
-      "templateIndex": 63
+      "name": "template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-39",
+      "path": "icons/vpc-service-controls/template-107a9ddda8dd24979fc82762a17ba68a24a5f5fb9ff0aef5729508758ff8cef4-39.svg",
+      "sha256": "f0f9e59be8b4fd7f541e4d72366cef6a1355f916f06738659dd68c7363c10c4d",
+      "templateIndex": 39
     },
     {
-      "dataIconName": "moreIcon",
+      "dataIconName": "lastPageIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-64",
-      "path": "icons/vpc-service-controls/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-64.svg",
-      "sha256": "019a60afd6d64a662e03b267c9fea461ad04eb15e8c2a443c8cb02293127ccb5",
-      "templateIndex": 64
+      "name": "template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-40",
+      "path": "icons/vpc-service-controls/template-7c74cec7917101dff48e1f974bc8c04c91bb5dd6bd2df214cc84dec71c0296d8-40.svg",
+      "sha256": "c6113309b68aff1fc65406850df1e809b20eb143db7a12b156cabb3dca30c9c4",
+      "templateIndex": 40
     },
     {
       "dataIconName": "nextIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-65",
-      "path": "icons/vpc-service-controls/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-65.svg",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-41",
+      "path": "icons/vpc-service-controls/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-41.svg",
+      "sha256": "bbdeba3b946c42e06a62847819e2981eac6f3eb93c7298455e5a9d2e8ada80fd",
+      "templateIndex": 41
+    },
+    {
+      "dataIconName": "previousIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-42",
+      "path": "icons/vpc-service-controls/template-46f53c306cff2755f7614661a3cd228f8b0c44517bc4a8c1eb0cb19f24ef622d-42.svg",
+      "sha256": "e4d59b6fc865844c2e8c8d7453908f5581d5c83ec27f0ac95fc1a8c2943fd75d",
+      "templateIndex": 42
+    },
+    {
+      "dataIconName": "folderIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-43",
+      "path": "icons/vpc-service-controls/template-a806501c761af18d23fa9f90b629dcc5bbed7bb23eb42a659f5989f10a9b7dbe-43.svg",
+      "sha256": "a08f64e246eb99bf6488077c33a8ad4669631e224b7291872103aa9795655a3d",
+      "templateIndex": 43
+    },
+    {
+      "dataIconName": "groupIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-44",
+      "path": "icons/vpc-service-controls/template-79c1fc1d969bb94c68bea3ec3298d1028cde6c4440efdd4e5aa195061d9f8eb8-44.svg",
+      "sha256": "111f570fb71f61735138a6b52fdb8d15c3d60d465d6421b41c8fe94ab98c3bbb",
+      "templateIndex": 44
+    },
+    {
+      "dataIconName": "projectIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-45",
+      "path": "icons/vpc-service-controls/template-4266bd1481664ea47fae14a6c32b399931c844925367d858a3d59545364520fc-45.svg",
+      "sha256": "638254e0334ce4e00862ba009e97575d77bd6b093b8ecc2476953ab613536229",
+      "templateIndex": 45
+    },
+    {
+      "dataIconName": "domainIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-46",
+      "path": "icons/vpc-service-controls/template-306cd49b80ddf7f443ba26f82cd5c563bebc9679d64c3bdc9e8a69071d5b44f6-46.svg",
+      "sha256": "67d6b9b57a6337cb9548488d228e428e3ffb629619ac12709b7df6b89e4e3811",
+      "templateIndex": 46
+    },
+    {
+      "dataIconName": "editIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-47",
+      "path": "icons/vpc-service-controls/template-72a5220e2ba8116b86181a2b87f9814cedd516e3fe82a91e5109e8e6a9c4b7e8-47.svg",
+      "sha256": "2d7c92295ebd1c0ebf6ffed78af49b90d6047cdbcf01597fd671d88d669e0757",
+      "templateIndex": 47
+    },
+    {
+      "dataIconName": "moreIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-48",
+      "path": "icons/vpc-service-controls/template-94112f22b95e526824a9777b458b9fc8677f81dc19b84825b65b77d0b8fbe10a-48.svg",
+      "sha256": "019a60afd6d64a662e03b267c9fea461ad04eb15e8c2a443c8cb02293127ccb5",
+      "templateIndex": 48
+    },
+    {
+      "dataIconName": "nextIcon",
+      "extension": "vpc_service_controls",
+      "module": "SecuritySecurityZoneMicroUi",
+      "moduleId": "vpc-service-controls",
+      "name": "template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-49",
+      "path": "icons/vpc-service-controls/template-46ec0219690e63d94fbbf71948d792318d336f954ac2688fae4eed5069cbd1bb-49.svg",
       "sha256": "97bfc948ba36eeeb19c9adf871b324a55d9e044184e9906da1663f893811a568",
-      "templateIndex": 65
+      "templateIndex": 49
     },
     {
       "dataIconName": "resourcesIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-66",
-      "path": "icons/vpc-service-controls/template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-66.svg",
+      "name": "template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-50",
+      "path": "icons/vpc-service-controls/template-33fd946f02de3c28b49fbbfe7782fb769f21175cce675dd4284c48511b1284a7-50.svg",
       "sha256": "8f3c960a40aac24a5de098095b8d24456e3392870b6abbe6456738bcf9fa4e03",
-      "templateIndex": 66
+      "templateIndex": 50
     },
     {
       "dataIconName": "selectAllIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-dd5e8cb1e8ca5cb3c3bb1298d298aba2b6f1e4ee30fb2632b7ae141523b45842-67",
-      "path": "icons/vpc-service-controls/template-dd5e8cb1e8ca5cb3c3bb1298d298aba2b6f1e4ee30fb2632b7ae141523b45842-67.svg",
+      "name": "template-dd5e8cb1e8ca5cb3c3bb1298d298aba2b6f1e4ee30fb2632b7ae141523b45842-51",
+      "path": "icons/vpc-service-controls/template-dd5e8cb1e8ca5cb3c3bb1298d298aba2b6f1e4ee30fb2632b7ae141523b45842-51.svg",
       "sha256": "d0d7d2f45442d09db7abe07671eb344862e047c1822f70655fe6376c4f3ab572",
-      "templateIndex": 67
+      "templateIndex": 51
     },
     {
       "dataIconName": "awsIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-68",
-      "path": "icons/vpc-service-controls/template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-68.svg",
+      "name": "template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-52",
+      "path": "icons/vpc-service-controls/template-a228a3d85a1a26f18e8a664e7227fcaed11ff0f663770a0b8904a611f809f7b2-52.svg",
       "sha256": "af6adaeccff43e23007d48e238e641c1e78d7fed5d33e330ea63b7e93b3ff069",
-      "templateIndex": 68
+      "templateIndex": 52
     },
     {
       "dataIconName": "awsAccountIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-69",
-      "path": "icons/vpc-service-controls/template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-69.svg",
+      "name": "template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-53",
+      "path": "icons/vpc-service-controls/template-8b22037acb7ca7958f87e627a638c119546e4f0d0c6a04d6fa55ad191baeb404-53.svg",
       "sha256": "3701db72baeeb5d90c2dd6a60024bf5edc80a2114261107513b214608f77f1f7",
-      "templateIndex": 69
+      "templateIndex": 53
     },
     {
       "dataIconName": "azureManagementGroupIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-70",
-      "path": "icons/vpc-service-controls/template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-70.svg",
+      "name": "template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-54",
+      "path": "icons/vpc-service-controls/template-3fd4c0e51b89264d192af0fdcf9ce864cfaf66156061f303e2f8fef27c1edb1d-54.svg",
       "sha256": "31b265e1914632dc6234811222704d49696d0043051c56e62659990e0372d33c",
-      "templateIndex": 70
+      "templateIndex": 54
     },
     {
       "dataIconName": "azureResourceGroupIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-71",
-      "path": "icons/vpc-service-controls/template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-71.svg",
+      "name": "template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-55",
+      "path": "icons/vpc-service-controls/template-c8d76c5174f2ab676155e5abf16964e707653b6fbaa2a8a52f19b50587699da4-55.svg",
       "sha256": "a1d73a8a33eda3a40f0fbc2793723c71e6d92a607c197a19cf90b681fbf1e6c2",
-      "templateIndex": 71
+      "templateIndex": 55
     },
     {
       "dataIconName": "azureSubscriptionIcon",
       "extension": "vpc_service_controls",
       "module": "SecuritySecurityZoneMicroUi",
       "moduleId": "vpc-service-controls",
-      "name": "template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-72",
-      "path": "icons/vpc-service-controls/template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-72.svg",
+      "name": "template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-56",
+      "path": "icons/vpc-service-controls/template-68d2683b64e80fd0bafb38d5d199846307209a50eee8a89b5a4cc256141392c8-56.svg",
       "sha256": "71ea557e9da97634160f86fc7a054e97a65dc8486759c839d8551d500d553b61",
-      "templateIndex": 72
+      "templateIndex": 56
     },
     {
       "dataIconName": null,
@@ -43740,6 +43590,6 @@
   "source": "Google Cloud Console",
   "sourceLock": {
     "path": "source-lock.json",
-    "sha256": "409a055ab671d98f6c221c070373cdf684523410cea1a785ea2b4c8ae86b8531"
+    "sha256": "7ea1bd6413744c95a5716387f2906c0fd99b2fbc86cabe409526853240f61b00"
   }
 }
