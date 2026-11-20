@@ -1,4 +1,4 @@
-const CACHE_NAME = "fluent-icon-browser-v22";
+const CACHE_NAME = "fluent-icon-browser-v23";
 const ICON_CACHE_NAME = "fluent-icons-assets-v8";
 const ICON_CACHE_CONCURRENCY = 2;
 const APP_SHELL = [
@@ -36,6 +36,10 @@ self.addEventListener("fetch", (event) => {
     }
 
     const url = new URL(event.request.url);
+    if (isRemoteResolverCorsRequest(event.request, url)) {
+        return;
+    }
+
     const isRemoteIconAsset =
         url.origin !== self.location.origin &&
         /\.(?:svg|js|json)$/i.test(url.pathname);
@@ -47,6 +51,13 @@ self.addEventListener("fetch", (event) => {
 
     event.respondWith(cacheAppAsset(event.request));
 });
+
+function isRemoteResolverCorsRequest(request, url) {
+    return url.origin !== self.location.origin &&
+        request.mode === "cors" &&
+        request.credentials === "omit" &&
+        request.destination === "";
+}
 
 self.addEventListener("message", (event) => {
     if (event.data?.type !== "cache-icons" || !Array.isArray(event.data.urls)) {

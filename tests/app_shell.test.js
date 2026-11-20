@@ -57,7 +57,7 @@ assert.deepEqual(
     currentFrontendAssets
 );
 
-assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v22");
+assert.equal(readConstant("CACHE_NAME"), "fluent-icon-browser-v23");
 assert.equal(readConstant("ICON_CACHE_NAME"), "fluent-icons-assets-v8");
 
 console.log("app_shell.test.js: ok");

@@ -1,5 +1,10 @@
 # History
 
+## 2026-11-20: Preserve Native Safari CORS for Remote Resolver Fetches
+
+- Excluded cross-origin `GET` requests with `mode: "cors"`, `credentials: "omit"`, and an empty destination from the service worker's `respondWith` routing. This lets Safari perform the resolver's public CORS requests natively after it rejected the worker-managed Azure Portal Dynamic-module fetch with `TypeError: Load failed`.
+- Kept resolver digest verification, SVG sanitization, and in-memory demand caching unchanged. Same-origin Google Cloud archive resolution and ordinary direct image/cache routes remain service-worker managed; advanced the app-shell generation so installed clients receive the route change.
+
 ## 2026-11-20: Split Google Cloud Console Sync From Other Icon Sources
 
 - Separated the Google Cloud route-map/module import into its own scheduled/manual writer. The non-GCP sync no longer contacts Google and composes fresh collections with the exact committed GCP set; the GCP writer replaces only that projected set and its validated SVG-only tree.
