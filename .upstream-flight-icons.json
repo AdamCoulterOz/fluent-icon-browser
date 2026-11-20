@@ -2,9 +2,9 @@
   "source": "hashicorp/design-system/packages/flight-icons",
   "repositoryUrl": "https://github.com/hashicorp/design-system",
   "packagePath": "packages/flight-icons",
-  "commit": "5e9396024ecc2b7425f60b4ce5f39da83438a2a2",
-  "packageVersion": "5.1.0",
-  "contentSha256": "3bd00c6e14fcdf9f4dcbd6e101243f567cc2cf7a33dd2a2cdf82eece59e5290b",
+  "commit": "485a63dbfd5577ff6fbae701b05e30153bed572d",
+  "packageVersion": "5.3.0",
+  "contentSha256": "542bb0a624a9c2ef17313ddf063350e29d4e50897d0b4646628720cf5cf07e3c",
   "includedCategories": [
     "Animated",
     "Arrows",
