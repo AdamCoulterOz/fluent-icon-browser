@@ -1,1798 +1,1854 @@
 {
-  "contentSha256": "bb7f2acf5da45435e94fca0e525e9d3acc35073a2399d17630f6ee4df3a1dc16",
+  "contentSha256": "b85a1f7e579b3ea3c3c421423e118c89f4366be2d868db6eac6608dca4ad346e",
   "format": "gcp-console-svg-archive-v1",
   "modules": [
     {
       "extension": "abuse_messaging_rif",
       "id": "abuse-messaging-rif",
       "module": "AbuseMessagingRifMicroUi",
-      "sha256": "ae6b0a8055744180e62bdbb41eb116b8055535c479ca07462ebe2cce497bce4f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AbuseMessagingRifMicroUi.en_US.ktGp9Ir13J4.es6.O/d=1/rs=AJ563L-bJSQNyWBrFBigetkDOKwDlnErJA/m=b"
+      "sha256": "05c93cfe168a1bd65f41ae99b7a2bbd0d18b5485c54a6e206ea689cf5d06ff01",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AbuseMessagingRifMicroUi.en_US.GJWkRg3JuqA.es6.O/d=1/rs=AJ563L-B81F0wFQ9uJKwcwKLo4x8ARriLw/m=b"
     },
     {
       "extension": "access_context_manager",
       "id": "access-context-manager",
       "module": "SecurityAccessLevelMicroUi",
-      "sha256": "66594b6a881c00d340e5916ef4b4ebd94d5aea9ecfa725c91c44674709982812",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAccessLevelMicroUi.en_US.LuIM2hanbjE.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L9puMyBKCR9cp_Wsln7c0nw4pP2xg/m=b"
+      "sha256": "14df6164217362a916b2bebb076e2877939cbdbce0f325b39a49a816acf47aa3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAccessLevelMicroUi.en_US.qIs5UslTYLs.es6.O/am=AAAAAAAAABQ/d=1/rs=AJ563L_d6Wdkxm7newxL4l4p0iT8lvPzaw/m=b"
     },
     {
       "extension": "active_assist",
       "id": "active-assist",
       "module": "ActiveAssistMicroUi",
-      "sha256": "58b77667a19fc699441a3d101936b6f9364048d05e0254044316d3faa5b4298a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ActiveAssistMicroUi.en_US.B63y1RJvnlo.es6.O/d=1/rs=AJ563L847OIrKTsZf1Ye4TtwiVdJ_zTw6Q/m=b"
+      "sha256": "7dcd522d02c9f28bada9074f131613ed9eeb9c089e88dd343a44ed4fdce22942",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ActiveAssistMicroUi.en_US.xVzBpnhBCY8.es6.O/d=1/rs=AJ563L-8u7MiFyHz_cJthrDC-EJOpUzxiQ/m=b"
     },
     {
       "extension": "ads_console",
       "id": "ads-console",
       "module": "AdsConsoleMicroUi",
-      "sha256": "df4369e817d07cea433c69cbb65307d4ebb4da2ec7853e9305ec485ef427267b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AdsConsoleMicroUi.en_US.t-Naf2TpjkQ.es6.O/d=1/rs=AJ563L_-VRpdrUSt5IpSIzGykOKb2X07Kw/m=b"
+      "sha256": "a1357b5a8949e05ebb4aaee94dc150c18424c1117ca20403ed490ddfbe720e3c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AdsConsoleMicroUi.en_US.9I3fN-WE_c4.es6.O/d=1/rs=AJ563L9uPw7QaClaHA3R6rxvFqfsMW5hEw/m=b"
     },
     {
       "extension": "agent_management",
       "id": "agent-management",
       "module": "AgentManagementMicroUi",
-      "sha256": "36dd47e9936c619538f8466c8f3e1d85fedb797573c9b865214513f90e038c97",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentManagementMicroUi.en_US.ExYkhcwOQJM.es6.O/d=1/rs=AJ563L85H7qy42xBF3agjV4dx6ZR1pktWQ/m=b"
+      "sha256": "3ad19bad6099c5887b414f08c78a8f4d57bbf58210e44ea2f32fea7ac4fc4e0d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentManagementMicroUi.en_US.NlsSzZCLoag.es6.O/am=AAAAACA/d=1/rs=AJ563L_w12wHjo0pymkz4Hhvb-98-eUvkQ/m=b"
     },
     {
       "extension": "agent_retrieval",
       "id": "agent-retrieval",
       "module": "AgentRetrievalMicroUi",
-      "sha256": "e0c4d87a86cfb655ff075e6766000f51d6df7ab85c301216c1d3cdb2ec75b5b1",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentRetrievalMicroUi.en_US.10iOAsb9CZE.es6.O/d=1/rs=AJ563L9swYw7nLz89JwbyFoVpsGd-qW4fQ/m=b"
+      "sha256": "2316c7a31b8d56aa0eeca55f9504b0fda8bae957cf6ac77a53ee2e4e47601a90",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentRetrievalMicroUi.en_US.cE6BnNd9Q7w.es6.O/d=1/rs=AJ563L_vsofphY4LrE5pRpxDSbbGLXS1Ug/m=b"
+    },
+    {
+      "extension": "agent_studio",
+      "id": "agent-studio",
+      "module": "AgentstudioMicroUi",
+      "sha256": "b558d6b42496ee4a9eb9f3ca043a6449fbb92f44b9632336b0f2a00d72441e39",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentstudioMicroUi.en_US.v4O-z5mo-BU.es6.O/d=1/rs=AJ563L9nHlJU3dY-gZM7Q-8oVSYi9Aw6sg/m=b"
     },
     {
       "extension": "agentis_finance",
       "id": "agentis-finance",
       "module": "AgentisFinanceMicroUi",
-      "sha256": "73b65ca6e337cdf2bff936669b762e76f2554ce5c2f2aedb59e61405e4cad321",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentisFinanceMicroUi.en_US.IWfDPyikhT8.es6.O/d=1/rs=AJ563L-AbQ2k7QXHtu-gRq_OjAFzXazNrA/m=b"
+      "sha256": "998607b80a32d3efce7eef027851060cd42c07d6231b377d0715ca7f6e6a8c13",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentisFinanceMicroUi.en_US.IjypITt9F6A.es6.O/d=1/rs=AJ563L8-tGuqDsVklGwXznhnQDTNlcmBGQ/m=b"
     },
     {
       "extension": "agentspace",
       "id": "agentspace",
       "module": "AgentspaceMicroUi",
-      "sha256": "19559cbf13cc6d50b7fdb59e2fb4149726824cde632a1b0a32f90be6f1806a55",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentspaceMicroUi.en_US.qnRCWZmCIp8.es6.O/d=1/rs=AJ563L_9g67q-xoouv34K46os19MkyUqog/m=b"
+      "sha256": "bedda05651eca718a4812d1abed398a10d80a06d28d4611b8322c37bb959aef5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AgentspaceMicroUi.en_US.Yw9nQU-oyxk.es6.O/am=AAAAAAAAAAAACA/d=1/rs=AJ563L8GY8rKtKuLI58nTj5Hxk9J9AxtAA/m=b"
     },
     {
       "extension": "ai_chat",
       "id": "ai-chat",
       "module": "AichatMicroUi",
-      "sha256": "1fb2ec6b7bdab8a68b0ef1e68ec6514a852fb491742b7142c79c2b804e5c713c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AichatMicroUi.en_US.LjyXpusEfzo.es6.O/am=AAAAIA/d=1/rs=AJ563L_xYXep7C3h_YKlXQ5i8vvQjRGw9g/m=b"
+      "sha256": "f55fe1879854ae73549a6e0327d5f677f12fa80e1c06e7a9da4bf347b96c5b85",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AichatMicroUi.en_US.h715Qk6PdRk.es6.O/d=1/rs=AJ563L8rQSAWEa24RTSYBKCCPMLUJYSBLw/m=b"
     },
     {
       "extension": "ai_edge_portal",
       "id": "ai-edge-portal",
       "module": "AiEdgePortalMicroUi",
-      "sha256": "e6013367fd31e68cb019207dd0556ec78a84254d02b819a2d5672c9f2b182e56",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiEdgePortalMicroUi.en_US.mq35FFwewn8.es6.O/d=1/rs=AJ563L_uJorkrnwywK2o20DkNCMbJafkFQ/m=b"
+      "sha256": "4c8eb02c3f74b42cf65b7577922dcca9760e8b87d7accbbb304578bace2e0e25",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiEdgePortalMicroUi.en_US.s1obHI0d7_8.es6.O/d=1/rs=AJ563L8_YHZqNgarndGHpVDs_aUmaDdGJg/m=b"
     },
     {
       "extension": "ai_platform",
       "id": "ai-platform",
       "module": "AiPlatformMicroUi",
-      "sha256": "11be1f848f501c8095cc69464ca6578e5fe45be4912581d9850413af91a9584f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiPlatformMicroUi.en_US.fjdxRvh32nQ.es6.O/am=AAAAAAB7AAAAAACg/d=1/rs=AJ563L_nzs99yKgsfVzD6H1Xk4UXIHLWQw/m=b"
+      "sha256": "6d3339202e8aacbb57a12f1640042bcef1c86f7bc7aed666b68a8135aad07ab8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiPlatformMicroUi.en_US.mvvnF65HttM.es6.O/am=AAAAABAAGwAAAAAAgAI/d=1/rs=AJ563L8LZTKNBaiZpfkFAcf9jzjJy_jM1g/m=b"
     },
     {
       "extension": "alloydb",
       "id": "alloydb",
       "module": "AlloydbMicroUi",
-      "sha256": "5c7deb695bd9da6bb74a303eb53706cb2b2daa096912f6c1a47ed82b9efedc69",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AlloydbMicroUi.en_US.zNk-RtXtsio.es6.O/am=AAAAAGA8gA/d=1/rs=AJ563L-mSDucpQPd5WRWgVOLP9Sk41BwgQ/m=b"
+      "sha256": "c3f1d3e04daf86c8f91353d5fd398ad0886f0daeec600918dac0849b4a2c2f4a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AlloydbMicroUi.en_US.FQvjKYG_qYs.es6.O/am=AAAAAAAAAQ/d=1/rs=AJ563L-8mPnTXFa9h4O2mg-a-6KjewmxbQ/m=b"
     },
     {
       "extension": "anthos_hosts",
       "id": "anthos-hosts",
       "module": "AnthosHostsMicroUi",
-      "sha256": "654fc0d12763142d4741d6b36b02b6f5d5e0a5a51facac6bf73b20df40212bd2",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AnthosHostsMicroUi.en_US.V-4hfV8I5Wo.es6.O/d=1/rs=AJ563L_2Qv5MBiXhIArjL8eUiitZLZwB9A/m=b"
+      "sha256": "7aa5827c971a615741c0ea4a1bcc4769e22bfb508095139942070fe8718cd882",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AnthosHostsMicroUi.en_US.O5HT60XY9TM.es6.O/d=1/rs=AJ563L-FeHzTWP-UB-rn3pYpORfavpcf7A/m=b"
     },
     {
       "extension": "anthos_ui",
       "id": "anthos-ui",
       "module": "AnthosUiMicroUi",
-      "sha256": "a6a720bf4d596fe3780d44beb20a07c87d1ee0f01dff9114d818bbca6836e3ae",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AnthosUiMicroUi.en_US.3YdfWnsh7Lk.es6.O/am=AAAAAAAAEIAC/d=1/rs=AJ563L_CYvCA35d-fjiCo5o8SMPIIkC5Yw/m=b"
+      "sha256": "c0e52efa2835b00b1b6d801079e4ab5b38c0cf928670609ef9b27e4f3c56457d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AnthosUiMicroUi.en_US.90_1A8IhLUg.es6.O/am=AAAAAAAAABAACg/d=1/rs=AJ563L9Ju_zLBvvhErzPvyDpW5CyDM66lg/m=b"
     },
     {
       "extension": "api_gateway",
       "id": "api-gateway",
       "module": "ApiGatewayMicroUi",
-      "sha256": "a399da7bfc05b4e21c7e862d7f277f62f4b23b253d5e9626270c08fb7d9aefbb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApiGatewayMicroUi.en_US.FbMrYqg18jM.es6.O/d=1/rs=AJ563L-LrIbbFjDY6-gW0hssmM5FNw80rA/m=b"
+      "sha256": "8af2c1580cd89aae38e9a535dbdb806d4b06181f3da0c7aec181b53a28a72b72",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApiGatewayMicroUi.en_US._POPk1VoQTo.es6.O/d=1/rs=AJ563L8beeeH3GGTyG3i70wNU3W117bvlQ/m=b"
     },
     {
       "extension": "api_hub",
       "id": "api-hub",
       "module": "ApiHubMicroUi",
-      "sha256": "922f365b5fdad9152482d67bd14dda1546e871982b5ea97edcb70a5c95ec6d2d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApiHubMicroUi.en_US.OOmY8lwaHk0.es6.O/d=1/rs=AJ563L_O5_m7oufYdw0l9XAphIN3h8M97A/m=b"
+      "sha256": "efbd96e89322de0aefd5b39dbaf432fcb9d0b8bbbc09d03ecaf04d8348350526",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApiHubMicroUi.en_US.ai54pelbGiI.es6.O/d=1/rs=AJ563L-tk2WzTbD0_brVWsOtwV49LqZOeA/m=b"
     },
     {
       "extension": "apigee_analytics",
       "id": "apigee-analytics",
       "module": "ApigeeAnalyticsMicroUi",
-      "sha256": "9c97c3c41265976e5e570aff28006e468342d44240f8217735cab476e566cbd2",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeAnalyticsMicroUi.en_US.4Euj_DtQ_vM.es6.O/d=1/rs=AJ563L_mheNvyv-EJ8q2B_si5i8TRAfcEw/m=b"
+      "sha256": "dce6194844285a5a43029fa620f78710d9f23b0f56c7405cdf65f7f36bfda63b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeAnalyticsMicroUi.en_US.R_2nvQ6eGsA.es6.O/d=1/rs=AJ563L92_ln3_w9cWpkZKoJlrwjZ8DhWOw/m=b"
     },
     {
       "extension": "apigee_mgmt",
       "id": "apigee-mgmt",
       "module": "ApigeeMgmtMicroUi",
-      "sha256": "a00172db10717e9c339abd040592742f44dac5fb37858516b0ff87cd8842a443",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeMgmtMicroUi.en_US.-fggY8ztb4g.es6.O/d=1/rs=AJ563L_dSff3mu4jxuQmax10R2bvQjdAzQ/m=b"
+      "sha256": "705495ac44e59f510c8cee536cbaeb1b27f514938a8ac73709e632b26c8856a8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeMgmtMicroUi.en_US.Gw5XTlsTZeM.es6.O/am=AAAAAAAAAAAC/d=1/rs=AJ563L9q_Du6mpHsHLVBCr_GGnKRZAP6nA/m=b"
     },
     {
       "extension": "apigeeportal",
       "id": "apigeeportal",
       "module": "ApigeeportalMicroUi",
-      "sha256": "f09b26d0a362f92afc5052566624b937a405df24b17444e1acc30a41d5d217e3",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeportalMicroUi.en_US.z9EeAhmeepQ.es6.O/d=1/rs=AJ563L9DxU8TuKnr3orBp8COUhxCA26cPQ/m=b"
+      "sha256": "f72b6a3fe487a90b9e8a2de1fca5889909364e52460689c107a3c1d1cf50e5d5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ApigeeportalMicroUi.en_US.F7v9b_Ucdac.es6.O/d=1/rs=AJ563L-BrRUmVlj7Z7CaWiln-2D3IqrDxg/m=b"
     },
     {
       "extension": "app_design_center",
       "id": "app-design-center",
       "module": "AppDesignCenterMicroUi",
-      "sha256": "9e2dca931aeafdde6b246728b7d0cfd01d6876926f9a120cab685130d51d955d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppDesignCenterMicroUi.en_US.zfISxgf9MKE.es6.O/d=1/rs=AJ563L9-mypXgB2IS59XU7KrkEJ6NAAO5w/m=b"
+      "sha256": "301678b083a67c28f73ada684283d969518d791834b30c82e507888a43b03b91",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppDesignCenterMicroUi.en_US.vdo9-2YtdpY.es6.O/d=1/rs=AJ563L99F1I8coISVQAIuL_h9OVPfL6qUw/m=b"
     },
     {
       "extension": "app_engine",
       "id": "app-engine",
       "module": "AppEngineMicroUi",
-      "sha256": "f139de8f18cf99f748633ee7a778f42fd804502b8c4ad2ab8994b78b5594ffaa",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppEngineMicroUi.en_US.wrvr7oCLErs.es6.O/d=1/rs=AJ563L-loHbmz9cX_KYB_V9EIweH1peKkw/m=b"
+      "sha256": "1507d3e8a84ca531277c332ea2312911cd664ab3b0494a792d73d55e033e9e35",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppEngineMicroUi.en_US.j0R-z0vc-nA.es6.O/d=1/rs=AJ563L9J49wDCiEoc2mRhki2Kye5962jFw/m=b"
+    },
+    {
+      "extension": "app_security",
+      "id": "app-security",
+      "module": "AppSecurityMicroUi",
+      "sha256": "8fe0108ccc21916fc8285e4a606136d7a1221284e920579e2afcf785938d2719",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppSecurityMicroUi.en_US.v0--fepRhsU.es6.O/d=1/rs=AJ563L9nEVAhHtb-dLC-Acs2BpicwLB4-g/m=b"
     },
     {
       "extension": "appdev",
       "id": "appdev",
       "module": "AppdevMicroUi",
-      "sha256": "f72bc139b562cf7473ce6281754711921c52260dcc9d0a7cddf274a0c563421e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppdevMicroUi.en_US.huXO1mY7slk.es6.O/d=1/rs=AJ563L8w2YmsVvBrmRYem_Wf9Vdtr-k2Fg/m=b"
+      "sha256": "d389b8d06f8eaaf605870b0e97d2aa0624e2ba225d6adbb11b979ce7af4b9f96",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppdevMicroUi.en_US.8Gds1vL3YGM.es6.O/d=1/rs=AJ563L8LsaGdT0UlqacyWj6HZy-OtwYuCA/m=b"
     },
     {
       "extension": "appliances",
       "id": "appliances",
       "module": "AppliancesMicroUi",
-      "sha256": "cfd3fb010818926290a9db399726e6bb8ca840f53cffdb66642705820afb3219",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppliancesMicroUi.en_US.aPG76yBHBGQ.es6.O/d=1/rs=AJ563L-YB44jNDMLS4mETYeR58k2A3hd4A/m=b"
+      "sha256": "a3ec1204ca26fbcd2043eb3d139576b2d67620114acb1f1c0819497d60f0adb4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AppliancesMicroUi.en_US.S0gZI3DqmmU.es6.O/d=1/rs=AJ563L_c0Y2WKNQyD_rbnARXL8BPdx_fEA/m=b"
     },
     {
       "extension": "artifact_registry",
       "id": "artifact-registry",
       "module": "ArtifactRegistryMicroUi",
-      "sha256": "71f8037863c279e44fd17daf85fb077c3fa09e9cab9108f5d0d27126eaf89037",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ArtifactRegistryMicroUi.en_US.APMMR_jbqk0.es6.O/d=1/rs=AJ563L9mjoaWP4tpUBrD5zC-oivr4tihvg/m=b"
+      "sha256": "50754fef11401ea67688aa74a614d78860100da9394739256d6e7293b57a0260",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ArtifactRegistryMicroUi.en_US.2OI5T4L6rJs.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9PepgGEoB0ZDBG0B05cuILX2z_zA/m=b"
     },
     {
       "extension": "asset_inventory",
       "id": "asset-inventory",
       "module": "AssetInventoryMicroUi",
-      "sha256": "5870c3ebbc7945c87ee50f158445e4eb60555c9b3039f21f2f90dae1fae2ca25",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssetInventoryMicroUi.en_US.3wMCF3K9dPQ.es6.O/am=AAAAAAAAABQ/d=1/rs=AJ563L_AbONacIaoAnV2v8RTmjwcR6JTJA/m=b"
+      "sha256": "bc329c69bc3298401d3d0d54d4215c654ec3604b31390b324134a55260ae1092",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssetInventoryMicroUi.en_US.o2c5My6JyEk.es6.O/am=AAAAAAAAAAAo/d=1/rs=AJ563L9G5Hge6reDVNKxPrIBWfeL7dQISA/m=b"
     },
     {
       "extension": "assurant",
       "id": "assurant",
       "module": "AssurantMicroUi",
-      "sha256": "d81a45b3e477c4a6ef73fdedaa6b7115156fe71893ba66128ddc2ae9d178b0b7",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssurantMicroUi.en_US.cyG8i-sPeS8.es6.O/d=1/rs=AJ563L9aVdCwhsR12Do3oIHFU9jB8iXFQA/m=b"
+      "sha256": "901ee6c95b9ab32fd8b417048163317c1162e30337084e230324f26c88e0a231",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssurantMicroUi.en_US.Lvzfw5RzqVw.es6.O/d=1/rs=AJ563L_k4mRrjWK3LX9XOBsAeZoC83Gvkw/m=b"
     },
     {
       "extension": "assured_oss",
       "id": "assured-oss",
       "module": "AssuredOssMicroUi",
-      "sha256": "5ae33cd84e77806ea523847c8c421a9f00b99399f4df4821bd5bdda99c33d153",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssuredOssMicroUi.en_US.8JN4ORjMmxI.es6.O/d=1/rs=AJ563L_VxRwyFTPrI6vjur5vl8A45GqKpw/m=b"
+      "sha256": "e30efd3bfbdf1446b66cbe7dcd7395448b559319bc5e2d1edd337b37dff9b229",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AssuredOssMicroUi.en_US.A8z551vWzRU.es6.O/d=1/rs=AJ563L-BLKNPd_aJDDSa34yi0w6i2ISdvA/m=b"
     },
     {
       "extension": "atp_web_scanner",
       "id": "atp-web-scanner",
       "module": "SecurityAtpWebScannerMicroUi",
-      "sha256": "f024335e5d55b16454978ba61df8826d24effd913b65d91dcd02ebbb65c32c9d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAtpWebScannerMicroUi.en_US.YTbHJ_TIctM.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L93xGbFMz1EmYXkeTpf0fUQgBBlmw/m=b"
+      "sha256": "e819ab1bc72854d110e850c98b1ff6aafc124d4c35ea251c5a4e924430ae9736",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAtpWebScannerMicroUi.en_US.zW5wAHbuXqI.es6.O/am=AAAAAAAAAKA/d=1/rs=AJ563L_PuzEQK2PkIF8Ysz-B-z0Txgsxhw/m=b"
     },
     {
       "extension": "audit_manager",
       "id": "audit-manager",
       "module": "AuditManagerMicroUi",
-      "sha256": "b6cce294e6a41dbc37c92fc7b8ab4f6da4ce195ef4cdecc71753d1b9cd3baaa7",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AuditManagerMicroUi.en_US.mdHDtU3rUFk.es6.O/d=1/rs=AJ563L9hzjWPx_Ga_COXdbtnIY1fFmP1lw/m=b"
+      "sha256": "f750201329f692d186d2b7a5a8a3d56310eea6d0ced3b88eda3fe8d225c27696",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AuditManagerMicroUi.en_US.pwHNsSNa3xc.es6.O/d=1/rs=AJ563L_kmZHaw4Oy6VH6sRZSfSmmuS2Abg/m=b"
     },
     {
       "extension": "autocloud",
       "id": "autocloud",
       "module": "AutocloudMicroUi",
-      "sha256": "5a14956867c8a81a35f6fc78b5dbae3136806c93d971741575427ff377aab66d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AutocloudMicroUi.en_US.yqq_AplIOYw.es6.O/d=1/rs=AJ563L8t_woa2iBspaoLMnRZ9Y8jq-gS3A/m=b"
+      "sha256": "d7fd8b1e0b1de21225c5bf2e5deef532cd5dd1fa4700be8904253d28bd53faa2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AutocloudMicroUi.en_US.gBGN3ZLAWBg.es6.O/am=AAAAAAAADgAAAAAAABA/d=1/rs=AJ563L_zrj2AOnaSVGaFjXl3IK56zGqqBA/m=b"
     },
     {
       "extension": "backupdr",
       "id": "backupdr",
       "module": "BackupDrMicroUi",
-      "sha256": "2d527c3eb1575e8e0b4349a71029fc94a8a3fde88383ec901f6155f4c41dba7e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BackupDrMicroUi.en_US.Q4jCoKk-Mxo.es6.O/d=1/rs=AJ563L_B2VJ_3kUt8nCaPSRm3bz3ljyEag/m=b"
+      "sha256": "18ac9f747ab68070e63e79fa2836434deb4bc125cf7df36df2a7245613349aef",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BackupDrMicroUi.en_US.EtXgWa_8JRk.es6.O/d=1/rs=AJ563L_pXl5aaiKyoc-pEFLQgvCH_gN1zQ/m=b"
     },
     {
       "extension": "bare_metal_solution",
       "id": "bare-metal-solution",
       "module": "BareMetalSolutionMicroUi",
-      "sha256": "f518612ef4399ef8e211f253c79413cb430fbd7cdc7950f77773f89bb88de124",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BareMetalSolutionMicroUi.en_US.WppASmdFGt8.es6.O/d=1/rs=AJ563L8olcEdsfVfr4hExqy7dceb5LKmYQ/m=b"
+      "sha256": "b142f28d9725fac2202654e27394d025e284c9acc708c68456cd88398b713fd4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BareMetalSolutionMicroUi.en_US.4vO5xcYiJ-U.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L-4PMzM-KZb_M5dfmMnfbTnIHWCmQ/m=b"
     },
     {
       "extension": "biglake",
       "id": "biglake",
       "module": "BiglakeMicroUi",
-      "sha256": "f796202f5cb9083e26252270723dc8852fabba778ffd3d27492efc6e14d911db",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BiglakeMicroUi.en_US.634SUxBcRrU.es6.O/am=AAAAAGAP/d=1/rs=AJ563L-aghmsSpm7wxfgfFWocle8I7_42w/m=b"
+      "sha256": "8417ecf307928dab4eb88dd3c96e1925e702211f5f2ae4d2f58ef623f0f0fe8c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BiglakeMicroUi.en_US.lH8N2czGmeQ.es6.O/am=AAAAAADY/d=1/rs=AJ563L9Wzd5ffIA2Ndk_gj53GoDN4r9tcw/m=b"
     },
     {
       "extension": "bigquery",
       "id": "bigquery",
       "module": "BigqueryMicroUi",
-      "sha256": "e66e34de901262aea1c8fe35d33821401cfc1ffaabe401d58da979a385a50a4e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryMicroUi.en_US.jFumrC2GDxo.es6.O/am=AAAAAMDwABAAAAAU/d=1/rs=AJ563L9ygrc0vK7yQCFqDtfuk2E0Jas1wg/m=b"
+      "sha256": "53cb9106398aa07df3a32b0f9a8692f2b078320feb75dc5f6a4886b564efd91c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryMicroUi.en_US.hnIsAtK5dnQ.es6.O/am=AAAAAAAwBoAAAACACg/d=1/rs=AJ563L8UYOKci3Gs-ooit1sIK3BrDsyCUw/m=b"
     },
     {
       "extension": "bigquery_analytics_hub",
       "id": "bigquery-analytics-hub",
       "module": "BigqueryAnalyticsHubMicroUi",
-      "sha256": "283ce49f119eebaba96766ea0c4b15b8022cf9ba8d521e983d4ca6d3dfed967b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryAnalyticsHubMicroUi.en_US.JZepXDoR26w.es6.O/d=1/rs=AJ563L-RNvIpAyf5wAvMFrPOJc-3-rla7Q/m=b"
+      "sha256": "cef9b1080163e2264d7efdd741d41ebdb6c12f435b540db49659d8b50d8dd6d2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryAnalyticsHubMicroUi.en_US._z_waAzbmxQ.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9bN9YiUAaxlS5_WPsVEPshHnMBXQ/m=b"
     },
     {
       "extension": "bigquery_catalog",
       "id": "bigquery-catalog",
       "module": "BigqueryCatalogMicroUi",
-      "sha256": "49ed0e8dc3aaa574d09a85ac0d113c4de0126b52995677640b38a6cae065eea6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryCatalogMicroUi.en_US.f8xgHQlmajs.es6.O/am=AAAAAGAP/d=1/rs=AJ563L_STtwSeqW2MYWdAOYqGkja-O6DWg/m=b"
+      "sha256": "4868cd25ee95ecb645aa426202d38ed7420e7022881a2b80963d9ffa5a8cd29b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryCatalogMicroUi.en_US.sbdeAiN41C8.es6.O/d=1/rs=AJ563L_w8QRdSRDKENH9pNZFeeH545Tkrw/m=b"
     },
     {
       "extension": "bigquery_migrations",
       "id": "bigquery-migrations",
       "module": "BigqueryMigrationsMicroUi",
-      "sha256": "89badc78f4d0275d383466c948ff6560f232b84c0a29a28084238d78f3e6d5a7",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryMigrationsMicroUi.en_US.a-SI8YP_QB8.es6.O/d=1/rs=AJ563L9a9iD0PZQmA0S7gT7l3VruZRXaEQ/m=b"
+      "sha256": "3aac6a587d4005027c4399bcc7a636e5fa03c0e7514f2f04d0499340562952a2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryMigrationsMicroUi.en_US.mxK_SdXc_xo.es6.O/am=AAAAAAAYAwAAAAg/d=1/rs=AJ563L9PErCyZ182n7zT2jv9DJ9OUB0Dtw/m=b"
     },
     {
       "extension": "bigquery_operations",
       "id": "bigquery-operations",
       "module": "BigqueryOperationsMicroUi",
-      "sha256": "bd38df8344cabd759e7e7629458fe5d8669d0d8353d705e1de07da97ee25522d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryOperationsMicroUi.en_US.AGOko2v1oZ0.es6.O/am=AAAAAMDw/d=1/rs=AJ563L_vng7NAZdYp5cF7SbIuetLEYfvQw/m=b"
+      "sha256": "24da04ad73c1d59f0ea5420093a0108c203c094b5ed71e2bc204c187cc2aea4f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigqueryOperationsMicroUi.en_US.-3lgtRwuE0M.es6.O/am=AAAAAAAYAwAAAAg/d=1/rs=AJ563L8gP5cHXNuP3zkw14SX9oD3Rvu2Bw/m=b"
     },
     {
       "extension": "bigquery_security",
       "id": "bigquery-security",
       "module": "BigquerySecurityMicroUi",
-      "sha256": "908acc973e145a57dcc26f48e103f583e47396dc0099102a12a5d51fee4bb063",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigquerySecurityMicroUi.en_US.c4GZmgN1-1E.es6.O/am=AAAAAMAe/d=1/rs=AJ563L-82Et7SiYmPal2fARW3nqjgWC6Gw/m=b"
+      "sha256": "219f018915cd100b99aece89f5946f607d5a45e365cba5d9d7f142f8fbd3a0d4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BigquerySecurityMicroUi.en_US.kkTnXfG1M5c.es6.O/am=AAAAAAAwBgAAACA/d=1/rs=AJ563L-tGZBA9dBgG9pryxrhtloYIiWuLg/m=b"
     },
     {
       "extension": "billing",
       "id": "billing",
       "module": "BillingMicroUi",
-      "sha256": "8b1b22da8a85b0ab0fdb007a4681f51b0af74b6498df45da614a14a854d05f24",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BillingMicroUi.en_US.erK1U6uPcL0.es6.O/am=AAAAAAAc/d=1/rs=AJ563L8O7g2LMe97_3UrrI2oGpfKlw21ng/m=b"
+      "sha256": "c60025f3207989db3a0b13376ee726bf3924991efe7bc5c4030f867367d34890",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BillingMicroUi.en_US.11VMBUHKI-c.es6.O/am=AAAAAAAABwAAIA/d=1/rs=AJ563L8R_RetL-oFteT3uIrW39MCNJHa1w/m=b"
     },
     {
       "extension": "binary_authorization",
       "id": "binary-authorization",
       "module": "BinaryAuthorizationMicroUi",
-      "sha256": "e70b04f91e2f333b4a56bdf923bfbabc7bcdb58ca96b545e3333db36211d8d51",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BinaryAuthorizationMicroUi.en_US.6MnqRpFdz_8.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L9MkvIjgtzBlGYQ29DsItLsBjW3XQ/m=b"
+      "sha256": "b1de4233195c8e5f90a5fc448af0c8d227838892435d046eb50d211b4f7b2b5e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BinaryAuthorizationMicroUi.en_US.GL3sEklXP2Q.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L_HcSgBs9908PutbrjpJIEWIc4lTw/m=b"
     },
     {
       "extension": "blockchain",
       "id": "blockchain",
       "module": "BlockchainMicroUi",
-      "sha256": "fc747ae20453df889fbd6a77d47d149d99a98c9d7c52aa156153e530a2472eb0",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainMicroUi.en_US.NhSZJ3Z4V9A.es6.O/d=1/rs=AJ563L-YxBTxPpUxTYsMtlScqlKLJfpf-Q/m=b"
+      "sha256": "b16c0440bae955424777cb6c3d6405c3a0fb4ca972c38a921b346f6d8379cd9e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainMicroUi.en_US.e0FX-a13b7g.es6.O/d=1/rs=AJ563L-uqAZbtPXoK7N_oZ83R3hajrmMjw/m=b"
     },
     {
       "extension": "blockchainnodeengine",
       "id": "blockchainnodeengine",
       "module": "BlockchainnodeengineMicroUi",
-      "sha256": "dbf1a6ae10b2c9064e40a96fc22a15fcc29aa3c38700c1c2fa4f536452007073",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainnodeengineMicroUi.en_US.cFw0tIjomGw.es6.O/d=1/rs=AJ563L-Mm1f-UWVlHP53F4D0wwSwiW4RiA/m=b"
+      "sha256": "f7d87a917a2e3ba6a8a97b1259fe4b599344183aade7b3df4e71787bcef381f2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainnodeengineMicroUi.en_US.UAw9ce7VB8k.es6.O/d=1/rs=AJ563L_1Q_iq7a8ysXiLLxkQJj3g533udg/m=b"
     },
     {
       "extension": "byoid",
       "id": "byoid",
       "module": "ByoidMicroUi",
-      "sha256": "a95e2d0394d7a257c2a9fe579c885a68c11c3172eb0205371439ffedfaa3fd4a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ByoidMicroUi.en_US.43Y9XmhnKCM.es6.O/d=1/rs=AJ563L_B6gB5BJOFl1hJYQDkFpoGNb95Jw/m=b"
+      "sha256": "36bffa7d822e0cd70991d81c3805d204190bd39f8381c41be07e2815c91546d1",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ByoidMicroUi.en_US.P-JLWsGH2k8.es6.O/d=1/rs=AJ563L-_A5WI9XfEDftxZ5X51VK1IG3Opw/m=b"
     },
     {
       "extension": "capacity",
       "id": "capacity",
       "module": "CapacityMicroUi",
-      "sha256": "3f8787fbabe1fe449d6f4d66fd73447724b4c8456234f4382e356fcae285ff45",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CapacityMicroUi.en_US.JsDno1y1Xu0.es6.O/d=1/rs=AJ563L8EYd3KxqkhjtTqhavzl7LjoP9CvQ/m=b"
+      "sha256": "50851638c93cdace0269145310cfee317eb52c06ecc689483fb1fe0c401487dc",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CapacityMicroUi.en_US.iETLzhgg244.es6.O/d=1/rs=AJ563L_Py8WEQu7CKwhx3VrtR5Uj2sLEqw/m=b"
     },
     {
       "extension": "carbon",
       "id": "carbon",
       "module": "CarbonMicroUi",
-      "sha256": "cbcc92a506b10b4006ea3e7272e4eec8778bd700ed2db196200df561fa4d93ed",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CarbonMicroUi.en_US.8AIpWzVlr5g.es6.O/d=1/rs=AJ563L8TXngKwbB-wX4aNLV6P17ZUY2jSw/m=b"
+      "sha256": "3096164b5c145f818981a5433e8d979f163c2d3cf47b5a0fad6b5db06f4a87c9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CarbonMicroUi.en_US.hfG15EnMg18.es6.O/d=1/rs=AJ563L-LIedmbVrOIKMpb5S6pYPLdTVTVw/m=b"
     },
     {
       "extension": "cas",
       "id": "cas",
       "module": "SecurityCasMicroUi",
-      "sha256": "7e7a7cbae6699c3dc85d3e57c522a8a32420f31aa7c6357bc37f5ee4ba2864d7",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityCasMicroUi.en_US.XrPsRKucmpo.es6.O/am=AAAAAAAAQAE/d=1/rs=AJ563L8K-KUxpWrCKyGfMZDA1O8UhZVQpQ/m=b"
+      "sha256": "4332da5f72b211347bcf4bb481522fc4eeab4a4daafd53fc75dc640969dc0e9d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityCasMicroUi.en_US.2ukOrJhe4tI.es6.O/am=AAAAAAAAAIAC/d=1/rs=AJ563L9wOVA-w3rSmqeQ9FHwdg-N4ebyZg/m=b"
     },
     {
       "extension": "ccaip",
       "id": "ccaip",
       "module": "CcaipMicroUi",
-      "sha256": "fa784b39e9730f40da9a3f4652b7c3b5a1e24d374338259f11bf3ad0d5371ca4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CcaipMicroUi.en_US.YSiK4I9ig1I.es6.O/d=1/rs=AJ563L9WHYnci0MM-AUITvFI2m3BKIyEJQ/m=b"
+      "sha256": "fd9499764c1c8e71181c91ca4d6d138104b62bed317492f23e2c69e6e6823c9e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CcaipMicroUi.en_US.tXP5STONB0k.es6.O/d=1/rs=AJ563L8tf4_9uxGfFj8IiLc_al9PxtJnVA/m=b"
     },
     {
       "extension": "chronicle",
       "id": "chronicle",
       "module": "ChronicleMicroUi",
-      "sha256": "a9353c35deaed88dec350270d5d8f838aebfdb324037982bb882c613f770b64b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ChronicleMicroUi.en_US.b8UbcLpyNIQ.es6.O/am=AAAAAAQAQAE/d=1/rs=AJ563L8h2cXkrpKHSMQspGXrm4IwRg1Okg/m=b"
+      "sha256": "a41f47bacb1ce2c3d341bbe0f7ca2e61dc17442936a8f4530d9e0bbba3fba36a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ChronicleMicroUi.en_US.-XsmJFDfD7o.es6.O/am=AAAAAAABAAAF/d=1/rs=AJ563L9_gQDooR91ac1hyA1NI70NO8EnGw/m=b"
     },
     {
       "extension": "cicp",
       "id": "cicp",
       "module": "CicpMicroUi",
-      "sha256": "d7ff8b38ce79fa725a3a6b57393347a9589d6f6d1fc3dd4faa109c3eea996646",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CicpMicroUi.en_US.OR6H1ta51i4.es6.O/d=1/rs=AJ563L8FQ2WBxC6Yx9OeherLPtgaAhELGQ/m=b"
+      "sha256": "9ca0f667ebb4e07fb8d04d0a4bde6c11e08abb0ca93736fabbe7209d9adc40fe",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CicpMicroUi.en_US.4I7qsRAxKIA.es6.O/d=1/rs=AJ563L-vfE-9vLrQcy_aYReDxYTMShBYWA/m=b"
     },
     {
       "extension": "ciem",
       "id": "ciem",
       "module": "CiemMicroUi",
-      "sha256": "13625e432e7b7984c7bd063ca3ae2623d14292c962b2e3bc0f62f050ef8d2983",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CiemMicroUi.en_US.ZFTKpy-9MSU.es6.O/d=1/rs=AJ563L_DWjBEehghevo2qvHH8hWPWIvxcQ/m=b"
+      "sha256": "c799c6eaef654363da103c2a0a42034f85c63b6bb206c489c5f66fce999022bc",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CiemMicroUi.en_US.tvQp3p85H0E.es6.O/d=1/rs=AJ563L_yQEss5lI94jUDUt_jdVkMhVfxDA/m=b"
     },
     {
       "extension": "clm",
       "id": "clm",
       "module": "ClmMicroUi",
-      "sha256": "d734eb36d5618ef0bfeda142c8e14ebb8f51e6b656cebc2a57a11b2a25ebe955",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ClmMicroUi.en_US.S3j9rVTjCs0.es6.O/d=1/rs=AJ563L8XGzi01CUkFpOO-BGGRaGIeH07Sg/m=b"
+      "sha256": "0dffbda3df35f72abd2dd7491066f96f7dc9d92b26e4a78868bfc5a83162325f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ClmMicroUi.en_US.C2i5xFR20JY.es6.O/d=1/rs=AJ563L8wtEyF2x8tjAxGouwLuMDFdspMnA/m=b"
     },
     {
       "extension": "cloud_access_approval",
       "id": "cloud-access-approval",
       "module": "CloudAccessApprovalMicroUi",
-      "sha256": "20e67f71d9575acd5715eeff3c8eab3fde84221ad1c5e5a1d1d0b524626833bb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccessApprovalMicroUi.en_US.0zCTl22LquE.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L9y2F-czb6dy9coi-je9X9AbXKCkg/m=b"
+      "sha256": "d1dc181a0a160bd532a0c8c20bf29cc5eacf59107dbe2a99081f7b4d267329a9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccessApprovalMicroUi.en_US.GACiWg_qZnQ.es6.O/am=AAAAAAAAAACAAg/d=1/rs=AJ563L_tuvsFlDojPMZyAL4Lb6YO3xSRag/m=b"
     },
     {
       "extension": "cloud_account",
       "id": "cloud-account",
       "module": "CloudAccountMicroUi",
-      "sha256": "b37444ba5e0f5cab70d2387cb8883ceff60f91d095ae92c85b8a25949c384d54",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccountMicroUi.en_US.wd3tfryYWvI.es6.O/d=1/rs=AJ563L9LY8PPf3FHdfTgMOwa5Ms8fBZEfw/m=b"
+      "sha256": "01196d658c6db7b3755d5c608ad911fd7f53c1534aa506e7dd58c7bb3eb06d0a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccountMicroUi.en_US.BOhmqxmYpHc.es6.O/d=1/rs=AJ563L_fo9b65nwtp16gHkMSFjlvifYLDQ/m=b"
     },
     {
       "extension": "cloud_ad_rif",
       "id": "cloud-ad-rif",
       "module": "CloudAdRifMicroUi",
-      "sha256": "303b21e59a8f5abd2069f4a1e6fa63aecb1b26c75418ba34aa4f162d9928688d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAdRifMicroUi.en_US.jRwYh7d6XC4.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L8iAbf2l4SPwyt2XF9gbWK9CR1Krg/m=b"
+      "sha256": "281482b1fe71eb33ffddc0097879055f4c8b21d915e4e31b2c91a0accfc12eb9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAdRifMicroUi.en_US.oQj1ui3n820.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L87lotjSP20ngs4LXI5Tjgr3RtZAg/m=b"
     },
     {
       "extension": "cloud_batch",
       "id": "cloud-batch",
       "module": "CloudBatchMicroUi",
-      "sha256": "92c5795239a56b41d3170b2c8542bf541d8bee31ffc1c91eaa7e11bdab37de08",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBatchMicroUi.en_US.81WU6LjKvtw.es6.O/d=1/rs=AJ563L-s-LCK8-I7zX3Gg5T1HmKVqzGp8g/m=b"
+      "sha256": "e2e6955aab01290e6139657088a455a8e9f50683e7ea4e51c16a17b538569180",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBatchMicroUi.en_US.6ptGhiGrsfY.es6.O/d=1/rs=AJ563L_OjJbcRUeylNjsYeqibQH68LMvIw/m=b"
     },
     {
       "extension": "cloud_bigtable",
       "id": "cloud-bigtable",
       "module": "CloudBigtableMicroUi",
-      "sha256": "0f79a875a0dcda917a80826ac5f2370e6d818404d08dfcd9cbe776236624ded4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBigtableMicroUi.en_US.OQ3sBF2WVO4.es6.O/d=1/rs=AJ563L9SY6ipBOh7VT4ibkCe3SVlgNYucg/m=b"
+      "sha256": "fc714e3993d96e4105c9700cd3b14a7dc22bf48a797e3bc584666fb7f3eb83d7",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBigtableMicroUi.en_US.ifz0ZcSb45g.es6.O/d=1/rs=AJ563L_r6naNa-i9P7cG4K6CYEEFaTLkNg/m=b"
     },
     {
       "extension": "cloud_build",
       "id": "cloud-build",
       "module": "CloudBuildMicroUi",
-      "sha256": "88f762a0bac678a61b1400255b271de071ba16a0b162b12e28884f478d143e58",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBuildMicroUi.en_US.e3tHiA0-748.es6.O/d=1/rs=AJ563L8GaEPcKWcXKfNjkhh0kKsSCe_Fcw/m=b"
+      "sha256": "def82cd2bc3a0e1056a2ca0cd4a00d8561255ee6293a1e936d97460029c2fabd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudBuildMicroUi.en_US.wZywq7cThck.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L9ej48p7Pm_IqVAaSnhzslkgbH4TQ/m=b"
     },
     {
       "extension": "cloud_certificate_manager",
       "id": "cloud-certificate-manager",
       "module": "CloudCertificateManagerMicroUi",
-      "sha256": "46edb72610b418f8443cc4b645ea3dadd706830e413250d3a8a8b8e8bc002c65",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudCertificateManagerMicroUi.en_US.9UDajpg9im8.es6.O/d=1/rs=AJ563L_rJz0bdu9dkKJRCZWnmI3nIeyH_A/m=b"
+      "sha256": "15de57b6359fd06719768eb672f1c0580ea826ec2871d96eccca9f90e569404a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudCertificateManagerMicroUi.en_US.pzl1sLhNVxE.es6.O/d=1/rs=AJ563L9lJoOus-yrU0Vw_E3SepTrGlAaqw/m=b"
     },
     {
       "extension": "cloud_dataproc_metastore",
       "id": "cloud-dataproc-metastore",
       "module": "MetastoreMicroUi",
-      "sha256": "1ddf1f4538fbfefaa700503bd754bc79125d0d494a55b3dec3a1e593d362fb87",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetastoreMicroUi.en_US.gdHKdAMdtbk.es6.O/d=1/rs=AJ563L81b4mPQ5xg_-5_p2_wldXjwOQ69g/m=b"
+      "sha256": "470af724be191cd995d2c91df04e405d13ee8a639a21d6362f48c882a45d1cfa",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetastoreMicroUi.en_US.VBgvhPvjzQk.es6.O/d=1/rs=AJ563L8E31j8h1Rx1Qx-5uEeJj-5KVD6qA/m=b"
     },
     {
       "extension": "cloud_datastream",
       "id": "cloud-datastream",
       "module": "CloudDatastreamMicroUi",
-      "sha256": "4fcd2e56d4cf543214ec4c3da203e19a3d89057d1ed5917032ab1029db340328",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDatastreamMicroUi.en_US.pj633xMY1cY.es6.O/am=AAAAAAAI/d=1/rs=AJ563L80VjYaLaTNJ64Nr2XA7Y9l5LI8Kg/m=b"
+      "sha256": "29959fa8c861d68cdcf5532caea981eb3ab0515aeb3351226d2c191f10719a10",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDatastreamMicroUi.en_US.t8iIoLbManU.es6.O/am=AAAAAAAAAg/d=1/rs=AJ563L_186my7WJDkfXGcTmrAfodEKXKeg/m=b"
     },
     {
       "extension": "cloud_deploy",
       "id": "cloud-deploy",
       "module": "CloudDeployMicroUi",
-      "sha256": "6e74e435bd4b6074af8af91605deb7e80cdd7a1d8d53c4e38efe1ac96c6eeff9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDeployMicroUi.en_US.2PP4OfRBsTg.es6.O/d=1/rs=AJ563L_2TG6ifs8lvpPTA6v3tbzzI6I9wA/m=b"
+      "sha256": "509700511a1acf80f05a1698b10f2a50469ef55f37d338a9dafe103bfbc96e67",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDeployMicroUi.en_US.6u53xer8p2w.es6.O/am=AAAAAAAAAAAg/d=1/rs=AJ563L-nGYcN60THcwbka-0hKRe3WTxe2A/m=b"
     },
     {
       "extension": "cloud_dms_v2",
       "id": "cloud-dms-v2",
       "module": "CloudDmsMicroUi",
-      "sha256": "c1d0def3385227f249520609846abe23160c2be1e7f496e0239a86ab2d9ed721",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDmsMicroUi.en_US.vgAXN9eynbE.es6.O/d=1/rs=AJ563L-ZZ_k2T_3WzCXv2j9hW783dECvuw/m=b"
+      "sha256": "469d0ab1a3d20be22f6d0ebe209adcc08f6652a0a1efde576dd09cd295b03514",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudDmsMicroUi.en_US.C7jF-mOPl8s.es6.O/d=1/rs=AJ563L--B0wPtq4HcGhgTLNPSODzIS2lJA/m=b"
     },
     {
       "extension": "cloud_essential_contacts",
       "id": "cloud-essential-contacts",
       "module": "CloudEssentialContactsMicroUi",
-      "sha256": "3067455ef8d0cf203a4a6f3d1ae50352127e571c7cf09feee0e7da4d3eb235d4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudEssentialContactsMicroUi.en_US.YE0ldmwtQ3I.es6.O/d=1/rs=AJ563L9TZ-5s1KEctm7H0JW9Bvjcti6ALA/m=b"
+      "sha256": "30affcfee20d8a8753a1754205aef18625e5a022f315fc00f2ad54b10d23df92",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudEssentialContactsMicroUi.en_US.BHAgROkVKrU.es6.O/d=1/rs=AJ563L9gHR7V2SzRu_TD57ndOt3cFVadLw/m=b"
     },
     {
       "extension": "cloud_functions",
       "id": "cloud-functions",
       "module": "FunctionsMicroUi",
-      "sha256": "392cffd86a645e51d2d56f297e546694d9a1017bb621ab48837abf7edbc294d1",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FunctionsMicroUi.en_US.tm50TNQZ3AE.es6.O/d=1/rs=AJ563L9zztDNzRsVeHm-MAoQHyqCo5OnKA/m=b"
+      "sha256": "fd27856d8443cec98f74e49a99e6ecce649a091d6fb92a4bc43d6dc04ce1d301",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FunctionsMicroUi.en_US._jS0nwVnZOI.es6.O/d=1/rs=AJ563L_CknPz_RBQH_1tJOvkG6knvcRPUA/m=b"
     },
     {
       "extension": "cloud_groups_rif",
       "id": "cloud-groups-rif",
       "module": "CloudGroupsRifMicroUi",
-      "sha256": "2adcaefcc3ad17a37cd3cb4292686fb24ffcef6a5a02977d4978e16feb8705ab",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudGroupsRifMicroUi.en_US.bBTQrB-VoeI.es6.O/d=1/rs=AJ563L_em9c-UF-Q1E09N4PdfHYB4knp-Q/m=b"
+      "sha256": "42c6992727bb564897bcafe7da6dc7c00f5dd819daa9fe3b757f851a6e2ec7d7",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudGroupsRifMicroUi.en_US.8fKXwedw0_E.es6.O/d=1/rs=AJ563L8pxA1ThWFC9tdbyCBkJecj2zIeOA/m=b"
     },
     {
       "extension": "cloud_logging",
       "id": "cloud-logging",
       "module": "CloudLoggingMicroUi",
-      "sha256": "b2e198d7e00f8360872556274f1c16ceb6342054a8bc86b3877ad1f869edbd8c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudLoggingMicroUi.en_US.LLDqWY-1dno.es6.O/d=1/rs=AJ563L9C964NgkyuKsjVekoNyI9hG7Adog/m=b"
+      "sha256": "15d2751b5877e9779c4411a1c6edd3be1baf4ab63eeb3e1062d99c505d479777",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudLoggingMicroUi.en_US.JH2Wn-FMG-Q.es6.O/d=1/rs=AJ563L_SluTOMWbxeY18YhtyTp09Tn0vqg/m=b"
     },
     {
       "extension": "cloud_profiler",
       "id": "cloud-profiler",
       "module": "CloudProfilerMicroUi",
-      "sha256": "c88c88d5d4d35ffc27f3a9b00de88ee5789007e2ce5551aad4e4ddf72a23fff5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudProfilerMicroUi.en_US.lr7KcCOWsus.es6.O/d=1/rs=AJ563L9SqP2MQ0v_I-8MI834MmXEkGIjEg/m=b"
+      "sha256": "0441208120c76c9ad798e1a8ddee51c1e30a72a715e517b18fcfcee2236f6dab",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudProfilerMicroUi.en_US.eyLPHhcNK_s.es6.O/d=1/rs=AJ563L9zQewYyC2MNarZg1QmKcP-jTdN1Q/m=b"
     },
     {
       "extension": "cloud_pub_sub",
       "id": "cloud-pub-sub",
       "module": "CloudpubsubMicroUi",
-      "sha256": "cff8c81a21aaad32d437ebc5f7bc9602479328ee525d271091fbd22a26d47850",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudpubsubMicroUi.en_US.x_Dz9r_4sQM.es6.O/d=1/rs=AJ563L-gB9Cmilpe9I3boRh7Afk8iyTEpw/m=b"
+      "sha256": "5b1644ad84916f568ed7eb47142276cfefdfd2f4e74f304c756c033a5a8756d7",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudpubsubMicroUi.en_US.P48CrXkoWL0.es6.O/d=1/rs=AJ563L8FS_Nhv8dbnwREBgU_HiGlJ4Xk3g/m=b"
     },
     {
       "extension": "cloud_run",
       "id": "cloud-run",
       "module": "CloudRunMicroUi",
-      "sha256": "e71da584c9b804afd5b97e8abfedff92d9b6a6303e83ecda33248d4e1e348e76",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudRunMicroUi.en_US.gN3_21LMQro.es6.O/d=1/rs=AJ563L9ZqV3u9JiK4CxnA7-YQXizrpP05g/m=b"
+      "sha256": "5e9663014414c5d6e171980796a733bdcf90256ff6c55431a05c47642f631898",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudRunMicroUi.en_US.XAFJ8RymJCE.es6.O/am=AAAAAAAAAACA/d=1/rs=AJ563L9zsfZMUlr_nLVnItcmGt_MakjAXA/m=b"
     },
     {
       "extension": "cloud_scheduler",
       "id": "cloud-scheduler",
       "module": "CloudSchedulerMicroUi",
-      "sha256": "5d9e859eb3cf037c95705433d516567e7a2630b71674f73c8e385ed91f1d29ca",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSchedulerMicroUi.en_US.91sJ76vH_0c.es6.O/d=1/rs=AJ563L8gg5rDJfZxZRWjbcH62XxF9HKtFQ/m=b"
+      "sha256": "f0741f9cf4e8dee412b9ce14c1d5bb7cf04c9ef9f2fb7c0f72e3bfa51f442e6f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSchedulerMicroUi.en_US.XBcXnAyPi0s.es6.O/d=1/rs=AJ563L_2hIcd-33yBFhcBhz8E_M3aZWSgg/m=b"
     },
     {
       "extension": "cloud_shell_editor",
       "id": "cloud-shell-editor",
       "module": "CloudShellEditorMicroUi",
-      "sha256": "acc482f0a78956d787eaf0812aa34cd38dd63e85dff7e6d4276c6c4154847a49",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudShellEditorMicroUi.en_US.GH2VDwudqGg.es6.O/d=1/rs=AJ563L-CzL2pLzQYJSfTRSFs3qqWrAlplQ/m=b"
+      "sha256": "3fee34138ad182ae0fcacf43ce736f590c1d5d608e38005aa83670952fd81a01",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudShellEditorMicroUi.en_US.gE0NBAcTAPw.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9LWbOAi6JkkZgBOPf_H0TaDZ6yqQ/m=b"
     },
     {
       "extension": "cloud_spanner",
       "id": "cloud-spanner",
       "module": "CloudSpannerMicroUi",
-      "sha256": "af7da85964ee0853489a1710630e47bb37da1116f60543bb4c7bce1b3ad498b6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSpannerMicroUi.en_US.8chNWv3Qp30.es6.O/am=AAAAAGA8gA/d=1/rs=AJ563L86BS2wdW3dKuADiDwSuTK6r2afSQ/m=b"
+      "sha256": "545ff860042359f45893e877c7ea27974b7998ad1ce14363b73e2cdaa82c7ff3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSpannerMicroUi.en_US.UAxyK0Odz5Q.es6.O/am=AAAAAAAAEA/d=1/rs=AJ563L_0-ozsGcHNWbOIaOBkFyYMO2xwQQ/m=b"
     },
     {
       "extension": "cloud_sql",
       "id": "cloud-sql",
       "module": "CloudSqlMicroUi",
-      "sha256": "c455088d02cb2756e31e0326d2f264f27c0347086dded0a90d84a84b1a53b5aa",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSqlMicroUi.en_US.NLsTEV5y78A.es6.O/am=AAAAAGA8gA/d=1/rs=AJ563L_p-OdXHSdaO-0IkeGY-0PcZGUm3w/m=b"
+      "sha256": "2f5478a4f028206928c0706a06442737e544c5a77a25e0d550925b77bb60199e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSqlMicroUi.en_US.frPSisxx9lY.es6.O/am=AAAAAAAgAAAAAQ/d=1/rs=AJ563L9WfhK8NbQbaoy3RQ9Pxk99NXgdlA/m=b"
     },
     {
       "extension": "cloud_support",
       "id": "cloud-support",
       "module": "CloudSupportMicroUi",
-      "sha256": "dbafd82e3fcfd194029be8dc9a05ea774142a752a8341e15cc212581350cf72c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSupportMicroUi.en_US.H0JmEuErGbM.es6.O/d=1/rs=AJ563L8q7lpxyyS_v5jss9vKSwNq_MDNkQ/m=b"
+      "sha256": "529ec2a6b5744cf4af1897382d5741a029ea77f8810e8913cd17b48c8c973e88",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudSupportMicroUi.en_US.eGZhAW1fljk.es6.O/d=1/rs=AJ563L-f5PUqXhIE-pvGMk-uLCZ5OwRoew/m=b"
     },
     {
       "extension": "cloud_tasks",
       "id": "cloud-tasks",
       "module": "CloudTasksMicroUi",
-      "sha256": "fea4cade9c5106b499afb60d4917a5049f04e2a179665bf0835872b5fb9a2a09",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudTasksMicroUi.en_US.h3f6oV_utks.es6.O/d=1/rs=AJ563L-0wgpLdUAc4rUrstLi9EwVKP0qag/m=b"
+      "sha256": "eee45b7c6eb6bfedfc41ab98bb5c4a02105f5569f098203459dc93ba1e8e74e6",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudTasksMicroUi.en_US.A7QWgW03taU.es6.O/d=1/rs=AJ563L9iGHby2mTSBuuc0hJq96RAlMWmPw/m=b"
     },
     {
       "extension": "cloud_trace",
       "id": "cloud-trace",
       "module": "CloudTraceMicroUi",
-      "sha256": "caab5a0c66dfd62afe2e7750e27f72212066c91f92aed9ce9d746996e6a16686",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudTraceMicroUi.en_US.ukggSPSw09c.es6.O/d=1/rs=AJ563L9siAGKbSrWn-6G_vDjhtDTEkj93w/m=b"
+      "sha256": "cc0a862e4dd0c8f1648c698058c874fe6f4941d35efe48d33a1659816804c77a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudTraceMicroUi.en_US.qnfhgFc-INc.es6.O/d=1/rs=AJ563L9c3gxlOhHf0HfWsj6hWXzIx5BQrQ/m=b"
     },
     {
       "extension": "cloud_workstations",
       "id": "cloud-workstations",
       "module": "CloudWorkstationsMicroUi",
-      "sha256": "140bf31ec7b458712c15d1c4fb82c5251e20cce25f2aaa107cb63291d3b15dff",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudWorkstationsMicroUi.en_US.OFcNN1Vubs0.es6.O/d=1/rs=AJ563L_gSs8QTgT3b_QMHQvyrYJWcrVe9w/m=b"
+      "sha256": "bf75f095028299e244d00213768e040d01e2fcbfddbed7fb7645f4987e3e9f7a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudWorkstationsMicroUi.en_US.xdBSUlOdvGA.es6.O/d=1/rs=AJ563L-QKaVE7yQs0q9lIwYRU3A28r1oOA/m=b"
     },
     {
       "extension": "clusters",
       "id": "clusters",
       "module": "ClustersMicroUi",
-      "sha256": "205c1817e1c40078faa45557c99091f94b63396835342841868125363433624d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ClustersMicroUi.en_US.g6_je6PWRSM.es6.O/d=1/rs=AJ563L96hBIHFyCZkYa_zN-Nu34WfxfZ2A/m=b"
+      "sha256": "35e0c192fed9a549c81f05c819d8e43f8488a17384bb8fa192382c64ffb2c02c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ClustersMicroUi.en_US.fnDHcvqw86c.es6.O/d=1/rs=AJ563L_-1MNAwBcck5tTx_Jb4-ynRp0DDA/m=b"
     },
     {
       "extension": "code_assist_extensions",
       "id": "code-assist-extensions",
       "module": "CodeAssistExtensionsMicroUi",
-      "sha256": "7c9ebd9cefe5470db59838136813bc6f704a1daed744e0fdd8d1e3e360133adb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeAssistExtensionsMicroUi.en_US.x_KQtsetHRY.es6.O/d=1/rs=AJ563L89WdvWbds_vYH2E_8KlF8dSHS06A/m=b"
+      "sha256": "c578494b2cb01dff3e4ffa50daa9ff6804f5946d316cf5d51f0e5239cd25a5df",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeAssistExtensionsMicroUi.en_US.55RzybcFk2s.es6.O/d=1/rs=AJ563L_pVouw03e1wtqP7zO_Y0bpzx7K7A/m=b"
     },
     {
       "extension": "code_customization",
       "id": "code-customization",
       "module": "CodeCustomizationMicroUi",
-      "sha256": "e499e85c6d2415d4b4cd675894d43ed04e65684300606b82f04134d4a82a77d8",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeCustomizationMicroUi.en_US.CgApj4pkNfY.es6.O/d=1/rs=AJ563L_nbG--it_jvZ7TxI3qjZjIGx4QUw/m=b"
+      "sha256": "68928780c87c29a6b8652f0e656bdc4695d3a0a35af4d4a4502b708879b69548",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeCustomizationMicroUi.en_US.u2mPH1bo70o.es6.O/d=1/rs=AJ563L9YbHWqCVthG2E8L-rrx2YuAGvrig/m=b"
     },
     {
       "extension": "codeshift",
       "id": "codeshift",
       "module": "CodeshiftMicroUi",
-      "sha256": "7f404d90a1d5959b5c849987968604f6dd6e30aff090c9584b040590745607e6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeshiftMicroUi.en_US.8XcVRQ5Phx8.es6.O/d=1/rs=AJ563L8VNIO721GmrxWeybdmSRNY0A8ybg/m=b"
+      "sha256": "24f14e96bfdcbb1645ece3f901480d28fc5ac9b6416ea67dc9093b079eee31af",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeshiftMicroUi.en_US.Znj5y8ZZYQc.es6.O/am=AAAAAAAAACA/d=1/rs=AJ563L_Ivt5a5ivz5pCX_zQlBadg0L2f-g/m=b"
     },
     {
       "extension": "common_components_demos",
       "id": "common-components-demos",
       "module": "CommonComponentsDemosMicroUi",
-      "sha256": "0f92f0293211fd006ef3f0bc04a1edad8e75da494970adef7a078ed4a01c95af",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CommonComponentsDemosMicroUi.en_US.39sxsbFUemg.es6.O/d=1/rs=AJ563L_IhNTIesEluFu6HYWWqm_h1MDQBA/m=b"
+      "sha256": "039ef35345fddcd827ae59f8e8c902d397a2c78cc5d62ab30d5f08b4e6f827d0",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CommonComponentsDemosMicroUi.en_US.Hqwg_P1vwHo.es6.O/d=1/rs=AJ563L-GCco0ghhPD0XLokgXFjBHGPrYEQ/m=b"
     },
     {
       "extension": "common_services_demo",
       "id": "common-services-demo",
       "module": "CommonServicesDemoMicroUi",
-      "sha256": "e1b4ef8bebb780c39b98a5b09c3d17b442fc3c0e603cacb26e649f9b9d52f9cd",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CommonServicesDemoMicroUi.en_US.IqssFhvnfiY.es6.O/d=1/rs=AJ563L81DNHuU1JjtWMme8Mu3r8o01cUPA/m=b"
-    },
-    {
-      "extension": "compliance_framework",
-      "id": "compliance-framework",
-      "module": "ComplianceFrameworkMicroUi",
-      "sha256": "0d60e272c9a27ad51c1c21a766c56590211030ca7505da56e8f3fbe186670a6a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComplianceFrameworkMicroUi.en_US.7WQKeN9Pnm4.es6.O/d=1/rs=AJ563L_cEVbo_SI-wZiJLXxVpfa8lFBYfw/m=b"
+      "sha256": "ff4269afed2a035202f6c20929af6bccbdccb9d84ec579c61068ace39d104fea",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CommonServicesDemoMicroUi.en_US.XBh6MWZS0w8.es6.O/d=1/rs=AJ563L-JAFRbdIGhGCC6LQxuV9qPnK8vWg/m=b"
     },
     {
       "extension": "compliancemanager",
       "id": "compliancemanager",
       "module": "CompliancemanagerMicroUi",
-      "sha256": "c666d9963f60a34a407c911c5dd1a685227151ab26a0908a3cd9d5dd7c986d24",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CompliancemanagerMicroUi.en_US.CtFrqsVOuuE.es6.O/d=1/rs=AJ563L_HYPSMBa5EtCdcSpIuX8XhZCt95Q/m=b"
+      "sha256": "86efb5f7607c97971b5cede4434ab430b6bc03eecaa43163208fd87030f2f0c6",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CompliancemanagerMicroUi.en_US.t6wuiwHghqU.es6.O/d=1/rs=AJ563L8P9ZaBhtPN_JsglYj70gFXwZTVTA/m=b"
     },
     {
       "extension": "composer",
       "id": "composer",
       "module": "ComposerMicroUi",
-      "sha256": "fda23c57e9e9a860836ac73b2526642c602ae4ef398972fbe7bbdd9a5a0256eb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComposerMicroUi.en_US.P1mRNt2HPes.es6.O/d=1/rs=AJ563L_4HUOVCYjmL2N3DAux6EqMJxjcuQ/m=b"
+      "sha256": "2c61bd84841d9fc5f1d5de259c80e0d9364a6a2771e5e299c37fc3010e25f681",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComposerMicroUi.en_US.tTqSKWcyn7g.es6.O/d=1/rs=AJ563L8jY8xTe9KeYSiZXrfSKnt-7CyL3A/m=b"
     },
     {
       "extension": "compute_advisor",
       "id": "compute-advisor",
       "module": "ComputeAdvisorMicroUi",
-      "sha256": "ac274efe03adbdf31a70461c29ea844a379ef57fe2577ee4bef786b6448ff267",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeAdvisorMicroUi.en_US.rC09LU6TpHU.es6.O/d=1/rs=AJ563L-9sVdIJXFx62_YDeC73M3-UIJbGw/m=b"
+      "sha256": "411a7fd862b806fab67e296e4be807f655db746c4a3062c311e4d0f2806f8e40",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeAdvisorMicroUi.en_US.nibL6R49v1E.es6.O/am=AAAAAAAAAAE/d=1/rs=AJ563L-_OwU5Fwt0V7ImYmqdMpomCuzVjg/m=b"
     },
     {
       "extension": "compute_cud",
       "id": "compute-cud",
       "module": "ComputeCudMicroUi",
-      "sha256": "f886d265a1b05ddc4b8d253ecfc905288e6e1091ba46419c7d0ebcb2a089b1be",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeCudMicroUi.en_US.u4EmJhoHk3g.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L-cQ-h1-dOpdJv-cBOwkY_zFaTcAg/m=b"
+      "sha256": "3aa59fb19150fb893b358959b7d402ee2ff54464cd62a004b003298c8169f763",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeCudMicroUi.en_US.CWPJ5vR4plM.es6.O/am=AAAAAAAAAAAq/d=1/rs=AJ563L-V3f4jmNXdMtam61dEz4hmC0Bm8Q/m=b"
     },
     {
       "extension": "compute_main",
       "id": "compute-main",
       "module": "ComputeMainMicroUi",
-      "sha256": "71574e0852ad1af819d2849210e1e5f384f38ca4bd5ff5b8489b5783ab3df53b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeMainMicroUi.en_US.BFHtWk8sgSs.es6.O/am=AAAAAAAAAIAC/d=1/rs=AJ563L-YnGYNI79YNcJCMQ1O8VAUqHK6UA/m=b"
+      "sha256": "3ab69db10ff9fc1c5a8e6fda81927f4493e4d6801de261a9f50832fce649d228",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeMainMicroUi.en_US.wcfU9kAw4pU.es6.O/am=AAAAAAAAAACo/d=1/rs=AJ563L_M8RwY0fCjo77U3VO0PZVOpKXX3A/m=b"
     },
     {
       "extension": "compute_managed",
       "id": "compute-managed",
       "module": "ComputeManagedMicroUi",
-      "sha256": "6fd61ea84e0cf05c56c93c088969f541b2c18dfbeb62ec13fa4e235dbb7f1c0c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeManagedMicroUi.en_US.sC0RBjqyxJM.es6.O/d=1/rs=AJ563L_2CcuYAxdkFz0OpZH6At3B0KVtfg/m=b"
+      "sha256": "81ef6fe1614948ef6e6acfcf1146946c364af23a7e582eb9fe810a23e4dc8d3a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeManagedMicroUi.en_US.S6Nl7uGQLZQ.es6.O/am=AAAAAAAAAABA/d=1/rs=AJ563L9J4HUOuXl4i0AINVzXegtfppLLuw/m=b"
     },
     {
       "extension": "compute_pd",
       "id": "compute-pd",
       "module": "ComputePdMicroUi",
-      "sha256": "c29b431fe7ed7e26e9f40bdc795c210a0dda83241a6c7bd071b62c8f56f3278d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputePdMicroUi.en_US.B-FhwoQjioU.es6.O/d=1/rs=AJ563L9pUteU9TG3EFkmTO9owkiiDChoTg/m=b"
+      "sha256": "f51dfac402b26062bdaed60d24912d1fa161c0870c1c848634ffdd45f2da70cd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputePdMicroUi.en_US.kNXuS4sggns.es6.O/am=AAAAAAAAAAAg/d=1/rs=AJ563L_2xvJ7G6m2mJ6b-w-NJ5GegXCZMA/m=b"
     },
     {
       "extension": "compute_tpu",
       "id": "compute-tpu",
       "module": "ComputeTpuMicroUi",
-      "sha256": "de673d7fadfec7f7c5272018cf837b716a02e6c21693013cbe6db3213095fc7c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeTpuMicroUi.en_US.uAPGPnpCrnE.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L9H96et_l6hkHemwJAuLKSknhVsUQ/m=b"
+      "sha256": "696b5f5a2be36783d708bdc2800b5f2d9db3d22331f099dbbcb9e73e6488f194",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ComputeTpuMicroUi.en_US.tg__mZeoCXY.es6.O/am=AAAAAAAAAABU/d=1/rs=AJ563L-bnX0JEGTAUGTYLrcMxjLvVKhEjg/m=b"
     },
     {
       "extension": "connector_platform",
       "id": "connector-platform",
       "module": "ConnectorPlatformMicroUi",
-      "sha256": "7a410281a12d29656975e5808784a30fe9aa754c1ce9e6c970977ee6cf071da6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ConnectorPlatformMicroUi.en_US.nWBy2rp1mWE.es6.O/d=1/rs=AJ563L9xPh_jcumJaeeBYhIG8oAmnsDynA/m=b"
+      "sha256": "ea6e61a71e01353a2a032a003da2398bf0d6dd2e53ca326ce06972263c96cb88",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ConnectorPlatformMicroUi.en_US.HBwjKAYnt-A.es6.O/d=1/rs=AJ563L8FfHrvdDy8nxcOLyhw3HZsM2yO2Q/m=b"
     },
     {
       "extension": "consent_manager",
       "id": "consent-manager",
       "module": "ConsentManagerMicroUi",
-      "sha256": "2bf799b5b99e22e83d1ae35adf059ff26cb16a5b6ad3bd921636516a5189def8",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ConsentManagerMicroUi.en_US.EGtGyAB4A24.es6.O/d=1/rs=AJ563L8NcSyBCX3WaxlWzF2oJDDj6lbtDQ/m=b"
+      "sha256": "50f99c0156106d66022b5bccc9b37a21036db7bd703359450fbf8ddb042d7c8a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ConsentManagerMicroUi.en_US.zSPRyKIqINI.es6.O/d=1/rs=AJ563L9rmHBhPw1YZBwNvkBB-fE7QJltLg/m=b"
     },
     {
       "extension": "cortex_data_platform",
       "id": "cortex-data-platform",
       "module": "CortexDataPlatformMicroUi",
-      "sha256": "7c32635b46a667aeba361fcca54a83935d65453c70f972b1544cb219eda88b94",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CortexDataPlatformMicroUi.en_US.EW6LcBf9H04.es6.O/d=1/rs=AJ563L90AkYXPeGWOhqTXaiEHO7lH4PWsw/m=b"
+      "sha256": "0c834f52e281e05ea5ba1506bce4d7abeffdc152bf44cc0337add5519ee7f562",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CortexDataPlatformMicroUi.en_US.5tTC7vOKLQY.es6.O/d=1/rs=AJ563L__Nqf81kz42onGjM3438DYCcwq3Q/m=b"
+    },
+    {
+      "extension": "data_cloud_studio",
+      "id": "data-cloud-studio",
+      "module": "DatacloudstudioMicroUi",
+      "sha256": "3b0abcc538415ef27311d810897341d992bc502b84c478f18204e92b29ea9765",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatacloudstudioMicroUi.en_US._mCagEKux34.es6.O/am=AAAAAAAwBg/d=1/rs=AJ563L8xHQZ4aGVvFkYFr0yhKKwo5FY_RA/m=b"
     },
     {
       "extension": "data_gen_ai",
       "id": "data-gen-ai",
       "module": "DataGenAiMicroUi",
-      "sha256": "e6017e9f9cf8af84763656b09292eb77ba9418d89252a3a4683b4feea79fe24c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataGenAiMicroUi.en_US._A0UhXC4yOc.es6.O/am=AAAAAGA8/d=1/rs=AJ563L-4m6a4adLMjoDJlXXg4WIrjR5VTw/m=b"
+      "sha256": "a6f3f6e2b7f8354a4322287fd73fe8cddf3779123d8c1c45aa6ce095a1aff6c4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataGenAiMicroUi.en_US.8Kd5YDlKXVs.es6.O/am=AAAAAAAYAw/d=1/rs=AJ563L_V7muNidhapecQkg6LgcxOxQcjJQ/m=b"
     },
     {
       "extension": "data_loss_prevention",
       "id": "data-loss-prevention",
       "module": "DataLossPreventionMicroUi",
-      "sha256": "a49af7021665e1148902a92eda024b133ab27c37b7d8585214f682476873ef4c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataLossPreventionMicroUi.en_US.-9kBfSpUbxc.es6.O/am=AAAAAAAAABQ/d=1/rs=AJ563L97Wi8TigNBhdFqdjqBheDI_eX-tQ/m=b"
+      "sha256": "d3e1dab89feb5c1d4787a6edef28b24f6f9790ccccd7d8b19ded3bab036fe840",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataLossPreventionMicroUi.en_US.-HME-GK4kNg.es6.O/am=AAAAAAAAAAAo/d=1/rs=AJ563L_46GH6FXsoXwlk3KwQQ1vV7RNFJw/m=b"
     },
     {
       "extension": "databases_home",
       "id": "databases-home",
       "module": "DatabasesHomeMicroUi",
-      "sha256": "3cbdc5cbc66648694a1475e4ec58a48069a564b6aaa7cf36941dfa5ac1a92ac0",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatabasesHomeMicroUi.en_US.mF6EaOWnsZk.es6.O/d=1/rs=AJ563L-SHyREYi74VdcqopaMFe5MoEr0AQ/m=b"
+      "sha256": "008b28ff81c55407895f04481289152b0191bc1fbeb7e3b9cb8170648afc4c21",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatabasesHomeMicroUi.en_US.o4hpuGIga-4.es6.O/d=1/rs=AJ563L9o4kjKmmB9Lid-umf9mANx1fRqvA/m=b"
     },
     {
       "extension": "dataflow_rif",
       "id": "dataflow-rif",
       "module": "DataflowRifMicroUi",
-      "sha256": "6223175d5fa9eca91484787fe7420da630d1c2b41ea7142cd05d88d311053975",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataflowRifMicroUi.en_US.MaAD5C93VOY.es6.O/d=1/rs=AJ563L94JOiMdQW9SxUhP6hkJn7jg3tC9Q/m=b"
+      "sha256": "0b587adf046a42c2a98968699fcc66dcf4d89905abfd1f384b5bd33fda0ce2e8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataflowRifMicroUi.en_US.r8yGNI8N-sI.es6.O/d=1/rs=AJ563L9r466kYwP5QolWFYz5fNzsBYUcKw/m=b"
     },
     {
       "extension": "dataform",
       "id": "dataform",
       "module": "DataformMicroUi",
-      "sha256": "b0daba4c99b9ee258537fa6d5f0d4ff083cea0dff3d23930ed17edca1a3a87c2",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataformMicroUi.en_US._21dS110qkw.es6.O/am=AAAAAGA8AAQ/d=1/rs=AJ563L-Xv1UKLi_IcFTMlakhjcGeUatSTA/m=b"
+      "sha256": "246806e383b09a4069f0043a5c6f56f7d05369437b97177bff53cc8acad85975",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataformMicroUi.en_US.COcBUfkQnAs.es6.O/am=AAAAAAAYA0AAAAAg/d=1/rs=AJ563L-1UdLlbbpoA3PXVj9ip956VAH8Fg/m=b"
     },
     {
       "extension": "datafusion_v2",
       "id": "datafusion-v2",
       "module": "DatafusionMicroUi",
-      "sha256": "a45e2d3fe70720002e1039775ebb187080abc0401341049991606f0dd4140583",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatafusionMicroUi.en_US.UIufrw8t99M.es6.O/d=1/rs=AJ563L-mvmMhB_Dfzxf1kG0bLsrAB8hUNQ/m=b"
+      "sha256": "5649f0fa41cdd4c31b9ca0b744adc1a49bc6f3dd34979ad79d92935620f5f476",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatafusionMicroUi.en_US.MyHhD1vEJVI.es6.O/d=1/rs=AJ563L9CXiLsksLR3QAO1WF8BEY5u9kMpA/m=b"
     },
     {
       "extension": "dataplex",
       "id": "dataplex",
       "module": "DataplexMicroUi",
-      "sha256": "87ade7c316c56ec949e47c1adccffacf149a2e21716a8c53250280bcb987f20e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataplexMicroUi.en_US.dyBi2wW3n2s.es6.O/am=AAAAAGA8/d=1/rs=AJ563L8N7b_4tDdn-kwrSV-9XFa_1IUkXg/m=b"
+      "sha256": "feed7273ae036f08bc0fbe631247211c21b3aa8845232f4eed55d8705c04ba55",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataplexMicroUi.en_US.0UmXGTvEQFw.es6.O/am=AAAAAIAx/d=1/rs=AJ563L_qxEF6C4695rehItcMYWTzF-zKug/m=b"
     },
     {
       "extension": "dataprep",
       "id": "dataprep",
       "module": "DataprepMicroUi",
-      "sha256": "14fcb4e0891a18b36e3513609744f81edb3b678652bf0165f7633e35c837a1d1",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataprepMicroUi.en_US.l8isM1kA-K0.es6.O/d=1/rs=AJ563L_pGmqfjQA2MELnvENkJ3v4kdwHPw/m=b"
+      "sha256": "3891604fe50daa25935da0def1d21e1b20aaa9e80fa61650285d13df1712fb7a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataprepMicroUi.en_US.i6Z9WS1JU9U.es6.O/d=1/rs=AJ563L8hZn50VeqUjf7TfJYLOfiHllSOZQ/m=b"
     },
     {
       "extension": "dataproc",
       "id": "dataproc",
       "module": "DataprocMicroUi",
-      "sha256": "07488aefbbfcb2ae0776282544de6dd0c6679d8db3d26edd9e8a48f8866c17df",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataprocMicroUi.en_US.3pKNz95J7qQ.es6.O/am=AAAAAAAI/d=1/rs=AJ563L-5XGGi2faDiE8i-VZ79c6fS1jEOw/m=b"
+      "sha256": "d6b9a4768cb1ab6d19102e674db6ef22dd2678da1512ed9de01161405483ef7b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DataprocMicroUi.en_US.xVXe0Wmdeuc.es6.O/am=AAAAAAAAAQ/d=1/rs=AJ563L-WFB2gYBs7mZMxG5F7_CISJMdNag/m=b"
     },
     {
       "extension": "datastore",
       "id": "datastore",
       "module": "DatastoreMicroUi",
-      "sha256": "0905f73f589b49ba2cc2db921e816ee8938186f1d764dfb9bc5d4c97ed3ec359",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatastoreMicroUi.en_US.BYMfMA4spj4.es6.O/d=1/rs=AJ563L_Glj3XQXlby_0YeHVxsrl_voxYOg/m=b"
+      "sha256": "e968198d84a57edbdadf44a0582381e5c96cc0e1b9e47cb57ecda1e92ff9608b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DatastoreMicroUi.en_US.LVlEj7Ilf7k.es6.O/d=1/rs=AJ563L_lbxpdnt6fSdABZ4MukNOe9v89fw/m=b"
     },
     {
       "extension": "daui_pipelines",
       "id": "daui-pipelines",
       "module": "DauiPipelinesMicroUi",
-      "sha256": "e528fe23ef4b6b50b7e446bb2bd0af0b41043a962cc5cbc4e68b3d9f634246a9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DauiPipelinesMicroUi.en_US.syzfLG8XkrY.es6.O/d=1/rs=AJ563L_PdG6TjsfVPnbGNZS-Y1s1G11xhQ/m=b"
+      "sha256": "50eefb83d2bc05777e96d5aa8c0ec8f1f1d58ed53682b84d15f8c2c4b8b3e4af",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DauiPipelinesMicroUi.en_US.1fAprcofLrg.es6.O/d=1/rs=AJ563L8sfcJikA83b1xpXl9S0C8St7IFfA/m=b"
     },
     {
       "extension": "dbmanageability",
       "id": "dbmanageability",
       "module": "DbmanageabilityMicroUi",
-      "sha256": "aeada1149c97853ee4c26d72b9437d125a0130ff2da85215dfb538470b3a8698",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DbmanageabilityMicroUi.en_US.5qjOsMjqYoM.es6.O/d=1/rs=AJ563L_-vXvwRNbo35ufP1PqjAGowfDfoQ/m=b"
+      "sha256": "6f61f352ee9aaaa830e793c9ce06467633fc4c7ad0f9b3cdc7fa60450ff74a98",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DbmanageabilityMicroUi.en_US.m1l9gOcwK-Y.es6.O/am=AAAAAAAI/d=1/rs=AJ563L-LqMwvVYSkMp6SmZg6HVA1Qn05dQ/m=b"
     },
     {
       "extension": "demand_forecasting",
       "id": "demand-forecasting",
       "module": "DemandForecastingMicroUi",
-      "sha256": "32904f3c9c1fe07993aaba3a2a3a68a4dfa3985221000ec3a1ef9fe3f447396a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DemandForecastingMicroUi.en_US.S7HCQUJ2hQY.es6.O/d=1/rs=AJ563L9clgAK9ex0bs3APPYjdEWiptZ6fg/m=b"
+      "sha256": "f9cb54fe5fad02cd8174dc96b6e023aaa17999be7927bc0d0a14574258b73744",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DemandForecastingMicroUi.en_US.xZv66dcp-TU.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9GrK2Hr43E0CXGmwZ5lx5wQ5BsYw/m=b"
     },
     {
       "extension": "deployment_manager",
       "id": "deployment-manager",
       "module": "DeploymentManagerMicroUi",
-      "sha256": "95af92a58debc63e730e0785989f4313155a11663ae9ec20795e93b4fa708204",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DeploymentManagerMicroUi.en_US.Xeva3iJbXq0.es6.O/d=1/rs=AJ563L8Jrzi_khpOZlAfUf4LcNCtzpOgBw/m=b"
+      "sha256": "a2e62053e8336e9d7db61f13921e19171e05fb956ebe826e32d2718d47d089c9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DeploymentManagerMicroUi.en_US.cXeeD6ZW-xM.es6.O/d=1/rs=AJ563L89prUUQNpi2PYHjiC-D-WDF7bAGg/m=b"
+    },
+    {
+      "extension": "developer_device_platform",
+      "id": "developer-device-platform",
+      "module": "DeveloperdeviceplatformMicroUi",
+      "sha256": "5d5851fce275128176efcfca1489c4d915f488f7c2e8893c1c11ea59dad771fb",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DeveloperdeviceplatformMicroUi.en_US.q3jMqoltkSk.es6.O/d=1/rs=AJ563L85gwGpQBw_qjBUFIRU-WVUZrO8Ig/m=b"
     },
     {
       "extension": "developerconnect",
       "id": "developerconnect",
       "module": "DeveloperconnectMicroUi",
-      "sha256": "a630c975f381f2e6d15d2ded1bd61fa65a6b8d33bd2382a0cb9f9ed72a243be4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DeveloperconnectMicroUi.en_US.532c7bWS9G0.es6.O/d=1/rs=AJ563L8_7xWzyDM4OjiShNu6ZhLUI623sw/m=b"
+      "sha256": "e43b16ddb5f2fed1da8421366bc55d6bc9acdfaaac6f6b5660f440b427d682dd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DeveloperconnectMicroUi.en_US.747u-AFJag0.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L8etUhhbDyk5tCJE5nN_e4ZFtwe-Q/m=b"
     },
     {
       "extension": "dicom_studio",
       "id": "dicom-studio",
       "module": "DicomStudioMicroUi",
-      "sha256": "829c8ca6c73d25042919bc16ecf1754e8d3fc233e24b7842782e27475596d5f5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DicomStudioMicroUi.en_US.coGHhPaeZOs.es6.O/d=1/rs=AJ563L8TJXe3n5PQD8wJy_d36TjgbsgKMg/m=b"
+      "sha256": "446b71017b11be88265d1345aaf91051e9eeba6812d38444f6e32ce41d737d53",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DicomStudioMicroUi.en_US.ExI2hEOh2aU.es6.O/d=1/rs=AJ563L8GMTXEptFD0qO1zD8fcJtvE-_mBw/m=b"
     },
     {
       "extension": "discovery",
       "id": "discovery",
       "module": "DiscoveryMicroUi",
-      "sha256": "74c67f16e34eb74a9dff922c47d2c39ac3e708fc5b2f959279aef6549a88d6db",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DiscoveryMicroUi.en_US.Xx-_G67kUOw.es6.O/d=1/rs=AJ563L_DhcnXOQD0PZXzU5J1Q1cgdILGQw/m=b"
+      "sha256": "4b51da8c8f09634365001633d5cde4543eaf0d94f04ece02ea3e49b3804168e3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DiscoveryMicroUi.en_US.MGum_6OXhtU.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L_igY-2H5udz0MbYStQtvBY8CWlqQ/m=b"
     },
     {
       "extension": "disruption_dashboard",
       "id": "disruption-dashboard",
       "module": "DisruptionDashboardMicroUi",
-      "sha256": "7c6cc0c31390ce44e02e375875d1c76f3c12582f77e8633483a9b6395a4cc33b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DisruptionDashboardMicroUi.en_US.tvvKAZCKlFg.es6.O/d=1/rs=AJ563L_sBoLsHluj7Rp6_OBoAElcI50VYg/m=b"
+      "sha256": "f657d988190ae4d63d21c1268f8d24e7526227b3edd540b7d66ef3449e74e6c9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DisruptionDashboardMicroUi.en_US.rQS2AcTtyUc.es6.O/d=1/rs=AJ563L8xXakFbvc1FyJ2pO3MIjIh-NRLXQ/m=b"
     },
     {
       "extension": "document_ai",
       "id": "document-ai",
       "module": "DocumentAiMicroUi",
-      "sha256": "048b1e6483445588b65b044c327c80406f2220abfc1a4988aef7cbdf30fbaa3b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DocumentAiMicroUi.en_US.9aHT_9AVCeU.es6.O/d=1/rs=AJ563L8cGzkrdnTkbTX7tlqH2B7XdjBZ7w/m=b"
+      "sha256": "79f58648f6321638610574c7ad2d3ab3d7cb4a78047b4b466e47b2cc4cf82bb9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DocumentAiMicroUi.en_US.fhzAV4SNfY0.es6.O/am=AAAAAAAAAAAE/d=1/rs=AJ563L9DY6KZD1A4kEXyx-lGZ_Ijqc1Ppw/m=b"
     },
     {
       "extension": "dspm",
       "id": "dspm",
       "module": "DspmMicroUi",
-      "sha256": "8354129b8c5fcc281043f95fafdfa63ecdd941ea657bf5fa7c71e4b5cbca0ecb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DspmMicroUi.en_US.3FLJOVAMG_Y.es6.O/d=1/rs=AJ563L__j42n1wdjZdYWOrO_wEd5SbHi1Q/m=b"
+      "sha256": "f49e8b4492c1160c82eea1e1cfa0cb074c9d6effc0a6fcf3475b7a637694b4f4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DspmMicroUi.en_US.JAHY988qe3E.es6.O/d=1/rs=AJ563L9vurVhlisbSJDybRSOBjERtIwscA/m=b"
     },
     {
       "extension": "duet_ai_admin",
       "id": "duet-ai-admin",
       "module": "DuetAiAdminMicroUi",
-      "sha256": "bfb5b1408d39503fcfabcf879c0199fb870aa9de07d42a0afbd3b5dcbf3b0287",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DuetAiAdminMicroUi.en_US.DzOdn-mPTMA.es6.O/d=1/rs=AJ563L8chKMmrli5qpKhssZgeQOmcaDfNw/m=b"
+      "sha256": "1e83d556a2cd2e43870d8a4c0d9ece1e6c02b615f50c0c716acc0663d05e5a93",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.DuetAiAdminMicroUi.en_US.CvbfFMFr5lk.es6.O/d=1/rs=AJ563L_OU-JRGPW6SciSNXDEckZSU2wZ_A/m=b"
     },
     {
       "extension": "earth",
       "id": "earth",
       "module": "EarthMicroUi",
-      "sha256": "cb50bffc1abffaa3b080660c2e323a83c06c7e98f7a2d240bf4f244f43077482",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EarthMicroUi.en_US.Z7XSnmWgUs4.es6.O/d=1/rs=AJ563L-BYPM8TTsrknkMMqsvD5jYHn7r9Q/m=b"
+      "sha256": "ae865eeeee02ed4235ef7bf5d4fcf1bd60097fb0c8aa77a45977825c28194036",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EarthMicroUi.en_US.9vMENIzeu0U.es6.O/d=1/rs=AJ563L-n0Os7kQqH7dxOyQ1SjDqpzFfaIw/m=b"
     },
     {
       "extension": "earth_engine",
       "id": "earth-engine",
       "module": "EarthEngineMicroUi",
-      "sha256": "96340296e753b69391007bba2e7681553a0728d0962c8e51f1d06abfb599b2d9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EarthEngineMicroUi.en_US.ehqsuo47cbQ.es6.O/d=1/rs=AJ563L_L-Lj5oiFYzFwZjKYC3mLYTABiGw/m=b"
+      "sha256": "99e9c8c848a1e66e5c61e0f8f84102971c6ec27c072108b2430e0a63d90bae55",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EarthEngineMicroUi.en_US.TmG_6pCoOtA.es6.O/d=1/rs=AJ563L-jk0lHlmzAZsP5kSU7iAL5BAdZAw/m=b"
     },
     {
       "extension": "easyapis",
       "id": "easyapis",
       "module": "EasyapisMicroUi",
-      "sha256": "2eb71f6028e8777ca6b887307620c28ee4a75771187dcc09df3092b31b18aad4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EasyapisMicroUi.en_US._7QFiwCQ_ck.es6.O/am=AAAAAHA/d=1/rs=AJ563L9RyuPYgnN8lz1zyFmOTpgc-vs3Cg/m=b"
+      "sha256": "3aaa53e20e0be632b5381caf2b36ab8b215ae8161e3e5a9462934fa79551c470",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EasyapisMicroUi.en_US.ZsvR4N0UfvE.es6.O/am=AAAAAAA4/d=1/rs=AJ563L-4e4jt0xqiz9S5mZqYHXb03dDdgA/m=b"
     },
     {
       "extension": "edge_clusters",
       "id": "edge-clusters",
       "module": "EdgeClustersMicroUi",
-      "sha256": "c4a2587129ce983377b78103aa42086e11cbe9405e3e4548ef77e1274518abd5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EdgeClustersMicroUi.en_US.1Qg1ZOkDxfo.es6.O/d=1/rs=AJ563L-_slAYiVkaJ9ZPcXvojMU3wEVAgw/m=b"
+      "sha256": "2c91cf25bea5be0802efbe9c040de8fdf284c6d19522d000049001df2ca6e6d3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EdgeClustersMicroUi.en_US.XmXxDAt6DFg.es6.O/d=1/rs=AJ563L-LC9a5Ym1ce_IXPpH7kA7oz05oaw/m=b"
     },
     {
       "extension": "edge_zones",
       "id": "edge-zones",
       "module": "EdgeZonesMicroUi",
-      "sha256": "be4d58f8d1fc5d7fb762377cc7704f72c6998a8c02de8215eda6262b999fe3d5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EdgeZonesMicroUi.en_US.MPQ3wdT0CoU.es6.O/d=1/rs=AJ563L_fS4XEYQMktI7er0fG4rsSLFX1tA/m=b"
+      "sha256": "e0d4aa6c987479404d4fdc385d160ecebd87e88691be1311a7bb48ab9060778f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EdgeZonesMicroUi.en_US.ZIOV-MVe62Y.es6.O/am=AAAAAAAAAAg/d=1/rs=AJ563L_5lW9h_wEGvxeGP8hSDq_d2OvnTA/m=b"
     },
     {
       "extension": "erebus",
       "id": "erebus",
       "module": "ErebusMicroUi",
-      "sha256": "11398c3b57a17dbbb096b625e9aac4af87dd16a766fbf4d0bc064abb579047ae",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ErebusMicroUi.en_US.MswADsIBGMA.es6.O/d=1/rs=AJ563L-k0zq0hyAzfehjDxCdTdXFQy-kpg/m=b"
+      "sha256": "a92b9982c0dcb22bad150f04b238b5d0405867f85c03b31e62e52197cd039ce2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ErebusMicroUi.en_US.hyAoq3b87E0.es6.O/d=1/rs=AJ563L8G0HtKKfHoBhMt6BKmETv2x-W__Q/m=b"
     },
     {
       "extension": "error_reporting",
       "id": "error-reporting",
       "module": "ErrorReportingMicroUi",
-      "sha256": "131a3c0ba3bd2e512fa47d10fd9c86c3571b4073d84461612f6c8030d8483f2f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ErrorReportingMicroUi.en_US.6ijPB6XLLWA.es6.O/d=1/rs=AJ563L9IQHcncD2qjHnxvrr0U7gyRWWQJw/m=b"
+      "sha256": "9eba95b2b499eb0add36414ed60e27aa83ff171a5798f27488076c045bc7f887",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ErrorReportingMicroUi.en_US.nJ6D_ew3mMw.es6.O/d=1/rs=AJ563L-Gv1RuGRAHYO_EpEPphCCBB6XTvg/m=b"
     },
     {
       "extension": "eventarc",
       "id": "eventarc",
       "module": "EventarcMicroUi",
-      "sha256": "01920f315c2f9f84fbf7757c067216244e96861965350a8102f07e7bcf0c4e6f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EventarcMicroUi.en_US.YrhrbhhnXuY.es6.O/d=1/rs=AJ563L-Um5PaoRc__xJk5FDOq6XnMVNomg/m=b"
+      "sha256": "366a0c92431ed31cef1157b7abf9745573bf5596e4bb27d3f32804fdf1c0fbe3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.EventarcMicroUi.en_US.Tilhg5FnF2c.es6.O/d=1/rs=AJ563L-UhxhX33Fk7fpU7b6pW7_N49jmWw/m=b"
     },
     {
       "extension": "faulttesting",
       "id": "faulttesting",
       "module": "FaulttestingMicroUi",
-      "sha256": "b7533cf15450f88c4f2e94e45bdabde756dbab137cc37c5c6da5e6b5d3321264",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FaulttestingMicroUi.en_US.Elc-bShkQWU.es6.O/d=1/rs=AJ563L89Zj218wm-gV-J_iqJO6Jk0-rfmQ/m=b"
+      "sha256": "45044a7d31dde9a72882396e572dc4c9a24f7dfe628f29db5b0eab914854ca72",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FaulttestingMicroUi.en_US.VgCoQaQelIE.es6.O/d=1/rs=AJ563L9FEE2cgH8hVFtZICFF3KA6MPLfmw/m=b"
     },
     {
       "extension": "fhir_viewer",
       "id": "fhir-viewer",
       "module": "FhirViewerMicroUi",
-      "sha256": "2b3542588de956901b5221034ae36fccba2153a6f05e28c6efaf6efdfd80f0c5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FhirViewerMicroUi.en_US.j_eQUdQhJto.es6.O/d=1/rs=AJ563L9oitofGHEMK-bfMnycorU2154qZA/m=b"
+      "sha256": "d29a07963dcc1dbecae7965c7068096885a316b67dec1af89cca12b6c6477ec2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FhirViewerMicroUi.en_US.JtTEcSbRlFc.es6.O/d=1/rs=AJ563L-CMqXwX0POAcSffOjMonPcZaAWWg/m=b"
     },
     {
       "extension": "filestore",
       "id": "filestore",
       "module": "FilestoreMicroUi",
-      "sha256": "407e4cbbb7d9ad57d1dce22dc01e702dafd2cfd35b4555a8fbd5a6ddbf863bd5",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FilestoreMicroUi.en_US.3NlZ766KEME.es6.O/d=1/rs=AJ563L8Hp5vrRPU7TmuDrMq2QHcTQmCXzA/m=b"
+      "sha256": "ea1f45368fdc0943b90f875d648e9fa551d7093b3b5665685d46a81b4cde931b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FilestoreMicroUi.en_US.mvL7PH5llBc.es6.O/d=1/rs=AJ563L-22Ka_Su7Ml2URSCahtNHej-ZQSw/m=b"
     },
     {
       "extension": "firestore",
       "id": "firestore",
       "module": "FirestoreMicroUi",
-      "sha256": "84c934ddfbaa565f64cbcb92af680a602c6f87854e0a71fa51b0c3150d5e9365",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FirestoreMicroUi.en_US.0cC0roPW-40.es6.O/am=AAAAAGA8/d=1/rs=AJ563L8KloQ2H1ft2l2LySAkFahzzRFmLw/m=b"
+      "sha256": "a6a7ebd9bfc17b760bad068124c8d64b3be808fcda5a9faf5bd2c54d382a612f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FirestoreMicroUi.en_US.Ib0DNZsKFwg.es6.O/d=1/rs=AJ563L9SplqZ1UCKqTsmw1MkcZWIvEsbJw/m=b"
     },
     {
       "extension": "free_trial",
       "id": "free-trial",
       "module": "FreeTrialMicroUi",
-      "sha256": "a328e837e0a91a7b744e21b7e08090d03ebc4b08d4f82c02998b96da522cdfae",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FreeTrialMicroUi.en_US.j4qUasGYqyk.es6.O/am=AAAAADg/d=1/rs=AJ563L-w08T-5hYTyv76BzWstP2ZjiejRA/m=b"
+      "sha256": "194dc45282455e52ead0709ecd2b3f89183da4a3ca813706ebf7fafc548e37a0",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.FreeTrialMicroUi.en_US.GlV2Xj7bNCE.es6.O/am=AAAAAAAOAEA/d=1/rs=AJ563L_VYZ_uZKLhIUoOoKU-SttfMn6Zbw/m=b"
     },
     {
       "extension": "gemini_for_gdc",
       "id": "gemini-for-gdc",
       "module": "GeminiForGdcMicroUi",
-      "sha256": "496617e523bcce58399cd5d130a77a990988ee3cb5921a04b98be9c4eac4be3f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GeminiForGdcMicroUi.en_US.84vK9gyOJ4s.es6.O/d=1/rs=AJ563L92zSJuuS5Z25N2z0z8XMpUeaK0TQ/m=b"
+      "sha256": "b95bbc1e1e0c09dd895fd034ba7af8dc44fd6ec933270d17a3126afbb8da289f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GeminiForGdcMicroUi.en_US.9-rAncxEBQg.es6.O/d=1/rs=AJ563L8wl1C6g4s8mazGdCH9xxAJWeH6yA/m=b"
     },
     {
       "extension": "genie",
       "id": "genie",
       "module": "GenieMicroUi",
-      "sha256": "bc858c87466305f5d76c67eb0676d4420c9b59eb0b63b7fd7d5c6ad114a0bdba",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GenieMicroUi.en_US.UrGtWrDcjM8.es6.O/d=1/rs=AJ563L_JSpdml_e77On4uSwQTw10QmBUEg/m=b"
+      "sha256": "75c6966e7099ca7190db32ce82a4adfbc2d10ecf6fbe3b41545600ae8d0a2bd9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GenieMicroUi.en_US.IdvF7tmFd3g.es6.O/d=1/rs=AJ563L9iX_bxvfGFktaDkodXC3RHE_Yjrg/m=b"
     },
     {
       "extension": "getting_started",
       "id": "getting-started",
       "module": "GettingStartedMicroUi",
-      "sha256": "bf5a59c43af7fc881b86b80dc5167fb6d7a36cf536f84df2f0df31f14734337f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GettingStartedMicroUi.en_US.3ad-9YiThQw.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L-e3PpBCAyWJ4pm4pM8y5jbHFadXw/m=b"
+      "sha256": "a917118f6d18a49062c8cec2c2493030c679f7f5fb5c741a9d427716bc9a55b5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GettingStartedMicroUi.en_US.aI2-ssy8oY8.es6.O/am=AAAAAAAAAACgAg/d=1/rs=AJ563L974wdHw91cqowyQrBYwyAW_x0xDQ/m=b"
     },
     {
       "extension": "gke_backup",
       "id": "gke-backup",
       "module": "GkeBackupMicroUi",
-      "sha256": "835963507b9b23d3333e5f62d68bbdba6d56733b5c27825e60a6c73ab802b882",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GkeBackupMicroUi.en_US.VkRuJUq1n_k.es6.O/am=AAAAAAAAQAE/d=1/rs=AJ563L82niW-8HyIBVIrJnRkPHT0eDnqMw/m=b"
+      "sha256": "e45de8ee025ee224ecc89bdcb3073881a2ef811e1f3eb0ecb95cf6f8d778b5c6",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GkeBackupMicroUi.en_US.Q2mUiZTTihs.es6.O/am=AAAAAAAAAFAB/d=1/rs=AJ563L9t8hf40cHaz_g0YjqaFcshLsLKmg/m=b"
     },
     {
       "extension": "gke_ui",
       "id": "gke-ui",
       "module": "GkeUiMicroUi",
-      "sha256": "0db46efe6ebb30dfb48d6f073dd2ba9c53dff100b2c548de39457bc910b1ac44",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GkeUiMicroUi.en_US.uqjKOf5IL7o.es6.O/am=AAAAAAAAAAAU/d=1/rs=AJ563L9D2krrCJpdZmBqG1IZEfZ1EFI91Q/m=b"
+      "sha256": "3ab502fdc4e2ad1f96d5f8b7c03dece66987f8d1731bd84eed47f756d5381eb8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GkeUiMicroUi.en_US.pqByOt6KCpY.es6.O/am=AAAAAAAAAAAAKg/d=1/rs=AJ563L8ki9-tvX7lbxLS-VbbwUSxWpgCeQ/m=b"
     },
     {
       "extension": "google_workspace_marketplace_sdk",
       "id": "google-workspace-marketplace-sdk",
       "module": "GoogleWorkspaceMarketplaceSdkMicroUi",
-      "sha256": "a5295d98092f26e8975eca57df211817ecc4df7bcc19ed64698bad6488e75842",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GoogleWorkspaceMarketplaceSdkMicroUi.en_US.oUrdihqlx8A.es6.O/d=1/rs=AJ563L8EIqZKCoPHUe_YoEA9M7-qEDFCgQ/m=b"
+      "sha256": "f27ad39e38803f733a1034e176f92bef6b3b198473f125fe5f5a22ca96b1d08a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GoogleWorkspaceMarketplaceSdkMicroUi.en_US.OvNy7MnTYX0.es6.O/d=1/rs=AJ563L-hRtaL1Q0oA86kGf7yCOjfLCx9Eg/m=b"
     },
     {
       "extension": "gvesddc",
       "id": "gvesddc",
       "module": "GvesddcMicroUi",
-      "sha256": "11d60d2b4522090530b0df9552fc43622e50d2856a814bc10cc55024b836a49a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GvesddcMicroUi.en_US.NQm9bp4v0FI.es6.O/d=1/rs=AJ563L8ByV5hJoBJlijxpOkwvkZNK4R26Q/m=b"
+      "sha256": "f22a3f872bbed403a45bcd97e2434c609d14200d68288ddc92bbea0760218357",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.GvesddcMicroUi.en_US.9MwmylmrdYQ.es6.O/d=1/rs=AJ563L-1hXw5h8z4ImMXZAlX00K6WKSkIA/m=b"
     },
     {
       "extension": "haikili",
       "id": "haikili",
       "module": "HaikiliMicroUi",
-      "sha256": "16ff1bf00bf5125360bf44bf1997a35769222224933974f4de6504ec54d8806f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HaikiliMicroUi.en_US.qFtu3DmDdLw.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L8tDZ7ynyy0_WMQvq9hEdkoRP4hCw/m=b"
+      "sha256": "ee1fa0f8648ca024d8202b3fe45b1df093fd535c8b07a513e30d372b1962f8ea",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HaikiliMicroUi.en_US.LHIgZ3gHQD8.es6.O/am=AAAAAAAAABQ/d=1/rs=AJ563L94Z3j2SUHWZcCeh7V8aTfSVN07Hg/m=b"
     },
     {
       "extension": "hangouts_chat",
       "id": "hangouts-chat",
       "module": "HangoutsChatMicroUi",
-      "sha256": "97468fc2a6138811234b16543c989d2bcd42d6ca99ecb44312ced871f1b52bca",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HangoutsChatMicroUi.en_US.IE5yTwztkns.es6.O/d=1/rs=AJ563L9BoJDeS4ZX6LT_av8EsGfdMjJOmQ/m=b"
+      "sha256": "f524c3b28feb4cdc59d1fbcdf6e0d4b323f66598463be4b229f62c44c4c74479",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HangoutsChatMicroUi.en_US.bCw_ynG5X3A.es6.O/d=1/rs=AJ563L_MIKIzGkToxS3qAA-_swHRgDnvyw/m=b"
     },
     {
       "extension": "healthcare_browser",
       "id": "healthcare-browser",
       "module": "HealthcareBrowserMicroUi",
-      "sha256": "29598092922fcddca4c934dfd41b3332efeb8019af085f3265ea4f6e51cbd032",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HealthcareBrowserMicroUi.en_US.10jkeLCwffE.es6.O/am=AAAACA/d=1/rs=AJ563L-yeqQVX_kYg0brA2rjGyVN2QHdjw/m=b"
+      "sha256": "5cb8f662f91f7947ca918976e691e43e08d019845f8acc77312b8edc51274da9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HealthcareBrowserMicroUi.en_US.IGH4HChUJR0.es6.O/d=1/rs=AJ563L8Puaoi8NdsMl6jYN3kTD-0DFrwLA/m=b"
+    },
+    {
+      "extension": "home_platform",
+      "id": "home-platform",
+      "module": "HomePlatformMicroUi",
+      "sha256": "6c08ad71c4e569f312643e528654821a1fec400bbc260f64fa1defee86c486bc",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HomePlatformMicroUi.en_US.4mOwW7EVMeI.es6.O/d=1/rs=AJ563L_DNV3XBLF5OCZHuz6foYyGAiWCDw/m=b"
     },
     {
       "extension": "hub",
       "id": "hub",
       "module": "HubMicroUi",
-      "sha256": "2209d1ec4f94618b3bd9c1f880fd7c075f7707d3d9e2c006be93c14863d07865",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HubMicroUi.en_US.KDIKCwSD1Io.es6.O/d=1/rs=AJ563L-KLO_pcCFAcfteJZSjWpW0eL6SmQ/m=b"
+      "sha256": "f4462d14e03fb4d623f2289cb4a90d281e16e807279fb8828224e240c8e705a7",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.HubMicroUi.en_US.Mmjno9vPD0A.es6.O/d=1/rs=AJ563L_KJQNLrl4P6eOx4oIE2thGw1sXLg/m=b"
     },
     {
       "extension": "iam",
       "id": "iam",
       "module": "IamMicroUi",
-      "sha256": "99aaafc06bc54c51d80d97a901683ad1f123d1f9f0d6df0f3efc687a1950e817",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.IamMicroUi.en_US.vXPiwS6AIP8.es6.O/d=1/rs=AJ563L8GlO56jtm-o_OsVABnbALi5rOcGQ/m=b"
+      "sha256": "6047bcf42c78b75f72454344e7dfaa3a205f00e8ff89d398dcf42563698d18c4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.IamMicroUi.en_US.plUIe7BGn9I.es6.O/am=AAAAAAAAAABA/d=1/rs=AJ563L98MKllkyeGMjQ1sNRYaMjzdIeHKA/m=b"
     },
     {
       "extension": "iap",
       "id": "iap",
       "module": "SecurityIapMicroUi",
-      "sha256": "ee4fa2ac8668a3b5c7eb2c1552dfa641c0340240162d4b6bd36d3f0e70234f0b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityIapMicroUi.en_US.eOp544izG6A.es6.O/am=AAAAAAAAAAU/d=1/rs=AJ563L_B93owHeJ0O6-51UvXjazYJu_Qkw/m=b"
+      "sha256": "48cffed6b1a2295c2825fde23b1856e49809fd9976365e97df1c790ada1a0551",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityIapMicroUi.en_US.uImOKIMDYjs.es6.O/am=AAAAAAAAAAAK/d=1/rs=AJ563L9ORmg9bwS8AyDINgFFFL0r11X-sQ/m=b"
     },
     {
       "extension": "imagebuilder",
       "id": "imagebuilder",
       "module": "ImagebuilderMicroUi",
-      "sha256": "57286c647b4c67d42a9758c9fcd42fd8c3551bdc970d2021755629447e2a2b9a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ImagebuilderMicroUi.en_US.rpCcwsC2aVQ.es6.O/d=1/rs=AJ563L9GNb4Bm4rqWdi1RZ9uszf-jqtpxg/m=b"
+      "sha256": "d1709b034f3e8162b20d6404fb7bb0f92d0d3edb255b8233e3fd134df68478e8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ImagebuilderMicroUi.en_US.c6Vp_yFmrjw.es6.O/am=AAAAAAAAAAg/d=1/rs=AJ563L8d9iYuUCQmIGZboi0OApaKJdMmyA/m=b"
     },
     {
       "extension": "infrastructure_manager",
       "id": "infrastructure-manager",
       "module": "InfrastructureManagerMicroUi",
-      "sha256": "0d9ef0d7fbf2a94091378500c3b44a446e28cf3d03d4a3725f08a7cc5d497046",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.InfrastructureManagerMicroUi.en_US.0MqfH0ikVcY.es6.O/d=1/rs=AJ563L9iS5F_Fah39KHZ5-OS33oP68rNcQ/m=b"
+      "sha256": "9a55be69da81d284dfe9f51e6e995dd447f7b1e36657310f14d497352ab66f24",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.InfrastructureManagerMicroUi.en_US.a8xqn4wL8bo.es6.O/d=1/rs=AJ563L_owcM4S17cfrCEV4WiiPvQMOiXuA/m=b"
     },
     {
       "extension": "integration_platform",
       "id": "integration-platform",
       "module": "IntegrationPlatformMicroUi",
-      "sha256": "288d45080db39020a88a93c3fb7d721d24b0bd7ce777c99e12fc5271d1c851c6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.IntegrationPlatformMicroUi.en_US.X3TY28LIf4k.es6.O/d=1/rs=AJ563L-7L4hN38UE1HS-sUp4579qVO0d4g/m=b"
+      "sha256": "59c632ee1b99c181eddba0e406d414338bb449f36bb13a88b9c0c8a24ae99031",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.IntegrationPlatformMicroUi.en_US.4T6s4YEoRGY.es6.O/d=1/rs=AJ563L8EYdMeK4tDB34kWi4D2k399Je61w/m=b"
     },
     {
-      "extension": "investigator_ai",
-      "id": "investigator-ai",
-      "module": "InvestigatorAiMicroUi",
-      "sha256": "3ba8c4937a9bc6b436c121e4bfac50d91a42860f1b6af33b3fb7af68d219e553",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.InvestigatorAiMicroUi.en_US.fztSZi-rnjs.es6.O/d=1/rs=AJ563L9JAY_ECGYiiqX2uZsyQP0efEDBDw/m=b"
+      "extension": "isv",
+      "id": "isv",
+      "module": "IsvMicroUi",
+      "sha256": "a8731a1928cc60975d52db54f6bdee008be437d1395430ef7de1c8f259fa033c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.IsvMicroUi.en_US.0AT96OtQncM.es6.O/d=1/rs=AJ563L9dHAyzRoOP6i5r6528rApvCLi97A/m=b"
     },
     {
       "extension": "job_discovery",
       "id": "job-discovery",
       "module": "JobDiscoveryMicroUi",
-      "sha256": "bacfe9036b3c79f4c17991ab8b32ada407a432880353833e94b9a643cb814ea4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.JobDiscoveryMicroUi.en_US.NtSri6nfyPY.es6.O/d=1/rs=AJ563L-d0J5oxFYMucYnXLyPsKRT_eosGg/m=b"
+      "sha256": "2b8a15e784159ac6169921e9ffeac625a2e769235565f5f976fa63b36449149d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.JobDiscoveryMicroUi.en_US.t0-ZJGEG8Ug.es6.O/d=1/rs=AJ563L9lLKVQxHtV5xr16e3arLXoMSHD9g/m=b"
     },
     {
       "extension": "jovius_onboarding_test_app",
       "id": "jovius-onboarding-test-app",
       "module": "JoviusOnboardingTestAppMicroUi",
-      "sha256": "77c05743c8ebc6631feefd244d43c9423f8ce05b2da4888806a18453973d3f6f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.JoviusOnboardingTestAppMicroUi.en_US.Us-j6GyEB9g.es6.O/d=1/rs=AJ563L96iNr1GlfmI8NKSXU8QuEFufIg6A/m=b"
+      "sha256": "141a159b171fcefd017c3ac84c8d64dbae9cb3b4a925ab5dd96de66c3f567e65",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.JoviusOnboardingTestAppMicroUi.en_US.3OLdTpFeEQ0.es6.O/d=1/rs=AJ563L-C1YSdipQjbMHTDfj8Jmpo0psLNQ/m=b"
     },
     {
       "extension": "kms",
       "id": "kms",
       "module": "KmsMicroUi",
-      "sha256": "e586d3a64df80ca9a675930f5521f26d99971d30563c7fcfc85dfcecc2a9a54a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KmsMicroUi.en_US.ZjCPGZw3xQs.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L__-YqORfMquyqzpwZq5iBB8NfKlg/m=b"
+      "sha256": "3c502b60a9e828b5bd9005be2e97978647d83b8269fd6b0e77a48b332e24478b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KmsMicroUi.en_US.wF0NdRFozg0.es6.O/am=AAAAAAAAAKA/d=1/rs=AJ563L_fQaOsVYl9KjzfVtZ4Nm0jhBYn0Q/m=b"
     },
     {
       "extension": "knowledge_agent",
       "id": "knowledge-agent",
       "module": "KnowledgeAgentMicroUi",
-      "sha256": "44c9a46d7f284d08f67865471acb02988275cae0a69027f462cae30cd2bea938",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KnowledgeAgentMicroUi.en_US.cp4v5VGvhcY.es6.O/d=1/rs=AJ563L-1418EJDLe4NLqbnlGzDi1XGWXJQ/m=b"
+      "sha256": "7cdbaf8439e6009bd33ba26351a3a4802ccac19cbd6d4ffbe28cb7bb8ac6993c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KnowledgeAgentMicroUi.en_US.cTPtHMy8YJE.es6.O/am=AAAAAAAwBg/d=1/rs=AJ563L8yadHUbFjOgQ4al_2KqULvDjycEA/m=b"
     },
     {
       "extension": "knowledge_graph",
       "id": "knowledge-graph",
       "module": "KnowledgeGraphMicroUi",
-      "sha256": "3dede99d9162cbf54f0c50447a673ef8a2c042a254039318785dffb2d8ec65fc",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KnowledgeGraphMicroUi.en_US.BzeWs7zQZgE.es6.O/d=1/rs=AJ563L8NgUAOAsySCZePY5fcOAbUil6G4w/m=b"
+      "sha256": "15f3ee010a67b56e1bf9282dae5e8a7228e1b77563ce42080e751fcabada75d6",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KnowledgeGraphMicroUi.en_US.-9kqvYFjXIM.es6.O/am=AAAAAAAAAEA/d=1/rs=AJ563L_olkr9H2Myz4bkGObjNPXymGNu9g/m=b"
     },
     {
       "extension": "kube_run",
       "id": "kube-run",
       "module": "KubeRunMicroUi",
-      "sha256": "94f5e0257e4020c695a7e3e95084b0e10a63fd591d292d963e75585f6a05f904",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubeRunMicroUi.en_US._e6Bb5Je4Lw.es6.O/d=1/rs=AJ563L_OhezzJ-Y_k-r1SfAOtUGp9isRig/m=b"
+      "sha256": "ae748cdfded8dfe2b22b28792d5e62c31bb450a16a12217439793a5db2a12c25",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubeRunMicroUi.en_US.L2OsEfDy1i4.es6.O/d=1/rs=AJ563L9ZOkd0ijRhuAYYFlQJ_gNw4fc5yQ/m=b"
     },
     {
       "extension": "kubernetes_ui_aiml",
       "id": "kubernetes-ui-aiml",
       "module": "KubernetesUiAimlMicroUi",
-      "sha256": "1ba6753f993d516b557f9b6dfb803693533e8f495b4dbe930d38fc297c9dc5af",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiAimlMicroUi.en_US.xLp3jvupZpc.es6.O/d=1/rs=AJ563L-9sBgSQ2fBnkALDbBFe6BhcpcA9g/m=b"
+      "sha256": "a1f0f09aff583e31d464baf74cc1307f405042cd1779a103784a924a6ff7a66c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiAimlMicroUi.en_US.EbuyVA0Xrmc.es6.O/d=1/rs=AJ563L8_Ohp0T6I8xtm5Hrlv1iYymtTUew/m=b"
     },
     {
       "extension": "kubernetes_ui_identity",
       "id": "kubernetes-ui-identity",
       "module": "KubernetesUiIdentityMicroUi",
-      "sha256": "54c0d2f3f2a3ad0e092763f08ca83910d8015f56b1e39855e2815f641f4cfd87",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiIdentityMicroUi.en_US.gA8cEdZda8k.es6.O/d=1/rs=AJ563L_rEr9kPiih50wdej-yvXqB3fxbDg/m=b"
+      "sha256": "2aca70645a0b13b1de7641216dc18ec6a52dbfc7c66043c280024ea06c4a70f2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiIdentityMicroUi.en_US.bMvzgNNyHTo.es6.O/d=1/rs=AJ563L8-Grau6e34pJWk8N9522uCPsW6bQ/m=b"
     },
     {
       "extension": "kubernetes_ui_onprem",
       "id": "kubernetes-ui-onprem",
       "module": "KubernetesUiOnpremMicroUi",
-      "sha256": "110197afc73951b1a0158d005f0103855f21b6015bc35599808834e542db2c51",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiOnpremMicroUi.en_US.NbsJrjc19jQ.es6.O/d=1/rs=AJ563L8FodluaoyZX7iycCViUUduxzrInA/m=b"
+      "sha256": "3433bd1d581e8616b2f7a4cdfd8cb24bdac4a44dbf55941c994b8a21d0a1ec7c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiOnpremMicroUi.en_US.YOzn0pw0HAk.es6.O/d=1/rs=AJ563L_c34a8vYiu_aKEIdAQkEaanbj1qQ/m=b"
     },
     {
       "extension": "kubernetes_ui_upgrades",
       "id": "kubernetes-ui-upgrades",
       "module": "KubernetesUiUpgradesMicroUi",
-      "sha256": "90994344bc5a0636597c7d9d0e25def23bb380c3d226e349bf4c65923b601d7d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiUpgradesMicroUi.en_US._sjk9Z3mn7Q.es6.O/d=1/rs=AJ563L_kaSG7MXmAJFQu79yYiUI_HBs-Iw/m=b"
+      "sha256": "370612d7abf1737af185dd4e54f8129d7fa0f2a3b4ec4f2a825a268a98fa376f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.KubernetesUiUpgradesMicroUi.en_US.aahVLIGxklE.es6.O/d=1/rs=AJ563L-YWtWIfqELwE_wxDgWKU3SCPVUEA/m=b"
     },
     {
       "extension": "license_manager",
       "id": "license-manager",
       "module": "LicenseManagerMicroUi",
-      "sha256": "ae40848f4aaa83e4bcca30f7a1176cfcf26b94e6f5cf69a77c3d2812f1c92907",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LicenseManagerMicroUi.en_US.-BhxDo7TW9w.es6.O/d=1/rs=AJ563L_gJvFzWpfMSe75OdOq_m70xsOnSw/m=b"
+      "sha256": "0d268c238280a2c50fac8ae5a4134da91026b866b67c999b02c62036f798c6c5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LicenseManagerMicroUi.en_US.9qXmzNPa5xc.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L_HgcDzzvLfAz-wWV6tFwHmwO-MUA/m=b"
     },
     {
       "extension": "looker_studio",
       "id": "looker-studio",
       "module": "LookerStudioMicroUi",
-      "sha256": "0a2d710b6f1fe03d3a6b01addc66c4b44bd7fda683d6451f3a72222524429a72",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LookerStudioMicroUi.en_US.DRWvwC_KviM.es6.O/d=1/rs=AJ563L8tazhswAuwYSJIL-XSMUCisDJlHg/m=b"
+      "sha256": "ff7723d7c4fdfe79e2af3d2b15c6b226e683df6da5fde081d84dae8e47a563c5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LookerStudioMicroUi.en_US.IFJT2eyGg6M.es6.O/d=1/rs=AJ563L8q5f4e6KbJPS4S6EVWQeFFLBAD6A/m=b"
     },
     {
       "extension": "looker_trial",
       "id": "looker-trial",
       "module": "LookerTrialMicroUi",
-      "sha256": "ea4540df1b6cba02a4acf414887dbfa683053e07dee1d5700d228b1b028d8b4d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LookerTrialMicroUi.en_US.IHj0BJukXqo.es6.O/d=1/rs=AJ563L8JbWbKxLNxa3txxAHg7obRyeo4lw/m=b"
+      "sha256": "c38f6dc0a6de6ec386b1ab566245ce592e5fa16d79f5d16a2d85e3ab6154c7c8",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LookerTrialMicroUi.en_US.hfgD2Y6aV74.es6.O/d=1/rs=AJ563L8xdmRJ4LgNZvqtszX4Djg9XOw1EQ/m=b"
     },
     {
       "extension": "lustre",
       "id": "lustre",
       "module": "LustreMicroUi",
-      "sha256": "efd23e70167364fd8aa0914efe42118779bd1e9fc519063a506619216052bbde",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LustreMicroUi.en_US.p91g-jwdTNQ.es6.O/d=1/rs=AJ563L_qyOI9JttXeuLva4MlGEbdO52vKA/m=b"
+      "sha256": "44af47d98452321fcbb67cfbf4ee51df945b41c2eb24e0481ca809afdd600ed2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.LustreMicroUi.en_US.AqOv768seJc.es6.O/d=1/rs=AJ563L8zsRGFyV-SjabzogDdFE7HTVCAzg/m=b"
     },
     {
       "extension": "macro_lounge",
       "id": "macro-lounge",
       "module": "MacroLoungeMicroUi",
-      "sha256": "c2bc74adcfee5d9a38d64da0c1670b077f4393157e8d43b56a631193222553f8",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MacroLoungeMicroUi.en_US.ikcHu_WzUEQ.es6.O/d=1/rs=AJ563L9bZJftCw5AkbtwVbQdeQc8D7kzIQ/m=b"
+      "sha256": "d6ba288109fa93a6977e75fd6e997bf726ecfb48df56f437d9ed25b7e2d0e496",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MacroLoungeMicroUi.en_US.frtTul1vCeQ.es6.O/am=AAAAAAAAAEA/d=1/rs=AJ563L-zYzk2Evtde0KwKJLwcNe4SHYrEA/m=b"
     },
     {
       "extension": "maintenance",
       "id": "maintenance",
       "module": "MaintenanceMicroUi",
-      "sha256": "9e801ee7489b2bc826f5ca94cb85a2231383a46887d80c9af639d6971bd3810c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MaintenanceMicroUi.en_US.GrwK9knVbRE.es6.O/d=1/rs=AJ563L97ETMg9-pGjx6osUMSbzDUN4xxWA/m=b"
+      "sha256": "9b0a0570945b98f7c9b9611e72b25739a66e29c50514b3073d57df6131503796",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MaintenanceMicroUi.en_US.A491rpyIgcM.es6.O/d=1/rs=AJ563L_5_YC3W7UZIadJQ9CSyDAJgObP7g/m=b"
     },
     {
       "extension": "managed_workload_identities",
       "id": "managed-workload-identities",
       "module": "ManagedWorkloadIdentitiesMicroUi",
-      "sha256": "f60672a016f3159fa0760c5735a13ad4963ec1b2f847fe5b0aa3f3556809aa87",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ManagedWorkloadIdentitiesMicroUi.en_US.Gne79Zfk46Y.es6.O/d=1/rs=AJ563L-sk7DMPf5Mk-RTaIigocecayergw/m=b"
+      "sha256": "801c94967f5d842461444c60771c1d3d26e918a5072f6c8690b701059281d999",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ManagedWorkloadIdentitiesMicroUi.en_US.o9QW7_fSh5s.es6.O/d=1/rs=AJ563L_GtnUnkzM_LYDzAlzN1FG911Q0mA/m=b"
     },
     {
       "extension": "managedkafka",
       "id": "managedkafka",
       "module": "ManagedkafkaMicroUi",
-      "sha256": "cd5fbb800348bc4c825beaff7f7c82d21809cce2d8659a01a10f7c82030283b9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ManagedkafkaMicroUi.en_US.OEX-icQqga4.es6.O/d=1/rs=AJ563L_vT_WLuUDtS73IKT_yRqVs6MHbVw/m=b"
+      "sha256": "c7fe28fe7a7080fd9a30468156ba7205f0189380450733bef11646f273fb7d89",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ManagedkafkaMicroUi.en_US.oC9JhLY5lpI.es6.O/d=1/rs=AJ563L9BX1D-KcYMu9gg3giRtf_nMJs7OA/m=b"
     },
     {
       "extension": "map_styling",
       "id": "map-styling",
       "module": "MapsStylingMicroUi",
-      "sha256": "7eb5d28e3320e7db712294e16860b24c8527e68bef68aa27f041165db7440aa3",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsStylingMicroUi.en_US.CjEijhPvJ8E.es6.O/d=1/rs=AJ563L-bUO7E-7o3_2eGKn0-LbeAKWrNAQ/m=b"
+      "sha256": "2df56ae14b6abc031fd2b9267a18f2ade979dd4e98ffee3003e6b2962e5a1661",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsStylingMicroUi.en_US.7ZvYmSMu4Ds.es6.O/d=1/rs=AJ563L-F2H4DNZLwRXwvMPLz-BDpisKsEQ/m=b"
     },
     {
       "extension": "maps_console",
       "id": "maps-console",
       "module": "MapsConsoleMicroUi",
-      "sha256": "5409ff6f03c9fec7bfe809c876f4ffcb722914588c881eed582d0355b74263bb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsConsoleMicroUi.en_US.jDPjKLRu4HU.es6.O/d=1/rs=AJ563L93IgSkP_R5YtpXA-z02wrpHRFL4A/m=b"
+      "sha256": "4196a5ef3dbcf379695ca25036ff52edd53a8fd6784b1da15cc6a6cfbc2bc117",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsConsoleMicroUi.en_US.Rp7PxN029V8.es6.O/d=1/rs=AJ563L-Y_pqDPDuK86UG3eGkVeXvQ2DADQ/m=b"
     },
     {
       "extension": "maps_datasets",
       "id": "maps-datasets",
       "module": "MapsDatasetsMicroUi",
-      "sha256": "25694128c0f526e5dd36128cf48594b59d42a543141416d69cd63b9c8e516596",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsDatasetsMicroUi.en_US.OTzDz9R0I68.es6.O/d=1/rs=AJ563L86DhSm8ZYJ4zAsd_U_3EEIiHFTHA/m=b"
+      "sha256": "d7026aa493fd5a6a9c648e7f7848f45ef23c0d5346deba9c87cdb7a75a019fca",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsDatasetsMicroUi.en_US.PYo25MdcFGM.es6.O/d=1/rs=AJ563L8qBULvgpLfr9zdjcxh_R7LzmmcCg/m=b"
     },
     {
       "extension": "maps_hosted",
       "id": "maps-hosted",
       "module": "MapsHostedMicroUi",
-      "sha256": "f46aacfbe8a8609dd23442ba76e2f66c5d4796896e34a71c177f03c3e0ee5bbf",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsHostedMicroUi.en_US.63xqTVsHvpY.es6.O/d=1/rs=AJ563L_wiKhL9M89elCpQidhp_7ATO7Hig/m=b"
+      "sha256": "e89f5f98e87f9d78cda1963cf71c030eb399dd3c8c25060b73c85588b1182290",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsHostedMicroUi.en_US.NeL-PbFSDLw.es6.O/d=1/rs=AJ563L-8KimPklNmw3fVZc8TjfKDG9prKA/m=b"
     },
     {
       "extension": "maps_manager_v2",
       "id": "maps-manager-v2",
       "module": "MapsmanagerMicroUi",
-      "sha256": "b415a66f07b571154793651a224358b61ae66a772dbc39f651f7b1af04158116",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsmanagerMicroUi.en_US._BtygBiPIdM.es6.O/d=1/rs=AJ563L92O9xNPRMDh9vAXcjKsnD7TAUBxQ/m=b"
+      "sha256": "4fd9cd38e956cd0cf40610e38c5ab82c498f778e5617e01976e875f90bb18a90",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsmanagerMicroUi.en_US.qIe4ThwtVLw.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L8HBEFGkIS_dxwzwq_s_I0AFJyXzA/m=b"
     },
     {
       "extension": "maps_viz_admin",
       "id": "maps-viz-admin",
       "module": "MapsVizAdminMicroUi",
-      "sha256": "d13f23c1a345a84ad952d6f39c711c066cc70126c0865a1e321d622306ea93ec",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsVizAdminMicroUi.en_US.ktHOsTsPZMU.es6.O/d=1/rs=AJ563L8JkI3oY4BMlCIuHc47YGYscoyxWA/m=b"
+      "sha256": "f2929e8776273b37391d62f822fc3d34af7e72bbb0c8a66c1f095eb69e312ea2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsVizAdminMicroUi.en_US.fRfag3uRZaE.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L_6Rg1CT9XTv6vkG2tqR4OYnqT1Ag/m=b"
     },
     {
       "extension": "marketplace",
       "id": "marketplace",
       "module": "CloudMarketplaceMicroUi",
-      "sha256": "5912ad4d0bdbe6099d03929038b03587acafc6f5cb6b26384f751468f925216e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudMarketplaceMicroUi.en_US.X6XCckrdMao.es6.O/am=AAAAAAAAQAE/d=1/rs=AJ563L_aukOB8JACisAya_MDrFUjPSX40w/m=b"
+      "sha256": "299f437ab1a06cebb5829b31ae5b207c5f4f24108fe0f73dd05e919fa017b248",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudMarketplaceMicroUi.en_US.yep8fY7PRcc.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L8C0uFAapFbEO26XtG_4Qt3b75jfQ/m=b"
     },
     {
       "extension": "marketplace_discovery",
       "id": "marketplace-discovery",
       "module": "MarketplaceDiscoveryMicroUi",
-      "sha256": "40d0e6b9072a54d8e147b976346a4c478d90d9f381a77a8df2ae4caa4a9c6e66",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceDiscoveryMicroUi.en_US.vPcniw4aSEA.es6.O/am=AAAAAAAAQA/d=1/rs=AJ563L84SxwapkixfrTtr6N_vXfEOLj6aA/m=b"
+      "sha256": "64bded98c506e0064efbdde7a145fe51c845e0f92c564a0e81958cab46575a59",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceDiscoveryMicroUi.en_US.QpZxMdKa0cs.es6.O/am=AAAAAAAAAEA/d=1/rs=AJ563L-HYTViLZ3UrUEvSJE5J-7QEnE7-Q/m=b"
     },
     {
       "extension": "marketplace_operations_console",
       "id": "marketplace-operations-console",
       "module": "MarketplaceOperationsConsoleMicroUi",
-      "sha256": "366d9da81d99a4e3b34dd198e08b049690ddff0508631845fc034f7da355fa9b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceOperationsConsoleMicroUi.en_US.Fp_av4uUETg.es6.O/d=1/rs=AJ563L-_0OwbpurZiCDHGNjWtkfjBriTfA/m=b"
+      "sha256": "0af50850d4afe0bf2f3d79fbad70b1a7271c1bde9d607b660362bbbd226137fd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceOperationsConsoleMicroUi.en_US.3WjBQQsF-R4.es6.O/d=1/rs=AJ563L8ff2cBQMmiYYGi_Meuvl5-uQpa5w/m=b"
     },
     {
       "extension": "marketplace_partner",
       "id": "marketplace-partner",
       "module": "MarketplacePartnerMicroUi",
-      "sha256": "d6952a1cd6fd4ea47d707a7bf7efe01cc5514e3e0485449a934a512e75201971",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplacePartnerMicroUi.en_US.ctg01TfqL8c.es6.O/am=AAAAAAAAgA/d=1/rs=AJ563L-evZl7YOOpVReldYbexNPR3EV9Wg/m=b"
+      "sha256": "e9cba2e881ac59a2a8a187de8a44079e0bf19ed52737bf350c897f705c1d5d39",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplacePartnerMicroUi.en_US.0o9ilHTApSE.es6.O/am=AAAAAAAAAAAB/d=1/rs=AJ563L_c_vvWCGePJPS-A9GOKHColWy0iQ/m=b"
     },
     {
       "extension": "marketplace_saas",
       "id": "marketplace-saas",
       "module": "MarketplaceSaasMicroUi",
-      "sha256": "4f9b2614e74094737b3ef2a310d2d3f1680be9585710e4f3b4fe1e5a478e8b0c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceSaasMicroUi.en_US.c1w1ypFWCsU.es6.O/d=1/rs=AJ563L8zeBdxL1-afsz7Y5VY12mythvRwQ/m=b"
+      "sha256": "0ad98313ab708bd3148711d3fbf7835441e6063102c73f3b68e38d5c7f5680b5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MarketplaceSaasMicroUi.en_US.CGWBoeuHtxI.es6.O/d=1/rs=AJ563L-Abkw3qqz73uGERqW97OupE_GVkw/m=b"
     },
     {
       "extension": "medical_imaging_hub",
       "id": "medical-imaging-hub",
       "module": "MedicalImagingHubMicroUi",
-      "sha256": "7e389ab12e4f88fc9ce6a61175a02b55e3e7541dcc176d71b948c92c348eff8f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MedicalImagingHubMicroUi.en_US.dDrzV6f_MpM.es6.O/d=1/rs=AJ563L_aSKQmSkcYW4b91_DcGtFu9A4F6w/m=b"
+      "sha256": "5275b1ffeed1d2e871585e93209d6ed1608cf5fc89d5d26e6ae4a3afa8fe40da",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MedicalImagingHubMicroUi.en_US.WXjmLfq-A7M.es6.O/d=1/rs=AJ563L-MD5eEwBIvGEfkQIFkP5BwzhpLMA/m=b"
     },
     {
       "extension": "memorystore",
       "id": "memorystore",
       "module": "MemorystoreMicroUi",
-      "sha256": "81c18e8f3255a5464876aa69def4efb72c98cd30045c180913f38d5b4e9ffa58",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MemorystoreMicroUi.en_US.VpDGAPVrXkI.es6.O/d=1/rs=AJ563L8zGyMq4A8zFR3wryFbvTH9DBUSvQ/m=b"
+      "sha256": "8e9ee21a692d13dde5af0ea063183f9c6032b0ac544c7d840e9eebc81aad93c2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MemorystoreMicroUi.en_US.ZF8LWQC8o58.es6.O/d=1/rs=AJ563L_n4cw9eHXKO8W8KEVTJA6Fe_e6YA/m=b"
     },
     {
       "extension": "meridian_studio",
       "id": "meridian-studio",
       "module": "MeridianStudioMicroUi",
-      "sha256": "9b49fa2eda941f6f4522f87a3b4308c5cc4572a9196a425e7cf050fe67f765cf",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MeridianStudioMicroUi.en_US.OQZZHxi8TPY.es6.O/d=1/rs=AJ563L9VIdhq40JXgRisS7abfMSlRLczaw/m=b"
+      "sha256": "a76272452f4eb2eb6e55ad00b5f1284bafa636f20e47b07b7d5f6360dec0727e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MeridianStudioMicroUi.en_US.4JGnsyDQG9U.es6.O/d=1/rs=AJ563L-k-GBFNj8Io8VZHmDk3XxhlmJ0fw/m=b"
     },
     {
       "extension": "metropolis",
       "id": "metropolis",
       "module": "MetropolisMicroUi",
-      "sha256": "c631b4fd9d479c97f2512ee7f25280022a931f2643ce0479237eca178953ccfb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetropolisMicroUi.en_US.FlhtCLtzsks.es6.O/d=1/rs=AJ563L-92vtMULIP66t5A5yYU2o28mpdpA/m=b"
+      "sha256": "176c027447be5b3179f69b4860e405b3c4b344399def98cb75d0c83d656dd665",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetropolisMicroUi.en_US.EtxzE9jC6XY.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L_h2dvZNSWx9l5rz8lXB-kj-UoPmw/m=b"
     },
     {
       "extension": "microkitchen",
       "id": "microkitchen",
       "module": "PlatformPrototypeMicroUi",
-      "sha256": "c183e132f26e31500d42c4dac5a75ecc6dd6843d90d74a928512062deb18e6e6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PlatformPrototypeMicroUi.en_US.Wjh9fT6Vav8.es6.O/d=1/rs=AJ563L-Fqkqr_DdVO9pfrTcqT4dAdF6Olg/m=b"
+      "sha256": "db963da4c91952f409f9aead8a1827817562fa87e66f73877d549aa346fc7db2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PlatformPrototypeMicroUi.en_US.UPudMiNVh64.es6.O/d=1/rs=AJ563L89j-GXgCDu_XNGr0X8-gXF4OkD7A/m=b"
     },
     {
       "extension": "migrate_for_compute_engine",
       "id": "migrate-for-compute-engine",
       "module": "MigrateForComputeEngineMicroUi",
-      "sha256": "406371f957032bcee24c5dfb2bd75ddd98c6bc39a8c8bdd51879788eb7daa81b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrateForComputeEngineMicroUi.en_US.1kYGFiRuS_o.es6.O/d=1/rs=AJ563L84foScXQbNnlbFNBNU1ddyFCYQHg/m=b"
+      "sha256": "232f9b8fb8b12a36b004958eac5596c705d51c88e93ac66cdcd7189f5f91ed82",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrateForComputeEngineMicroUi.en_US.azkzXCYLfJ0.es6.O/d=1/rs=AJ563L952uCVR38N95J1V3uFfevDdUwFzw/m=b"
     },
     {
       "extension": "migration_ai",
       "id": "migration-ai",
       "module": "MigrationAiMicroUi",
-      "sha256": "615ce7e16edf84ec26c8e4aa998e14f698b13fa1ab1275a717c0945105a7ea7b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrationAiMicroUi.en_US.LF4aQYClaSE.es6.O/d=1/rs=AJ563L9weFcpZan3ukX7SUXSCcXNqd4EZQ/m=b"
+      "sha256": "1adc9b131a1ba7691ffd094cadbc82f5fec9af30ed7c602e0fa556931cc3f8da",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrationAiMicroUi.en_US.tvYMpUmFZXA.es6.O/d=1/rs=AJ563L-Nh1QLuNY6lxCftHhf6qaqF1zeDA/m=b"
     },
     {
       "extension": "migration_center",
       "id": "migration-center",
       "module": "MigrationCenterMicroUi",
-      "sha256": "5ecce84dbc172538eed3ead23e308ef45323d6878a76b5be626e00c6ba2ebf88",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrationCenterMicroUi.en_US.9b6UyDi02Pk.es6.O/d=1/rs=AJ563L83FZAMT4BTbIg5m4IS4m_JVdzcxw/m=b"
+      "sha256": "e9b69748510299e36bd9221984f3da324d8750d586b6767b88c9a8024bd98c04",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MigrationCenterMicroUi.en_US.DbJRJKN29lQ.es6.O/d=1/rs=AJ563L8jg7R2BppKEr_IAQoDSp9KGVxPIA/m=b"
     },
     {
       "extension": "mirage",
       "id": "mirage",
       "module": "MirageMicroUi",
-      "sha256": "2f219e3ef350743a4966c6c774bc932f693a5021bb5bc802115fa989e767df5f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MirageMicroUi.en_US.sKwZN3h9IV4.es6.O/d=1/rs=AJ563L8MyVLFYMfaxtjqBZgf7O4aJY0lVQ/m=b"
+      "sha256": "e35a9e71027d48762631f9ef808ad1700532035b951a2e0e4c5b3409cde71774",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MirageMicroUi.en_US.nQiL2Sg6sag.es6.O/d=1/rs=AJ563L8MoKi_wJItMTZV0_IYrm4Izrd3DA/m=b"
     },
     {
       "extension": "mledge",
       "id": "mledge",
       "module": "MledgeMicroUi",
-      "sha256": "8d545cbb97fa8e149bc456b51ba782590618a99303b56e1a5963b42e0174e041",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MledgeMicroUi.en_US.dgl57C0PNfg.es6.O/d=1/rs=AJ563L-Z8J0qMX55bwJ0oduik7tu9ClLCw/m=b"
+      "sha256": "9a5d0f433e28a0e93ff90f3e25be5461bed1d885ad155a6c5a9c87aab78be535",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MledgeMicroUi.en_US.cwI5spDzATY.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L_P1VP8UudSCzFRtVN59HQqNgk9QQ/m=b"
     },
     {
       "extension": "modelarmor",
       "id": "modelarmor",
       "module": "ModelarmorMicroUi",
-      "sha256": "a4792a4153094315a12dd2c6a826105d65cb5b757de822bd75ba050fd7f38532",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ModelarmorMicroUi.en_US.bZWaNI8kIt4.es6.O/d=1/rs=AJ563L_PH9QeXGYmLYXP3vQ-xcgLVwGwlA/m=b"
+      "sha256": "03b9e0678c045b5375c2785f98a6c7ac82df4c024f6268f366493784c8553c8e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ModelarmorMicroUi.en_US.tUFCGIkPSp0.es6.O/d=1/rs=AJ563L_V4NW7vPVex-q2hVjFIcW-Ekn-Ag/m=b"
     },
     {
       "extension": "modernization_hub",
       "id": "modernization-hub",
       "module": "ModernizationHubMicroUi",
-      "sha256": "d4a0930c1ba096e31e08de4ce5092c3a85cccebe35bf0a0a9161a3f612d1aef6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ModernizationHubMicroUi.en_US.W_B2ZO-Aelk.es6.O/d=1/rs=AJ563L9yvyvgoJVEWf1BXqH9hQgqhdba6A/m=b"
+      "sha256": "cd94c19b1c0391e8d08d1cfb63fef8f4cba29e10dfed0eba8120957c2cebbb2d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ModernizationHubMicroUi.en_US.I1vdpRTPv-M.es6.O/d=1/rs=AJ563L9-fg2AxclnIbfEi-rh5jjHBOh3fQ/m=b"
+    },
+    {
+      "extension": "multi_universe",
+      "id": "multi-universe",
+      "module": "MultiuniverseMicroUi",
+      "sha256": "0abf6aa160877677b0fc1f41d020256980f686972f3a8e5b2426f645d649bf49",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MultiuniverseMicroUi.en_US.OfXxxOQ5CaA.es6.O/d=1/rs=AJ563L9Gekb3ZrbUZhBqKw8fdf5dkV1OqA/m=b"
     },
     {
       "extension": "net_security",
       "id": "net-security",
       "module": "NetSecurityMicroUi",
-      "sha256": "91c9b0e4b6236f04ffdf9370b9aeb73da82f1148d03f5ebf38066b1aa07be67d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetSecurityMicroUi.en_US.a-gBATCUHFk.es6.O/d=1/rs=AJ563L-zEjgj5J-avNZhj_fYThBGti4aPA/m=b"
+      "sha256": "e069473729d75cb539292b509f817e9c3395f5fbbaba479b0547d04c784d586b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetSecurityMicroUi.en_US.mUsbJL0JdCQ.es6.O/d=1/rs=AJ563L_XwLlq500itbcfTD2gCaFle5N2mg/m=b"
     },
     {
       "extension": "netapp_cloud_volumes",
       "id": "netapp-cloud-volumes",
       "module": "NetappCloudVolumesMicroUi",
-      "sha256": "8fc4954736edb49a699a3063ffe4ed9d9c1c0b88c3de3effc536173b35a104bf",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetappCloudVolumesMicroUi.en_US.iuwHNxu3KNY.es6.O/am=AAAACA/d=1/rs=AJ563L-S863x4Y3NIxpMV2ZV-m2wmoqX8g/m=b"
+      "sha256": "295252747ccb5ccf3d1a773804ed5cccd9184461f893e2cf956a032ee5ac3006",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetappCloudVolumesMicroUi.en_US.577x3u4Fq3s.es6.O/d=1/rs=AJ563L81uGWCpLrC2xcxe4WESHxCbDFrbA/m=b"
     },
     {
       "extension": "netapp_files",
       "id": "netapp-files",
       "module": "NetappFilesMicroUi",
-      "sha256": "89a9f09fc8aac4aa7dacadb40ac0655ea4faac2ae106da6d56732e92cdfe2cbf",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetappFilesMicroUi.en_US.AeoljiYGbL0.es6.O/d=1/rs=AJ563L_jI2iXoOZ1iJKAs6i-0aP0AUe1MQ/m=b"
+      "sha256": "b2d0b877a0e21e313980a7e21278dc98696ac9bbcb5b7c0691ae029617eda8cf",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetappFilesMicroUi.en_US.FtMABqHDiro.es6.O/d=1/rs=AJ563L-UUfDW-04jk13o9QFwrZ3jvgHJXg/m=b"
     },
     {
       "extension": "networking",
       "id": "networking",
       "module": "NetworkingMicroUi",
-      "sha256": "4933e2c31b2e03d0fc0c6dc247a58c7243c3610df4a26fd57669c613bc4183e3",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetworkingMicroUi.en_US.YyWhev1JGO8.es6.O/d=1/rs=AJ563L-lmDPBrsgc_PsXMisp4neXdyUyUA/m=b"
+      "sha256": "6df5fe9b3e57449d52a5dfcee461bc0ca1327b899a4a06f5e91f713197224f1c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetworkingMicroUi.en_US.qPc1tcy6XNI.es6.O/am=AAAAAAAAAABA/d=1/rs=AJ563L-UkOwzevMErO9YjMHRLRT68qk9bw/m=b"
     },
     {
       "extension": "networking_services",
       "id": "networking-services",
       "module": "NetworkingServicesMicroUi",
-      "sha256": "76f1ebcfdfb21cc16fbbaf8717d025076753d7a12e2df4d935e66c821bbafc5c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetworkingServicesMicroUi.en_US.3tKg75RfO4I.es6.O/d=1/rs=AJ563L9mF1TvpBAgJJNSb6JltWyP6JdJrw/m=b"
+      "sha256": "33d5022be8ee784eb5232dff5f507cdbfc5e1745a2947912b89f9a1176d798af",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NetworkingServicesMicroUi.en_US.41Q8DNXGxFk.es6.O/am=AAAAAAAAAAAg/d=1/rs=AJ563L-BnkAWK2Ln62UuSGTcDXRxGX11Vw/m=b"
     },
     {
       "extension": "ngrx_microkitchen",
       "id": "ngrx-microkitchen",
       "module": "NgrxMicrokitchenMicroUi",
-      "sha256": "f5b257252690b727260ef57208f633c31b3d2a6b5daf031eef44754d23ecbdb9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NgrxMicrokitchenMicroUi.en_US.LSHiULHkhGY.es6.O/d=1/rs=AJ563L-Hr8rUQmmIy3XYvuRS3dUFMCzpFw/m=b"
+      "sha256": "e5d631ebd1377752df2f72385ec6f71025a8bb38e4cdc480e815f7ef90e96d1c",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NgrxMicrokitchenMicroUi.en_US.MjYcZt0WN8o.es6.O/d=1/rs=AJ563L_w1OgVtNSG7NhNEYNHvn-qJN5YbA/m=b"
     },
     {
       "extension": "notebook_v2",
       "id": "notebook-v2",
       "module": "NotebookMicroUi",
-      "sha256": "af4f82654c1f5450be41b75a7e916c914476121baed7962135a0bcbb620975ae",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NotebookMicroUi.en_US.OSauISrw9lA.es6.O/d=1/rs=AJ563L-f6A3GTVWmCaWPf1axeG7tCDTiWA/m=b"
+      "sha256": "e696e473ef4b1f153188cc098640c620697818676b82268bbc7a3eacd0571b3e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NotebookMicroUi.en_US.WUo2BMXF5ys.es6.O/d=1/rs=AJ563L-sUA2Z_aDfMLJ22PvlL8YwIjCJVg/m=b"
     },
     {
       "extension": "notebooklm",
       "id": "notebooklm",
       "module": "NotebooklmMicroUi",
-      "sha256": "adc88b71f9a4c2d0dbce917a6f2335c702aa40ce2f3642f952d2fa9a7050d243",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NotebooklmMicroUi.en_US.yya9kTJ9btk.es6.O/d=1/rs=AJ563L8zO6dJBwJd2DZcEEqOctI8T9u6zw/m=b"
+      "sha256": "a822be0d4270f92159863c72bb1a4a761367c26618766a741195e7f9f5c6415f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.NotebooklmMicroUi.en_US.8MBJvJ8xvbs.es6.O/d=1/rs=AJ563L-R8tv-j_IK6yCQUpAKhOCF3ueppg/m=b"
     },
     {
       "extension": "oauth",
       "id": "oauth",
       "module": "OauthMicroUi",
-      "sha256": "615e20f138cafb9d7c8d3776d859328060cb533507afdaa128122443e70ac663",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OauthMicroUi.en_US.Aqkm7AS8hqY.es6.O/d=1/rs=AJ563L9r2wJZozyJLOYOBy5yyEl8E5vO9Q/m=b"
+      "sha256": "25f613fec2fbb848de3c348239ece3580649e8faa9c25cbeee00134c86687b65",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OauthMicroUi.en_US.o2vbHOo54vs.es6.O/am=AAAAAAAAAAAg/d=1/rs=AJ563L94QW8WsCezIw2xq_ZbM9GCWsxzjg/m=b"
     },
     {
       "extension": "omnichannel_gateway",
       "id": "omnichannel-gateway",
       "module": "OmnichannelGatewayMicroUi",
-      "sha256": "c6f2c8830232ecc82b8c5d8059f6ca34f2822aca09822595bfb2f35458c837bb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OmnichannelGatewayMicroUi.en_US.8dxl_FFMVr0.es6.O/d=1/rs=AJ563L_vm8JqZ-H4j0FxahN85Ay3F_D6xQ/m=b"
+      "sha256": "4f5dca8572258f0ec8acdf805f85054cae3063d354e30054b28075d6869029cb",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OmnichannelGatewayMicroUi.en_US.x4lnWdl8Ut4.es6.O/d=1/rs=AJ563L_k6XSTdaSzQydbHqaXRa3qDtKcog/m=b"
     },
     {
       "extension": "omnilab",
       "id": "omnilab",
       "module": "OmnilabMicroUi",
-      "sha256": "a40e59637f5e771ada56c7191382e805625bca6523e66dc61039d01717ee32a9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OmnilabMicroUi.en_US.W2oZ80mBgr8.es6.O/d=1/rs=AJ563L_o5ZS4X0kCf2lRQsmwHQxtbTrjwg/m=b"
+      "sha256": "9073dcd8839db69cb530b2d9235f9d05edcdd77cff7a6ab942f9f7fec407f82a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OmnilabMicroUi.en_US.7BFAxqnLRZM.es6.O/d=1/rs=AJ563L8BoLsVIaHvZH7K1Qpp53mWIDyj7g/m=b"
     },
     {
       "extension": "onboarding",
       "id": "onboarding",
       "module": "OnboardingMicroUi",
-      "sha256": "5098fa89bf4a246e04e0bbf8045f4f34f00f01dedd4651d9aa369d3e16a829ac",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OnboardingMicroUi.en_US.JikpYrcEFwY.es6.O/d=1/rs=AJ563L_q_s4sp5SW0SboJj5u2Mvt5A1cxA/m=b"
+      "sha256": "745ae5643525155e8209c87e937f61d8818b7fb3922aefca9efacd86abc84842",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OnboardingMicroUi.en_US.IZ3yuEYLm_s.es6.O/am=AAAAAAAAABA/d=1/rs=AJ563L_CkqTYxEzrlGmrfPNUiMxiBdSfkA/m=b"
     },
     {
       "extension": "onboarding_platform",
       "id": "onboarding-platform",
       "module": "OnboardingPlatformMicroUi",
-      "sha256": "30ab61f5dd7c6251ffa4f0868421dc8ca6bada691bab492fd73d22259cc3e660",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OnboardingPlatformMicroUi.en_US.9z53blL4zUo.es6.O/am=AAAAADg/d=1/rs=AJ563L94fv7ke_eNjeDu_Zi73OH1SrkoPA/m=b"
+      "sha256": "25409e2d6bd7b43fb89731cd82d4bbe7150a78087e1fb4f3d46593dab1441f73",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.OnboardingPlatformMicroUi.en_US.wK8LWy0rgl0.es6.O/am=AAAAAAAOAEA/d=1/rs=AJ563L8aMwp-LeD3FoQkBU9l8GW1qbKDZw/m=b"
     },
     {
       "extension": "os_patch_management",
       "id": "os-patch-management",
       "module": "PatchMicroUi",
-      "sha256": "abf9367d5fced66c14ceb717961f1400dbd6c16d3f542174e1bf3b23d2ab170c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PatchMicroUi.en_US.RKIeVpdegqg.es6.O/am=AAAAAAAAAIAC/d=1/rs=AJ563L8V8Yn3-0JG2C5Yl01fru4ROgqhUQ/m=b"
+      "sha256": "0467510fbb7a981114efb75d31a33eb657646a5c238e6e2da6c70d2efb3e0721",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PatchMicroUi.en_US.vRiQAwYX5hQ.es6.O/am=AAAAAAAAAABAAQ/d=1/rs=AJ563L9ih4oz-r4vBbntQpoGLsgTgJj0ZA/m=b"
     },
     {
       "extension": "pam",
       "id": "pam",
       "module": "PamMicroUi",
-      "sha256": "7b3892fb6756a8de2ae75e655aeb71d4e3737a2d62a2d0fc76e0690961cd69ae",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PamMicroUi.en_US.fYR6UbMUEnk.es6.O/d=1/rs=AJ563L-qMQ_5cyXK-7OBoJWe9yuApN3v0Q/m=b"
+      "sha256": "2b994de833fee2c7965fe5c230acea23fe0ee6effb4c37ec43f91531d4fa0c62",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PamMicroUi.en_US.bnwpBmzlCr8.es6.O/d=1/rs=AJ563L9cwCPNcZBi8-w_NOUqkBWgqTA0lQ/m=b"
     },
     {
       "extension": "pangolin_cscc",
       "id": "pangolin-cscc",
       "module": "SecurityCsccMicroUi",
-      "sha256": "000984aaf72a2a1c2606f239bdeab1edc1776b3d2ded37b801ac607d0b464903",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityCsccMicroUi.en_US.El9YupIk8Zk.es6.O/am=AAAAAAAAAIAC/d=1/rs=AJ563L9kM4RJ906Rqv1jq4qo7NgJ-IWUBw/m=b"
+      "sha256": "0902a1f4ee980ba630889b856b3b5f2701cc72a09b5cb6ffe95e5b34748fd0a3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityCsccMicroUi.en_US.6e53WKxSBk4.es6.O/am=AAAAAAAAAAAABQ/d=1/rs=AJ563L-7yUIE2IpM4kCNowRGSeafR04icA/m=b"
     },
     {
       "extension": "parallelstore",
       "id": "parallelstore",
       "module": "ParallelstoreMicroUi",
-      "sha256": "a637012463ac3e66f02aa6ffb1ccead23943a4e377693c25b851550173182b02",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ParallelstoreMicroUi.en_US.hejYq2yMjv8.es6.O/d=1/rs=AJ563L-bZtZ1QQXgj78xTYSGMVA3nU0P3w/m=b"
+      "sha256": "53ebc608486c84e8e82822cbdfab560758d6a992b3b5f7ce3c885ccaaf4e8abd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ParallelstoreMicroUi.en_US.GYth9aLNu94.es6.O/d=1/rs=AJ563L8oI_7JuuR_sau-WzRIOkN8qVXyVQ/m=b"
     },
     {
       "extension": "parametermanager",
       "id": "parametermanager",
       "module": "ParametermanagerMicroUi",
-      "sha256": "484bebd3cb1721a3838c50cf8c05476abe17f2247af7547f32d9f6ce915c4fcb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ParametermanagerMicroUi.en_US.hnP3chayh0w.es6.O/d=1/rs=AJ563L8aw364LBC24lWq7zW2aJQdGZkKEw/m=b"
+      "sha256": "db53839478eb64ff1aab4e113d676baca1d5aa40a0534596f6b83ac6212732c5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ParametermanagerMicroUi.en_US.jEUa2fno2XE.es6.O/d=1/rs=AJ563L_sRkxzNaaC0j4q4yPB1fzSGY7K-w/m=b"
     },
     {
       "extension": "partner_console",
       "id": "partner-console",
       "module": "PartnerConsoleMicroUi",
-      "sha256": "6afb7de7f064396b85bc06d02499dea6c96a38721ef590521732f3aa5586726c",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PartnerConsoleMicroUi.en_US.y18N3TrgS9Q.es6.O/d=1/rs=AJ563L-PsB-3iMkOzAKeq9l_o2Fd8pD7Dg/m=b"
+      "sha256": "36a7d1e08de8c79b7881fa444667755478910b5477f1d39583c324943a654b20",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PartnerConsoleMicroUi.en_US.HarSdzoSOeM.es6.O/d=1/rs=AJ563L_S8B3m36MbCDfsszy2z8gOS14gfg/m=b"
     },
     {
       "extension": "policy_analyzer",
       "id": "policy-analyzer",
       "module": "PolicyAnalyzerMicroUi",
-      "sha256": "4ed5ffc98ea1d997a5e0cb8387796f989d6439e2d32d76f6cf7930b4b278e3a6",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PolicyAnalyzerMicroUi.en_US.dwYozSpQTBA.es6.O/d=1/rs=AJ563L8jHcKJmXNLFLvN8yzop5AQ_Ew72g/m=b"
+      "sha256": "632a3574bca5c470eec6032876d9ae787c2c828bfc966618f91817fdaa7e3a12",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PolicyAnalyzerMicroUi.en_US.f_gL0dn1I48.es6.O/am=AAAAAAAAAAAB/d=1/rs=AJ563L8VCTNPs2IRRCloOcBjz0A2lOGO8w/m=b"
+    },
+    {
+      "extension": "policy_set_manager",
+      "id": "policy-set-manager",
+      "module": "PolicysetmanagerMicroUi",
+      "sha256": "d977a56d5821d9355e272688458c617bd37f08067a5894534b37f52c8f8c6c5f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PolicysetmanagerMicroUi.en_US.KzgtwJ9qLqY.es6.O/d=1/rs=AJ563L85djEuQ_iALANs1YXIdAiwbdBWpQ/m=b"
     },
     {
       "extension": "private_catalog",
       "id": "private-catalog",
       "module": "PrivateCatalogMicroUi",
-      "sha256": "cb6b4e5ab5afb87387f378c9213fead1a014bede15956e8f35326ef70079e940",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PrivateCatalogMicroUi.en_US.D0cuuPE4bTo.es6.O/d=1/rs=AJ563L_qjqaKGeMifDKH3apGCn5tA4lfhA/m=b"
+      "sha256": "07144b0723370e2d9f8722f8e325a16e31ae4901303a15eece5da64df71c7d22",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PrivateCatalogMicroUi.en_US.xZW-YNevPoc.es6.O/d=1/rs=AJ563L-PmyMx92DaCvEvLrObJd_Y7YErcw/m=b"
     },
     {
       "extension": "producer_private_offers",
       "id": "producer-private-offers",
       "module": "ProducerPrivateOffersMicroUi",
-      "sha256": "af647a38c88c63b564fa07b7a06da22932426920ae92e91651cc90ad2abacf85",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ProducerPrivateOffersMicroUi.en_US.TLEgw6JuULE.es6.O/am=AAAAAAAAgA/d=1/rs=AJ563L_QeVy510AU7GItcYUWKLUzqXhTvA/m=b"
+      "sha256": "4e6ab81b0c1cc96e167f004415302470e178ec94dac16ca613c6b4e07256b48f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ProducerPrivateOffersMicroUi.en_US.BgR9VJoYcso.es6.O/am=AAAAAAAAAAAB/d=1/rs=AJ563L_AEsY605sHu0WjVeGxSd1l4ueIUw/m=b"
     },
     {
       "extension": "product_overview",
       "id": "product-overview",
       "module": "ProductOverviewMicroUi",
-      "sha256": "a1200f21a072ab4cba237244f99fc3fee51faf09b9ebd4d1d3dc0f1fde086458",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ProductOverviewMicroUi.en_US.aPUCzsI9Lek.es6.O/d=1/rs=AJ563L8O4KCTxMFFUiuhL3vhTw4KnXB_XQ/m=b"
+      "sha256": "da669a599a8e682381cdf24dd0db045f619746f24a51e73408c31306f432e727",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ProductOverviewMicroUi.en_US.qXhPi6UqQxY.es6.O/d=1/rs=AJ563L9PWRpn_fjuLuvLm5F2a8ErXGexxg/m=b"
     },
     {
       "extension": "quantum_rif",
       "id": "quantum-rif",
       "module": "QuantumMicroUi",
-      "sha256": "e695dec24f539890b75e8e09826826a51ea72392eef579ec4769ad3d260ae6b0",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.QuantumMicroUi.en_US.Pc93JTZ6AjI.es6.O/d=1/rs=AJ563L8WtL8AUxZ-F_3VN66OngqKptGbVg/m=b"
+      "sha256": "9cf3028dfd77ab40419e5f01ab512e73cacd25b3810c5759f8b255399b29433e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.QuantumMicroUi.en_US.OdY2kt60vJY.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L_fBROx3Ao4zE-Y1c5BeBLKTzONTw/m=b"
     },
     {
       "extension": "recaptcha",
       "id": "recaptcha",
       "module": "RecaptchaMicroUi",
-      "sha256": "0dde6525bb0495f6802d5e76b67f27c606cb0df4996887ddac7069d61ec6aa03",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RecaptchaMicroUi.en_US._KrWv1mEKF8.es6.O/am=AAAAAAAAAAAK/d=1/rs=AJ563L_ZPNqxQsJ_oBwcWPy5ji5NQGhQFg/m=b"
+      "sha256": "85ae65c4701cfddcfd19e357e6443845575464c00c92efa4546c1aae303cda02",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RecaptchaMicroUi.en_US.cVOjXJwUVVI.es6.O/am=AAAAAAAAAAAAFA/d=1/rs=AJ563L8-NRTgugPMJ3CdJCSu9L1QSXxWow/m=b"
     },
     {
       "extension": "retail",
       "id": "retail",
       "module": "RetailMicroUi",
-      "sha256": "c56e200e892e457f127cf4613e858c95093447191b869c470f47dec0862c2260",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RetailMicroUi.en_US.r5208ObdZy4.es6.O/am=AAAAAAAAAAAE/d=1/rs=AJ563L98BZAX2k31DGQU_ATbXaO3t0hBcQ/m=b"
+      "sha256": "4ce405ada9c77352aa3b0d1de9922e56efce6496ffd91753508d4765f927b4e6",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RetailMicroUi.en_US.V6TPPnIk4jc.es6.O/am=AAAAAAAAAAAR/d=1/rs=AJ563L-0u288PCQ0WvE3R8v3nHxic_M57w/m=b"
     },
     {
       "extension": "retail_support_tool",
       "id": "retail-support-tool",
       "module": "RetailSupportToolMicroUi",
-      "sha256": "bdfeb899bcb1d2ba6165deb5a8def5d2cc27b7a3a5905b09929db146fe987aac",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RetailSupportToolMicroUi.en_US.110CZldIVTE.es6.O/d=1/rs=AJ563L9U6ZdM9cKeXGzpM9rZ6zyx97czNg/m=b"
+      "sha256": "f11e730decc94b0edb9651230cd46668aa87ecf2b8404590ce11348ebaabf800",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RetailSupportToolMicroUi.en_US.rz3JuLMKZl4.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9DsHhCPproFQayTL9BXzXcpCZVBA/m=b"
     },
     {
       "extension": "riskmanager",
       "id": "riskmanager",
       "module": "RiskmanagerMicroUi",
-      "sha256": "8bf14112a804ebb49514dee8e726fc04816c6ac07c5d26858e70686ea6bd3145",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RiskmanagerMicroUi.en_US.keP5uczyKB8.es6.O/am=AAAAAAAAoA/d=1/rs=AJ563L_rWnYKJsGq7z5rSDukNtpIYAPXeg/m=b"
+      "sha256": "26bff12862cd1010e7ea3b8d512d6f001bd5c1b1fecba0f6367a72709db3a59d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.RiskmanagerMicroUi.en_US._r7R4pZL7JI.es6.O/am=AAAAAAAAACg/d=1/rs=AJ563L8-MHhzv03jlqKUVeg-k1hUdsrQCg/m=b"
     },
     {
       "extension": "saas",
       "id": "saas",
       "module": "SaasMicroUi",
-      "sha256": "f4f1cb51d02ddbb05672f6670b786d76b1f402dc6d796275c9bfc4a8255fc290",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SaasMicroUi.en_US.Vw8VRuui0_8.es6.O/d=1/rs=AJ563L_QG791C7qMmoJ_guc4mn4TlmmepA/m=b"
+      "sha256": "fac24af4ff6a733e441db819dbc0374ee775e26f39aafa71eeb4b7015df63c03",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SaasMicroUi.en_US.ah91WMhgsJw.es6.O/d=1/rs=AJ563L9z2YaDqfbKou3Y10Gj3aFwV-sFyg/m=b"
     },
     {
       "extension": "scc_uno",
       "id": "scc-uno",
       "module": "SccUnoMicroUi",
-      "sha256": "2191e9a75162b817d036131ab13ecfd86af06d5f6734300e81d25068314d2148",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SccUnoMicroUi.en_US.XK_-yvCww04.es6.O/d=1/rs=AJ563L-D-zvSEUkfhcDhRqjvwUCTAKFysw/m=b"
+      "sha256": "4abc7159bc1e467764f8cfd46a077076a6510c05394f84dff5c808abb6fbbb00",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SccUnoMicroUi.en_US.8vOSkj1pVXQ.es6.O/d=1/rs=AJ563L9MRSroZIJpLMKdMOqAC9NcGUz48Q/m=b"
     },
     {
       "extension": "sdui_playground",
       "id": "sdui-playground",
       "module": "SduiPlaygroundMicroUi",
-      "sha256": "a435a467137d0ab2e94e4e50ef407d596b117d612fc9b506219c28f21276e49d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SduiPlaygroundMicroUi.en_US.abwRZoNe7v8.es6.O/d=1/rs=AJ563L-ca_1BQdajAzRr68L2TqBGFfcy8Q/m=b"
+      "sha256": "cb70da7a8cc68c652b81bca99cfd0838e66154c5350fdd5b4216f9dab7443ec3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SduiPlaygroundMicroUi.en_US.c8XqUStkPsc.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L-rl3dBbcBUB74iilqeL7__8l-whw/m=b"
     },
     {
       "extension": "sdui_widget_viewer",
       "id": "sdui-widget-viewer",
       "module": "SduiWidgetViewerMicroUi",
-      "sha256": "e2af0baaf58ed8c79adae68f81a0e46a309273a436833e0938ecf14e0779c591",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SduiWidgetViewerMicroUi.en_US.o7mekpf71LU.es6.O/d=1/rs=AJ563L-yILHXlQpJR0SjWpNq8wNUhqzNVQ/m=b"
+      "sha256": "38d5a0357efa4e2f1fb3fbb1833a812e42ebe5da2d47d72c3ac6ea240cebd623",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SduiWidgetViewerMicroUi.en_US.kn7RMWeeMig.es6.O/d=1/rs=AJ563L_uBAPp_nLC6d4_8B-uo_Lup6wdqw/m=b"
     },
     {
       "extension": "search",
       "id": "search",
       "module": "SearchMicroUi",
-      "sha256": "c187abf48b9794cf3ecb5766f4939f5a1345ae115a02fef57c9c1958acaa942a",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SearchMicroUi.en_US.GVgjdTD9T7o.es6.O/d=1/rs=AJ563L_MiGB_lLGSpo2YHN0-utOGGnOiPQ/m=b"
+      "sha256": "3156e92c9960ab26443d59716c4a909656b3023c4ef08646724772ccf5532d9d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SearchMicroUi.en_US.MNO7t0nUY2g.es6.O/d=1/rs=AJ563L-E77igZLdy2Kz_Jkg12MiCnKNQKw/m=b"
     },
     {
       "extension": "secret_manager",
       "id": "secret-manager",
       "module": "SecretManagerMicroUi",
-      "sha256": "6e53b0ccb4cc6e715b91c37697a882f57af6f49362a1b5aefd8ad18a7f1542ad",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecretManagerMicroUi.en_US.-dVNhlhyF98.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L9tXu_Azi_EtGHd_D0s3VlUoK4YeA/m=b"
+      "sha256": "86697d03d472eb958cebb26d70896d14700b1aab0f188f2182fdd5e0df14255a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecretManagerMicroUi.en_US.47HOQ3_0YXI.es6.O/am=AAAAAAAAAABQAQ/d=1/rs=AJ563L_9Yrh1fhRtS4eJTvxbdFaYagcPeQ/m=b"
     },
     {
       "extension": "secure_source_manager",
       "id": "secure-source-manager",
       "module": "SecureSourceManagerMicroUi",
-      "sha256": "15b9de3d5e26b8c759b322f8159796380bea64c81c99839d3fb29205213b2149",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecureSourceManagerMicroUi.en_US.thXlwAUAOP0.es6.O/d=1/rs=AJ563L9YSrOlxBwMMK9IsJjPeeLNNcONow/m=b"
+      "sha256": "1235dd2c5a8e5f949f89f35e516e0547bf1b33d3bb842e8cb5abdea5dbdadf6d",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecureSourceManagerMicroUi.en_US.wdtG9DZS0FE.es6.O/d=1/rs=AJ563L_N-5p7WiruvBWXcynUCl4or9rkoA/m=b"
     },
     {
       "extension": "security_agent_deployment",
       "id": "security-agent-deployment",
       "module": "SecurityAgentDeploymentMicroUi",
-      "sha256": "fd0142a4735707a19a8154a75fac90cbc37fbe270ef20515a898bc441891846e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAgentDeploymentMicroUi.en_US.3KWxxq2xdtA.es6.O/d=1/rs=AJ563L_NoEpCBdKCAywlfD8ShIpevrn92g/m=b"
+      "sha256": "5fcf9298a0b0aaea9f2dcd8f977c8481c88281466266eff8b1d9131e20b94f60",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecurityAgentDeploymentMicroUi.en_US.ah9JWa_MYnE.es6.O/d=1/rs=AJ563L-P5zrEiYF4uS2mJyaJN2bNzIu-eA/m=b"
     },
     {
       "extension": "service_management",
       "id": "service-management",
       "module": "ServiceManagementMicroUi",
-      "sha256": "42da6211b50d5534ea38cea4d38d373439410b71bfe045db926041e27e98e849",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ServiceManagementMicroUi.en_US.YTVLWpI4FaA.es6.O/d=1/rs=AJ563L-h7ebVRIhYyU0sGG6B2wZn4p4f_A/m=b"
+      "sha256": "35e58da2f836c8518b401fdd7a09f43bd81344b3c0b400c69a2e6d491b49f018",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.ServiceManagementMicroUi.en_US.sdRid2J-cL8.es6.O/d=1/rs=AJ563L_ZFu-c5q_2HKMyiYERekTPno4H5w/m=b"
     },
     {
       "extension": "sole_tenancy",
       "id": "sole-tenancy",
       "module": "SoleTenancyMicroUi",
-      "sha256": "1928dfb05ec2d7239ee814959f304db833b4b035b559939463691ad106e739a8",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SoleTenancyMicroUi.en_US.u-KluHFdQ4M.es6.O/d=1/rs=AJ563L8i3SmW-QksJbvMRB3njUDNXnulAA/m=b"
+      "sha256": "4e1afaedd12cd5110c8bf352da82d997f4ec82d6b6f438957c568d56d916db85",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SoleTenancyMicroUi.en_US.W-oRdKzGmh4.es6.O/am=AAAAAAAAAAI/d=1/rs=AJ563L9POvVhSTbU5x5Q6JmlN754XhT1Ng/m=b"
     },
     {
       "extension": "solutions",
       "id": "solutions",
       "module": "SolutionsMicroUi",
-      "sha256": "f17737db20cd1c54034a25c4c6d8c6171c043c394f632b7d405587f9cc627176",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SolutionsMicroUi.en_US.kNevzDMyTJw.es6.O/am=AAAACA/d=1/rs=AJ563L91SfnV8rPMAXBq5NPjQV2Npit-RQ/m=b"
+      "sha256": "1ec3d3f075b7106add9355811192f6b5adce11c615dc3f74ed1dd2a7f6d47733",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SolutionsMicroUi.en_US.unIVNfc8mk0.es6.O/d=1/rs=AJ563L8tMgT6u_b14onWbTTpRGYJQsgrYQ/m=b"
     },
     {
       "extension": "spectrum_access_system",
       "id": "spectrum-access-system",
       "module": "SpectrumAccessSystemMicroUi",
-      "sha256": "21b6b605e975821c34ff3f295666afe0f654c36ae9c3aff12630bd08e7ff8ef3",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SpectrumAccessSystemMicroUi.en_US._O24Jy4rxnA.es6.O/d=1/rs=AJ563L_ldNg4LOkfVVttyjtukMB0nIhdaw/m=b"
+      "sha256": "521b3fac440ff1bd4692cb8febf9673ea4ce6c17886c531b893219e963be9acd",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SpectrumAccessSystemMicroUi.en_US.3wVNF9Q8TFg.es6.O/d=1/rs=AJ563L-Wqyb1PZL7TZWX05l5UkcuG-Q9Kw/m=b"
     },
     {
       "extension": "speech_studio",
       "id": "speech-studio",
       "module": "SpeechStudioMicroUi",
-      "sha256": "c2b0cb13f43dbc9b95473d341402415d5b366b4eb97853091e96541ed133f0e1",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SpeechStudioMicroUi.en_US.-Pnvr5tm3u0.es6.O/d=1/rs=AJ563L81fSytU8DH-EGU9Op584x2WFa3GA/m=b"
+      "sha256": "6042d7180c01f660c9875a856487a435643f54d296db0862d4ef5326fc85ae6a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SpeechStudioMicroUi.en_US.hCCA8j6pUVI.es6.O/am=AAAAAAAAAIA/d=1/rs=AJ563L_Zv88Pk6d-MNzD_hIKU3n21i1tog/m=b"
     },
     {
       "extension": "stackdriver_rif",
       "id": "stackdriver-rif",
       "module": "StackdriverMicroUi",
-      "sha256": "cc7cad521c6885a8bc2e43bcb6e211fdfb1201a5f0209cefc94344650080980e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StackdriverMicroUi.en_US.uhRWN0TeHuQ.es6.O/d=1/rs=AJ563L8GtyLczO-SAjZXMyJeV7Ls3-LcWw/m=b"
+      "sha256": "f51abcb630cbfd57a229846e77f6cab641a3428679936c11434aba45d56a9c96",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StackdriverMicroUi.en_US.ca3Y67fnHYY.es6.O/d=1/rs=AJ563L_ohZfVC_6XeGOPXsPMefx56jtOPA/m=b"
     },
     {
       "extension": "storage",
       "id": "storage",
       "module": "StorageMicroUi",
-      "sha256": "952a9ead426de27fe978aae95b242c838a64cdb573a3da822d87f0a1e750ebfc",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StorageMicroUi.en_US.A24tK_SO1R4.es6.O/am=AAAAAAAAAEAB/d=1/rs=AJ563L_qm_IiUrisQrcLoFgMsaNSQV-rnQ/m=b"
+      "sha256": "d67cc29da26166ad399f3ca8fafb7abfc27b9657ec07bbf4dd346995715ffb11",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StorageMicroUi.en_US.itnBBDpI_jw.es6.O/am=AAAAAAAAAACAAg/d=1/rs=AJ563L-lsX29rubaKWgQQeLxXWszwsjjMA/m=b"
     },
     {
       "extension": "storage_insights",
       "id": "storage-insights",
       "module": "StorageInsightsMicroUi",
-      "sha256": "924ac5011a91d7070a2833700c79cd2d6170939d69035ef6f2c2de611ed8f3bf",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StorageInsightsMicroUi.en_US.UWMwsWLUcA8.es6.O/d=1/rs=AJ563L8LFoya3wddNA0SclLwrJIh0DJgSg/m=b"
+      "sha256": "cdf4f70579c48f358eda51010ac9f078ad608ca59cde23d0cfb4230c4cde74c3",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.StorageInsightsMicroUi.en_US.X4pAlGN-lcU.es6.O/d=1/rs=AJ563L_wC27Kx6BBU9aKJ6q1w7pv0i6wOw/m=b"
     },
     {
       "extension": "superquota",
       "id": "superquota",
       "module": "SuperquotaMicroUi",
-      "sha256": "8d6b225093bb045fcca74bbc587442d05f35a609d0ddeda81b3419d2926f1635",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SuperquotaMicroUi.en_US.PIsHruYvfDU.es6.O/d=1/rs=AJ563L8p0LU5inaKNqaYNURWuRwbfPdyMg/m=b"
+      "sha256": "599c282ffdc53586fe96de4e7ef0c47531b0132c72c917c51c6c36f8db09faf4",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SuperquotaMicroUi.en_US.20zH4HXd-uw.es6.O/d=1/rs=AJ563L9Q6DU7rJ9otISxwjj1XfJiuQ7rcQ/m=b"
     },
     {
       "extension": "tags",
       "id": "tags",
       "module": "TagsMicroUi",
-      "sha256": "9e29f6c1201f40818c191b076ed48c302092d611fb3b3018323cbfcb7f85b649",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TagsMicroUi.en_US.uHp0b5zmkKQ.es6.O/d=1/rs=AJ563L9sUrPaHksvHUE7z0V-vMSe0eTrTw/m=b"
+      "sha256": "c5c00b2c70b5839fcc745020391effbe846fd73ddad6b5bd5d79b965d40eba81",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TagsMicroUi.en_US.Qg9U-j2-vzI.es6.O/d=1/rs=AJ563L9_8dXN_JgQ3oMgQEHS0Wb3Jcsx_A/m=b"
     },
     {
       "extension": "telco_automation",
       "id": "telco-automation",
       "module": "TelcoAutomationMicroUi",
-      "sha256": "ad7b82d70fffbbb8a991803c8b82b1d693fed2d2ac570dcf91fbac14d6d1a44b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TelcoAutomationMicroUi.en_US.Uv6CRX-Gegg.es6.O/d=1/rs=AJ563L-O67BbGcnhgACjlAp3ECvZwMT1aQ/m=b"
+      "sha256": "aaf35b7219a2c8ba596b32b256b605b731cac7c942d21ba5a542112ee9a82963",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TelcoAutomationMicroUi.en_US.bBxL-XG86wM.es6.O/d=1/rs=AJ563L8galk1kC8budRcV_g1CFcCdXj7MA/m=b"
     },
     {
       "extension": "terms_of_service",
       "id": "terms-of-service",
       "module": "TermsOfServiceMicroUi",
-      "sha256": "0cbc0212dacb682345f17d409a193650016ec7dcb398b62c4573bbfeb2edd14f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TermsOfServiceMicroUi.en_US.cLzKHf3LUIw.es6.O/d=1/rs=AJ563L9DH-ybpL0TLlHYrNhs88sndyPAMQ/m=b"
+      "sha256": "70abb02655aae705d3485de1510875fda0e9d9b1ed958c5a1a7a90dbea7483ed",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TermsOfServiceMicroUi.en_US.kZ7qaDyRexg.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L8VyP9OAKiRxk6mvIN0pIF9COnyfg/m=b"
     },
     {
       "extension": "tesseract_ui",
       "id": "tesseract-ui",
       "module": "TesseractUiMicroUi",
-      "sha256": "6a5952b7dfe73ecb362c5171aac55a6cb8d3e72f6e27225501686c41547c82e2",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TesseractUiMicroUi.en_US.gUY6zeggom0.es6.O/d=1/rs=AJ563L-O7JwAqdAFjfZ2Sxhr1-tuKtaGTA/m=b"
+      "sha256": "680ca1b77c7fb1547940e169824f9195bcbf4e4006539daf66afb860921568e1",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TesseractUiMicroUi.en_US.lBG_55EBC7I.es6.O/d=1/rs=AJ563L9m6Ha85rxYJ6QMbOK6P0NvfYkRWQ/m=b"
     },
     {
       "extension": "transfer",
       "id": "transfer",
       "module": "TransferMicroUi",
-      "sha256": "fd8ad8952084e68143590d603d16c1762325869e875609b3d80e26af71b01f64",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TransferMicroUi.en_US.Shme6LUTURE.es6.O/d=1/rs=AJ563L-UYSnXv1P0ajlTN7HZcIw6AT1LnA/m=b"
+      "sha256": "163ddbdd65dc6920bb9d986e1e686a85d814a5cee13c99cfb72364474c3fe080",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TransferMicroUi.en_US.Aybxuv5DZq0.es6.O/d=1/rs=AJ563L_St-Fw1271t7BcXKWLV_na4L3fkw/m=b"
     },
     {
       "extension": "translation",
       "id": "translation",
       "module": "TranslationMicroUi",
-      "sha256": "0d1ee015701b19b99380b8443001bda0f222cb0a37091557a9fb471bc98a916b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TranslationMicroUi.en_US.UFjCJmy3q5A.es6.O/d=1/rs=AJ563L8uotzqf4YSXX_Lu2tIzJevfsDYeg/m=b"
+      "sha256": "55cf145c0b7f32725ad29eb1f33429d0ee3e5fedd1ae6addd00b11164d1187d9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TranslationMicroUi.en_US.k48oIFst92Y.es6.O/d=1/rs=AJ563L_8brbQJzOWOA2jum41XRFt8NpHVw/m=b"
     },
     {
       "extension": "troubleshooting",
       "id": "troubleshooting",
       "module": "TroubleshootingMicroUi",
-      "sha256": "cd7a6b6048b3229bb8913f50954b3903588e43ed1e032d8433a45bfb1f653e7e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TroubleshootingMicroUi.en_US._73SuCGZKJM.es6.O/d=1/rs=AJ563L_xrcgEyjZ6TGlqWd8OFhL0QnLCow/m=b"
+      "sha256": "b71ec613665ffe020038c311ad4d7342f908358e1e9e5ad1ce8228365aabfd52",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TroubleshootingMicroUi.en_US.RR806EUGyqs.es6.O/d=1/rs=AJ563L-u8jgYgJKf_nLVoymyuXt6eIgd4A/m=b"
     },
     {
       "extension": "trust",
       "id": "trust",
       "module": "TrustMicroUi",
-      "sha256": "c1604b421fa3ef5121778abbab6743dc492fd5a25d3825af413ec66459f441dd",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TrustMicroUi.en_US.5u93MjFgmaA.es6.O/d=1/rs=AJ563L9VR9IinGrZwxW2N3F1YlcyMrx4MA/m=b"
+      "sha256": "e20972396faa643a4fb41bbb835b2f417b7fd614b359cf76ea7e1ded59055556",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.TrustMicroUi.en_US.6ccOtsX5-6Q.es6.O/d=1/rs=AJ563L-qgfxWIwQnvrKYcX_x4HgyYKLAqw/m=b"
     },
     {
       "extension": "ucp_hub",
       "id": "ucp-hub",
       "module": "UcpHubMicroUi",
-      "sha256": "5228d6cb8099b9c8bba7f925e520e48c81cf450df80e35efef30fc34560f828b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UcpHubMicroUi.en_US.KbDtP7JFqkQ.es6.O/d=1/rs=AJ563L8RvoRDJwsYZEdjQuXUnDjZI6M6gg/m=b"
+      "sha256": "ed1e297ed384e0a7d8a02a371df5a180090d41e8e79a67cad5a31c96f0c8c030",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UcpHubMicroUi.en_US.xTIl5mjO7Lg.es6.O/d=1/rs=AJ563L9tJ6ZskMcXcXsrcVfbdexEJdbsWw/m=b"
     },
     {
       "extension": "ucs_support_tool",
       "id": "ucs-support-tool",
       "module": "UcsSupportToolMicroUi",
-      "sha256": "c308fbe80317cdd1fac18b9603343c73ee723fc7b8a97a7ce361a2c527cfa0fa",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UcsSupportToolMicroUi.en_US.egwEzwpQ3ZU.es6.O/d=1/rs=AJ563L_xJRIi4Lt9oOyf6PDdKtKqzN83xQ/m=b"
+      "sha256": "72ad1423fe163c7dfb02cd91e76de903ac0b3800f7ca54df55ad4f6804b315da",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UcsSupportToolMicroUi.en_US.mb0M1xkXYDU.es6.O/am=AAAAAAAAABA/d=1/rs=AJ563L-BOsVh6H6DY7i6CgWHtFS9H9ZtVg/m=b"
     },
     {
       "extension": "unified_cloud_search",
       "id": "unified-cloud-search",
       "module": "UnifiedCloudSearchMicroUi",
-      "sha256": "7629f2ad75d8e71277e6dc4c5d98f6f49e27adeee63d6dccd59cf3a0aeb75e52",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UnifiedCloudSearchMicroUi.en_US.MZF-WjLmnXU.es6.O/d=1/rs=AJ563L9_UlLb1aXmG0NTbfXnPaEgSRVVCg/m=b"
+      "sha256": "973ad1398e4d4dd68c63c873a586dc95de9efb89f8976382422d67b1d2e35a8e",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UnifiedCloudSearchMicroUi.en_US.bquQVRW3n7w.es6.O/d=1/rs=AJ563L_GYzsqsVODqhXrzYSIs8o1xHZjxQ/m=b"
+    },
+    {
+      "extension": "unified_server_brownfield_poc",
+      "id": "unified-server-brownfield-poc",
+      "module": "UnifiedserverbrownfieldpocMicroUi",
+      "sha256": "27bd842c18cbbabfce6526ab95954499bbd5995bc2b38e440aa00070ed5b1fb5",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UnifiedserverbrownfieldpocMicroUi.en_US.Jl_ZYl3P9RA.es6.O/d=1/rs=AJ563L_XGsaTBsJ0X-pNiFp3SNilKWU7Fw/m=b"
     },
     {
       "extension": "user_preferences",
       "id": "user-preferences",
       "module": "UserPreferencesMicroUi",
-      "sha256": "15071c87ba54ba9ee5aed03ae4905471b8cda56fc9c9b55cde86907cce033f36",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UserPreferencesMicroUi.en_US.8_rjxZkgafw.es6.O/d=1/rs=AJ563L8VuaURTaB-gfBIITS7IZRTbkZR5A/m=b"
+      "sha256": "91460aa03056950ad0631754f1e73108999b92807c18eef994c62fc046ffebbf",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UserPreferencesMicroUi.en_US.sxs2OBUdg4M.es6.O/am=AAAAAAAABwAAAAAAAAE/d=1/rs=AJ563L9WO4Z0SbR8E__0xhWkG22B6J0oIw/m=b"
     },
     {
       "extension": "uxplayground",
       "id": "uxplayground",
       "module": "UxplaygroundMicroUi",
-      "sha256": "5b95870ab91073eb362cf7790353d40f408248dc1de84002b9acc4f5364bea17",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UxplaygroundMicroUi.en_US.llTmi9roHnQ.es6.O/d=1/rs=AJ563L-lEAiIlEDJ288x0gGhvSoWyWDkFQ/m=b"
+      "sha256": "b9941171de554f6c91034c3bb87ae96ddc0887b5f90c8358e11d71941983a27a",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.UxplaygroundMicroUi.en_US.16AjORE8V0A.es6.O/am=AAAAAAAAACA/d=1/rs=AJ563L_VySLUsHN_B1jA33Brx5_cDFha9w/m=b"
     },
     {
       "extension": "vertex_ai_studio",
       "id": "vertex-ai-studio",
       "module": "VertexAiStudioMicroUi",
-      "sha256": "cac986a192357abd71bcdd304ce91f88c97c42e7e2fb331ab7d2461351d63197",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexAiStudioMicroUi.en_US.g5wvMEigA1c.es6.O/am=AAAAAAAAAAAUAAAB/d=1/rs=AJ563L8JM3Wsm-SnwLR9JnYigK5ihuw4tQ/m=b"
+      "sha256": "e1c4e4802f2265a60826594bcaf1f33fb808ea3583cd0e909bcf17d8a0f1fe58",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexAiStudioMicroUi.en_US.cfo8rxkNBbA.es6.O/am=AAAAAAAAAAAAUAAABA/d=1/rs=AJ563L-Zdqp965-33hOCZhd4bxIqaaXmZg/m=b"
     },
     {
       "extension": "vertex_conversation",
       "id": "vertex-conversation",
       "module": "VertexConversationMicroUi",
-      "sha256": "849530efe99cc2b1449f98409f410ba40c8bb0255cf9c4dd3316518169ec2118",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexConversationMicroUi.en_US.OK5GBBm8oLc.es6.O/d=1/rs=AJ563L9ZIoEvylarK28-o9OsRVkLufsAnw/m=b"
+      "sha256": "29b9ba4a777ab15e64ded692231377ac4589b6b40af36bdbf9b54bb7f49f3e81",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexConversationMicroUi.en_US.g53NNbUPq7Y.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9EUHK7iUJ9AI7oHlcUYG7KiRJrDA/m=b"
     },
     {
       "extension": "vertexaiagentauditad",
       "id": "vertexaiagentauditad",
       "module": "VertexaiagentauditadMicroUi",
-      "sha256": "a6d3396647584d0b285909227dbd5f62c8d1e792992d99203f762dfa1f0cffcb",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexaiagentauditadMicroUi.en_US.y7QIJWRs_KQ.es6.O/d=1/rs=AJ563L_5HK4bqALQmYUMqwKFKLYdEC1m5Q/m=b"
+      "sha256": "89b55a3f9dd618a9a78624d434deb7cf0da55ebad1ef5980db974c6649964ece",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexaiagentauditadMicroUi.en_US.P9oCh9F1IvQ.es6.O/d=1/rs=AJ563L--VnqSXqU8a2x5sqwVFMAquJ6f4Q/m=b"
     },
     {
       "extension": "vision_ai",
       "id": "vision-ai",
       "module": "VisionAiMicroUi",
-      "sha256": "5ac0b0c05a543c1dbb5cfe3b50ba6216a0b5ee5a1c06022dbac6ccfc2abff83f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VisionAiMicroUi.en_US.RYxn5F2XuLU.es6.O/am=AAAAAAAAAAAAAQ/d=1/rs=AJ563L9J1JPUXcywNR6x4ENTw8QKfYwFlQ/m=b"
+      "sha256": "2b53a132a5ac61b8adc29590e4fb3b9de57dabf2373c82a83ffaac47ea3b47ec",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VisionAiMicroUi.en_US.fPpR0t7Ab90.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L8VDBVnPj1wVpA78MAaJSVjME7eBA/m=b"
     },
     {
       "extension": "vpc_service_controls",
       "id": "vpc-service-controls",
       "module": "SecuritySecurityZoneMicroUi",
-      "sha256": "8748b993dc791622ac43e0684dcb0658e890f2337f9ee089df79a39b82f3da34",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecuritySecurityZoneMicroUi.en_US.R6m_MFyvJaE.es6.O/am=AAAAAAAAAAU/d=1/rs=AJ563L8J2vg3aIa1lcCN1by1ykDmnT2GgQ/m=b"
+      "sha256": "41d2a06d57c1edb2f702afa0f791bb8ff44645890b07a94cdf76a45c0f97d956",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecuritySecurityZoneMicroUi.en_US.vIFOczc6Uck.es6.O/am=AAAAAAAAAAAK/d=1/rs=AJ563L-L90deUfZ5_c5g62OGoCm-RPhxKw/m=b"
     },
     {
       "extension": "webrisk",
       "id": "webrisk",
       "module": "WebriskMicroUi",
-      "sha256": "0de83808954889e9b1ad547f0ef7056eddc1d9dcfbdea7eac4bd938a16ddadc0",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WebriskMicroUi.en_US.aGrhuH0BZeo.es6.O/d=1/rs=AJ563L_y9nBxlhPh22StobVKIQ7rFenwSQ/m=b"
+      "sha256": "2439d7752d7879f9b215ab2cf23768509b97a85560915724e33662d372e66069",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WebriskMicroUi.en_US.yKTNZSLz2bQ.es6.O/d=1/rs=AJ563L8nLQ2tSK2SE6aP3DR62WNF___ZyQ/m=b"
     },
     {
       "extension": "welcome",
       "id": "welcome",
       "module": "WelcomeMicroUi",
-      "sha256": "a4a9556ed5b06f33c71ea3c4528a5bade5577f8d6e7d7d5d9e7e522669e2609b",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WelcomeMicroUi.en_US.Xw68erl6zJ4.es6.O/d=1/rs=AJ563L_XXankedujshsBPhtcbwzzhqxFdg/m=b"
+      "sha256": "9b0576840cad03e4e65678b3a8e551f3267fa533a1bd3230bc3ccefa3df05d31",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WelcomeMicroUi.en_US.cjherGAKUbU.es6.O/am=AAAAAAAAAAAg/d=1/rs=AJ563L96kvVoyO_MEodML4sDWOgN0VL5jA/m=b"
     },
     {
       "extension": "workflows",
       "id": "workflows",
       "module": "WorkflowsMicroUi",
-      "sha256": "d484df5561f3d94f0a1b253f9c07c2a28ed170673148cf61bd213f7451a1e254",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkflowsMicroUi.en_US.2PPeX6KPd7g.es6.O/d=1/rs=AJ563L-Jms3qzhTOleVUBp0rE5crjEEwFQ/m=b"
+      "sha256": "85250fd664faa7f2517596f18efe62fa8f0f230416c7c6bc97e56026bccdae4b",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkflowsMicroUi.en_US.6sqJtCqiRMo.es6.O/d=1/rs=AJ563L_6dczhVzfJ1LTIBpnfv8DUUdAMVQ/m=b"
     },
     {
       "extension": "workload_management",
       "id": "workload-management",
       "module": "WorkloadManagementMicroUi",
-      "sha256": "854122ca3dbb72939a9dac0fb61c108f1135529aa80025851d1235b0f509cac1",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkloadManagementMicroUi.en_US.843youy8j9Y.es6.O/d=1/rs=AJ563L_PWjYIkX_b3lPMC6bRYo5UmD9pTw/m=b"
+      "sha256": "6ee0ee90445dcc12410389e7ad3ade896567b2836f949f7fa39507d5511bf616",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkloadManagementMicroUi.en_US.dbGO97AQ5cw.es6.O/d=1/rs=AJ563L8TZzRKZAVFznvh1AwlqpccCZnKaQ/m=b"
+    },
+    {
+      "extension": "workload_studio",
+      "id": "workload-studio",
+      "module": "WorkloadstudioMicroUi",
+      "sha256": "048d365836a6b899a046fbf7be37fa9a92586e1de5500abd143ee552f09452c7",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkloadstudioMicroUi.en_US.AOO6OHUHLx4.es6.O/d=1/rs=AJ563L_qaPs2aCDi_r9DMX6siRnLS4-PHA/m=b"
     },
     {
       "extension": "workspace_api",
       "id": "workspace-api",
       "module": "WorkspaceApiMicroUi",
-      "sha256": "597823aa612e6623c500028b0d07c253dcdacb7c2a9cba05be300c284e9a4639",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkspaceApiMicroUi.en_US.v-1fIcHwMZ4.es6.O/d=1/rs=AJ563L8_bwfQIUDpyY2DFWiBCapJ47p0Qw/m=b"
+      "sha256": "e733b3067b275c7293950482af2996b0aa86ab65a630c329699e56eaeb9a6d88",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkspaceApiMicroUi.en_US.7P8bppo5iAo.es6.O/d=1/rs=AJ563L8KG_TJj8A-FzX-8iVMLCdFS3HwwA/m=b"
     }
   ],
   "routeMapUrl": "https://console.cloud.google.com/p/routemapdata",
