@@ -1,8 +1,8 @@
 """Create and validate deterministic, static GCP Console SVG icon archives.
 
-This module deliberately treats Console JavaScript as untrusted text.  It scans
-only complete JavaScript string/template literals, rejects interpolated template
-literals, and never executes a module.
+This module deliberately treats Console JavaScript as untrusted text. It scans
+only complete literal SVG documents, skips dynamic or fragmentary templates,
+and never executes a module.
 """
 
 from __future__ import annotations
@@ -48,6 +48,8 @@ NON_RENDERING_SVG_CONTAINERS = frozenset({
     "clippath", "defs", "marker", "mask", "pattern", "symbol",
 })
 LOCAL_FRAGMENT_REFERENCE_PATTERN = re.compile(r"^#[-\w:.]+$")
+COMPLETE_SVG_END_PATTERN = re.compile(r"</svg\s*>$")
+SELF_CLOSING_SVG_PATTERN = re.compile(r"^<svg(?:\s[^>]*)?/\s*>")
 
 
 @dataclass(frozen=True)
@@ -342,6 +344,59 @@ def _skip_javascript_regular_expression(source: str, index: int) -> int | None:
     return None
 
 
+def _skip_javascript_quoted_value(source: str, index: int) -> int:
+    """Skip one JavaScript quoted value without decoding or evaluating it."""
+
+    quote = source[index]
+    cursor = index + 1
+    while cursor < len(source):
+        character = source[cursor]
+        if character == "\\":
+            cursor += 2
+            continue
+        if quote == "`" and character == "$" and source.startswith("${", cursor):
+            cursor = _skip_javascript_template_expression(source, cursor + 2)
+            continue
+        if character == quote:
+            return cursor + 1
+        cursor += 1
+    raise ValueError("JavaScript module has an unterminated string literal")
+
+
+def _skip_javascript_template_expression(source: str, index: int) -> int:
+    """Skip a ``${...}`` expression, including nested quoted values, as text."""
+
+    depth = 1
+    cursor = index
+    while cursor < len(source):
+        if source.startswith("//", cursor):
+            newline = source.find("\n", cursor + 2)
+            cursor = len(source) if newline == -1 else newline + 1
+            continue
+        if source.startswith("/*", cursor):
+            end = source.find("*/", cursor + 2)
+            if end == -1:
+                raise ValueError("JavaScript module has an unterminated block comment")
+            cursor = end + 2
+            continue
+        if source[cursor] in "'\"`":
+            cursor = _skip_javascript_quoted_value(source, cursor)
+            continue
+        if source[cursor] == "/":
+            regex_end = _skip_javascript_regular_expression(source, cursor)
+            if regex_end is not None:
+                cursor = regex_end
+                continue
+        if source[cursor] == "{":
+            depth += 1
+        elif source[cursor] == "}":
+            depth -= 1
+            if depth == 0:
+                return cursor + 1
+        cursor += 1
+    raise ValueError("JavaScript module has an unterminated template interpolation")
+
+
 def _javascript_literals(source: str) -> list[tuple[str, bool]]:
     """Return decoded string literals and whether each was an interpolated template."""
 
@@ -378,6 +433,8 @@ def _javascript_literals(source: str) -> list[tuple[str, bool]]:
                 break
             if quote == "`" and character == "$" and index + 1 < len(source) and source[index + 1] == "{":
                 interpolated = True
+                index = _skip_javascript_template_expression(source, index + 2)
+                continue
             if character == "\\":
                 decoded, index = _decode_js_escape(source, index + 1)
                 characters.append(decoded)
@@ -403,8 +460,6 @@ def _icon_entry_segment(data_icon_name: str | None, template_index: int) -> str:
 def _validate_svg_template(
     value: str, module: Module, template_index: int = 0
 ) -> ExtractedIcon:
-    if "${" in value:
-        raise ValueError(f"GCP Console module {module.identifier} has an interpolated SVG template")
     try:
         root = ET.fromstring(value)
     except ET.ParseError as exc:
@@ -416,6 +471,20 @@ def _validate_svg_template(
         svg=value.encode("utf-8"),
         module=module,
         template_index=template_index,
+    )
+
+
+def _is_complete_svg_document(value: str) -> bool:
+    """Return whether a scanned SVG-starting literal contains a whole document.
+
+    The lexical check is intentionally narrower than XML validation: it filters
+    runtime-joined prefixes before parsing, while preserving SVG's valid
+    self-closing root and whitespace before a closing root tag.
+    """
+
+    return bool(
+        COMPLETE_SVG_END_PATTERN.search(value)
+        or SELF_CLOSING_SVG_PATTERN.fullmatch(value)
     )
 
 
@@ -502,7 +571,13 @@ def svg_has_renderable_content(svg_text: str) -> bool:
 
 
 def extract_literal_svg_templates(module: Module, javascript: bytes) -> list[ExtractedIcon]:
-    """Extract complete literal ``<svg data-icon-name=...>`` templates without evaluation."""
+    """Extract complete static SVG literals without evaluating JavaScript.
+
+    Console modules also contain SVG prefixes joined to runtime values and
+    interpolated templates. Neither is a static document, so both are skipped.
+    A complete non-interpolated SVG literal remains subject to strict XML
+    validation; malformed complete documents are never accepted.
+    """
 
     try:
         source = javascript.decode("utf-8")
@@ -517,8 +592,11 @@ def extract_literal_svg_templates(module: Module, javascript: bytes) -> list[Ext
         candidate = literal.strip()
         if not candidate.startswith("<svg"):
             continue
+        if not _is_complete_svg_document(candidate):
+            continue
         if interpolated:
-            raise ValueError(f"GCP Console module {module.identifier} has an interpolated SVG template")
+            template_index += 1
+            continue
         icons.append(_validate_svg_template(candidate, module, template_index))
         template_index += 1
     return icons
@@ -826,6 +904,27 @@ def build_source_tree_from_route_map(
     )
 
 
+def _require_noncollapsed_candidate(source_tree: Mapping[str, bytes], baseline_root: Path) -> None:
+    """Reject a full CLI candidate that materially collapses a tracked catalogue."""
+
+    try:
+        baseline = json.loads((baseline_root / MANIFEST_NAME).read_bytes())
+        baseline_count = baseline["iconCount"]
+        candidate_count = json.loads(source_tree[MANIFEST_NAME])["iconCount"]
+    except (FileNotFoundError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise ValueError("GCP Console candidate count cannot be compared to its baseline") from exc
+    if not isinstance(baseline_count, int) or isinstance(baseline_count, bool) or baseline_count < 1:
+        raise ValueError("GCP Console baseline has an invalid icon count")
+    if not isinstance(candidate_count, int) or isinstance(candidate_count, bool):
+        raise ValueError("GCP Console candidate has an invalid icon count")
+    minimum_count = (baseline_count * 3 + 3) // 4
+    if candidate_count < minimum_count:
+        raise ValueError(
+            f"GCP Console candidate icon count {candidate_count} is below the "
+            f"minimum {minimum_count} derived from baseline {baseline_count}"
+        )
+
+
 def fetch_public_bytes(url: str) -> bytes:
     """Fetch a fixed public source without cookies, credentials, or execution."""
 
@@ -850,6 +949,7 @@ def main() -> None:
         source_tree = build_source_tree_from_route_map(
             fetch_public_bytes(ROUTE_MAP_URL), fetch_public_bytes, workers=args.workers
         )
+        _require_noncollapsed_candidate(source_tree, Path(__file__).with_name("gcp-console-icons"))
         write_source_tree(Path(args.source_tree), source_tree)
         return
     if not args.archive:

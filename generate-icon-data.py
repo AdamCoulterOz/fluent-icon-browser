@@ -1542,6 +1542,87 @@ def assemble_collections(
     return collections
 
 
+def load_existing_icon_data(path: Path) -> dict:
+    """Read the committed catalogue used as a projection-composition base."""
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Existing icon data is not readable JSON: {path}") from exc
+    if not isinstance(payload, dict) or not isinstance(payload.get("sets"), dict):
+        raise ValueError("Existing icon data must contain an object-valued sets map")
+    return payload
+
+
+def preserve_collection_from_existing_data(
+    payload: dict, existing_data_path: Path, collection_key: str
+) -> None:
+    """Keep a collection byte-for-byte semantically unchanged during another sync."""
+
+    existing = load_existing_icon_data(existing_data_path)
+    collection = existing["sets"].get(collection_key)
+    if not isinstance(collection, dict):
+        raise ValueError(
+            f"Existing icon data has no object-valued {collection_key!r} collection"
+        )
+    payload["sets"][collection_key] = collection
+    existing_order = list(existing["sets"])
+    payload["sets"] = {
+        key: payload["sets"][key]
+        for key in existing_order
+        if key in payload["sets"]
+    } | {
+        key: value
+        for key, value in payload["sets"].items()
+        if key not in existing_order
+    }
+
+
+def gcp_collection_descriptor(gcp_console_directory: Path) -> CollectionDescriptor:
+    """Build the one shared descriptor for the validated GCP archive boundary."""
+
+    gcp_source_lock, gcp_icons, gcp_archive_sha256 = generate_gcp_console_icons(
+        gcp_console_directory
+    )
+    return CollectionDescriptor(
+        key="gcp",
+        label="Google Cloud Console Icons",
+        short_label="Google Cloud",
+        source=(
+            "Static same-origin archive generated from public Google Cloud "
+            "Console route-map and module sources; contains the archive notice"
+        ),
+        sources=(
+            source_record(
+                label="Google Cloud Console Icons",
+                reference="Google Cloud Console public route-map/module sources",
+                url="https://console.cloud.google.com/",
+                revision=gcp_source_lock["contentSha256"],
+                digest=gcp_archive_sha256,
+            ),
+        ),
+        upstream_sha=gcp_source_lock["contentSha256"],
+        cdn_base="gcp-console-icons.zip",
+        build_icons=lambda: gcp_icons,
+    )
+
+
+def generate_gcp_projection(
+    existing_data_path: Path, gcp_console_directory: Path, output_file: Path
+) -> None:
+    """Replace only GCP in a complete existing index after validating its SVG tree."""
+
+    payload = load_existing_icon_data(existing_data_path)
+    if "gcp" not in payload["sets"]:
+        raise ValueError("Existing icon data has no GCP collection to replace")
+    descriptor = gcp_collection_descriptor(gcp_console_directory)
+    payload["sets"]["gcp"] = assemble_collections((descriptor,))["gcp"]
+    payload["generatedAt"] = datetime.now(timezone.utc).isoformat()
+    output_file.write_text(
+        f"{json.dumps(payload, indent=2, ensure_ascii=False)}\n", encoding="utf-8"
+    )
+
+
 def generate_icon_data(
     fluent_icons_dir: Path,
     fabric_components_dir: Path,
@@ -1568,6 +1649,7 @@ def generate_icon_data(
     redhat_source_lock_path: Optional[Path] = None,
     redhat_upstream_sha: str = "",
     gcp_console_directory: Optional[Path] = None,
+    preserve_gcp_from: Optional[Path] = None,
 ) -> tuple[int, int]:
     fabric_metadata = load_fabric_metadata(fabric_metadata_path)
 
@@ -1860,32 +1942,7 @@ def generate_icon_data(
             )
         )
     if gcp_console_directory is not None:
-        gcp_source_lock, gcp_icons, gcp_archive_sha256 = generate_gcp_console_icons(
-            gcp_console_directory
-        )
-        descriptors.append(
-            CollectionDescriptor(
-                key="gcp",
-                label="Google Cloud Console Icons",
-                short_label="Google Cloud",
-                source=(
-                    "Static same-origin archive generated from public Google Cloud "
-                    "Console route-map and module sources; contains the archive notice"
-                ),
-                sources=(
-                    source_record(
-                        label="Google Cloud Console Icons",
-                        reference="Google Cloud Console public route-map/module sources",
-                        url="https://console.cloud.google.com/",
-                        revision=gcp_source_lock["contentSha256"],
-                        digest=gcp_archive_sha256,
-                    ),
-                ),
-                upstream_sha=gcp_source_lock["contentSha256"],
-                cdn_base="gcp-console-icons.zip",
-                build_icons=lambda: gcp_icons,
-            )
-        )
+        descriptors.append(gcp_collection_descriptor(gcp_console_directory))
     collections = assemble_collections(descriptors)
     fluent_icons = collections["fluent"]["icons"]
     segoe_icons = collections["segoe"]["icons"]
@@ -1904,6 +1961,8 @@ def generate_icon_data(
         "setAliases": SET_ALIASES,
         "sets": collections,
     }
+    if preserve_gcp_from is not None:
+        preserve_collection_from_existing_data(payload, preserve_gcp_from, "gcp")
 
     output_file.write_text(
         f"{json.dumps(payload, indent=2, ensure_ascii=False)}\n", encoding="utf-8"
@@ -1977,6 +2036,21 @@ def parse_args() -> argparse.Namespace:
         "--gcp-console-directory",
         default="",
         help="Versioned GCP Console SVG source directory for the Pages ZIP payload",
+    )
+    parser.add_argument(
+        "--preserve-gcp-from",
+        default="",
+        help="Existing icon-data.json whose validated GCP collection is retained",
+    )
+    parser.add_argument(
+        "--gcp-only",
+        action="store_true",
+        help="Replace only GCP in --base-icon-data from --gcp-console-directory",
+    )
+    parser.add_argument(
+        "--base-icon-data",
+        default="",
+        help="Committed complete icon-data.json used by --gcp-only",
     )
     parser.add_argument(
         "--redhat-icons-dir",
@@ -2071,6 +2145,20 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
+    if args.gcp_only:
+        if not args.base_icon_data or not args.gcp_console_directory:
+            raise ValueError(
+                "--gcp-only requires --base-icon-data and --gcp-console-directory"
+            )
+        generate_gcp_projection(
+            Path(args.base_icon_data),
+            Path(args.gcp_console_directory),
+            Path(args.output),
+        )
+        return
+    if args.base_icon_data:
+        raise ValueError("--base-icon-data is only valid with --gcp-only")
+
     fluent_icons_dir = args.fluent_icons_dir
     if args.icons_dir and args.fluent_icons_dir == "assets":
         fluent_icons_dir = args.icons_dir
@@ -2127,6 +2215,9 @@ def main() -> None:
         redhat_upstream_sha=args.redhat_upstream_sha.strip(),
         gcp_console_directory=Path(args.gcp_console_directory)
         if args.gcp_console_directory
+        else None,
+        preserve_gcp_from=Path(args.preserve_gcp_from)
+        if args.preserve_gcp_from
         else None,
     )
 

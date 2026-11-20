@@ -1,5 +1,11 @@
 # History
 
+## 2026-11-20: Split Google Cloud Console Sync From Other Icon Sources
+
+- Separated the Google Cloud route-map/module import into its own scheduled/manual writer. The non-GCP sync no longer contacts Google and composes fresh collections with the exact committed GCP set; the GCP writer replaces only that projected set and its validated SVG-only tree.
+- Both writers serialize against `main` with GitHub Actions' bounded FIFO queue and finite job timeouts, check out current `main` after acquiring the writer slot, and skip scheduled rebuilds when their inputs have not changed. The Google importer skips interpolated and fragmentary SVG templates, strictly validates complete literal SVGs, and rejects a materially smaller candidate before publication. Pages now deploys independently after either successful sync and records its checked-out artifact SHA.
+- Retained the literal-SVG boundary, deep-link/set schema, GCP archive/index digest verification, and existing picker order.
+
 ## 2026-09-01: Make Large Gallery Rendering Demand-Driven
 
 - The 2,975-card one-task/full-mask population caused multi-second to tens-of-seconds interaction stalls. Replaced it with demand-driven, cancellable rendering; static, deep-link, catalogue, and source behavior are unchanged.

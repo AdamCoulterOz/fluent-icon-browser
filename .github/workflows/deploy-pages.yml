@@ -9,7 +9,8 @@ on:
     - cron: "47 21 * * *"
   workflow_run:
     workflows:
-      - Sync Icon Indexes
+      - Sync Non-GCP Icon Indexes
+      - Sync Google Cloud Console Icons
     types:
       - completed
   workflow_dispatch:
@@ -25,7 +26,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    if: (github.event_name != 'workflow_run' && github.ref == 'refs/heads/main') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -48,7 +49,7 @@ jobs:
           python gcp_console_icons.py \
             --package-source-tree gcp-console-icons \
             --archive _site/gcp-console-icons.zip
-          export DEPLOYMENT_VERSION="$GITHUB_SHA"
+          export DEPLOYMENT_VERSION="$(git rev-parse HEAD)"
           export DEPLOYMENT_SUMMARY="$(git log -1 --pretty=%s)"
           python3 - <<'PY' > _site/version.json
           import json

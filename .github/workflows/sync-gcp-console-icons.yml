@@ -1,0 +1,90 @@
+name: Sync Google Cloud Console Icons
+
+on:
+  schedule:
+    # Weekly on Wednesday 21:17 UTC (Thursday morning in Australia).
+    - cron: "17 21 * * 3"
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: Rebuild even if the validated GCP source tree is unchanged
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: icon-index-writer-main
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  sync:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout latest default branch after writer serialization
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build and validate candidate Google Cloud Console icon source tree
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          rm -rf .tmp/gcp-console-icons.candidate
+          python gcp_console_icons.py \
+            --source-tree .tmp/gcp-console-icons.candidate
+
+      - name: Decide if GCP replacement is needed
+        id: decision
+        run: |
+          set -euo pipefail
+          force="${{ github.event.inputs.force_rebuild || 'false' }}"
+          changed="false"
+          if [ "$force" = "true" ] || ! diff -qr gcp-console-icons .tmp/gcp-console-icons.candidate >/dev/null; then
+            changed="true"
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "Google Cloud Console source tree changed: $changed"
+
+      - name: Project validated GCP collection into current icon data
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          python generate-icon-data.py \
+            --gcp-only \
+            --base-icon-data icon-data.json \
+            --gcp-console-directory .tmp/gcp-console-icons.candidate \
+            --output .tmp/icon-data.json
+          mv .tmp/icon-data.json icon-data.json
+          rm -rf gcp-console-icons
+          mv .tmp/gcp-console-icons.candidate gcp-console-icons
+
+      - name: Commit and push GCP replacement
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icon-data.json gcp-console-icons
+          if git diff --cached --quiet; then
+            echo "No GCP changes after validated projection."
+            exit 0
+          fi
+          source_short_sha="$(jq -r '.contentSha256' gcp-console-icons/source-lock.json | cut -c1-7)"
+          git commit -m "chore: sync Google Cloud Console icons @${source_short_sha}"
+          git push origin HEAD:main

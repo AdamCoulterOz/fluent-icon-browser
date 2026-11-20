@@ -209,16 +209,28 @@ class GcpConsoleIconTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "entry name"):
             gcp_console_icons._validate_source_files(source_tree)
 
-    def test_rejects_interpolation_digest_drift_and_tampered_integrity(self) -> None:
+    def test_skips_dynamic_and_fragmentary_svg_templates_but_rejects_malformed_complete_literals(self) -> None:
         discovered = gcp_console_icons.discover_modules(route_map_bytes(dict([
             route_record("databases_home", "DatabasesHomeMicroUi"),
         ])))
-        interpolated = b"const icon = `<svg data-icon-name=\"database-${kind}\"></svg>`;"
-        registry = gcp_console_icons.pin_modules(discovered, lambda _url: interpolated)
-        with self.assertRaisesRegex(ValueError, "interpolated SVG"):
-            gcp_console_icons.build_archive(registry, {"databases-home": interpolated})
+        dynamic_and_fragmentary = (
+            b'const dynamic = `<svg><defs>${items.map(item => `<svg id="${item}"></svg>`).join("")}</defs></svg>`;'
+            b'const fragment = \'<svg width="\' + width + \'"></svg>\';'
+            b'const context = \'<svg>\';'
+            b'const literal = \'<svg data-icon-name="database"></svg>\';'
+            b'const selfClosing = \'<svg data-icon-name="self-closing" />\';'
+            b'const spacedClosing = \'<svg data-icon-name="spaced"></svg   >\';'
+        )
+        registry = gcp_console_icons.pin_modules(discovered, lambda _url: dynamic_and_fragmentary)
+        source_tree = gcp_console_icons.build_source_tree(
+            registry, {"databases-home": dynamic_and_fragmentary}
+        )
+        manifest = json.loads(source_tree["manifest.json"])
+        self.assertEqual(3, manifest["iconCount"])
+        self.assertEqual(1, manifest["icons"][0]["templateIndex"])
+        self.assertEqual([1, 2, 3], [entry["templateIndex"] for entry in manifest["icons"]])
 
-        malformed = b"const icon = '<svg data-icon-name=\"database\">';"
+        malformed = b"const icon = '<svg data-icon-name=\"database\"><path></svg>' ;"
         malformed_registry = gcp_console_icons.pin_modules(discovered, lambda _url: malformed)
         with self.assertRaisesRegex(ValueError, "malformed SVG"):
             gcp_console_icons.build_archive(malformed_registry, {"databases-home": malformed})
@@ -266,6 +278,18 @@ class GcpConsoleIconTests(unittest.TestCase):
         members["icons/bitmap.png"] = b"not an SVG"
         with self.assertRaisesRegex(ValueError, "non-SVG asset"):
             gcp_console_icons.validate_archive(gcp_console_icons._deterministic_zip(members))
+
+    def test_rejects_materially_collapsed_cli_candidate_against_baseline(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "manifest.json").write_bytes(gcp_console_icons._canonical_json({"iconCount": 100}))
+            gcp_console_icons._require_noncollapsed_candidate(
+                {"manifest.json": gcp_console_icons._canonical_json({"iconCount": 75})}, root
+            )
+            with self.assertRaisesRegex(ValueError, "below the minimum 75"):
+                gcp_console_icons._require_noncollapsed_candidate(
+                    {"manifest.json": gcp_console_icons._canonical_json({"iconCount": 74})}, root
+                )
 
     def test_scans_svg_literals_after_micro_ui_regular_expressions(self) -> None:
         javascript = (
