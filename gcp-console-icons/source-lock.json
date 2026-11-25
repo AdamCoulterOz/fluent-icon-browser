@@ -1,5 +1,5 @@
 {
-  "contentSha256": "b85a1f7e579b3ea3c3c421423e118c89f4366be2d868db6eac6608dca4ad346e",
+  "contentSha256": "bfc0a67499c90b82ae1b6c21a99484a5c9f4ff26582b877fdd6b05542abf2129",
   "format": "gcp-console-svg-archive-v1",
   "modules": [
     {
@@ -69,8 +69,8 @@
       "extension": "ai_chat",
       "id": "ai-chat",
       "module": "AichatMicroUi",
-      "sha256": "f55fe1879854ae73549a6e0327d5f677f12fa80e1c06e7a9da4bf347b96c5b85",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AichatMicroUi.en_US.h715Qk6PdRk.es6.O/d=1/rs=AJ563L8rQSAWEa24RTSYBKCCPMLUJYSBLw/m=b"
+      "sha256": "a0ec2b71a1ef9a4d17b019eb4ed7eb8256535ee979a4dda37d09c41c736ca30f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AichatMicroUi.en_US.CGcIV6myrOw.es6.O/d=1/rs=AJ563L8GhinABB_KaJE79h3bJQocG2nKtQ/m=b"
     },
     {
       "extension": "ai_edge_portal",
@@ -83,8 +83,8 @@
       "extension": "ai_platform",
       "id": "ai-platform",
       "module": "AiPlatformMicroUi",
-      "sha256": "6d3339202e8aacbb57a12f1640042bcef1c86f7bc7aed666b68a8135aad07ab8",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiPlatformMicroUi.en_US.mvvnF65HttM.es6.O/am=AAAAABAAGwAAAAAAgAI/d=1/rs=AJ563L8LZTKNBaiZpfkFAcf9jzjJy_jM1g/m=b"
+      "sha256": "e9149fd3a7e896f4a4205875c4c7777a46dc53f7bdde4f27dee8a008fe4cecf2",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AiPlatformMicroUi.en_US.qmM9z9H8DBg.es6.O/am=AAAAABAAGwAAAAAAgAI/d=1/rs=AJ563L8Ghvedakq4Jcdz_FkFNd967_oofg/m=b"
     },
     {
       "extension": "alloydb",
@@ -223,8 +223,8 @@
       "extension": "autocloud",
       "id": "autocloud",
       "module": "AutocloudMicroUi",
-      "sha256": "d7fd8b1e0b1de21225c5bf2e5deef532cd5dd1fa4700be8904253d28bd53faa2",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AutocloudMicroUi.en_US.gBGN3ZLAWBg.es6.O/am=AAAAAAAADgAAAAAAABA/d=1/rs=AJ563L_zrj2AOnaSVGaFjXl3IK56zGqqBA/m=b"
+      "sha256": "c618b2f990dc8e27b98ce78bcb051b5c64f179c324882a19565e70d68b73e4d9",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.AutocloudMicroUi.en_US.7uZkpf1tEeU.es6.O/am=AAAAAAAADgAAAAAAQBA/d=1/rs=AJ563L9Ept_JZBWFrXNo39UYpW_NTO4yqQ/m=b"
     },
     {
       "extension": "backupdr",
@@ -307,8 +307,8 @@
       "extension": "blockchain",
       "id": "blockchain",
       "module": "BlockchainMicroUi",
-      "sha256": "b16c0440bae955424777cb6c3d6405c3a0fb4ca972c38a921b346f6d8379cd9e",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainMicroUi.en_US.e0FX-a13b7g.es6.O/d=1/rs=AJ563L-uqAZbtPXoK7N_oZ83R3hajrmMjw/m=b"
+      "sha256": "0f7d87ff4d10beb100587635e7ab7e1927c521c3eaafacd16018ff8702acb529",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.BlockchainMicroUi.en_US.hYxenZ68J7I.es6.O/d=1/rs=AJ563L9vmspolDe8PN1nnkoX8QJfE_qVvQ/m=b"
     },
     {
       "extension": "blockchainnodeengine",
@@ -384,8 +384,8 @@
       "extension": "cloud_access_approval",
       "id": "cloud-access-approval",
       "module": "CloudAccessApprovalMicroUi",
-      "sha256": "d1dc181a0a160bd532a0c8c20bf29cc5eacf59107dbe2a99081f7b4d267329a9",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccessApprovalMicroUi.en_US.GACiWg_qZnQ.es6.O/am=AAAAAAAAAACAAg/d=1/rs=AJ563L_tuvsFlDojPMZyAL4Lb6YO3xSRag/m=b"
+      "sha256": "090732209b158ef30fb34da54b8a06ec51629f915d3f899e491e810e592a2490",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CloudAccessApprovalMicroUi.en_US.3Dp9KUii_8Y.es6.O/am=AAAAAAAAAABAAQ/d=1/rs=AJ563L_cEI3QA2WrZyL7Cy9XpXWG-TjEjw/m=b"
     },
     {
       "extension": "cloud_account",
@@ -580,8 +580,8 @@
       "extension": "code_customization",
       "id": "code-customization",
       "module": "CodeCustomizationMicroUi",
-      "sha256": "68928780c87c29a6b8652f0e656bdc4695d3a0a35af4d4a4502b708879b69548",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeCustomizationMicroUi.en_US.u2mPH1bo70o.es6.O/d=1/rs=AJ563L9YbHWqCVthG2E8L-rrx2YuAGvrig/m=b"
+      "sha256": "d5a19cf2ec6029c7e909d1961223db40f667621bad6b2982b6689c3bbd4564c0",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.CodeCustomizationMicroUi.en_US.5jtdQ1C5Uug.es6.O/d=1/rs=AJ563L-DKtBi-M3RYzQ3Cmzv3Oh_EkgDIA/m=b"
     },
     {
       "extension": "codeshift",
@@ -1196,8 +1196,8 @@
       "extension": "maps_console",
       "id": "maps-console",
       "module": "MapsConsoleMicroUi",
-      "sha256": "4196a5ef3dbcf379695ca25036ff52edd53a8fd6784b1da15cc6a6cfbc2bc117",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsConsoleMicroUi.en_US.Rp7PxN029V8.es6.O/d=1/rs=AJ563L-Y_pqDPDuK86UG3eGkVeXvQ2DADQ/m=b"
+      "sha256": "e798d4baa65f6d665f956d78a5e00e3de32e2d6c8a4518acffdd6a8d93837634",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MapsConsoleMicroUi.en_US.ZJNXEQxbRfI.es6.O/d=1/rs=AJ563L-PrL-Ghvx_RkRPUEuBC4fDdxciMQ/m=b"
     },
     {
       "extension": "maps_datasets",
@@ -1288,7 +1288,7 @@
       "id": "metropolis",
       "module": "MetropolisMicroUi",
       "sha256": "176c027447be5b3179f69b4860e405b3c4b344399def98cb75d0c83d656dd665",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetropolisMicroUi.en_US.EtxzE9jC6XY.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L_h2dvZNSWx9l5rz8lXB-kj-UoPmw/m=b"
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.MetropolisMicroUi.en_US.5HFZndcPZj0.es6.O/am=AAAAAAAAAAAI/d=1/rs=AJ563L94EziqGFmyxxcIfaKiTB3gAVKiOw/m=b"
     },
     {
       "extension": "microkitchen",
@@ -1455,8 +1455,8 @@
       "extension": "pam",
       "id": "pam",
       "module": "PamMicroUi",
-      "sha256": "2b994de833fee2c7965fe5c230acea23fe0ee6effb4c37ec43f91531d4fa0c62",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PamMicroUi.en_US.bnwpBmzlCr8.es6.O/d=1/rs=AJ563L9cwCPNcZBi8-w_NOUqkBWgqTA0lQ/m=b"
+      "sha256": "d1b95b6b06a483074a953738574fdf34e830e94842f627c647256aa573f41632",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PamMicroUi.en_US.wUWA5qnGDTM.es6.O/d=1/rs=AJ563L9Vcba6LZUYk_cgpTz-oKxY3033Nw/m=b"
     },
     {
       "extension": "pangolin_cscc",
@@ -1497,8 +1497,8 @@
       "extension": "policy_set_manager",
       "id": "policy-set-manager",
       "module": "PolicysetmanagerMicroUi",
-      "sha256": "d977a56d5821d9355e272688458c617bd37f08067a5894534b37f52c8f8c6c5f",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PolicysetmanagerMicroUi.en_US.KzgtwJ9qLqY.es6.O/d=1/rs=AJ563L85djEuQ_iALANs1YXIdAiwbdBWpQ/m=b"
+      "sha256": "e199b3d22f8c66180e7897e7036d00b0359d35d6f15c33600d08307e871a1e42",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.PolicysetmanagerMicroUi.en_US.mPTsOLQ0Idc.es6.O/d=1/rs=AJ563L9Z5ClaZVjFu80rcDHlj5zLkkQ7ZA/m=b"
     },
     {
       "extension": "private_catalog",
@@ -1602,8 +1602,8 @@
       "extension": "secure_source_manager",
       "id": "secure-source-manager",
       "module": "SecureSourceManagerMicroUi",
-      "sha256": "1235dd2c5a8e5f949f89f35e516e0547bf1b33d3bb842e8cb5abdea5dbdadf6d",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecureSourceManagerMicroUi.en_US.wdtG9DZS0FE.es6.O/d=1/rs=AJ563L_N-5p7WiruvBWXcynUCl4or9rkoA/m=b"
+      "sha256": "c18cbbfc0da458674a5a46730f0a94d7054cb7d2af94fb4befb445ac32b285de",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SecureSourceManagerMicroUi.en_US.ZPN8_4WZ4d4.es6.O/d=1/rs=AJ563L9d81fISGwpeUmrzxSR7r8MXQ32uw/m=b"
     },
     {
       "extension": "security_agent_deployment",
@@ -1673,7 +1673,7 @@
       "id": "superquota",
       "module": "SuperquotaMicroUi",
       "sha256": "599c282ffdc53586fe96de4e7ef0c47531b0132c72c917c51c6c36f8db09faf4",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SuperquotaMicroUi.en_US.20zH4HXd-uw.es6.O/d=1/rs=AJ563L9Q6DU7rJ9otISxwjj1XfJiuQ7rcQ/m=b"
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.SuperquotaMicroUi.en_US.PxXu-hG5XRI.es6.O/d=1/rs=AJ563L-YISMg1SXUe2Yen_LlbErzdbFf_w/m=b"
     },
     {
       "extension": "tags",
@@ -1778,14 +1778,14 @@
       "id": "vertex-ai-studio",
       "module": "VertexAiStudioMicroUi",
       "sha256": "e1c4e4802f2265a60826594bcaf1f33fb808ea3583cd0e909bcf17d8a0f1fe58",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexAiStudioMicroUi.en_US.cfo8rxkNBbA.es6.O/am=AAAAAAAAAAAAUAAABA/d=1/rs=AJ563L-Zdqp965-33hOCZhd4bxIqaaXmZg/m=b"
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexAiStudioMicroUi.en_US.vbnIbndbnic.es6.O/am=AAAAAAAAAAAAUAAABA/d=1/rs=AJ563L9HKcf2O3HaNqf7QPxMUsb_ugCh5A/m=b"
     },
     {
       "extension": "vertex_conversation",
       "id": "vertex-conversation",
       "module": "VertexConversationMicroUi",
-      "sha256": "29b9ba4a777ab15e64ded692231377ac4589b6b40af36bdbf9b54bb7f49f3e81",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexConversationMicroUi.en_US.g53NNbUPq7Y.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L9EUHK7iUJ9AI7oHlcUYG7KiRJrDA/m=b"
+      "sha256": "a1696665aefe8ea067732d4d84d226079a781f19b71edebc73e80676f49d2eab",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.VertexConversationMicroUi.en_US.ar1riu5LOx0.es6.O/am=AAAAAAAAAAQ/d=1/rs=AJ563L_t7RIY_RWGlYmMFJKGy3AOSOCwCg/m=b"
     },
     {
       "extension": "vertexaiagentauditad",
@@ -1847,8 +1847,8 @@
       "extension": "workspace_api",
       "id": "workspace-api",
       "module": "WorkspaceApiMicroUi",
-      "sha256": "e733b3067b275c7293950482af2996b0aa86ab65a630c329699e56eaeb9a6d88",
-      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkspaceApiMicroUi.en_US.7P8bppo5iAo.es6.O/d=1/rs=AJ563L8KG_TJj8A-FzX-8iVMLCdFS3HwwA/m=b"
+      "sha256": "feff79b6e8e103ed3f8ce84ee86d6bb879e291131993362b9690893b5d0bcf4f",
+      "url": "https://www.gstatic.com/_/mss/boq-cloud-client/_/js/k=boq-cloud-client.WorkspaceApiMicroUi.en_US.2DuMCpuGafo.es6.O/d=1/rs=AJ563L-kHhkN57OIvQzJtXcOnut5w6C-vg/m=b"
     }
   ],
   "routeMapUrl": "https://console.cloud.google.com/p/routemapdata",

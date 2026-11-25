@@ -1,6 +1,6 @@
 {
   "format": "gcp-console-svg-archive-v1",
-  "iconCount": 5936,
+  "iconCount": 5943,
   "icons": [
     {
       "dataIconName": null,
@@ -3031,56 +3031,6 @@
       "path": "icons/ai-chat/template-ed8b3716971874aa64cf41dff4e633d14ed6b251b7277a57f593aec0e6180d6b-40.svg",
       "sha256": "136059f53623a7b9b1fe83e257d429be4e49ea049fefe1214d703351cc5f181f",
       "templateIndex": 40
-    },
-    {
-      "dataIconName": "aiKeepOffIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-c5ca228bc25c9391d274472259cdd5171bc2d831d63200409b9384bceda77d0b-41",
-      "path": "icons/ai-chat/template-c5ca228bc25c9391d274472259cdd5171bc2d831d63200409b9384bceda77d0b-41.svg",
-      "sha256": "569f6eaff7b4082fa589da28675cc9e70104fa8fd9fc7f770488538d307b9ddd",
-      "templateIndex": 41
-    },
-    {
-      "dataIconName": "aiMoreVertIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-e5984a28ec9e7f7162f96b8267896da0c9e154185449e73b6be9e23bb5b0ea0a-42",
-      "path": "icons/ai-chat/template-e5984a28ec9e7f7162f96b8267896da0c9e154185449e73b6be9e23bb5b0ea0a-42.svg",
-      "sha256": "1452f8969cb50ebff9cf4315c3f4e5c6a9da1257df2eb07c58cd00730641ecc2",
-      "templateIndex": 42
-    },
-    {
-      "dataIconName": "aiPushPinIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-03ce6e51bd77d078195643c9c59fa1ed99f677756d624ef989ac09c8a16afc6d-43",
-      "path": "icons/ai-chat/template-03ce6e51bd77d078195643c9c59fa1ed99f677756d624ef989ac09c8a16afc6d-43.svg",
-      "sha256": "f6db4df25acdb756c587dd62479f198d5dbbdfdd6c13612bc01e242d42f6f4dc",
-      "templateIndex": 43
-    },
-    {
-      "dataIconName": "corporateFareIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-c5a4e100349835ba21bbed30f30d804012ab56d78f824836756b623352a4dace-44",
-      "path": "icons/ai-chat/template-c5a4e100349835ba21bbed30f30d804012ab56d78f824836756b623352a4dace-44.svg",
-      "sha256": "70607b2c28b6c91a6f49e85f47e9a595825d9d11c56cb702918e55f3acd77cb4",
-      "templateIndex": 44
-    },
-    {
-      "dataIconName": "aiEditSquareIcon",
-      "extension": "ai_chat",
-      "module": "AichatMicroUi",
-      "moduleId": "ai-chat",
-      "name": "template-26ae8f463ce909271bfb545279c359a4785ceaf20d35712f159ec3ecfd8c9889-45",
-      "path": "icons/ai-chat/template-26ae8f463ce909271bfb545279c359a4785ceaf20d35712f159ec3ecfd8c9889-45.svg",
-      "sha256": "1f7a895a41cc5c66a2bb1285ac361515b84039b9cd76c45abd0076f82fe242e4",
-      "templateIndex": 45
     },
     {
       "dataIconName": null,
@@ -13783,124 +13733,174 @@
       "templateIndex": 1
     },
     {
+      "dataIconName": "aiErrorIcon",
+      "extension": "blockchain",
+      "module": "BlockchainMicroUi",
+      "moduleId": "blockchain",
+      "name": "template-cc017b92478635d2867c685899975c4c396e70543b6fa5806f70bb90e3f4e1c6-2",
+      "path": "icons/blockchain/template-cc017b92478635d2867c685899975c4c396e70543b6fa5806f70bb90e3f4e1c6-2.svg",
+      "sha256": "e013dbd41ba7d30acdd3890952649c6a039f201ff46f4f4d3d617bbf49cb577a",
+      "templateIndex": 2
+    },
+    {
+      "dataIconName": "aiInfoIcon",
+      "extension": "blockchain",
+      "module": "BlockchainMicroUi",
+      "moduleId": "blockchain",
+      "name": "template-2e5139966303fa99a49aaab45c41bb21ffb2ef6a1c0b99d4dae3d2764463bd12-3",
+      "path": "icons/blockchain/template-2e5139966303fa99a49aaab45c41bb21ffb2ef6a1c0b99d4dae3d2764463bd12-3.svg",
+      "sha256": "60e55eb214b69608ecc3e24f4f311ce734dcecceec474512cc7964721caaabde",
+      "templateIndex": 3
+    },
+    {
       "dataIconName": "aiWarningIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-2",
-      "path": "icons/blockchain/template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-2.svg",
+      "name": "template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-4",
+      "path": "icons/blockchain/template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-4.svg",
       "sha256": "04ff76fc9ee470c51726628d961367db4753744f4b6345802b5f391a663eaa18",
-      "templateIndex": 2
+      "templateIndex": 4
     },
     {
       "dataIconName": "severityAlternateIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-3",
-      "path": "icons/blockchain/template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-3.svg",
+      "name": "template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-5",
+      "path": "icons/blockchain/template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-5.svg",
       "sha256": "25d7547a997c159d755391d380d15d97624726bc98a7d7bd2c4e403cecc8bf3a",
-      "templateIndex": 3
+      "templateIndex": 5
     },
     {
       "dataIconName": "statusErrorIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-4",
-      "path": "icons/blockchain/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-4.svg",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-6",
+      "path": "icons/blockchain/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-6.svg",
       "sha256": "6f497ddef409f8214d646615d5d94c8836479c4175adc0a726adecf1b61070c4",
-      "templateIndex": 4
+      "templateIndex": 6
     },
     {
       "dataIconName": "statusInfoIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-5",
-      "path": "icons/blockchain/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-5.svg",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-7",
+      "path": "icons/blockchain/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-7.svg",
       "sha256": "a4b40a76d0b5e17213fa809e8b739717aa8ac4eeb07284d556f9f311c52c0a9c",
-      "templateIndex": 5
+      "templateIndex": 7
     },
     {
       "dataIconName": "statusRecommendationBlueIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-6",
-      "path": "icons/blockchain/template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-6.svg",
+      "name": "template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-8",
+      "path": "icons/blockchain/template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-8.svg",
       "sha256": "ab0287988770534529107378a6eba24a15f059e22b4d68d7c528b6a09532b422",
-      "templateIndex": 6
+      "templateIndex": 8
     },
     {
       "dataIconName": "statusSuccessIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-7",
-      "path": "icons/blockchain/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-7.svg",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-9",
+      "path": "icons/blockchain/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-9.svg",
       "sha256": "0f1ceae840880721fe11f725cfcc8941ee456ea5ce1dc2fc441640816b505e7d",
-      "templateIndex": 7
+      "templateIndex": 9
     },
     {
       "dataIconName": "statusWarningIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-8",
-      "path": "icons/blockchain/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-8.svg",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-10",
+      "path": "icons/blockchain/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-10.svg",
       "sha256": "d744c3b0aed2016edacaa5c1b93cac04193bb5e48e45012e13095562b44ea161",
-      "templateIndex": 8
+      "templateIndex": 10
     },
     {
       "dataIconName": "aiOpenInNewIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-9",
-      "path": "icons/blockchain/template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-9.svg",
+      "name": "template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-11",
+      "path": "icons/blockchain/template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-11.svg",
       "sha256": "ff335905090a3572e7cf1aac9ab15efb6fdc08478304272be1b7df6ed4ee54f9",
-      "templateIndex": 9
+      "templateIndex": 11
     },
     {
       "dataIconName": "externalLinkIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-10",
-      "path": "icons/blockchain/template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-10.svg",
+      "name": "template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-12",
+      "path": "icons/blockchain/template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-12.svg",
       "sha256": "4270166ad0fa933d964178aeffee9db89b133ceffa4044cbb2053492263575a4",
-      "templateIndex": 10
+      "templateIndex": 12
+    },
+    {
+      "dataIconName": "aiCloseIcon",
+      "extension": "blockchain",
+      "module": "BlockchainMicroUi",
+      "moduleId": "blockchain",
+      "name": "template-8842eae920f4b05f383742c8b63e549ba8e3ec54bab08d54e9290ba70104a215-13",
+      "path": "icons/blockchain/template-8842eae920f4b05f383742c8b63e549ba8e3ec54bab08d54e9290ba70104a215-13.svg",
+      "sha256": "fc29f227d89288cea89fddd210b84b4514a36ce377a43021ab6facf2e1dd7d24",
+      "templateIndex": 13
     },
     {
       "dataIconName": "closeIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-11",
-      "path": "icons/blockchain/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-11.svg",
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-14",
+      "path": "icons/blockchain/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-14.svg",
       "sha256": "193143e888fa0aaf0f993ec2be316f8f02ee3b489c7068db0e3a97d2682b2d29",
-      "templateIndex": 11
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "aiExpandLessIcon",
+      "extension": "blockchain",
+      "module": "BlockchainMicroUi",
+      "moduleId": "blockchain",
+      "name": "template-31c7df4f890f98461f93dec9d20a606b253dd45e548797be829a1a93b3627b19-15",
+      "path": "icons/blockchain/template-31c7df4f890f98461f93dec9d20a606b253dd45e548797be829a1a93b3627b19-15.svg",
+      "sha256": "46124ead9d460f719b4a8ba4e6e7712437fded188c26a62d5ccd031cb0473f21",
+      "templateIndex": 15
+    },
+    {
+      "dataIconName": "aiExpandMoreIcon",
+      "extension": "blockchain",
+      "module": "BlockchainMicroUi",
+      "moduleId": "blockchain",
+      "name": "template-a6da8bab75f2c3d0e4ff17addee7de60c077604caacc38b003ab85c633427413-16",
+      "path": "icons/blockchain/template-a6da8bab75f2c3d0e4ff17addee7de60c077604caacc38b003ab85c633427413-16.svg",
+      "sha256": "8de699ec30f45fae49f7088acd6c65ed416345522816b2d3f796085a453406ae",
+      "templateIndex": 16
     },
     {
       "dataIconName": "unfoldIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-12",
-      "path": "icons/blockchain/template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-12.svg",
+      "name": "template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-17",
+      "path": "icons/blockchain/template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-17.svg",
       "sha256": "746ea8a8ed03372231765871868e2b4a939fdab81e3d19b6529b3049b00127d7",
-      "templateIndex": 12
+      "templateIndex": 17
     },
     {
       "dataIconName": "unfoldedIcon",
       "extension": "blockchain",
       "module": "BlockchainMicroUi",
       "moduleId": "blockchain",
-      "name": "template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-13",
-      "path": "icons/blockchain/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-13.svg",
+      "name": "template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-18",
+      "path": "icons/blockchain/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-18.svg",
       "sha256": "da922a3173a586bf922a81e502cae1b78d4fe3e8ca6134da34ea7ba66071af94",
-      "templateIndex": 13
+      "templateIndex": 18
     },
     {
       "dataIconName": null,
@@ -47553,104 +47553,174 @@
       "templateIndex": 1
     },
     {
+      "dataIconName": "aiErrorIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-cc017b92478635d2867c685899975c4c396e70543b6fa5806f70bb90e3f4e1c6-2",
+      "path": "icons/pam/template-cc017b92478635d2867c685899975c4c396e70543b6fa5806f70bb90e3f4e1c6-2.svg",
+      "sha256": "e013dbd41ba7d30acdd3890952649c6a039f201ff46f4f4d3d617bbf49cb577a",
+      "templateIndex": 2
+    },
+    {
+      "dataIconName": "aiInfoIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-2e5139966303fa99a49aaab45c41bb21ffb2ef6a1c0b99d4dae3d2764463bd12-3",
+      "path": "icons/pam/template-2e5139966303fa99a49aaab45c41bb21ffb2ef6a1c0b99d4dae3d2764463bd12-3.svg",
+      "sha256": "60e55eb214b69608ecc3e24f4f311ce734dcecceec474512cc7964721caaabde",
+      "templateIndex": 3
+    },
+    {
+      "dataIconName": "aiWarningIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-4",
+      "path": "icons/pam/template-80990b0b2efc9c39956cb8c72b0e6ed5fa2795542c46d01544414f2f87348714-4.svg",
+      "sha256": "04ff76fc9ee470c51726628d961367db4753744f4b6345802b5f391a663eaa18",
+      "templateIndex": 4
+    },
+    {
       "dataIconName": "severityAlternateIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-2",
-      "path": "icons/pam/template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-2.svg",
+      "name": "template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-5",
+      "path": "icons/pam/template-243b55f19e7b3689a7d0a9cc59417b3eeb929ae52f8cc43e6011a01832f1ecbf-5.svg",
       "sha256": "25d7547a997c159d755391d380d15d97624726bc98a7d7bd2c4e403cecc8bf3a",
-      "templateIndex": 2
+      "templateIndex": 5
     },
     {
       "dataIconName": "statusErrorIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-3",
-      "path": "icons/pam/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-3.svg",
+      "name": "template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-6",
+      "path": "icons/pam/template-ab3d1b5246b55bf99f88692c80a01a1e87cc8889765f558112d71d0c52a61c82-6.svg",
       "sha256": "6f497ddef409f8214d646615d5d94c8836479c4175adc0a726adecf1b61070c4",
-      "templateIndex": 3
+      "templateIndex": 6
     },
     {
       "dataIconName": "statusInfoIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-4",
-      "path": "icons/pam/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-4.svg",
+      "name": "template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-7",
+      "path": "icons/pam/template-df295bcd891890e448b31bd919918ef6fb1bb38bfb6fff5eab6d9e1045350086-7.svg",
       "sha256": "a4b40a76d0b5e17213fa809e8b739717aa8ac4eeb07284d556f9f311c52c0a9c",
-      "templateIndex": 4
+      "templateIndex": 7
     },
     {
       "dataIconName": "statusRecommendationBlueIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-5",
-      "path": "icons/pam/template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-5.svg",
+      "name": "template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-8",
+      "path": "icons/pam/template-9807fc204370497868be71703b2ee6d3f9f3a0de262638a9947eceb949bd2979-8.svg",
       "sha256": "ab0287988770534529107378a6eba24a15f059e22b4d68d7c528b6a09532b422",
-      "templateIndex": 5
+      "templateIndex": 8
     },
     {
       "dataIconName": "statusSuccessIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-6",
-      "path": "icons/pam/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-6.svg",
+      "name": "template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-9",
+      "path": "icons/pam/template-900aa47b52444ca0786a4e53266bd993e18e583cec33ef2d33c74b2224e47305-9.svg",
       "sha256": "0f1ceae840880721fe11f725cfcc8941ee456ea5ce1dc2fc441640816b505e7d",
-      "templateIndex": 6
+      "templateIndex": 9
     },
     {
       "dataIconName": "statusWarningIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-7",
-      "path": "icons/pam/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-7.svg",
+      "name": "template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-10",
+      "path": "icons/pam/template-0743a7b03b39f8176ffcbfb6483b175a4cf5d93b9781c619879d3ed3241adc2e-10.svg",
       "sha256": "d744c3b0aed2016edacaa5c1b93cac04193bb5e48e45012e13095562b44ea161",
-      "templateIndex": 7
+      "templateIndex": 10
+    },
+    {
+      "dataIconName": "aiOpenInNewIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-11",
+      "path": "icons/pam/template-5f07575eba8469e97772a11528a1ffc088c2eeaf1768d1fb47c1f9d2e406cdeb-11.svg",
+      "sha256": "ff335905090a3572e7cf1aac9ab15efb6fdc08478304272be1b7df6ed4ee54f9",
+      "templateIndex": 11
     },
     {
       "dataIconName": "externalLinkIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-8",
-      "path": "icons/pam/template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-8.svg",
+      "name": "template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-12",
+      "path": "icons/pam/template-8abfb67c47ad8b6fce1e6d03f351a883131f0a47d21ccaccd0e5a0aa13243b38-12.svg",
       "sha256": "4270166ad0fa933d964178aeffee9db89b133ceffa4044cbb2053492263575a4",
-      "templateIndex": 8
+      "templateIndex": 12
+    },
+    {
+      "dataIconName": "aiCloseIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-8842eae920f4b05f383742c8b63e549ba8e3ec54bab08d54e9290ba70104a215-13",
+      "path": "icons/pam/template-8842eae920f4b05f383742c8b63e549ba8e3ec54bab08d54e9290ba70104a215-13.svg",
+      "sha256": "fc29f227d89288cea89fddd210b84b4514a36ce377a43021ab6facf2e1dd7d24",
+      "templateIndex": 13
     },
     {
       "dataIconName": "closeIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-9",
-      "path": "icons/pam/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-9.svg",
+      "name": "template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-14",
+      "path": "icons/pam/template-50f3e917e909502bcada30379aea1b916aca2ac466f39156af37705fdfb90911-14.svg",
       "sha256": "193143e888fa0aaf0f993ec2be316f8f02ee3b489c7068db0e3a97d2682b2d29",
-      "templateIndex": 9
+      "templateIndex": 14
+    },
+    {
+      "dataIconName": "aiExpandLessIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-31c7df4f890f98461f93dec9d20a606b253dd45e548797be829a1a93b3627b19-15",
+      "path": "icons/pam/template-31c7df4f890f98461f93dec9d20a606b253dd45e548797be829a1a93b3627b19-15.svg",
+      "sha256": "46124ead9d460f719b4a8ba4e6e7712437fded188c26a62d5ccd031cb0473f21",
+      "templateIndex": 15
+    },
+    {
+      "dataIconName": "aiExpandMoreIcon",
+      "extension": "pam",
+      "module": "PamMicroUi",
+      "moduleId": "pam",
+      "name": "template-a6da8bab75f2c3d0e4ff17addee7de60c077604caacc38b003ab85c633427413-16",
+      "path": "icons/pam/template-a6da8bab75f2c3d0e4ff17addee7de60c077604caacc38b003ab85c633427413-16.svg",
+      "sha256": "8de699ec30f45fae49f7088acd6c65ed416345522816b2d3f796085a453406ae",
+      "templateIndex": 16
     },
     {
       "dataIconName": "unfoldIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-10",
-      "path": "icons/pam/template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-10.svg",
+      "name": "template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-17",
+      "path": "icons/pam/template-fb4c0ae30d72760ea430f41a389958fb0df7a4a308c4a54b3731a704031d841e-17.svg",
       "sha256": "746ea8a8ed03372231765871868e2b4a939fdab81e3d19b6529b3049b00127d7",
-      "templateIndex": 10
+      "templateIndex": 17
     },
     {
       "dataIconName": "unfoldedIcon",
       "extension": "pam",
       "module": "PamMicroUi",
       "moduleId": "pam",
-      "name": "template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11",
-      "path": "icons/pam/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-11.svg",
+      "name": "template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-18",
+      "path": "icons/pam/template-094e7f6101e86e55f2801a93efc455e42eaf35294305c9cef09a7486c84070d0-18.svg",
       "sha256": "da922a3173a586bf922a81e502cae1b78d4fe3e8ca6134da34ea7ba66071af94",
-      "templateIndex": 11
+      "templateIndex": 18
     },
     {
       "dataIconName": null,
@@ -59370,6 +59440,6 @@
   "source": "Google Cloud Console",
   "sourceLock": {
     "path": "source-lock.json",
-    "sha256": "1dfef8bbc2230c6642e7107abec9f7a72ed1a75bf431fcb3bb72f4cb0d837fa3"
+    "sha256": "d80eb25e15affb13186abfe7586776c303b379c71db38e58a3999f07421a8852"
   }
 }
